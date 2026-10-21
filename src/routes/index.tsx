@@ -45,11 +45,27 @@ function Index() {
   );
 }
 
+function BrandMark() {
+  return (
+    <svg className="welcome-logo" viewBox="0 0 32 32" width="30" height="30" aria-hidden="true">
+      <defs>
+        <linearGradient id="mk-top" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="oklch(0.88 0.17 95)" /><stop offset="1" stopColor="oklch(0.82 0.18 140)" /></linearGradient>
+        <linearGradient id="mk-left" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="oklch(0.78 0.17 60)" /><stop offset="1" stopColor="oklch(0.72 0.17 45)" /></linearGradient>
+        <linearGradient id="mk-right" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="oklch(0.82 0.18 140)" /><stop offset="1" stopColor="oklch(0.78 0.13 210)" /></linearGradient>
+      </defs>
+      <path d="M16 3 L27.3 9.5 L16 16 L4.7 9.5 Z" fill="url(#mk-top)" fillOpacity="0.9" />
+      <path d="M4.7 9.5 L16 16 L16 29 L4.7 22.5 Z" fill="url(#mk-left)" fillOpacity="0.85" />
+      <path d="M27.3 9.5 L16 16 L16 29 L27.3 22.5 Z" fill="url(#mk-right)" fillOpacity="0.85" />
+      <path d="M16 3 L27.3 9.5 L27.3 22.5 L16 29 L4.7 22.5 L4.7 9.5 Z M4.7 9.5 L16 16 L27.3 9.5 M16 16 L16 29" fill="none" stroke="oklch(1 0 0 / 0.7)" strokeWidth="0.8" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 function Header() {
   return (
     <header className="welcome-header sticky top-0 z-30">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5 md:px-8">
-        <span className="font-sans text-lg font-bold">Мастер Касс<span className="welcome-brand-dot" aria-hidden="true">.</span></span>
+        <span className="flex items-center gap-2.5 font-sans text-lg font-bold"><BrandMark />Мастер Касс</span>
         <Button type="button" variant="outline" title="Раздел в разработке" className="welcome-login"><LogIn />Войти</Button>
       </div>
     </header>

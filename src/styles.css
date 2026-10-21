@@ -206,12 +206,14 @@ body { font-family: var(--font-sans); }
 .welcome-copy > :nth-child(4) { animation-delay: 660ms; }
 .welcome-badge { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 28px; padding: 7px 16px; border-radius: 999px; font-size: 13px; font-weight: 500; color: var(--welcome-muted); background: linear-gradient(var(--welcome-background), var(--welcome-background)) padding-box, var(--welcome-spectrum) border-box; border: 1px solid transparent; }
 .welcome-badge-dot { width: 8px; height: 8px; border-radius: 999px; background: var(--welcome-spectrum); }
-.welcome-highlight { position: relative; white-space: nowrap; }
-.welcome-highlight::after { content: ""; position: absolute; left: 2%; right: 2%; bottom: -0.1em; height: 0.09em; border-radius: 999px; background: var(--welcome-spectrum); opacity: 0.85; z-index: -1; }
+.welcome-highlight { white-space: nowrap; }
+.welcome-logo { filter: drop-shadow(0 3px 6px oklch(0.75 0.15 120 / 0.35)); }
 .welcome-copy h1 { font-family: var(--font-welcome); font-size: 64px; font-weight: 600; line-height: 1.1; letter-spacing: -0.035em; margin: 0; }
 .welcome-copy p { max-width: 650px; margin: 24px auto 0; font-size: 18px; line-height: 1.65; letter-spacing: -0.01em; color: var(--welcome-muted); }
-.welcome-contact { margin-top: 32px; border-radius: 999px; height: 48px; padding-inline: 23px; font-size: 14px; box-shadow: none; transition: transform 250ms, background 250ms; }
-.welcome-contact:hover { transform: translateY(-2px); }
+.welcome-contact { position: relative; margin-top: 36px; border-radius: 999px; height: 56px; padding-inline: 30px; font-size: 15px; font-weight: 600; gap: 10px; color: var(--welcome-background); background: linear-gradient(var(--welcome-foreground), var(--welcome-foreground)) padding-box, var(--welcome-spectrum) border-box; border: 2px solid transparent; box-shadow: 0 10px 30px -10px oklch(0.8 0.17 110 / 0.55); transition: transform 250ms, box-shadow 250ms; }
+.welcome-contact::before { content: ""; position: absolute; inset: -6px; border-radius: inherit; background: var(--welcome-spectrum); filter: blur(14px); opacity: 0.35; z-index: -1; transition: opacity 250ms; }
+.welcome-contact:hover { transform: translateY(-2px); background: linear-gradient(var(--welcome-foreground), var(--welcome-foreground)) padding-box, var(--welcome-spectrum) border-box; box-shadow: 0 16px 36px -12px oklch(0.8 0.17 110 / 0.7); }
+.welcome-contact:hover::before { opacity: 0.6; }
 .welcome-contact:active { transform: scale(0.97); }
 @keyframes welcome-reveal { from { opacity: 0; transform: translateY(24px); filter: blur(6px); } to { opacity: 1; transform: translateY(0); filter: blur(0); } }
 .team-scene { position: relative; width: min(100%, 1100px); height: 470px; margin: 62px auto 0; perspective: 1200px; }
