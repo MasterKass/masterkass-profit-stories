@@ -238,7 +238,7 @@ body { font-family: var(--font-sans); }
   .welcome-badge { font-size: 12px; margin-bottom: 22px; }
   .welcome-copy h1 { font-size: 36px; line-height: 1.18; }
   .welcome-copy p { font-size: 14px; line-height: 1.75; max-width: 340px; margin-top: 22px; }
-  .welcome-contact { font-size: 11px; height: 46px; padding-inline: 16px; margin-top: 24px; }
+  .welcome-contact { font-size: 13px; height: 52px; padding-inline: 20px; margin-top: 28px; }
   .team-scene { height: 420px; margin-top: 42px; width: 100%; }
   .team-photo { width: 48%; top: 125px; }
   .team-photo-float { border-width: 6px; border-radius: 12px; }
