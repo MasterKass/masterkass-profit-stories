@@ -38,7 +38,7 @@ export function WelcomeHero() {
         <h1 id="welcome-title">Добро пожаловать<br />в <span className="welcome-highlight">кассовый сервис</span></h1>
         <p>Берём на себя всю заботу о технологиях,<br className="hidden sm:block" /> пока вы заботитесь о своих клиентах.</p>
         <Button onClick={() => continueTo("assistant")} className="welcome-contact">
-          <MessageCircle />Написать дежурному инженеру<ArrowUpRight />
+          <MessageCircle />Обратиться в поддержку<ArrowUpRight />
         </Button>
       </div>
       <div className="team-scene" aria-label="Команды пяти разных бизнесов">

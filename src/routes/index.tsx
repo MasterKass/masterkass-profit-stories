@@ -48,15 +48,17 @@ function Index() {
 function BrandMark() {
   return (
     <svg className="welcome-logo" viewBox="0 0 32 32" width="30" height="30" aria-hidden="true">
-      <defs>
-        <linearGradient id="mk-top" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="oklch(0.88 0.17 95)" /><stop offset="1" stopColor="oklch(0.82 0.18 140)" /></linearGradient>
-        <linearGradient id="mk-left" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="oklch(0.78 0.17 60)" /><stop offset="1" stopColor="oklch(0.72 0.17 45)" /></linearGradient>
-        <linearGradient id="mk-right" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="oklch(0.82 0.18 140)" /><stop offset="1" stopColor="oklch(0.78 0.13 210)" /></linearGradient>
-      </defs>
-      <path d="M16 3 L27.3 9.5 L16 16 L4.7 9.5 Z" fill="url(#mk-top)" fillOpacity="0.9" />
-      <path d="M4.7 9.5 L16 16 L16 29 L4.7 22.5 Z" fill="url(#mk-left)" fillOpacity="0.85" />
-      <path d="M27.3 9.5 L16 16 L16 29 L27.3 22.5 Z" fill="url(#mk-right)" fillOpacity="0.85" />
-      <path d="M16 3 L27.3 9.5 L27.3 22.5 L16 29 L4.7 22.5 L4.7 9.5 Z M4.7 9.5 L16 16 L27.3 9.5 M16 16 L16 29" fill="none" stroke="oklch(1 0 0 / 0.7)" strokeWidth="0.8" strokeLinejoin="round" />
+      {[
+        ["16,3 27.3,9.5", "oklch(0.86 0.17 92)"],
+        ["27.3,9.5 27.3,22.5", "oklch(0.85 0.18 120)"],
+        ["27.3,22.5 16,29", "oklch(0.83 0.18 145)"],
+        ["16,29 4.7,22.5", "oklch(0.8 0.13 210)"],
+        ["4.7,22.5 4.7,9.5", "oklch(0.74 0.17 50)"],
+        ["4.7,9.5 16,3", "oklch(0.8 0.17 72)"],
+      ].map(([pts, color]) => (
+        <polygon key={pts} points={`16,16 ${pts}`} fill={color} fillOpacity="0.9" />
+      ))}
+      <path d="M16 3 L27.3 9.5 L27.3 22.5 L16 29 L4.7 22.5 L4.7 9.5 Z M16 3 L16 29 M4.7 9.5 L27.3 22.5 M27.3 9.5 L4.7 22.5" fill="none" stroke="oklch(1 0 0 / 0.8)" strokeWidth="0.7" strokeLinejoin="round" />
     </svg>
   );
 }
