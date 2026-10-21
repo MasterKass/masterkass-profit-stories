@@ -232,7 +232,8 @@ body { font-family: var(--font-sans); }
 @keyframes team-drift { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
 @media (min-width: 1500px) { .welcome-hero { padding-top: 85px; } .team-scene { margin-top: 75px; } }
 @media (max-width: 767px) {
-  .welcome-hero { min-height: 660px; padding: 54px 20px 20px; }
+  .welcome-hero { min-height: 700px; padding: 84px 20px 20px; }
+  .welcome-badge { font-size: 12px; margin-bottom: 22px; }
   .welcome-copy h1 { font-size: 36px; line-height: 1.18; }
   .welcome-copy p { font-size: 14px; line-height: 1.75; max-width: 340px; margin-top: 22px; }
   .welcome-contact { font-size: 11px; height: 46px; padding-inline: 16px; margin-top: 24px; }
@@ -248,6 +249,6 @@ body { font-family: var(--font-sans); }
 }
 @media (max-width: 359px) { .welcome-copy h1 { font-size: 30px; } .welcome-contact { padding-inline: 10px; font-size: 10px; } }
 @media (prefers-reduced-motion: reduce) {
-  .welcome-copy, .team-photo-float { animation: none; }
+  .welcome-copy > *, .team-photo-float { animation: none; }
   .welcome-contact { transition: none; }
 }
