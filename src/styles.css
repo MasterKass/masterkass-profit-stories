@@ -207,7 +207,7 @@ body { font-family: var(--font-sans); }
 .welcome-badge { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 28px; padding: 7px 16px; border-radius: 999px; font-size: 13px; font-weight: 500; color: var(--welcome-muted); background: linear-gradient(var(--welcome-background), var(--welcome-background)) padding-box, var(--welcome-spectrum) border-box; border: 1px solid transparent; }
 .welcome-badge-dot { width: 8px; height: 8px; border-radius: 999px; background: var(--welcome-spectrum); }
 .welcome-highlight { position: relative; white-space: nowrap; }
-.welcome-highlight::after { content: ""; position: absolute; left: 2%; right: 2%; bottom: 0.04em; height: 0.12em; border-radius: 999px; background: var(--welcome-spectrum); opacity: 0.85; z-index: -1; }
+.welcome-highlight::after { content: ""; position: absolute; left: 2%; right: 2%; bottom: -0.1em; height: 0.09em; border-radius: 999px; background: var(--welcome-spectrum); opacity: 0.85; z-index: -1; }
 .welcome-copy h1 { font-family: var(--font-welcome); font-size: 64px; font-weight: 600; line-height: 1.1; letter-spacing: -0.035em; margin: 0; }
 .welcome-copy p { max-width: 650px; margin: 24px auto 0; font-size: 18px; line-height: 1.65; letter-spacing: -0.01em; color: var(--welcome-muted); }
 .welcome-contact { margin-top: 32px; border-radius: 999px; height: 48px; padding-inline: 23px; font-size: 14px; box-shadow: none; transition: transform 250ms, background 250ms; }
