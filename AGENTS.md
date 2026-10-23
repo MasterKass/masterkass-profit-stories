@@ -11,3 +11,4 @@
 
 - Keep the welcome photo scene in a browser-safe standalone React component with CSS perspective and scroll effects; it remains replaceable without changing the lower page sections.
 - Scope welcome-screen colors to semantic CSS tokens so its light palette does not recolor the existing service and pricing sections.
+- Home page sections below the welcome scene live in src/components/home-sections.tsx, styled via scoped --mk-* tokens; the bottom wrapper .mk-tail carries the spectrum gradient so blocks can be reordered without touching the hero.
