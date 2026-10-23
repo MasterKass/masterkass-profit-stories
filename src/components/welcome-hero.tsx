@@ -37,7 +37,7 @@ export function WelcomeHero() {
       <div className="welcome-copy">
         <h1 id="welcome-title">Добро пожаловать<br />в <span className="welcome-highlight">кассовый сервис</span></h1>
         <p>Берём на себя всю заботу о технологиях,<br className="hidden sm:block" /> пока вы заботитесь о своих клиентах.</p>
-        <Button onClick={() => continueTo("assistant")} className="welcome-contact">
+        <Button onClick={() => continueTo("ask")} className="welcome-contact">
           <MessageCircle />Обратиться в поддержку<ArrowUpRight />
         </Button>
       </div>
@@ -58,7 +58,7 @@ export function WelcomeHero() {
           <div className="team-photo-float"><img src={salon} alt="Улыбающаяся команда парикмахерской" width={1536} height={1024} loading="lazy" /></div>
         </div>
       </div>
-      <Button variant="ghost" size="icon" className="welcome-scroll" aria-label="Листать дальше" onClick={() => continueTo("niches")}><ArrowDown /></Button>
+      <Button variant="ghost" size="icon" className="welcome-scroll" aria-label="Листать дальше" onClick={() => continueTo("ai")}><ArrowDown /></Button>
     </section>
   );
 }
