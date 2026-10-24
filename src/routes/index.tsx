@@ -41,7 +41,7 @@ function Index() {
 
 function BrandMark() {
   return (
-    <svg className="welcome-logo" viewBox="0 0 32 32" width="30" height="30" aria-hidden="true">
+    <svg className="welcome-logo" viewBox="0 0 32 32" width="38" height="38" aria-hidden="true">
       {[
         ["16,3 27.3,9.5", "oklch(0.86 0.17 92)"],
         ["27.3,9.5 27.3,22.5", "oklch(0.85 0.18 120)"],
@@ -61,7 +61,7 @@ function Header() {
   return (
     <header className="welcome-header sticky top-0 z-30">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5 md:px-8">
-        <span className="flex items-center gap-2.5 font-sans text-lg font-bold"><BrandMark />Мастер Касс</span>
+        <span className="welcome-brand flex items-center gap-2"><BrandMark />Мастер Касс</span>
         <Button type="button" variant="outline" title="Раздел в разработке" className="welcome-login"><LogIn />Войти</Button>
       </div>
     </header>
