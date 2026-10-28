@@ -2,15 +2,15 @@ import { createFileRoute } from "@tanstack/react-router";
 import { LogIn } from "lucide-react";
 import { WelcomeHero } from "@/components/welcome-hero";
 import { Button } from "@/components/ui/button";
-import { AiReveal, AskAi, Benefit, GeoMap, JoinCta, Partners, QuickActions, ServiceFaq, SiteFooter } from "@/components/home-sections";
+import { AiReveal, AskAi, Benefit, ClientStories, GeoMap, JoinCta, Partners, QuickActions, ServiceFaq, SiteFooter } from "@/components/home-sections";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Мастер Касс — кассовый сервис в Ростове-на-Дону и на юге" },
-      { name: "description", content: "Берём на себя всю заботу о технологиях, пока вы заботитесь о своих клиентах. Сопровождение касс и AI-помощник." },
+      { name: "description", content: "Заботимся о технологиях, пока вы заботитесь о клиентах. Сопровождение касс и AI-наставник с 9-летним опытом инженеров." },
       { property: "og:title", content: "Мастер Касс — кассовый сервис" },
-      { property: "og:description", content: "Сопровождение касс, AI-помощник и 9 лет опыта сервисных инженеров." },
+      { property: "og:description", content: "Сопровождение касс, AI-наставник и 9 лет опыта сервисных инженеров." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -29,6 +29,7 @@ function Index() {
       <Benefit />
       <JoinCta />
       <GeoMap />
+      <ClientStories />
       <div className="mk-tail">
         <Partners />
         <ServiceFaq />
