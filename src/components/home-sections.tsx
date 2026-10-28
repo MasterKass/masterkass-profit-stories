@@ -30,9 +30,9 @@ function useInView<T extends HTMLElement>() {
   return [ref, inView] as const;
 }
 
-/* 3. AI-наставник, текст проявляется при прокрутке */
+/* 3. Наш AI-сотрудник, текст проявляется при прокрутке */
 const AI_TEXT =
-  "AI-наставник отвечает мгновенно в голосовом и текстовом режиме. В нём 9-летний опыт сервисных инженеров: даёт пошаговые инструкции по настройке в реальном времени, проводит диагностику, устраняет ошибки кассы и подключённых сервисов, обучает кассиров с нуля и помогает настроить систему лояльности.";
+  "Наш AI-сотрудник всегда на связи — голосом и текстом. В нём объединён 9-летний опыт инженеров: мгновенная диагностика сбоев, пошаговая помощь кассиру прямо у экрана, обучение новичков и запуск программ лояльности.";
 
 export function AiReveal() {
   const ref = useRef<HTMLParagraphElement>(null);
@@ -48,7 +48,8 @@ export function AiReveal() {
       frame = 0;
       const r = el.getBoundingClientRect();
       const vh = window.innerHeight;
-      setProgress(Math.min(1, Math.max(0, (vh * 0.85 - r.top) / (r.height + vh * 0.35))));
+      // Проявление начинается, когда текст входит снизу, и заканчивается, когда он у верхней трети экрана
+      setProgress(Math.min(1, Math.max(0, (vh * 0.9 - r.top) / (vh * 0.65))));
     };
     const onScroll = () => { if (!frame) frame = requestAnimationFrame(update); };
     update();
