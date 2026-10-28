@@ -29,9 +29,6 @@ export function WelcomeHero() {
     };
   }, []);
 
-  const continueTo = (id: string) => document.getElementById(id)?.scrollIntoView({
-    behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
-  });
 
   return (
     <section ref={scene} className="welcome-hero" aria-labelledby="welcome-title">
