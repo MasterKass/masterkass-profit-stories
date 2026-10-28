@@ -23,7 +23,7 @@ function useInView<T extends HTMLElement>() {
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setInView(true); io.disconnect(); } }, { threshold: 0.3 });
+    const io = new IntersectionObserver(([e]) => { if (e?.isIntersecting) { setInView(true); io.disconnect(); } }, { threshold: 0.3 });
     io.observe(el);
     return () => io.disconnect();
   }, []);
@@ -253,10 +253,10 @@ function useTypewriter(lines: string[], active: boolean) {
   const [txt, setTxt] = useState("");
   useEffect(() => {
     if (!active) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return setTxt(lines[0]);
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return setTxt(lines[0] ?? "");
     let li = 0, ci = 0, del = false, t = 0;
     const step = () => {
-      const line = lines[li];
+      const line = lines[li] ?? "";
       ci += del ? -1 : 1;
       setTxt(line.slice(0, ci));
       let wait = del ? 25 : 55;
