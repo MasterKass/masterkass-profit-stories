@@ -249,7 +249,7 @@ body { font-family: var(--font-sans); }
 @media (max-width: 767px) {
   .welcome-hero { min-height: 700px; padding: 84px 20px 20px; }
   .welcome-badge { font-size: 12px; margin-bottom: 22px; }
-  .welcome-copy h1 { font-size: clamp(20px, 6.3vw, 30px); line-height: 1.2; letter-spacing: -0.04em; }
+  .welcome-copy h1 { font-size: clamp(17px, 5.5vw, 30px); line-height: 1.2; letter-spacing: -0.04em; }
   .welcome-copy p { font-size: 14px; line-height: 1.75; max-width: 340px; margin-top: 22px; }
   .welcome-contact { font-size: 13px; height: 52px; padding-inline: 20px; margin-top: 28px; }
   .team-scene { height: 820px; margin-top: 200px; width: 100%; }
