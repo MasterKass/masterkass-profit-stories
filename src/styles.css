@@ -291,6 +291,15 @@ body { font-family: var(--font-sans); }
 .mk-reveal span.is-lit { color: var(--mk-fg); }
 .mk-card { display: block; padding: 1.75rem; border-radius: 1.5rem; border: 1px solid var(--mk-border); background: var(--mk-surface); transition: transform 250ms; }
 .mk-card:hover { transform: translateY(-3px); }
+/* Карточки действий: воздух внутри, кнопка прижата к нижнему краю */
+.mk-tile { display: flex; flex-direction: column; justify-content: space-between; gap: 3rem; min-height: 440px; padding: 2rem; border-radius: 1.5rem; border: 1px solid var(--mk-border); background: var(--mk-surface); text-align: left; transition: transform 250ms, box-shadow 250ms; }
+.mk-tile:hover { transform: translateY(-4px); box-shadow: 0 26px 50px -32px oklch(0.24 0.008 260 / 0.45); }
+.mk-tile-title { font-size: clamp(1.5rem, 2.2vw, 2rem); font-weight: 700; line-height: 1.1; letter-spacing: -0.045em; }
+.mk-tile-btn { display: inline-flex; align-items: center; gap: 8px; align-self: flex-start; padding: 13px 18px; border-radius: 14px; font-size: 14px; font-weight: 600; letter-spacing: -0.01em; background: var(--mk-fg); color: var(--mk-bg); transition: transform 250ms; }
+.mk-tile:hover .mk-tile-btn { transform: translateY(-2px); }
+.mk-tile:active { transform: scale(0.99); }
+@media (max-width: 767px) { .mk-tile { min-height: 260px; padding: 1.5rem; gap: 2rem; } }
+
 .mk-outline { position: relative; display: inline-flex; align-items: center; gap: 10px; height: 56px; padding-inline: 30px; border-radius: 999px; font-size: 15px; font-weight: 600; background: transparent; color: var(--mk-fg); transition: transform 250ms; }
 .mk-outline::before { content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1.5px; background: var(--welcome-spectrum); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; }
 .mk-outline:hover { transform: translateY(-2px); }
