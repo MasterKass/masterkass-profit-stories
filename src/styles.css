@@ -249,13 +249,13 @@ body { font-family: var(--font-sans); }
   .welcome-copy h1 { font-size: 36px; line-height: 1.18; }
   .welcome-copy p { font-size: 14px; line-height: 1.75; max-width: 340px; margin-top: 22px; }
   .welcome-contact { font-size: 13px; height: 52px; padding-inline: 20px; margin-top: 28px; }
-  .team-scene { height: 580px; margin-top: 200px; width: 100%; }
+  .team-scene { height: 600px; margin-top: 200px; width: 100%; }
   .team-photo-float { border-width: 6px; border-radius: 12px; }
   .team-photo-center { width: 72%; top: 0; transform: translateX(-48%) translateY(calc(var(--p) * 90px)) rotate(2deg); }
-  .team-photo-left { width: 56%; top: 190px; transform: translateX(calc(-108% - var(--p) * 30px)) translateY(calc(var(--p) * -70px)) rotate(-4deg); }
-  .team-photo-right { width: 56%; top: 215px; transform: translateX(calc(20% + var(--p) * 30px)) translateY(calc(var(--p) * -50px)) rotate(4deg); }
-  .team-photo-bottom-left { width: 60%; top: 330px; transform: translateX(calc(-96% - var(--p) * 20px)) translateY(calc(var(--p) * -120px)) rotate(-3deg); }
-  .team-photo-bottom-right { width: 58%; top: 360px; transform: translateX(calc(-6% + var(--p) * 20px)) translateY(calc(var(--p) * -150px)) rotate(3deg); }
+  .team-photo-left { width: 56%; top: 250px; transform: translateX(calc(-104% - var(--p) * 30px)) translateY(calc(var(--p) * -70px)) rotate(-4deg); }
+  .team-photo-right { width: 58%; top: 280px; transform: translateX(calc(2% + var(--p) * 30px)) translateY(calc(var(--p) * -50px)) rotate(4deg); }
+  .team-photo-bottom-left { width: 60%; top: 390px; transform: translateX(calc(-94% - var(--p) * 20px)) translateY(calc(var(--p) * -120px)) rotate(-3deg); }
+  .team-photo-bottom-right { width: 58%; top: 420px; transform: translateX(calc(-8% + var(--p) * 20px)) translateY(calc(var(--p) * -150px)) rotate(3deg); }
   .welcome-scroll { margin-top: 0; }
 }
 @media (max-width: 359px) { .welcome-copy h1 { font-size: 30px; } .welcome-contact { padding-inline: 10px; font-size: 10px; } }
