@@ -232,9 +232,9 @@ body { font-family: var(--font-sans); }
 .team-photo-center img { aspect-ratio: 4 / 3; object-position: center 20%; }
 /* Передний план: быстрее и расходится в стороны */
 .team-photo-left { z-index: 3; width: 320px; top: 200px; transform: translateX(calc(-118% - var(--p) * 90px)) translateY(calc(var(--p) * -140px)) rotate(-5deg); }
-.team-photo-right { z-index: 3; width: 410px; top: 150px; transform: translateX(calc(8% + var(--p) * 80px)) translateY(calc(var(--p) * -100px)) rotate(4deg); }
-.team-photo-bottom-left { z-index: 4; width: 480px; top: 380px; transform: translateX(calc(-88% - var(--p) * 60px)) translateY(calc(var(--p) * -220px)) rotate(-3deg); }
-.team-photo-bottom-right { z-index: 4; width: 230px; top: 360px; transform: translateX(calc(42% + var(--p) * 70px)) translateY(calc(var(--p) * -260px)) rotate(3deg); }
+.team-photo-right { z-index: 3; width: 410px; top: 210px; transform: translateX(calc(14% + var(--p) * 80px)) translateY(calc(var(--p) * -100px)) rotate(7deg); }
+.team-photo-bottom-left { z-index: 2; width: 540px; top: 340px; transform: translateX(calc(-84% - var(--p) * 60px)) translateY(calc(var(--p) * -200px)) rotate(-3deg); }
+.team-photo-bottom-right { z-index: 4; width: 230px; top: 400px; transform: translateX(calc(0% + var(--p) * 70px)) translateY(calc(var(--p) * -260px)) rotate(8deg); }
 .team-photo-bottom-right img { aspect-ratio: 3 / 4; object-position: center; }
 .team-photo-center .team-photo-float { animation-delay: 0ms; }
 .team-photo-left .team-photo-float { animation-delay: 120ms; }
@@ -254,9 +254,9 @@ body { font-family: var(--font-sans); }
   .team-photo-float { border-width: 6px; border-radius: 12px; }
   .team-photo-center { width: 72%; top: 0; transform: translateX(-48%) translateY(calc(var(--p) * 90px)) rotate(2deg); }
   .team-photo-left { width: 50%; top: 165px; transform: translateX(calc(-108% - var(--p) * 30px)) translateY(calc(var(--p) * -70px)) rotate(-4deg); }
-  .team-photo-right { width: 62%; top: 135px; transform: translateX(calc(0% + var(--p) * 30px)) translateY(calc(var(--p) * -50px)) rotate(4deg); }
-  .team-photo-bottom-left { width: 76%; top: 290px; transform: translateX(calc(-96% - var(--p) * 20px)) translateY(calc(var(--p) * -120px)) rotate(-3deg); }
-  .team-photo-bottom-right { width: 36%; top: 300px; transform: translateX(calc(30% + var(--p) * 20px)) translateY(calc(var(--p) * -150px)) rotate(3deg); }
+  .team-photo-right { width: 62%; top: 185px; transform: translateX(calc(8% + var(--p) * 30px)) translateY(calc(var(--p) * -50px)) rotate(7deg); }
+  .team-photo-bottom-left { z-index: 2; width: 86%; top: 265px; transform: translateX(calc(-92% - var(--p) * 20px)) translateY(calc(var(--p) * -110px)) rotate(-3deg); }
+  .team-photo-bottom-right { width: 38%; top: 330px; transform: translateX(calc(-8% + var(--p) * 20px)) translateY(calc(var(--p) * -150px)) rotate(8deg); }
   .welcome-scroll { margin-top: 0; }
 }
 @media (max-width: 359px) { .welcome-copy h1 { font-size: 30px; } .welcome-contact { padding-inline: 10px; font-size: 10px; } }
