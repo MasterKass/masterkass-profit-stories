@@ -223,18 +223,18 @@ body { font-family: var(--font-sans); }
 .welcome-contact:hover { transform: translateY(-2px); background: transparent; color: var(--welcome-foreground); box-shadow: none; }
 .welcome-contact:active { transform: scale(0.97); }
 @keyframes welcome-reveal { from { opacity: 0; transform: translateY(24px); filter: blur(6px); } to { opacity: 1; transform: translateY(0); filter: blur(0); } }
-.team-scene { --p: var(--scene-progress); position: relative; width: min(100%, 1100px); height: 560px; margin: 62px auto 0; }
+.team-scene { --p: var(--scene-progress); position: relative; width: min(100%, 1100px); height: 700px; margin: 230px auto 0; }
 .team-photo { position: absolute; left: 50%; width: 320px; top: 0; will-change: transform; }
 .team-photo-float { overflow: hidden; border: 8px solid var(--welcome-photo-frame); border-radius: 16px; box-shadow: var(--welcome-photo-shadow); animation: welcome-unblur 1.4s cubic-bezier(0.22, 1, 0.36, 1) both; }
 .team-photo img { display: block; width: 100%; aspect-ratio: 3 / 2; height: auto; object-fit: cover; }
 /* Задний план: лицо сервиса, движется медленнее */
-.team-photo-center { z-index: 1; width: 440px; top: 0; transform: translateX(-46%) translateY(calc(var(--p) * 160px)) rotate(2deg); }
+.team-photo-center { z-index: 1; width: 460px; top: 0; transform: translateX(-46%) translateY(calc(var(--p) * 160px)) rotate(2deg); }
 .team-photo-center img { aspect-ratio: 4 / 3; object-position: center 20%; }
 /* Передний план: быстрее и расходится в стороны */
-.team-photo-left { z-index: 3; width: 400px; top: 170px; transform: translateX(calc(-132% - var(--p) * 90px)) translateY(calc(var(--p) * -140px)) rotate(-5deg); }
-.team-photo-right { z-index: 3; width: 360px; top: 120px; transform: translateX(calc(42% + var(--p) * 80px)) translateY(calc(var(--p) * -100px)) rotate(4deg); }
-.team-photo-bottom-left { z-index: 4; width: 340px; top: 340px; transform: translateX(calc(-96% - var(--p) * 60px)) translateY(calc(var(--p) * -220px)) rotate(-3deg); }
-.team-photo-bottom-right { z-index: 4; width: 330px; top: 380px; transform: translateX(calc(8% + var(--p) * 70px)) translateY(calc(var(--p) * -260px)) rotate(3deg); }
+.team-photo-left { z-index: 3; width: 380px; top: 230px; transform: translateX(calc(-112% - var(--p) * 90px)) translateY(calc(var(--p) * -140px)) rotate(-5deg); }
+.team-photo-right { z-index: 3; width: 360px; top: 260px; transform: translateX(calc(16% + var(--p) * 80px)) translateY(calc(var(--p) * -100px)) rotate(4deg); }
+.team-photo-bottom-left { z-index: 4; width: 340px; top: 400px; transform: translateX(calc(-84% - var(--p) * 60px)) translateY(calc(var(--p) * -220px)) rotate(-3deg); }
+.team-photo-bottom-right { z-index: 4; width: 330px; top: 430px; transform: translateX(calc(-4% + var(--p) * 70px)) translateY(calc(var(--p) * -260px)) rotate(3deg); }
 .team-photo-center .team-photo-float { animation-delay: 0ms; }
 .team-photo-left .team-photo-float { animation-delay: 120ms; }
 .team-photo-right .team-photo-float { animation-delay: 220ms; }
@@ -249,13 +249,13 @@ body { font-family: var(--font-sans); }
   .welcome-copy h1 { font-size: 36px; line-height: 1.18; }
   .welcome-copy p { font-size: 14px; line-height: 1.75; max-width: 340px; margin-top: 22px; }
   .welcome-contact { font-size: 13px; height: 52px; padding-inline: 20px; margin-top: 28px; }
-  .team-scene { height: 520px; margin-top: 42px; width: 100%; }
+  .team-scene { height: 600px; margin-top: 200px; width: 100%; }
   .team-photo-float { border-width: 6px; border-radius: 12px; }
-  .team-photo-center { width: 68%; top: 0; transform: translateX(-44%) translateY(calc(var(--p) * 90px)) rotate(2deg); }
-  .team-photo-left { width: 58%; top: 120px; transform: translateX(calc(-122% - var(--p) * 30px)) translateY(calc(var(--p) * -70px)) rotate(-4deg); }
-  .team-photo-right { width: 54%; top: 150px; transform: translateX(calc(52% + var(--p) * 30px)) translateY(calc(var(--p) * -50px)) rotate(4deg); }
-  .team-photo-bottom-left { width: 64%; top: 300px; transform: translateX(calc(-108% - var(--p) * 20px)) translateY(calc(var(--p) * -120px)) rotate(-3deg); }
-  .team-photo-bottom-right { width: 60%; top: 340px; transform: translateX(calc(8% + var(--p) * 20px)) translateY(calc(var(--p) * -150px)) rotate(3deg); }
+  .team-photo-center { width: 72%; top: 0; transform: translateX(-48%) translateY(calc(var(--p) * 90px)) rotate(2deg); }
+  .team-photo-left { width: 56%; top: 250px; transform: translateX(calc(-104% - var(--p) * 30px)) translateY(calc(var(--p) * -70px)) rotate(-4deg); }
+  .team-photo-right { width: 58%; top: 280px; transform: translateX(calc(2% + var(--p) * 30px)) translateY(calc(var(--p) * -50px)) rotate(4deg); }
+  .team-photo-bottom-left { width: 60%; top: 390px; transform: translateX(calc(-94% - var(--p) * 20px)) translateY(calc(var(--p) * -120px)) rotate(-3deg); }
+  .team-photo-bottom-right { width: 58%; top: 420px; transform: translateX(calc(-8% + var(--p) * 20px)) translateY(calc(var(--p) * -150px)) rotate(3deg); }
   .welcome-scroll { margin-top: 0; }
 }
 @media (max-width: 359px) { .welcome-copy h1 { font-size: 30px; } .welcome-contact { padding-inline: 10px; font-size: 10px; } }
