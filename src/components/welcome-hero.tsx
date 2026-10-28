@@ -35,7 +35,7 @@ export function WelcomeHero() {
   return (
     <section ref={scene} className="welcome-hero" aria-labelledby="welcome-title">
       <div className="welcome-copy">
-        <h1 id="welcome-title">Заботимся о <span className="welcome-highlight">технологиях</span>,<br />пока вы заботитесь о клиентах</h1>
+        <h1 id="welcome-title"><span className="welcome-line">Заботимся о&nbsp;технологиях,</span> <span className="welcome-line">пока вы заботитесь о&nbsp;клиентах</span></h1>
         <p>Кассовый сервис с AI-наставником и 9-летним опытом инженеров.</p>
         <Button onClick={() => continueTo("ask")} className="welcome-contact">
           <MessageCircle />Обратиться в поддержку<ArrowUpRight />
