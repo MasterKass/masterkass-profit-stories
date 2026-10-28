@@ -249,14 +249,13 @@ body { font-family: var(--font-sans); }
   .welcome-copy h1 { font-size: 36px; line-height: 1.18; }
   .welcome-copy p { font-size: 14px; line-height: 1.75; max-width: 340px; margin-top: 22px; }
   .welcome-contact { font-size: 13px; height: 52px; padding-inline: 20px; margin-top: 28px; }
-  .team-scene { height: 420px; margin-top: 42px; width: 100%; }
-  .team-photo { width: 48%; top: 125px; }
+  .team-scene { height: 520px; margin-top: 42px; width: 100%; }
   .team-photo-float { border-width: 6px; border-radius: 12px; }
-  .team-photo-center { width: 66%; top: 20px; }
-  .team-photo-left { width: 60%; top: 135px; transform: translateX(calc(-128% - var(--scene-progress) * 12px)) translateY(calc(var(--scene-progress) * -15px)) rotateZ(-6deg); }
-  .team-photo-right { width: 60%; top: 135px; transform: translateX(calc(28% + var(--scene-progress) * 12px)) translateY(calc(var(--scene-progress) * -10px)) rotateZ(6deg); }
-  .team-photo-bottom-left { width: 49%; top: 270px; transform: translateX(calc(-102% - var(--scene-progress) * 10px)) translateY(calc(var(--scene-progress) * 12px)) rotateZ(-5deg); }
-  .team-photo-bottom-right { width: 49%; top: 275px; transform: translateX(calc(2% + var(--scene-progress) * 10px)) translateY(calc(var(--scene-progress) * 18px)) rotateZ(4deg); }
+  .team-photo-center { width: 68%; top: 0; transform: translateX(-44%) translateY(calc(var(--p) * 90px)) rotate(2deg); }
+  .team-photo-left { width: 58%; top: 120px; transform: translateX(calc(-122% - var(--p) * 30px)) translateY(calc(var(--p) * -70px)) rotate(-4deg); }
+  .team-photo-right { width: 54%; top: 150px; transform: translateX(calc(52% + var(--p) * 30px)) translateY(calc(var(--p) * -50px)) rotate(4deg); }
+  .team-photo-bottom-left { width: 64%; top: 300px; transform: translateX(calc(-108% - var(--p) * 20px)) translateY(calc(var(--p) * -120px)) rotate(-3deg); }
+  .team-photo-bottom-right { width: 60%; top: 340px; transform: translateX(calc(8% + var(--p) * 20px)) translateY(calc(var(--p) * -150px)) rotate(3deg); }
   .welcome-scroll { margin-top: 0; }
 }
 @media (max-width: 359px) { .welcome-copy h1 { font-size: 30px; } .welcome-contact { padding-inline: 10px; font-size: 10px; } }
