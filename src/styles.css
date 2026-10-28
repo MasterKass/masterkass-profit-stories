@@ -223,22 +223,25 @@ body { font-family: var(--font-sans); }
 .welcome-contact:hover { transform: translateY(-2px); background: transparent; color: var(--welcome-foreground); box-shadow: none; }
 .welcome-contact:active { transform: scale(0.97); }
 @keyframes welcome-reveal { from { opacity: 0; transform: translateY(24px); filter: blur(6px); } to { opacity: 1; transform: translateY(0); filter: blur(0); } }
-.team-scene { position: relative; width: min(100%, 1100px); height: 470px; margin: 62px auto 0; perspective: 1200px; }
-.team-photo { position: absolute; left: 50%; width: 300px; top: 70px; transform-style: preserve-3d; }
-.team-photo-float { overflow: hidden; border: 8px solid var(--welcome-photo-frame); border-radius: 16px; box-shadow: var(--welcome-photo-shadow); animation: welcome-arrive 1.1s both, team-drift 7s 1.1s ease-in-out infinite; }
+.team-scene { --p: var(--scene-progress); position: relative; width: min(100%, 1100px); height: 560px; margin: 62px auto 0; }
+.team-photo { position: absolute; left: 50%; width: 320px; top: 0; will-change: transform; }
+.team-photo-float { overflow: hidden; border: 8px solid var(--welcome-photo-frame); border-radius: 16px; box-shadow: var(--welcome-photo-shadow); animation: welcome-unblur 1.4s cubic-bezier(0.22, 1, 0.36, 1) both; }
 .team-photo img { display: block; width: 100%; aspect-ratio: 3 / 2; height: auto; object-fit: cover; }
-.team-photo-left { z-index: 2; width: 380px; transform: translateX(calc(-175% - var(--scene-progress) * 45px)) translateY(calc(var(--scene-progress) * -35px)) rotateZ(-7deg) rotateY(8deg); }
-.team-photo-right { z-index: 2; width: 380px; transform: translateX(calc(75% + var(--scene-progress) * 45px)) translateY(calc(var(--scene-progress) * -25px)) rotateZ(7deg) rotateY(-8deg); }
-.team-photo-center { top: 0; z-index: 4; width: 380px; transform: translateX(-50%) translateY(calc(var(--scene-progress) * -20px)) rotateZ(-3deg); }
-.team-photo-bottom-left { top: 245px; z-index: 3; transform: translateX(calc(-105% - var(--scene-progress) * 30px)) translateY(calc(var(--scene-progress) * 25px)) rotateZ(-6deg); }
-.team-photo-bottom-right { top: 250px; z-index: 3; transform: translateX(calc(5% + var(--scene-progress) * 30px)) translateY(calc(var(--scene-progress) * 40px)) rotateZ(5deg); }
-.team-photo-left .team-photo-float { animation-delay: 120ms, 1.2s; }
-.team-photo-right .team-photo-float { animation-delay: 240ms, 1.4s; }
-.team-photo-bottom-left .team-photo-float { animation-delay: 320ms, 1.6s; }
-.team-photo-bottom-right .team-photo-float { animation-delay: 400ms, 1.8s; }
+/* Задний план: лицо сервиса, движется медленнее */
+.team-photo-center { z-index: 1; width: 440px; top: 0; transform: translateX(-46%) translateY(calc(var(--p) * 160px)) rotate(2deg); }
+.team-photo-center img { aspect-ratio: 4 / 3; object-position: center 20%; }
+/* Передний план: быстрее и расходится в стороны */
+.team-photo-left { z-index: 3; width: 400px; top: 170px; transform: translateX(calc(-132% - var(--p) * 90px)) translateY(calc(var(--p) * -140px)) rotate(-5deg); }
+.team-photo-right { z-index: 3; width: 360px; top: 120px; transform: translateX(calc(42% + var(--p) * 80px)) translateY(calc(var(--p) * -100px)) rotate(4deg); }
+.team-photo-bottom-left { z-index: 4; width: 340px; top: 340px; transform: translateX(calc(-96% - var(--p) * 60px)) translateY(calc(var(--p) * -220px)) rotate(-3deg); }
+.team-photo-bottom-right { z-index: 4; width: 330px; top: 380px; transform: translateX(calc(8% + var(--p) * 70px)) translateY(calc(var(--p) * -260px)) rotate(3deg); }
+.team-photo-center .team-photo-float { animation-delay: 0ms; }
+.team-photo-left .team-photo-float { animation-delay: 120ms; }
+.team-photo-right .team-photo-float { animation-delay: 220ms; }
+.team-photo-bottom-left .team-photo-float { animation-delay: 320ms; }
+.team-photo-bottom-right .team-photo-float { animation-delay: 420ms; }
 .welcome-scroll { position: relative; z-index: 5; color: var(--welcome-muted); border-radius: 999px; margin-top: 8px; }
-@keyframes welcome-arrive { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes team-drift { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+@keyframes welcome-unblur { from { opacity: 0; filter: blur(16px); transform: scale(0.96); } to { opacity: 1; filter: blur(0); transform: scale(1); } }
 @media (min-width: 1500px) { .welcome-hero { padding-top: 85px; } .team-scene { margin-top: 75px; } }
 @media (max-width: 767px) {
   .welcome-hero { min-height: 700px; padding: 84px 20px 20px; }
