@@ -69,21 +69,20 @@ export function AiReveal() {
   );
 }
 
-/* 4. Три карточки действий */
+/* 4. Три карточки действий: заголовок вверху, кнопка внизу */
 export function QuickActions() {
   const items = [
-    { t: "Кассы и оборудование", d: "Живые сценарии: какая касса подойдёт именно вашему делу.", b: "Посмотреть каталог" },
-    { t: "Как устроен сервис", d: "AI-наставник, карточка точки и единое окно поддержки.", b: "Исследовать" },
-    { t: "Законы и маркировка", d: "Изменения в законах простым языком — заранее, а не после штрафа.", b: "Следить за изменениями" },
+    { t: "Кассы и оборудование", b: "Посмотреть каталог" },
+    { t: "Как устроен сервис", b: "Исследовать" },
+    { t: "Законы и маркировка", b: "Следить за изменениями" },
   ];
   return (
     <section className="mk-section pt-0">
       <div className="grid gap-4 md:grid-cols-3">
         {items.map((x) => (
-          <button key={x.t} type="button" title="Раздел в разработке" className="mk-card group flex flex-col text-left">
-            <span className="text-xl font-semibold tracking-tight">{x.t}</span>
-            <span className="mt-2 block flex-1 text-[var(--mk-muted)]">{x.d}</span>
-            <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold">
+          <button key={x.t} type="button" title="Раздел в разработке" className="mk-tile group">
+            <span className="mk-tile-title">{x.t}</span>
+            <span className="mk-tile-btn">
               {x.b}
               <ArrowUpRight className="h-4 w-4 transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </span>
@@ -93,6 +92,7 @@ export function QuickActions() {
     </section>
   );
 }
+
 
 /* 5. Манифест и цифры с плавным набегом */
 function CountUp({ to, run, suffix }: { to: number; run: boolean; suffix: string }) {
