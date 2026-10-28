@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { Link } from "@tanstack/react-router";
 import { ArrowUpRight, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import face from "@/assets/service-face.jpg.asset.json";
@@ -28,17 +29,14 @@ export function WelcomeHero() {
     };
   }, []);
 
-  const continueTo = (id: string) => document.getElementById(id)?.scrollIntoView({
-    behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
-  });
 
   return (
     <section ref={scene} className="welcome-hero" aria-labelledby="welcome-title">
       <div className="welcome-copy">
         <h1 id="welcome-title">Добро пожаловать в&nbsp;кассовый сервис</h1>
         <p>Заботимся о&nbsp;технологиях, пока вы заботитесь о&nbsp;клиентах</p>
-        <Button onClick={() => continueTo("ask")} className="welcome-contact">
-          <MessageCircle />Обратиться в поддержку<ArrowUpRight />
+        <Button asChild className="welcome-contact">
+          <Link to="/support"><MessageCircle />Обратиться в поддержку<ArrowUpRight /></Link>
         </Button>
       </div>
       <div className="team-scene" aria-label="Команда Мастер Касс и наши клиенты">
