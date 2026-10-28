@@ -167,6 +167,7 @@
   --font-sans: "Manrope", sans-serif;
   --shadow-soft: var(--shadow-soft);
 }
+html, body { overflow-x: clip; max-width: 100%; }
 body { font-family: var(--font-sans); }
 @utility font-display { font-family: var(--font-display); }
 
@@ -204,7 +205,7 @@ body { font-family: var(--font-sans); }
 @media (prefers-reduced-motion: reduce) { .mk-stories-photo { opacity: 1; filter: none; transform: none; } .mk-wave span, .mk-caret { animation: none; } }
 .welcome-brand-dot { background: var(--welcome-spectrum); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .welcome-login { border-radius: 999px; padding-inline: 20px; height: 38px; box-shadow: none; }
-.welcome-hero { --scene-progress: 0; position: relative; overflow: hidden; min-height: 820px; padding: 120px 24px 28px; text-align: center; font-family: var(--font-welcome); }
+.welcome-hero { --scene-progress: 0; position: relative; overflow: hidden; overflow: clip; min-height: 820px; padding: 120px 24px 28px; text-align: center; font-family: var(--font-welcome); }
 .welcome-copy { position: relative; z-index: 5; }
 .welcome-copy > * { animation: welcome-reveal 1100ms cubic-bezier(0.22, 1, 0.36, 1) both; }
 .welcome-copy > :nth-child(1) { animation-delay: 100ms; }
