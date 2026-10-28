@@ -194,7 +194,14 @@ body { font-family: var(--font-sans); }
   color: var(--welcome-foreground);
   background: var(--welcome-background);
 }
-.welcome-header { background: color-mix(in oklch, var(--welcome-background) 92%, transparent); backdrop-filter: blur(16px); font-family: var(--font-welcome); }
+.welcome-header { background: color-mix(in oklch, var(--welcome-background) 62%, transparent); backdrop-filter: blur(20px) saturate(160%); font-family: var(--font-welcome); }
+.mk-stories-photo { opacity: 0; filter: blur(14px); transform: scale(0.92); transition: opacity 900ms, filter 900ms, transform 900ms; }
+.mk-stories.is-in .mk-stories-photo { opacity: 1; filter: blur(0); transform: scale(1); }
+.mk-caret { display: inline-block; width: 2px; height: 1em; margin-left: 2px; vertical-align: -2px; background: var(--mk-fg); animation: mk-blink 1s steps(1) infinite; }
+@keyframes mk-blink { 50% { opacity: 0; } }
+.mk-wave span { display: inline-block; width: 3px; border-radius: 2px; background: var(--mk-fg); animation: mk-wave 1.1s ease-in-out infinite; }
+@keyframes mk-wave { 0%,100% { height: 6px; } 50% { height: 18px; } }
+@media (prefers-reduced-motion: reduce) { .mk-stories-photo { opacity: 1; filter: none; transform: none; } .mk-wave span, .mk-caret { animation: none; } }
 .welcome-brand-dot { background: var(--welcome-spectrum); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .welcome-login { border-radius: 999px; padding-inline: 20px; height: 38px; box-shadow: none; }
 .welcome-hero { --scene-progress: 0; position: relative; overflow: hidden; min-height: 820px; padding: 120px 24px 28px; text-align: center; font-family: var(--font-welcome); }

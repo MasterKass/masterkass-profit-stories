@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { ArrowDown, ArrowUpRight, MessageCircle } from "lucide-react";
+import { ArrowUpRight, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import cafe from "@/assets/team-cafe.jpg";
 import florist from "@/assets/team-florist.jpg";
@@ -36,7 +36,7 @@ export function WelcomeHero() {
     <section ref={scene} className="welcome-hero" aria-labelledby="welcome-title">
       <div className="welcome-copy">
         <h1 id="welcome-title">Заботимся о <span className="welcome-highlight">технологиях</span>,<br />пока вы заботитесь о клиентах</h1>
-        <p>Берём на себя всю заботу о технологиях,<br className="hidden sm:block" /> пока вы заботитесь о своих клиентах.</p>
+        <p>Кассовый сервис с AI-наставником и 9-летним опытом инженеров.</p>
         <Button onClick={() => continueTo("ask")} className="welcome-contact">
           <MessageCircle />Обратиться в поддержку<ArrowUpRight />
         </Button>
@@ -58,7 +58,6 @@ export function WelcomeHero() {
           <div className="team-photo-float"><img src={salon} alt="Улыбающаяся команда парикмахерской" width={1536} height={1024} loading="lazy" /></div>
         </div>
       </div>
-      <Button variant="ghost" size="icon" className="welcome-scroll" aria-label="Листать дальше" onClick={() => continueTo("ai")}><ArrowDown /></Button>
     </section>
   );
 }
