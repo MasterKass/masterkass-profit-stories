@@ -359,6 +359,7 @@ body { font-family: var(--font-sans); }
 .mk-geo-dot { fill: var(--mk-fg); }
 .mk-geo-halo { fill: color-mix(in oklch, oklch(0.8 0.15 75) 35%, transparent); }
 .mk-geo-lbl { font-size: 15px; fill: var(--mk-muted); font-weight: 500; }
+.mk-geo-lbl--strong { font-weight: 700; }
 .mk-geo-hqdot { fill: oklch(0.72 0.17 60); stroke: var(--mk-bg); stroke-width: 2.5; }
 .mk-geo-pulse { fill: oklch(0.8 0.15 75); transform-box: fill-box; transform-origin: center; animation: mk-geo-pulse 2.2s ease-out infinite; }
 @keyframes mk-geo-pulse { from { transform: scale(1); opacity: .6; } to { transform: scale(4.5); opacity: 0; } }
