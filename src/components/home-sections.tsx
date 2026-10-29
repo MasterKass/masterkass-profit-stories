@@ -400,10 +400,10 @@ export function AskAi() {
           )}
         </div>
         <div className="mt-3 flex items-center justify-between">
-          <button type="button" aria-label="Добавить" className="mk-icon-btn border-0"><Plus className="h-5 w-5" /></button>
+          <button type="button" aria-label="Добавить" className="mk-icon-btn mk-icon-plain"><Plus className="h-5 w-5" /></button>
           <div className="flex items-center gap-1">
-            <button type="button" onClick={() => setVoice(false)} aria-label="Ввести текстом" className={`mk-icon-btn border-0 ${voice ? "opacity-50" : ""}`}><Keyboard className="h-5 w-5" /></button>
-            <button type="button" onClick={() => setVoice(true)} aria-label="Задать вопрос голосом" className={`mk-icon-btn border-0 ${voice ? "" : "opacity-60"}`}><AudioLines className="h-5 w-5" /></button>
+            <button type="button" onClick={() => setVoice(false)} aria-label="Ввести текстом" className={`mk-icon-btn mk-icon-plain ${voice ? "opacity-50" : ""}`}><Keyboard className="h-5 w-5" /></button>
+            <button type="button" onClick={() => setVoice(true)} aria-label="Задать вопрос голосом" className={`mk-icon-btn mk-icon-plain ${voice ? "" : "opacity-60"}`}><AudioLines className="h-5 w-5" /></button>
           </div>
         </div>
       </form>
