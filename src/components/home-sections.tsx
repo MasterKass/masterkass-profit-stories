@@ -297,10 +297,10 @@ export function ClientStories() {
 /* 9. Партнёрство */
 export function Partners() {
   return (
-    <section className="mk-section text-center">
+    <section className="mk-section mk-partners text-center">
       <h2 className="mk-h2">Партнёрская программа</h2>
       <p className="mx-auto mt-5 max-w-2xl text-lg text-[var(--mk-muted)]">
-        Работаем в связке с бухгалтерским аутсорсом, юристами и нашими клиентами. Приглашаем стать партнёром сервиса.
+        Работаем в партнёрстве с бухгалтерами, юристами и нашими клиентами. Приглашаем стать партнёрами сервиса.
       </p>
       <div className="mt-10"><OutlineButton>Узнать подробнее</OutlineButton></div>
     </section>
