@@ -213,13 +213,23 @@ export function GeoMap() {
     <section className="mk-section">
       <h2 className="mk-h2 text-center">Работаем рядом с вами</h2>
       <p className="mx-auto mt-4 max-w-xl text-center text-[var(--mk-muted)]">Центральный офис: Ростов-на-Дону, ул. М. Горького 151, 3 этаж. Сопровождаем точки в Ростове, Аксае, Батайске, Таганроге и Краснодаре.</p>
-      <div className="mt-10 overflow-hidden rounded-3xl border border-[var(--mk-border)]">
+      <div className="relative mt-10 h-[420px] overflow-hidden rounded-3xl border border-[var(--mk-border)] md:h-[500px]">
         <iframe
           title="Карта присутствия Мастер Касс"
           src={`https://yandex.ru/map-widget/v1/?ll=39.3,46.2&z=7&pt=${pts}`}
-          className="block h-[420px] w-full md:h-[500px]"
+          className="pointer-events-none absolute inset-x-0 top-0 block h-[calc(100%+60px)] w-full md:pointer-events-auto"
           loading="lazy"
         />
+        <div className="absolute inset-x-3 bottom-3 flex flex-col gap-3 rounded-2xl border border-[var(--mk-border)] bg-[var(--mk-bg)] p-4 shadow-lg sm:flex-row sm:items-center sm:justify-between md:inset-x-5 md:bottom-5 md:p-5">
+          <div>
+            <div className="text-xs uppercase tracking-wide text-[var(--mk-muted)]">Центральный офис</div>
+            <div className="mt-1 font-semibold text-[var(--mk-ink)]">Ростов-на-Дону, ул. М. Горького, 151, 3 этаж</div>
+          </div>
+          <div className="flex gap-2">
+            <a href="https://yandex.ru/maps/?text=Ростов-на-Дону,%20ул.%20М.%20Горького,%20151" target="_blank" rel="noopener noreferrer" className="mk-tile-btn flex-1 text-center sm:flex-none">Яндекс Карты</a>
+            <a href="https://2gis.ru/rostov/search/Ростов-на-Дону,%20Максима%20Горького,%20151" target="_blank" rel="noopener noreferrer" className="mk-tile-btn flex-1 text-center sm:flex-none">2ГИС</a>
+          </div>
+        </div>
       </div>
     </section>
   );
