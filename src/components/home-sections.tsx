@@ -248,7 +248,7 @@ export function GeoMap() {
             <g className="mk-geo-hq">
               <circle cx={rx} cy={ry} r={7} className="mk-geo-pulse" />
               <circle cx={rx} cy={ry} r={7} className="mk-geo-hqdot" />
-              <text x={rx + 11} y={ry - 8} className="mk-geo-hqlbl">Ростов-на-Дону</text>
+              <text x={rx + 14} y={ry + 17} className="mk-geo-hqlbl">Ростов-на-Дону</text>
             </g>
           </g>
         </svg>
