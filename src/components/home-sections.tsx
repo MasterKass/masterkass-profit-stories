@@ -329,15 +329,15 @@ export function ServiceFaq() {
   return (
     <section id="faq" className="mk-section">
       <h2 className="mk-h2 text-center">Вопросы о сервисе</h2>
-      <div className="mx-auto mt-10 flex max-w-3xl flex-col gap-3">
+      <div className="mx-auto mt-10 flex max-w-3xl flex-col gap-2">
         {FAQ.map(([q, a], i) => (
-          <div key={q} className="rounded-2xl border border-[var(--mk-border)] bg-[var(--mk-surface)] backdrop-blur">
+          <div key={q} className="mk-faq-card">
             <button type="button" onClick={() => setOpen(open === i ? null : i)} aria-expanded={open === i}
-              className="flex w-full items-center justify-between gap-4 px-5 py-5 text-left font-medium">
+              className="flex w-full items-center justify-between gap-4 px-4 py-3.5 text-left text-[15px] font-medium leading-snug tracking-[-0.01em]">
               {q}
-              <ChevronDown className={`h-5 w-5 shrink-0 text-[var(--mk-muted)] transition-transform duration-300 ${open === i ? "rotate-180" : ""}`} />
+              <ChevronDown strokeWidth={1.5} className={`h-4 w-4 shrink-0 opacity-50 transition-transform duration-300 ${open === i ? "rotate-180" : ""}`} />
             </button>
-            {open === i && <p className="px-5 pb-5 leading-relaxed text-[var(--mk-muted)]">{a}</p>}
+            {open === i && <p className="px-4 pb-4 text-[14px] leading-relaxed text-[var(--mk-muted)]">{a}</p>}
           </div>
         ))}
       </div>
