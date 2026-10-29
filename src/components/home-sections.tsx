@@ -230,8 +230,7 @@ export function GeoMap() {
   return (
     <section className="mk-section">
       <h2 className="mk-h2 text-center">Работаем рядом с вами</h2>
-      <p className="mx-auto mt-4 max-w-xl text-center text-[var(--mk-muted)]">Центральный офис: Ростов-на-Дону, ул. М. Горького 151, 3 этаж. Сопровождаем точки по всему Югу России.</p>
-      <div ref={ref} className="mk-geo relative mt-10 aspect-square overflow-hidden rounded-3xl border border-[var(--mk-border)] md:aspect-[16/13]" data-on={inView || undefined}>
+      <div ref={ref} className="mk-geo relative mt-10 mb-[122px] aspect-square overflow-hidden rounded-3xl border border-[var(--mk-border)] md:mb-[98px] md:aspect-[16/13]" data-on={inView || undefined}>
         <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid slice" className="absolute inset-0 h-full w-full" aria-label="Карта присутствия Мастер Касс на Юге России" role="img">
           <g className="mk-geo-cam" style={{ transformOrigin: `${rx}px ${ry}px` }}>
             <path d={mpath(AZOV, true)} className="mk-geo-sea" />
