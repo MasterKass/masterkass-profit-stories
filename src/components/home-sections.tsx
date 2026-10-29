@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { ArrowUpRight, Mic, Send, Bot, Plus } from "lucide-react";
+import { ArrowUpRight, Mic, Send, Bot, Plus, ShieldCheck, MessageCircleMore } from "lucide-react";
 import cafe from "@/assets/team-cafe.jpg";
 import florist from "@/assets/team-florist.jpg";
 import bakery from "@/assets/team-bakery.jpg";
@@ -43,13 +43,31 @@ const AI_THRESHOLDS = (() => {
   return [0, ...weights.map((w) => (acc += w) / total)];
 })();
 
+// Микро-иконки после ключевых слов: рука со смартфоном, щит, облачко подсказки.
+const AI_ICONS: Record<string, React.ReactNode> = {
+  "24/7.": <HandPhoneIcon />,
+  "сбоев,": <ShieldCheck className="h-[0.55em] w-[0.55em]" strokeWidth={1.8} />,
+  "кассиру": <MessageCircleMore className="h-[0.55em] w-[0.55em]" strokeWidth={1.8} />,
+};
+
+function HandPhoneIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="h-[0.55em] w-[0.55em]" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <rect x="8" y="2.5" width="9" height="14" rx="2" />
+      <path d="M11.5 13.5h2" />
+      <path d="M8 10.5 5.6 12.4a2 2 0 0 0-.6 2.3l1.6 3.8A4 4 0 0 0 10.3 21H14a3 3 0 0 0 3-3v-1.5" />
+    </svg>
+  );
+}
+
 export function AiReveal() {
-  const ref = useRef<HTMLParagraphElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
   const [progress, setProgress] = useState(-1);
+  const [runway, setRunway] = useState(0);
   const words = AI_WORDS;
 
   useEffect(() => {
-    const el = ref.current;
+    const el = sectionRef.current;
     if (!el) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return setProgress(1);
     let frame = 0;
@@ -57,16 +75,17 @@ export function AiReveal() {
     const update = () => {
       frame = 0;
       if (done) return;
-      const r = el.getBoundingClientRect();
       const vh = window.innerHeight;
-      const start = vh * 0.95; // текст показался снизу — загорается первое слово
-      const end = 110; // последнее слово — когда текст у верха экрана, под шапкой
-      if (r.top > start) return;
-      const p = Math.min(1, (start - r.top) / (start - end));
+      const run = Math.round(vh * 0.7); // запас прокрутки: блок едет медленнее пальца
+      setRunway(run);
+      const top = el.getBoundingClientRect().top + 96; // верх текста (с учётом отступа секции)
+      const start = vh * 0.66; // текст поднялся на две трети экрана — загорается первое слово
+      const end = 110 - run; // последнее слово — когда текст у самого верха, под шапкой
+      if (top > start) return;
+      const p = Math.min(1, (start - top) / (start - end));
       setProgress((prev) => Math.max(prev, p));
       if (p >= 1) {
-        // Однократное окрашивание: дальше текст всегда чёрный.
-        done = true;
+        done = true; // однократное окрашивание
         window.removeEventListener("scroll", onScroll);
       }
     };
@@ -76,12 +95,17 @@ export function AiReveal() {
     return () => { window.removeEventListener("scroll", onScroll); cancelAnimationFrame(frame); };
   }, []);
 
+  const p = Math.max(0, progress);
   const lit = progress < 0 ? 0 : AI_THRESHOLDS.filter((t) => t <= progress).length;
   return (
-    <section id="ai" className="mk-section">
-      <p ref={ref} className="mk-reveal" aria-label={AI_TEXT}>
+    <section id="ai" ref={sectionRef} className="mk-section" style={{ paddingBottom: `calc(6rem + ${runway}px)` }}>
+      <p className="mk-reveal" aria-label={AI_TEXT} style={{ transform: `translate3d(0, ${p * runway}px, 0)` }}>
         {words.map((w, i) => (
-          <span key={i} aria-hidden="true" className={i < lit ? "is-lit" : undefined}>{w} </span>
+          <span key={i} aria-hidden="true" className={i < lit ? "is-lit" : undefined}>
+            {w}{" "}
+            {AI_ICONS[w] && <span className={`mk-reveal-icon${i < lit ? " is-on" : ""}`}>{AI_ICONS[w]}</span>}
+            {AI_ICONS[w] && " "}
+          </span>
         ))}
       </p>
     </section>
