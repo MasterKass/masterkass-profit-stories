@@ -309,3 +309,36 @@ body { font-family: var(--font-sans); }
 .mk-outline:hover { transform: translateY(-2px); }
 .mk-icon-btn { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 999px; border: 1px solid var(--mk-border); flex-shrink: 0; }
 @media (max-width: 767px) { .mk-section { padding: 4rem 1.25rem; } }
+
+/* «Молния» фирменного спектра по фразе о пользе чека */
+.mk-bolt {
+  --bolt-spec: #f5a524, #facc15, #a3e635, #22d3ee;
+  color: transparent;
+  background-image:
+    linear-gradient(100deg, transparent 0%, transparent 42%, #facc15 47%, #a3e635 50%, #22d3ee 53%, transparent 58%, transparent 100%),
+    linear-gradient(100deg, var(--mk-fg) 0%, var(--mk-fg) 36%, #f5a524 41%, #facc15 45%, #a3e635 49%, #22d3ee 53%, var(--mk-muted) 60%, var(--mk-muted) 100%);
+  background-size: 300% 100%, 300% 100%;
+  background-position: 120% 0, 100% 0;
+  background-repeat: no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-box-decoration-break: slice;
+}
+.mk-bolt.is-on {
+  animation:
+    mk-bolt-reveal 1.15s cubic-bezier(0.55, 0, 0.2, 1) 0.1s forwards,
+    mk-bolt-shine 7.5s ease-in-out 2.5s infinite;
+}
+@keyframes mk-bolt-reveal {
+  from { background-position: 120% 0, 100% 0; }
+  to { background-position: 120% 0, 0% 0; }
+}
+@keyframes mk-bolt-shine {
+  0%, 100% { background-position: 120% 0, 0% 0; }
+  0.01% { background-position: 100% 0, 0% 0; }
+  18% { background-position: 0% 0, 0% 0; }
+  18.01% { background-position: 120% 0, 0% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mk-bolt, .mk-bolt.is-on { animation: none; background: none; color: var(--mk-fg); }
+}
