@@ -289,7 +289,7 @@ export function ClientStories() {
         </StoriesGroup>
         <div className="py-10">
           <h2 className="mk-h2">Наши клиенты</h2>
-          <div className="mt-8"><OutlineButton>Смотреть истории</OutlineButton></div>
+          <div className="mt-8"><button type="button" title="Раздел в разработке" className="mk-tile-btn">Смотреть истории</button></div>
         </div>
         <StoriesGroup>
           <Mid items={bottom.slice(0, 2)} offset={1} start={0} />
