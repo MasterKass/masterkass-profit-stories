@@ -155,11 +155,11 @@ function CountUp({ to, run, suffix }: { to: number; run: boolean; suffix: string
 export function Benefit() {
   const [ref] = useInView<HTMLDivElement>();
   const [boltRef, boltOn] = useInView<HTMLSpanElement>();
-  // Цифры стартуют через 1 с после окончания первой вспышки (0.1 с задержка + 1.15 с вспышка)
+  // Цифры стартуют сразу после окончания первой вспышки (0.1 с задержка + 1.15 с вспышка)
   const [inView, setCountOn] = useState(false);
   useEffect(() => {
     if (!boltOn) return;
-    const t = setTimeout(() => setCountOn(true), 2250);
+    const t = setTimeout(() => setCountOn(true), 1250);
     return () => clearTimeout(t);
   }, [boltOn]);
   const stats: [number, string, string][] = [
