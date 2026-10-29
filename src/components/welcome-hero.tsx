@@ -50,10 +50,10 @@ export function WelcomeHero() {
           <div className="team-photo-float"><img src={face.url} alt="Инженер сервиса Мастер Касс" width={1284} height={835} fetchPriority="high" /></div>
         </div>
         <div className="team-photo team-photo-bottom-left">
-          <div className="team-photo-float"><img src={boutique} alt="Владелицы магазина одежды приветствуют гостей" width={1536} height={1024} loading="lazy" /></div>
+          <div className="team-photo-float"><img src={boutique} alt="Владелицы магазина одежды приветствуют гостей" width={1536} height={1024} /></div>
         </div>
         <div className="team-photo team-photo-bottom-right">
-          <div className="team-photo-float"><img src={cashier.url} alt="Инженер сервиса помогает кассиру со смарт-терминалом" width={1101} height={818} loading="lazy" /></div>
+          <div className="team-photo-float"><img src={cashier.url} alt="Инженер сервиса помогает кассиру со смарт-терминалом" width={1101} height={818} /></div>
         </div>
       </div>
     </section>

@@ -94,7 +94,7 @@ export function AiReveal() {
 
   const lit = progress < 0 ? 0 : AI_THRESHOLDS.filter((t) => t <= progress).length;
   return (
-    <section id="ai" ref={sectionRef} className="mk-section" style={{ paddingTop: "2rem" }}>
+    <section id="ai" ref={sectionRef} className="mk-section mk-ai-section" style={{ paddingTop: "2rem" }}>
       <p className="mk-reveal" aria-label={AI_TEXT}>
         {words.map((w, i) => (
           <span key={i} aria-hidden="true" className={i < lit ? "is-lit" : undefined}>
