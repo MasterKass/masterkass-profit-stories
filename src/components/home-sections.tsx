@@ -270,17 +270,17 @@ export function ClientStories() {
   // Порядок «вразнобой» внутри каждой группы из 5 фото.
   const order = [2, 0, 4, 1, 3];
   const Photo = ({ src, alt, idx }: { src: string; alt: string; idx: number }) => (
-    <img src={src} alt={alt} style={{ transitionDelay: `${order[idx] * 90}ms` }}
+    <img src={src} alt={alt} style={{ transitionDelay: `${(order[idx] ?? 0) * 90}ms` }}
       className="mk-stories-photo aspect-square w-[15%] max-w-20 rounded-lg object-cover md:w-20" />
   );
   const Row = ({ items, offset, start }: { items: string[]; offset: number; start: number }) => (
     <div className="flex w-full justify-between">
-      {items.map((src, i) => <Photo key={i} src={src} alt={alts[(i + offset) % 5]} idx={start + i} />)}
+      {items.map((src, i) => <Photo key={i} src={src} alt={alts[(i + offset) % 5] ?? ""} idx={start + i} />)}
     </div>
   );
   const Mid = ({ items, offset, start }: { items: string[]; offset: number; start: number }) => (
     <div className="flex w-full justify-center gap-[22%]">
-      {items.map((src, i) => <Photo key={i} src={src} alt={alts[(i + offset) % 5]} idx={start + i} />)}
+      {items.map((src, i) => <Photo key={i} src={src} alt={alts[(i + offset) % 5] ?? ""} idx={start + i} />)}
     </div>
   );
   return (
