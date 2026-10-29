@@ -313,6 +313,10 @@ body { font-family: var(--font-sans); }
 .mk-band { background: oklch(0.945 0.018 75); margin-block: 3rem; }
 .mk-section.mk-section-airy { padding-block: 10rem; }
 @media (max-width: 767px) { .mk-band { margin-block: 2rem; } .mk-section.mk-section-airy { padding-block: 7.5rem; } }
+/* Воздух между историями клиентов и партнёрством */
+.mk-section.mk-stories { padding-bottom: 10rem; }
+.mk-section.mk-partners { padding-top: 10rem; padding-bottom: 9rem; }
+@media (max-width: 767px) { .mk-section.mk-stories { padding-bottom: 7rem; } .mk-section.mk-partners { padding-top: 7rem; padding-bottom: 6rem; } }
 
 /* «Молния» фирменного спектра по фразе о пользе чека */
 .mk-bolt {
