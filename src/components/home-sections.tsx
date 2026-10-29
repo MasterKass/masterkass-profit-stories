@@ -209,11 +209,11 @@ const AZOV = [[36,46.95],[37.0,47.0],[38.0,47.05],[38.6,47.1],[38.9,47.14],[39.1
 const BLACK = [[34,44.9],[36,45.1],[37.0,45.0],[37.3,44.9],[37.9,44.55],[38.6,44.1],[39.4,43.6],[40.0,43.15],[41.0,42.8],[44,42.4],[44,41.5],[34,41.5]];
 const DON = [[43,48.4],[42.2,47.85],[41.3,47.6],[40.6,47.55],[40.1,47.4],[39.75,47.24],[39.4,47.1],[39.2,47.1]];
 const KUBAN = [[42.2,45.1],[41.3,45.0],[40.3,45.12],[39.0,45.05],[38.2,45.3],[37.6,45.32]];
-const CITIES: { n: string; c: [number, number]; lab?: "r" | "l" | "t" | "b"; dy?: number }[] = [
+const CITIES: { n: string; c: [number, number]; lab?: "r" | "l" | "t" | "b"; dy?: number; b?: boolean }[] = [
   { n: "Таганрог", c: [38.9, 47.21] }, { n: "Новочеркасск", c: [40.1, 47.42], dy: -6 }, { n: "Шахты", c: [40.21, 47.71], lab: "l" },
   { n: "Каменск-Шахтинский", c: [40.27, 48.32] }, { n: "Зерноград", c: [40.31, 46.85] }, { n: "Сальск", c: [41.54, 46.47] },
-  { n: "Волгодонск", c: [42.15, 47.51] }, { n: "Краснодар", c: [38.98, 45.04] }, { n: "Новороссийск", c: [37.77, 44.72] },
-  { n: "Сочи", c: [39.72, 43.6] }, { n: "Ставрополь", c: [41.97, 45.04] },
+  { n: "Волгодонск", c: [42.15, 47.51] }, { n: "Краснодар", c: [38.98, 45.04], b: true }, { n: "Новороссийск", c: [37.77, 44.72] },
+  { n: "Сочи", c: [39.72, 43.6] }, { n: "Ставрополь", c: [41.97, 45.04], b: true },
 ];
 const ROSTOV: [number, number] = [39.71, 47.23];
 
@@ -230,8 +230,7 @@ export function GeoMap() {
   return (
     <section className="mk-section">
       <h2 className="mk-h2 text-center">Работаем рядом с вами</h2>
-      <p className="mx-auto mt-4 max-w-xl text-center text-[var(--mk-muted)]">Центральный офис: Ростов-на-Дону, ул. М. Горького 151, 3 этаж. Сопровождаем точки по всему Югу России.</p>
-      <div ref={ref} className="mk-geo relative mt-10 aspect-square overflow-hidden rounded-3xl border border-[var(--mk-border)] md:aspect-[16/13]" data-on={inView || undefined}>
+      <div ref={ref} className="mk-geo relative mt-10 mb-[122px] aspect-square overflow-hidden rounded-3xl border border-[var(--mk-border)] md:mb-[98px] md:aspect-[16/13]" data-on={inView || undefined}>
         <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid slice" className="absolute inset-0 h-full w-full" aria-label="Карта присутствия Мастер Касс на Юге России" role="img">
           <g className="mk-geo-cam" style={{ transformOrigin: `${rx}px ${ry}px` }}>
             <path d={mpath(AZOV, true)} className="mk-geo-sea" />
@@ -242,7 +241,7 @@ export function GeoMap() {
               <g key={c.n} className="mk-geo-pt" style={{ animationDelay: `${d}s`, transformOrigin: `${x}px ${y}px` }}>
                 <circle cx={x} cy={y} r={9} className="mk-geo-halo" />
                 <circle cx={x} cy={y} r={4} className="mk-geo-dot" />
-                <text x={x + p.dx} y={y + (c.dy ?? p.dy)} textAnchor={p.anchor} className="mk-geo-lbl">{c.n}</text>
+                <text x={x + p.dx} y={y + (c.dy ?? p.dy)} textAnchor={p.anchor} className={c.b ? "mk-geo-lbl mk-geo-lbl--strong" : "mk-geo-lbl"}>{c.n}</text>
               </g>
             ); })}
             <g className="mk-geo-hq">
@@ -252,10 +251,6 @@ export function GeoMap() {
             </g>
           </g>
         </svg>
-      </div>
-      <div className="mx-auto mt-5 flex max-w-2xl flex-col items-center rounded-2xl border border-[var(--mk-border)] bg-[var(--mk-bg)] px-6 py-4 text-center">
-        <div className="text-xs uppercase tracking-wide text-[var(--mk-muted)]">Центральный офис</div>
-        <div className="mt-1 font-semibold text-[var(--mk-fg)]">Ростов-на-Дону, ул. М. Горького, 151, 3 этаж</div>
       </div>
     </section>
   );
