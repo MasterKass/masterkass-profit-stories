@@ -260,21 +260,26 @@ export function GeoMap() {
 export function ClientStories() {
   const [ref, inView] = useInView<HTMLElement>();
   const photos = [
-    { src: cafe, alt: "Команда кофейни", cls: "left-[2%] top-[4%] w-28 md:w-44 -rotate-6", d: 0 },
-    { src: florist, alt: "Команда цветочного салона", cls: "right-[3%] top-[0%] w-24 md:w-40 rotate-6", d: 150 },
-    { src: bakery, alt: "Команда пекарни", cls: "left-[6%] bottom-[2%] w-24 md:w-36 rotate-3", d: 300 },
-    { src: boutique, alt: "Владелицы магазина одежды", cls: "right-[6%] bottom-[4%] w-28 md:w-44 -rotate-3", d: 450 },
-    { src: salon, alt: "Команда парикмахерской", cls: "left-1/2 -translate-x-1/2 bottom-[-6%] w-20 md:w-32 rotate-2 hidden md:block", d: 600 },
+    { src: cafe, alt: "Команда кофейни", cls: "left-[4%] top-[2%] w-16 md:w-24" },
+    { src: salon, alt: "Команда парикмахерской", cls: "left-[34%] top-[-4%] w-14 md:w-20" },
+    { src: florist, alt: "Команда цветочного салона", cls: "right-[30%] top-[6%] w-12 md:w-20" },
+    { src: bakery, alt: "Команда пекарни", cls: "right-[3%] top-[0%] w-16 md:w-24" },
+    { src: boutique, alt: "Владелицы магазина одежды", cls: "left-[2%] top-[38%] w-12 md:w-20 hidden md:block" },
+    { src: cafe, alt: "Гости кофейни", cls: "right-[2%] top-[40%] w-12 md:w-20 hidden md:block" },
+    { src: florist, alt: "Флорист за работой", cls: "left-[6%] bottom-[2%] w-16 md:w-24" },
+    { src: boutique, alt: "Магазин одежды", cls: "left-[36%] bottom-[-4%] w-12 md:w-20" },
+    { src: salon, alt: "Мастер салона", cls: "right-[32%] bottom-[4%] w-14 md:w-20" },
+    { src: bakery, alt: "Пекарь у витрины", cls: "right-[5%] bottom-[0%] w-16 md:w-24" },
   ];
   return (
     <section ref={ref} className={`mk-section mk-stories ${inView ? "is-in" : ""}`}>
       <div className="relative mx-auto flex min-h-[460px] max-w-5xl flex-col items-center justify-center text-center md:min-h-[560px]">
-        {photos.map((p) => (
-          <img key={p.alt} src={p.src} alt={p.alt} loading="lazy" style={{ transitionDelay: `${p.d}ms` }}
-            className={`mk-stories-photo absolute aspect-square rounded-3xl object-cover shadow-lg ${p.cls}`} />
+        {photos.map((p, i) => (
+          <img key={p.alt} src={p.src} alt={p.alt} loading="lazy" style={{ transitionDelay: `${i * 140}ms` }}
+            className={`mk-stories-photo absolute aspect-square rounded-2xl object-cover ${p.cls}`} />
         ))}
-        <h2 className="mk-h2 relative z-10 max-w-xl px-20 md:px-0">Наши клиенты и их истории автоматизации</h2>
-        <div className="relative z-10 mt-8"><OutlineButton>Посмотреть истории</OutlineButton></div>
+        <h2 className="mk-h2 relative z-10">Наши клиенты</h2>
+        <div className="relative z-10 mt-8"><OutlineButton>Смотреть истории</OutlineButton></div>
       </div>
     </section>
   );
