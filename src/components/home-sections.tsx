@@ -396,7 +396,7 @@ export function AskAi() {
         </div>
       )}
       <form
-        className="mx-auto mt-8 max-w-2xl rounded-2xl border border-[var(--mk-border)] bg-[var(--mk-surface)] px-5 pb-3 pt-4 text-left shadow-lg backdrop-blur"
+        className="mx-auto mt-8 max-w-2xl rounded-2xl border border-[var(--mk-border)] bg-[var(--mk-surface)] px-5 pb-3 pt-4 text-left shadow-lg"
         onSubmit={(e) => { e.preventDefault(); const v = text.trim() || typed; if (v) { setQ(PROMPTS.find((p) => p.startsWith(v)) ?? v); setText(""); } }}
       >
         <div className="relative min-h-12">
