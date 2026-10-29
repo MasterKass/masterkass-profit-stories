@@ -5,6 +5,7 @@ import florist from "@/assets/team-florist.jpg";
 import bakery from "@/assets/team-bakery.jpg";
 import boutique from "@/assets/team-boutique.jpg";
 import salon from "@/assets/team-salon.jpg";
+import { BrandMark } from "@/components/brand-mark";
 
 const go = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 
@@ -435,9 +436,8 @@ export function SiteFooter() {
   return (
     <footer className="px-3 pb-6 pt-16 md:px-6 md:pb-8">
       <div className="mk-footer mx-auto max-w-6xl">
-        <a href="/" className="inline-flex items-center gap-2 text-base font-semibold tracking-tight">
-          <span className="mk-footer-mark" aria-hidden="true" />
-          МастерКасс
+        <a href="/" aria-label="Мастер Касс" className="inline-flex">
+          <BrandMark size={28} />
         </a>
 
         <nav aria-label="Разделы сайта" className="mt-8 grid grid-cols-2 gap-x-6 gap-y-8 md:grid-cols-5">
