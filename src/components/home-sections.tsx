@@ -258,7 +258,8 @@ export function GeoMap() {
 
 /* 8. Истории клиентов */
 export function ClientStories() {
-  const [ref, inView] = useInView<HTMLElement>({ threshold: 0, rootMargin: "0px 0px -60px 0px" });
+  // Старт, когда верх блока поднялся примерно на треть экрана — первые фото уже видны.
+  const [ref, inView] = useInView<HTMLElement>({ threshold: 0, rootMargin: "0px 0px -35% 0px" });
   const order = [2, 6, 0, 4, 1, 7, 3, 5, 9, 8];
   const top = [cafe, salon, florist, bakery, boutique];
   const bottom = [florist, boutique, salon, cafe, bakery];
