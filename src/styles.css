@@ -287,7 +287,7 @@ body { font-family: var(--font-sans); }
 .mk-h2 { font-size: clamp(2rem, 4.5vw, 3.5rem); font-weight: 700; line-height: 1.05; letter-spacing: -0.05em; }
 .mk-reveal { max-width: 60rem; margin-inline: auto; font-size: clamp(1.9rem, 4.6vw, 3.4rem); font-weight: 700; line-height: 1.2; letter-spacing: -0.04em; }
 .mk-page p { letter-spacing: -0.015em; }
-.mk-reveal span { color: var(--mk-reveal-dim); transition: color 400ms; }
+.mk-reveal span { color: var(--mk-reveal-dim); transition: color 700ms ease-out; }
 .mk-reveal span.is-lit { color: var(--mk-fg); }
 .mk-card { display: block; padding: 1.75rem; border-radius: 1.5rem; border: 1px solid var(--mk-border); background: var(--mk-surface); transition: transform 250ms; }
 .mk-card:hover { transform: translateY(-3px); }
