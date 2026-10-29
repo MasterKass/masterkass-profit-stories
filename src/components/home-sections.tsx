@@ -201,34 +201,57 @@ export function JoinCta() {
 }
 
 /* 7. Карта */
+const MAP_LON0 = 36, MAP_LAT0 = 48.6;
+const mp = (lon: number, lat: number) => [ (lon - MAP_LON0) * 100, (MAP_LAT0 - lat) * 135 ] as const;
+const mpath = (pts: number[][], close = false) =>
+  pts.map(([a, b], i) => { const [x, y] = mp(a!, b!); return `${i ? "L" : "M"}${x.toFixed(1)},${y.toFixed(1)}`; }).join(" ") + (close ? " Z" : "");
+const AZOV = [[39.25,47.2],[38.9,47.25],[38.2,47.12],[37.5,47.08],[36,47.05],[36,45.45],[36.6,45.4],[37.4,45.55],[37.9,45.95],[38.25,46.6],[38.6,46.8],[39.3,47.08]];
+const BLACK = [[36,45.2],[36.7,45.2],[37.3,44.95],[37.8,44.65],[38.5,44.25],[39.4,43.85],[40.0,43.4],[36,43.4]];
+const DON = [[43,48.4],[42.2,47.85],[41.3,47.6],[40.6,47.55],[40.1,47.4],[39.75,47.24],[39.3,47.12]];
+const KUBAN = [[42.2,45.1],[41.3,45.0],[40.3,45.12],[39.0,45.05],[38.2,45.3],[37.6,45.32]];
+const CITIES: { n: string; c: [number, number]; label?: boolean }[] = [
+  { n: "Аксай", c: [39.87, 47.27] }, { n: "Батайск", c: [39.75, 47.14] }, { n: "Азов", c: [39.42, 47.11] },
+  { n: "Новочеркасск", c: [40.1, 47.42] }, { n: "Таганрог", c: [38.9, 47.24], label: true }, { n: "Шахты", c: [40.21, 47.71], label: true },
+  { n: "Каменск", c: [40.27, 48.32] }, { n: "Волгодонск", c: [42.15, 47.51], label: true }, { n: "Сальск", c: [41.54, 46.47] },
+  { n: "Ейск", c: [38.27, 46.71] }, { n: "Тихорецк", c: [40.13, 45.85] }, { n: "Краснодар", c: [38.98, 45.04], label: true },
+  { n: "Армавир", c: [41.12, 44.99] }, { n: "Новороссийск", c: [37.77, 44.72], label: true }, { n: "Сочи", c: [39.72, 43.6], label: true },
+  { n: "Ставрополь", c: [41.97, 45.04], label: true },
+];
+const ROSTOV: [number, number] = [39.71, 47.23];
+
 export function GeoMap() {
-  const pts = [
-    "39.7120,47.2290,pm2rdl",
-    "39.8756,47.2690,pm2bll",
-    "39.7451,47.1383,pm2bll",
-    "38.8970,47.2362,pm2bll",
-    "38.9769,45.0355,pm2bll",
-  ].join("~");
+  const [ref, inView] = useInView<HTMLDivElement>();
+  const [rx, ry] = mp(...ROSTOV);
+  const W = 700, H = 700;
+  const dist = (c: [number, number]) => Math.hypot(c[0] - ROSTOV[0], c[1] - ROSTOV[1]);
   return (
     <section className="mk-section">
       <h2 className="mk-h2 text-center">Работаем рядом с вами</h2>
-      <p className="mx-auto mt-4 max-w-xl text-center text-[var(--mk-muted)]">Центральный офис: Ростов-на-Дону, ул. М. Горького 151, 3 этаж. Сопровождаем точки в Ростове, Аксае, Батайске, Таганроге и Краснодаре.</p>
-      <div className="relative mt-10 h-[420px] overflow-hidden rounded-3xl border border-[var(--mk-border)] md:h-[500px]">
-        <iframe
-          title="Карта присутствия Мастер Касс"
-          src={`https://yandex.ru/map-widget/v1/?ll=39.3,46.2&z=7&pt=${pts}`}
-          className="pointer-events-none absolute inset-x-0 top-0 block h-[calc(100%+60px)] w-full md:pointer-events-auto"
-          loading="lazy"
-        />
-        <div className="absolute inset-x-3 bottom-3 flex flex-col gap-3 rounded-2xl border border-[var(--mk-border)] bg-[var(--mk-bg)] p-4 shadow-lg sm:flex-row sm:items-center sm:justify-between md:inset-x-5 md:bottom-5 md:p-5">
-          <div>
-            <div className="text-xs uppercase tracking-wide text-[var(--mk-muted)]">Центральный офис</div>
-            <div className="mt-1 font-semibold text-[var(--mk-fg)]">Ростов-на-Дону, ул. М. Горького, 151, 3 этаж</div>
-          </div>
-          <div className="flex gap-2">
-            <a href="https://yandex.ru/maps/?text=Ростов-на-Дону,%20ул.%20М.%20Горького,%20151" target="_blank" rel="noopener noreferrer" className="mk-tile-btn flex-1 justify-center sm:flex-none">Яндекс Карты</a>
-            <a href="https://2gis.ru/rostov/search/Ростов-на-Дону,%20Максима%20Горького,%20151" target="_blank" rel="noopener noreferrer" className="mk-tile-btn flex-1 justify-center sm:flex-none">2ГИС</a>
-          </div>
+      <p className="mx-auto mt-4 max-w-xl text-center text-[var(--mk-muted)]">Центральный офис: Ростов-на-Дону, ул. М. Горького 151, 3 этаж. Сопровождаем точки по всему Югу России.</p>
+      <div ref={ref} className="mk-geo relative mt-10 aspect-square overflow-hidden rounded-3xl border border-[var(--mk-border)] md:aspect-[16/11]" data-on={inView || undefined}>
+        <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid slice" className="absolute inset-0 h-full w-full" aria-label="Карта присутствия Мастер Касс на Юге России" role="img">
+          <g className="mk-geo-cam" style={{ transformOrigin: `${rx}px ${ry}px` }}>
+            <path d={mpath(AZOV, true)} className="mk-geo-sea" />
+            <path d={mpath(BLACK, true)} className="mk-geo-sea" />
+            <path d={mpath(DON)} className="mk-geo-river" />
+            <path d={mpath(KUBAN)} className="mk-geo-river" />
+            {CITIES.map((c) => { const [x, y] = mp(...c.c); const d = 0.9 + dist(c.c) * 0.45; return (
+              <g key={c.n} className="mk-geo-pt" style={{ animationDelay: `${d}s`, transformOrigin: `${x}px ${y}px` }}>
+                <circle cx={x} cy={y} r={9} className="mk-geo-halo" />
+                <circle cx={x} cy={y} r={4} className="mk-geo-dot" />
+                {c.label && <text x={x + 9} y={y + 4} className="mk-geo-lbl">{c.n}</text>}
+              </g>
+            ); })}
+            <g className="mk-geo-hq">
+              <circle cx={rx} cy={ry} r={7} className="mk-geo-pulse" />
+              <circle cx={rx} cy={ry} r={7} className="mk-geo-hqdot" />
+              <text x={rx + 11} y={ry - 8} className="mk-geo-hqlbl">Ростов-на-Дону</text>
+            </g>
+          </g>
+        </svg>
+        <div className="absolute inset-x-3 bottom-3 rounded-2xl border border-[var(--mk-border)] bg-[var(--mk-bg)] p-4 shadow-lg md:inset-x-5 md:bottom-5 md:p-5">
+          <div className="text-xs uppercase tracking-wide text-[var(--mk-muted)]">Центральный офис</div>
+          <div className="mt-1 font-semibold text-[var(--mk-fg)]">Ростов-на-Дону, ул. М. Горького, 151, 3 этаж</div>
         </div>
       </div>
     </section>
