@@ -257,40 +257,47 @@ export function GeoMap() {
 }
 
 /* 8. Истории клиентов */
+// Каждая группа фото проявляется сама, когда именно она попадает в поле зрения.
+function StoriesGroup({ children }: { children: React.ReactNode }) {
+  const [ref, inView] = useInView<HTMLDivElement>({ threshold: 0, rootMargin: "0px 0px -15% 0px" });
+  return <div ref={ref} className={`mk-stories-group flex w-full flex-col items-center gap-14 ${inView ? "is-in" : ""}`}>{children}</div>;
+}
+
 export function ClientStories() {
-  // Старт, когда верх блока поднялся примерно на треть экрана — первые фото уже видны.
-  const [ref, inView] = useInView<HTMLElement>({ threshold: 0, rootMargin: "0px 0px -35% 0px" });
-  const order = [2, 6, 0, 4, 1, 7, 3, 5, 9, 8];
   const top = [cafe, salon, florist, bakery, boutique];
   const bottom = [florist, boutique, salon, cafe, bakery];
   const alts = ["Команда кофейни", "Команда парикмахерской", "Команда цветочного салона", "Команда пекарни", "Владелицы магазина одежды"];
+  // Порядок «вразнобой» внутри каждой группы из 5 фото.
+  const order = [2, 0, 4, 1, 3];
+  const Photo = ({ src, alt, idx }: { src: string; alt: string; idx: number }) => (
+    <img src={src} alt={alt} style={{ transitionDelay: `${order[idx] * 90}ms` }}
+      className="mk-stories-photo aspect-square w-[15%] max-w-20 rounded-lg object-cover md:w-20" />
+  );
   const Row = ({ items, offset, start }: { items: string[]; offset: number; start: number }) => (
     <div className="flex w-full justify-between">
-      {items.map((src, i) => (
-        <img key={i} src={src} alt={alts[(i + offset) % 5]} style={{ transitionDelay: `${(order[start + i] ?? 0) * 70}ms` }}
-          className="mk-stories-photo aspect-square w-[15%] max-w-20 rounded-lg object-cover md:w-20" />
-      ))}
+      {items.map((src, i) => <Photo key={i} src={src} alt={alts[(i + offset) % 5]} idx={start + i} />)}
     </div>
   );
   const Mid = ({ items, offset, start }: { items: string[]; offset: number; start: number }) => (
     <div className="flex w-full justify-center gap-[22%]">
-      {items.map((src, i) => (
-        <img key={i} src={src} alt={alts[(i + offset) % 5]} style={{ transitionDelay: `${(order[start + i] ?? 0) * 70}ms` }}
-          className="mk-stories-photo aspect-square w-[15%] max-w-20 rounded-lg object-cover md:w-20" />
-      ))}
+      {items.map((src, i) => <Photo key={i} src={src} alt={alts[(i + offset) % 5]} idx={start + i} />)}
     </div>
   );
   return (
-    <section ref={ref} className={`mk-section mk-stories ${inView ? "is-in" : ""}`}>
+    <section className="mk-section mk-stories">
       <div className="mx-auto flex max-w-xl flex-col items-center gap-14 px-2 text-center">
-        <Row items={top.slice(0, 3)} offset={0} start={0} />
-        <Mid items={top.slice(3)} offset={3} start={3} />
+        <StoriesGroup>
+          <Row items={top.slice(0, 3)} offset={0} start={0} />
+          <Mid items={top.slice(3)} offset={3} start={3} />
+        </StoriesGroup>
         <div className="py-10">
           <h2 className="mk-h2">Наши клиенты</h2>
           <div className="mt-8"><OutlineButton>Смотреть истории</OutlineButton></div>
         </div>
-        <Mid items={bottom.slice(0, 2)} offset={1} start={5} />
-        <Row items={bottom.slice(2)} offset={4} start={7} />
+        <StoriesGroup>
+          <Mid items={bottom.slice(0, 2)} offset={1} start={0} />
+          <Row items={bottom.slice(2)} offset={4} start={2} />
+        </StoriesGroup>
       </div>
     </section>
   );
