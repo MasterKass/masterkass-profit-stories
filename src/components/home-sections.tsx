@@ -116,7 +116,7 @@ export function QuickActions() {
     { t: "Законы и маркировка", b: "Следить за изменениями" },
   ];
   return (
-    <section className="mk-section pt-0">
+    <section id="services" className="mk-section pt-0">
       <div className="grid gap-4 md:grid-cols-3">
         {items.map((x) => (
           <div key={x.t} className="mk-tile">
@@ -169,7 +169,7 @@ export function Benefit() {
     [40, "+", "сфер бизнеса"],
   ];
   return (
-    <section className="mk-section text-center">
+    <section id="benefit" className="mk-section text-center">
       <p className="mx-auto max-w-2xl text-[1.05rem] leading-[1.42] tracking-[-0.015em] text-[var(--mk-muted)] md:text-xl md:leading-[1.45]">
         Любимое кафе, магазин у дома, автосервис, салон красоты и детская студия. У них есть что-то общее.{" "}
         <span ref={boltRef} className={`mk-bolt${boltOn ? " is-on" : ""}`}>Каждый пробитый чек — это реальная польза, которую получил человек:</span>{" "}
@@ -228,7 +228,7 @@ export function GeoMap() {
     : c.lab === "b" ? { dx: 0, anchor: "middle" as const, dy: 20 }
     : { dx: 9, anchor: "start" as const, dy: 4 };
   return (
-    <section className="mk-section">
+    <section id="map" className="mk-section">
       <h2 className="mk-h2 text-center">Работаем рядом с вами</h2>
       <div ref={ref} className="mk-geo relative mt-10 mb-[122px] aspect-square overflow-hidden rounded-3xl border border-[var(--mk-border)] md:mb-[98px] md:aspect-[16/13]" data-on={inView || undefined}>
         <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid slice" className="absolute inset-0 h-full w-full" aria-label="Карта присутствия Мастер Касс на Юге России" role="img">
@@ -284,7 +284,7 @@ export function ClientStories() {
     </div>
   );
   return (
-    <section className="mk-section mk-stories">
+    <section id="clients" className="mk-section mk-stories">
       <div className="mx-auto flex max-w-xl flex-col items-center gap-14 px-2 text-center">
         <StoriesGroup>
           <Row items={top.slice(0, 3)} offset={0} start={0} />
@@ -306,7 +306,7 @@ export function ClientStories() {
 /* 9. Партнёрство */
 export function Partners() {
   return (
-    <section className="mk-section mk-partners text-center">
+    <section id="partners" className="mk-section mk-partners text-center">
       <h2 className="mk-h2">Партнёрская программа</h2>
       <p className="mx-auto mt-5 max-w-2xl text-lg text-[var(--mk-muted)]">
         Работаем в партнёрстве с бухгалтерами, юристами и нашими клиентами. Приглашаем стать партнёрами сервиса.
@@ -327,7 +327,7 @@ const FAQ = [
 export function ServiceFaq() {
   const [open, setOpen] = useState<number | null>(null);
   return (
-    <section className="mk-section">
+    <section id="faq" className="mk-section">
       <h2 className="mk-h2 text-center">Вопросы о сервисе</h2>
       <div className="mx-auto mt-10 max-w-3xl divide-y divide-[var(--mk-border)] rounded-3xl border border-[var(--mk-border)] bg-[var(--mk-surface)] backdrop-blur">
         {FAQ.map(([q, a], i) => (
