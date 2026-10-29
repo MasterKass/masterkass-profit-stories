@@ -384,8 +384,7 @@ export function AskAi() {
   const typed = useTypewriter(PROMPTS, !text && !voice);
   return (
     <section id="ask" className="mk-section text-center">
-      <h2 className="mk-h2 mx-auto max-w-4xl">Готовы задать вопрос AI-помощнику?</h2>
-      <p className="mx-auto mt-4 max-w-xl text-[var(--mk-muted)]">Протестируйте возможности нашего AI</p>
+      <h2 className="mk-h2 mx-auto max-w-4xl">Задайте вопрос нашему ИИ сотруднику</h2>
       {q && (
         <div className="mx-auto mt-10 max-w-2xl space-y-3 text-left text-sm">
           <div className="ml-auto w-fit max-w-[85%] rounded-2xl bg-[var(--mk-fg)] p-3 text-[var(--mk-bg)]">{q}</div>
