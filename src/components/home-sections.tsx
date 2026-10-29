@@ -487,7 +487,7 @@ export function SiteFooter() {
       <div className="mk-footer mx-auto max-w-6xl">
         <a href="/" className="inline-flex items-center gap-2 text-lg font-semibold tracking-tight">
           <span className="mk-footer-mark" aria-hidden="true" />
-          Мастер Касс
+          МастерКасс
         </a>
 
         <nav aria-label="Разделы сайта" className="mt-10 grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-4">
@@ -517,7 +517,7 @@ export function SiteFooter() {
         <div className="mt-12 flex flex-col gap-4 border-t border-[var(--mk-border)] pt-6 text-sm text-[var(--mk-muted)] md:flex-row md:items-start md:justify-between">
           <div>
             <div>Ростов-на-Дону, ул. М. Горького 151, 3 этаж</div>
-            <div className="mt-1">© 2026 Мастер Касс</div>
+            <div className="mt-1">© 2026 МастерКасс</div>
           </div>
           <div className="flex flex-col gap-2 md:items-end">
             <button type="button" title="Раздел в разработке" className="mk-footer-link text-left">Политика конфиденциальности</button>
