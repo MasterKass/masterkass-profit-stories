@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { ArrowUpRight, Plus, ShieldCheck, MessageCircleMore, Keyboard, AudioLines } from "lucide-react";
+import { ArrowUpRight, ChevronDown, Plus, ShieldCheck, MessageCircleMore, Keyboard, AudioLines } from "lucide-react";
 import cafe from "@/assets/team-cafe.jpg";
 import florist from "@/assets/team-florist.jpg";
 import bakery from "@/assets/team-bakery.jpg";
@@ -329,15 +329,15 @@ export function ServiceFaq() {
   return (
     <section id="faq" className="mk-section">
       <h2 className="mk-h2 text-center">Вопросы о сервисе</h2>
-      <div className="mx-auto mt-10 max-w-3xl divide-y divide-[var(--mk-border)] rounded-2xl border border-[var(--mk-border)] bg-[var(--mk-surface)] backdrop-blur">
+      <div className="mx-auto mt-10 flex max-w-3xl flex-col gap-3">
         {FAQ.map(([q, a], i) => (
-          <div key={q}>
+          <div key={q} className="rounded-2xl border border-[var(--mk-border)] bg-[var(--mk-surface)] backdrop-blur">
             <button type="button" onClick={() => setOpen(open === i ? null : i)} aria-expanded={open === i}
-              className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left font-medium">
+              className="flex w-full items-center justify-between gap-4 px-5 py-5 text-left font-medium">
               {q}
-              <Plus className={`h-5 w-5 shrink-0 transition ${open === i ? "rotate-45" : ""}`} />
+              <ChevronDown className={`h-5 w-5 shrink-0 text-[var(--mk-muted)] transition-transform duration-300 ${open === i ? "rotate-180" : ""}`} />
             </button>
-            {open === i && <p className="px-6 pb-6 leading-relaxed text-[var(--mk-muted)]">{a}</p>}
+            {open === i && <p className="px-5 pb-5 leading-relaxed text-[var(--mk-muted)]">{a}</p>}
           </div>
         ))}
       </div>
