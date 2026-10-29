@@ -32,7 +32,7 @@ function useInView<T extends HTMLElement>() {
 
 /* 3. Наш AI-сотрудник, текст проявляется при прокрутке */
 const AI_TEXT =
-  "Наш AI-сотрудник всегда на связи — голосом и текстом. В нём объединён 9-летний опыт инженеров: мгновенная диагностика сбоев, пошаговая помощь кассиру прямо у экрана, обучение новичков и запуск программ лояльности.";
+  "Наш AI сотрудник на связи 24/7. В нём 9-ти летний опыт инженеров: диагностика сбоев, обучение, помощь кассиру и управление системой лояльности.";
 
 export function AiReveal() {
   const ref = useRef<HTMLParagraphElement>(null);
@@ -48,8 +48,10 @@ export function AiReveal() {
       frame = 0;
       const r = el.getBoundingClientRect();
       const vh = window.innerHeight;
-      // Проявление начинается, когда текст входит снизу, и заканчивается, когда он у верхней трети экрана
-      setProgress(Math.min(1, Math.max(0, (vh * 0.9 - r.top) / (vh * 0.65))));
+      // Проявление начинается, когда текст входит снизу, и заканчивается у самого верха экрана.
+      // Окрашивание однократное: при обратной прокрутке слова не сереют.
+      const p = Math.min(1, Math.max(0, (vh * 0.9 - r.top) / (vh * 0.9)));
+      setProgress((prev) => Math.max(prev, p));
     };
     const onScroll = () => { if (!frame) frame = requestAnimationFrame(update); };
     update();
