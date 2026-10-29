@@ -266,7 +266,7 @@ export function ClientStories() {
   const Row = ({ items, offset, start }: { items: string[]; offset: number; start: number }) => (
     <div className="flex w-full justify-between">
       {items.map((src, i) => (
-        <img key={i} src={src} alt={alts[(i + offset) % 5]} style={{ transitionDelay: `${order[start + i] * 70}ms` }}
+        <img key={i} src={src} alt={alts[(i + offset) % 5]} style={{ transitionDelay: `${(order[start + i] ?? 0) * 70}ms` }}
           className="mk-stories-photo aspect-square w-[15%] max-w-20 rounded-lg object-cover md:w-20" />
       ))}
     </div>
@@ -274,7 +274,7 @@ export function ClientStories() {
   const Mid = ({ items, offset, start }: { items: string[]; offset: number; start: number }) => (
     <div className="flex w-full justify-center gap-[22%]">
       {items.map((src, i) => (
-        <img key={i} src={src} alt={alts[(i + offset) % 5]} style={{ transitionDelay: `${order[start + i] * 70}ms` }}
+        <img key={i} src={src} alt={alts[(i + offset) % 5]} style={{ transitionDelay: `${(order[start + i] ?? 0) * 70}ms` }}
           className="mk-stories-photo aspect-square w-[15%] max-w-20 rounded-lg object-cover md:w-20" />
       ))}
     </div>
