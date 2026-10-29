@@ -162,7 +162,7 @@ export function Benefit() {
   ];
   return (
     <section className="mk-section text-center">
-      <p className="mx-auto max-w-3xl text-xl leading-relaxed text-[var(--mk-muted)] md:text-2xl">
+      <p className="mx-auto max-w-2xl text-[1.05rem] leading-[1.42] tracking-[-0.015em] text-[var(--mk-muted)] md:text-xl md:leading-[1.45]">
         Любимое кафе, магазин у дома, автосервис, салон красоты и детская студия. У них есть что-то общее.{" "}
         <span className="text-[var(--mk-fg)]">Каждый пробитый чек — это реальная польза, которую получил человек:</span>{" "}
         горячий кофе, свежий хлеб, исправный автомобиль, аккуратная стрижка или уроки танцев.
@@ -171,7 +171,7 @@ export function Benefit() {
         {stats.map(([n, s, l]) => (
           <div key={l}>
             <div className="text-4xl font-semibold tabular-nums tracking-tight md:text-6xl"><CountUp to={n} suffix={s} run={inView} /></div>
-            <div className="mt-2 text-sm text-[var(--mk-muted)] md:text-base">{l}</div>
+            <div className="mt-2 text-base leading-snug text-[var(--mk-muted)] md:text-lg">{l}</div>
           </div>
         ))}
       </div>
