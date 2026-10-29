@@ -378,6 +378,3 @@ body { font-family: var(--font-sans); }
 .mk-footer-title { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mk-fg); }
 .mk-footer-link { font-size: 12.5px; line-height: 1.4; letter-spacing: 0.005em; color: var(--mk-muted); cursor: pointer; transition: color 200ms; -webkit-tap-highlight-color: transparent; }
 .mk-footer-link:hover, .mk-footer-link:focus-visible { color: var(--mk-fg); }
-.mk-footer-chip { display: inline-flex; padding: 8px 14px; border-radius: 999px; border: 1px solid var(--mk-border); font-size: 13px; color: var(--mk-fg); background: var(--mk-surface); -webkit-tap-highlight-color: transparent; transition: transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1), background 200ms; }
-.mk-footer-chip:hover { background: var(--mk-bubble); }
-.mk-footer-chip:active { transform: scale(0.95); }
