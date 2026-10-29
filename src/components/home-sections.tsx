@@ -395,15 +395,15 @@ export function AskAi() {
           ) : (
             <>
               <input value={text} onChange={(e) => setText(e.target.value)} aria-label="Ваш вопрос" className="h-12 w-full bg-transparent text-base outline-none" />
-              {!text && <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center truncate pr-4 text-base text-[var(--mk-muted)]">{typed}<span className="mk-caret" /></span>}
+              {!text && <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center truncate pr-4 text-base text-[var(--mk-muted)] opacity-60">{typed}</span>}
             </>
           )}
         </div>
         <div className="mt-3 flex items-center justify-between">
-          <button type="button" aria-label="Добавить" className="mk-icon-btn"><Plus className="h-5 w-5" /></button>
+          <button type="button" aria-label="Добавить" className="mk-icon-btn border-0"><Plus className="h-5 w-5" /></button>
           <div className="flex items-center gap-1">
-            <button type="button" onClick={() => setVoice(false)} aria-label="Ввести текстом" className={`mk-icon-btn ${voice ? "opacity-50" : ""}`}><Keyboard className="h-5 w-5" /></button>
-            <button type="button" onClick={() => setVoice(true)} aria-label="Задать вопрос голосом" className={`mk-icon-btn ${voice ? "" : "opacity-60"}`}><AudioLines className="h-5 w-5" /></button>
+            <button type="button" onClick={() => setVoice(false)} aria-label="Ввести текстом" className={`mk-icon-btn border-0 ${voice ? "opacity-50" : ""}`}><Keyboard className="h-5 w-5" /></button>
+            <button type="button" onClick={() => setVoice(true)} aria-label="Задать вопрос голосом" className={`mk-icon-btn border-0 ${voice ? "" : "opacity-60"}`}><AudioLines className="h-5 w-5" /></button>
           </div>
         </div>
       </form>
