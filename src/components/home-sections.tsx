@@ -34,24 +34,41 @@ function useInView<T extends HTMLElement>() {
 const AI_TEXT =
   "Наш AI сотрудник на связи 24/7. В нём 9-ти летний опыт инженеров: диагностика сбоев, обучение, помощь кассиру и управление системой лояльности.";
 
+const AI_WORDS = AI_TEXT.split(" ");
+// Порог окрашивания каждого слова: первое — сразу, остальные по числу букв (длинные слова читаются дольше).
+const AI_THRESHOLDS = (() => {
+  const weights = AI_WORDS.slice(1).map((w) => w.replace(/[^\p{L}\p{N}]/gu, "").length + 2);
+  const total = weights.reduce((a, b) => a + b, 0);
+  let acc = 0;
+  return [0, ...weights.map((w) => (acc += w) / total)];
+})();
+
 export function AiReveal() {
   const ref = useRef<HTMLParagraphElement>(null);
-  const [progress, setProgress] = useState(0);
-  const words = AI_TEXT.split(" ");
+  const [progress, setProgress] = useState(-1);
+  const words = AI_WORDS;
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return setProgress(1);
     let frame = 0;
+    let done = false;
     const update = () => {
       frame = 0;
+      if (done) return;
       const r = el.getBoundingClientRect();
       const vh = window.innerHeight;
-      // Проявление начинается, когда текст входит снизу, и заканчивается у самого верха экрана.
-      // Окрашивание однократное: при обратной прокрутке слова не сереют.
-      const p = Math.min(1, Math.max(0, (vh * 0.9 - r.top) / (vh * 0.9)));
+      const start = vh * 0.95; // текст показался снизу — загорается первое слово
+      const end = 110; // последнее слово — когда текст у верха экрана, под шапкой
+      if (r.top > start) return;
+      const p = Math.min(1, (start - r.top) / (start - end));
       setProgress((prev) => Math.max(prev, p));
+      if (p >= 1) {
+        // Однократное окрашивание: дальше текст всегда чёрный.
+        done = true;
+        window.removeEventListener("scroll", onScroll);
+      }
     };
     const onScroll = () => { if (!frame) frame = requestAnimationFrame(update); };
     update();
@@ -59,7 +76,7 @@ export function AiReveal() {
     return () => { window.removeEventListener("scroll", onScroll); cancelAnimationFrame(frame); };
   }, []);
 
-  const lit = Math.round(progress * words.length);
+  const lit = progress < 0 ? 0 : AI_THRESHOLDS.filter((t) => t <= progress).length;
   return (
     <section id="ai" className="mk-section">
       <p ref={ref} className="mk-reveal" aria-label={AI_TEXT}>
