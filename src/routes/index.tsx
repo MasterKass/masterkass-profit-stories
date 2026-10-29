@@ -47,7 +47,6 @@ function Index() {
   );
 }
 
-
 function Header() {
   return (
     <header className="welcome-header sticky top-0 z-30">
