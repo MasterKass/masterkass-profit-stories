@@ -242,7 +242,7 @@ export function GeoMap() {
               <g key={c.n} className="mk-geo-pt" style={{ animationDelay: `${d}s`, transformOrigin: `${x}px ${y}px` }}>
                 <circle cx={x} cy={y} r={9} className="mk-geo-halo" />
                 <circle cx={x} cy={y} r={4} className="mk-geo-dot" />
-                <text x={x + p.dx} y={y + (c.dy ?? p.dy)} textAnchor={p.anchor} className="mk-geo-lbl">{c.n}</text>
+                <text x={x + p.dx} y={y + (c.dy ?? p.dy)} textAnchor={p.anchor} className={c.b ? "mk-geo-lbl mk-geo-lbl--strong" : "mk-geo-lbl"}>{c.n}</text>
               </g>
             ); })}
             <g className="mk-geo-hq">
