@@ -5,6 +5,7 @@ import florist from "@/assets/team-florist.jpg";
 import bakery from "@/assets/team-bakery.jpg";
 import boutique from "@/assets/team-boutique.jpg";
 import salon from "@/assets/team-salon.jpg";
+import { BrandMark } from "@/components/brand-mark";
 
 const go = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 
