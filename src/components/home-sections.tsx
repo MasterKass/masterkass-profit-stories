@@ -316,7 +316,7 @@ const FAQ = [
 ];
 
 export function ServiceFaq() {
-  const [open, setOpen] = useState<number | null>(0);
+  const [open, setOpen] = useState<number | null>(null);
   return (
     <section className="mk-section">
       <h2 className="mk-h2 text-center">Вопросы о сервисе</h2>
