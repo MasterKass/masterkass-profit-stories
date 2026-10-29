@@ -63,7 +63,6 @@ function HandPhoneIcon() {
 export function AiReveal() {
   const sectionRef = useRef<HTMLElement>(null);
   const [progress, setProgress] = useState(-1);
-  const [runway, setRunway] = useState(0);
   const words = AI_WORDS;
 
   useEffect(() => {
@@ -76,11 +75,9 @@ export function AiReveal() {
       frame = 0;
       if (done) return;
       const vh = window.innerHeight;
-      const run = Math.round(vh * 0.7); // запас прокрутки: блок едет медленнее пальца
-      setRunway(run);
-      const top = el.getBoundingClientRect().top + 96; // верх текста (с учётом отступа секции)
+      const top = el.getBoundingClientRect().top + 32; // верх текста (с учётом отступа секции)
       const start = vh * 0.66; // текст поднялся на две трети экрана — загорается первое слово
-      const end = 110 - run; // последнее слово — когда текст у самого верха, под шапкой
+      const end = 110; // последнее слово — когда текст у самого верха, под шапкой
       if (top > start) return;
       const p = Math.min(1, (start - top) / (start - end));
       setProgress((prev) => Math.max(prev, p));
@@ -95,11 +92,10 @@ export function AiReveal() {
     return () => { window.removeEventListener("scroll", onScroll); cancelAnimationFrame(frame); };
   }, []);
 
-  const p = Math.max(0, progress);
   const lit = progress < 0 ? 0 : AI_THRESHOLDS.filter((t) => t <= progress).length;
   return (
-    <section id="ai" ref={sectionRef} className="mk-section" style={{ paddingBottom: `calc(6rem + ${runway}px)` }}>
-      <p className="mk-reveal" aria-label={AI_TEXT} style={{ transform: `translate3d(0, ${p * runway}px, 0)` }}>
+    <section id="ai" ref={sectionRef} className="mk-section" style={{ paddingTop: "2rem" }}>
+      <p className="mk-reveal" aria-label={AI_TEXT}>
         {words.map((w, i) => (
           <span key={i} aria-hidden="true" className={i < lit ? "is-lit" : undefined}>
             {w}{" "}
