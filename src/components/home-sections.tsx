@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { ArrowUpRight, Mic, Send, Bot, Plus, ShieldCheck, MessageCircleMore } from "lucide-react";
+import { ArrowUpRight, Plus, ShieldCheck, MessageCircleMore, Keyboard, AudioLines } from "lucide-react";
 import cafe from "@/assets/team-cafe.jpg";
 import florist from "@/assets/team-florist.jpg";
 import bakery from "@/assets/team-bakery.jpg";
@@ -372,41 +372,41 @@ export function AskAi() {
   const typed = useTypewriter(PROMPTS, !text && !voice);
   return (
     <section id="ask" className="mk-section text-center">
-      <h2 className="mk-h2 mx-auto max-w-4xl">Готовы задать свой вопрос и протестировать AI-помощника в реальном времени?</h2>
-      <p className="mx-auto mt-4 max-w-xl text-[var(--mk-muted)]">Он знает нюансы оборудования и законов — ответит за секунды текстом или голосом.</p>
-      <div className="mx-auto mt-10 max-w-2xl rounded-3xl border border-[var(--mk-border)] bg-[var(--mk-surface)] p-5 text-left shadow-xl backdrop-blur">
-        <div className="mb-4 inline-flex rounded-full border border-[var(--mk-border)] p-1 text-sm">
-          {[["Текст", false], ["Голос", true]].map(([l, v]) => (
-            <button key={String(l)} type="button" onClick={() => setVoice(v as boolean)}
-              className={`rounded-full px-4 py-1.5 transition ${voice === v ? "bg-[var(--mk-fg)] text-[var(--mk-bg)]" : ""}`}>{l as string}</button>
-          ))}
+      <h2 className="mk-h2 mx-auto max-w-4xl">Готовы задать вопрос AI-помощнику?</h2>
+      <p className="mx-auto mt-4 max-w-xl text-[var(--mk-muted)]">Протестируйте возможности нашего AI</p>
+      {q && (
+        <div className="mx-auto mt-10 max-w-2xl space-y-3 text-left text-sm">
+          <div className="ml-auto w-fit max-w-[85%] rounded-2xl bg-[var(--mk-fg)] p-3 text-[var(--mk-bg)]">{q}</div>
+          <div className="w-fit max-w-[85%] rounded-2xl bg-[var(--mk-bubble)] p-3">{DEMO[q] ?? "Спасибо за вопрос! Скоро здесь будет отвечать настоящий AI-помощник."}</div>
         </div>
-        <div className="space-y-3 text-sm">
-          <div className="flex gap-2"><Bot className="mt-1 h-5 w-5 shrink-0" /><div className="rounded-2xl bg-[var(--mk-bubble)] p-3">Здравствуйте! Спросите о кассе, подключённых сервисах или законах.</div></div>
-          {q && <>
-            <div className="ml-auto w-fit max-w-[85%] rounded-2xl bg-[var(--mk-fg)] p-3 text-[var(--mk-bg)]">{q}</div>
-            <div className="flex gap-2"><Bot className="mt-1 h-5 w-5 shrink-0" /><div className="rounded-2xl bg-[var(--mk-bubble)] p-3">{DEMO[q] ?? "Спасибо за вопрос! Скоро здесь будет отвечать настоящий AI-помощник."}</div></div>
-          </>}
-        </div>
-        {voice ? (
-          <div className="mt-5 flex items-center gap-4 rounded-full border border-[var(--mk-border)] px-5 py-3">
-            <Mic className="h-5 w-5" />
-            <span className="mk-wave flex h-5 items-center gap-1" aria-hidden="true">
-              {Array.from({ length: 14 }).map((_, i) => <span key={i} style={{ animationDelay: `${i * 70}ms` }} />)}
-            </span>
-            <span className="text-sm text-[var(--mk-muted)]">Голосовой режим скоро заработает</span>
-          </div>
-        ) : (
-          <form className="mt-5 flex items-center gap-2" onSubmit={(e) => { e.preventDefault(); const v = text.trim() || typed; if (v) { setQ(PROMPTS.find((p) => p.startsWith(v)) ?? v); setText(""); } }}>
-            <button type="button" onClick={() => setVoice(true)} aria-label="Задать вопрос голосом" className="mk-icon-btn"><Mic className="h-5 w-5" /></button>
-            <div className="relative h-12 flex-1">
-              <input value={text} onChange={(e) => setText(e.target.value)} aria-label="Ваш вопрос" className="h-12 w-full rounded-full border border-[var(--mk-border)] bg-transparent px-5 outline-none" />
-              {!text && <span className="pointer-events-none absolute inset-y-0 left-5 flex items-center truncate pr-4 text-sm text-[var(--mk-muted)]">{typed}<span className="mk-caret" /></span>}
+      )}
+      <form
+        className="mx-auto mt-8 max-w-2xl rounded-[28px] border border-[var(--mk-border)] bg-[var(--mk-surface)] px-5 pb-3 pt-4 text-left shadow-lg backdrop-blur"
+        onSubmit={(e) => { e.preventDefault(); const v = text.trim() || typed; if (v) { setQ(PROMPTS.find((p) => p.startsWith(v)) ?? v); setText(""); } }}
+      >
+        <div className="relative min-h-12">
+          {voice ? (
+            <div className="flex h-12 items-center gap-3 text-[var(--mk-muted)]">
+              <span className="mk-wave flex h-5 items-center gap-1" aria-hidden="true">
+                {Array.from({ length: 14 }).map((_, i) => <span key={i} style={{ animationDelay: `${i * 70}ms` }} />)}
+              </span>
+              <span className="text-sm">Голосовой режим скоро заработает</span>
             </div>
-            <button type="submit" aria-label="Отправить" className="mk-icon-btn"><Send className="h-5 w-5" /></button>
-          </form>
-        )}
-      </div>
+          ) : (
+            <>
+              <input value={text} onChange={(e) => setText(e.target.value)} aria-label="Ваш вопрос" className="h-12 w-full bg-transparent text-base outline-none" />
+              {!text && <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center truncate pr-4 text-base text-[var(--mk-muted)]">{typed}<span className="mk-caret" /></span>}
+            </>
+          )}
+        </div>
+        <div className="mt-3 flex items-center justify-between">
+          <button type="button" aria-label="Добавить" className="mk-icon-btn"><Plus className="h-5 w-5" /></button>
+          <div className="flex items-center gap-1">
+            <button type="button" onClick={() => setVoice(false)} aria-label="Ввести текстом" className={`mk-icon-btn ${voice ? "opacity-50" : ""}`}><Keyboard className="h-5 w-5" /></button>
+            <button type="button" onClick={() => setVoice(true)} aria-label="Задать вопрос голосом" className={`mk-icon-btn ${voice ? "" : "opacity-60"}`}><AudioLines className="h-5 w-5" /></button>
+          </div>
+        </div>
+      </form>
     </section>
   );
 }
