@@ -116,7 +116,7 @@ export function QuickActions() {
     { t: "Законы и маркировка", b: "Следить за изменениями" },
   ];
   return (
-    <section className="mk-section pt-0">
+    <section id="services" className="mk-section pt-0">
       <div className="grid gap-4 md:grid-cols-3">
         {items.map((x) => (
           <div key={x.t} className="mk-tile">
@@ -169,7 +169,7 @@ export function Benefit() {
     [40, "+", "сфер бизнеса"],
   ];
   return (
-    <section className="mk-section text-center">
+    <section id="benefit" className="mk-section text-center">
       <p className="mx-auto max-w-2xl text-[1.05rem] leading-[1.42] tracking-[-0.015em] text-[var(--mk-muted)] md:text-xl md:leading-[1.45]">
         Любимое кафе, магазин у дома, автосервис, салон красоты и детская студия. У них есть что-то общее.{" "}
         <span ref={boltRef} className={`mk-bolt${boltOn ? " is-on" : ""}`}>Каждый пробитый чек — это реальная польза, которую получил человек:</span>{" "}
@@ -228,7 +228,7 @@ export function GeoMap() {
     : c.lab === "b" ? { dx: 0, anchor: "middle" as const, dy: 20 }
     : { dx: 9, anchor: "start" as const, dy: 4 };
   return (
-    <section className="mk-section">
+    <section id="map" className="mk-section">
       <h2 className="mk-h2 text-center">Работаем рядом с вами</h2>
       <div ref={ref} className="mk-geo relative mt-10 mb-[122px] aspect-square overflow-hidden rounded-3xl border border-[var(--mk-border)] md:mb-[98px] md:aspect-[16/13]" data-on={inView || undefined}>
         <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid slice" className="absolute inset-0 h-full w-full" aria-label="Карта присутствия Мастер Касс на Юге России" role="img">
@@ -284,7 +284,7 @@ export function ClientStories() {
     </div>
   );
   return (
-    <section className="mk-section mk-stories">
+    <section id="clients" className="mk-section mk-stories">
       <div className="mx-auto flex max-w-xl flex-col items-center gap-14 px-2 text-center">
         <StoriesGroup>
           <Row items={top.slice(0, 3)} offset={0} start={0} />
@@ -306,7 +306,7 @@ export function ClientStories() {
 /* 9. Партнёрство */
 export function Partners() {
   return (
-    <section className="mk-section mk-partners text-center">
+    <section id="partners" className="mk-section mk-partners text-center">
       <h2 className="mk-h2">Партнёрская программа</h2>
       <p className="mx-auto mt-5 max-w-2xl text-lg text-[var(--mk-muted)]">
         Работаем в партнёрстве с бухгалтерами, юристами и нашими клиентами. Приглашаем стать партнёрами сервиса.
@@ -327,7 +327,7 @@ const FAQ = [
 export function ServiceFaq() {
   const [open, setOpen] = useState<number | null>(null);
   return (
-    <section className="mk-section">
+    <section id="faq" className="mk-section">
       <h2 className="mk-h2 text-center">Вопросы о сервисе</h2>
       <div className="mx-auto mt-10 max-w-3xl divide-y divide-[var(--mk-border)] rounded-3xl border border-[var(--mk-border)] bg-[var(--mk-surface)] backdrop-blur">
         {FAQ.map(([q, a], i) => (
@@ -426,18 +426,105 @@ export function AskAi() {
   );
 }
 
-/* 12. Подвал */
+/* 12. Подвал — карточка с разделами и SEO-ссылками */
+const FOOTER_COLUMNS: { title: string; links: [string, string][] }[] = [
+  {
+    title: "Сервис",
+    links: [
+      ["Как устроен сервис", "/#services"],
+      ["AI-сотрудник 24/7", "/#ai"],
+      ["Польза для бизнеса", "/#benefit"],
+      ["Присоединиться", "/#join"],
+      ["Вопросы о сервисе", "/#faq"],
+      ["Поддержка", "/support"],
+    ],
+  },
+  {
+    title: "Оборудование",
+    links: [
+      ["Кассы и оборудование", "/#services"],
+      ["Кассы Эвотор", "/#services"],
+      ["Кассы Касатка", "/#services"],
+      ["Замена фискального накопителя", "/support"],
+      ["Диагностика сбоев", "/support"],
+    ],
+  },
+  {
+    title: "Законы и маркировка",
+    links: [
+      ["Честный Знак", "/#services"],
+      ["ЕГАИС", "/#services"],
+      ["Меркурий", "/#services"],
+      ["ЭДО и ЭЦП", "/#services"],
+      ["54-ФЗ", "/#services"],
+    ],
+  },
+  {
+    title: "Компания",
+    links: [
+      ["Наши клиенты", "/#clients"],
+      ["Работаем рядом с вами", "/#map"],
+      ["Партнёрам", "/#partners"],
+      ["Спросить AI-помощника", "/#ask"],
+    ],
+  },
+];
+
+const FOOTER_TAGS: [string, string][] = [
+  ["Онлайн-касса в Ростове-на-Дону", "/#services"],
+  ["Обслуживание касс Эвотор", "/#services"],
+  ["Касса для кофейни", "/#services"],
+  ["Подключение маркировки", "/#services"],
+  ["Программа лояльности для клиентов", "/#ai"],
+  ["Обучение кассиров", "/#ai"],
+  ["Техподдержка касс 24/7", "/support"],
+  ["Кассы на юге России", "/#map"],
+];
+
 export function SiteFooter() {
   return (
-    <footer className="mk-section pb-10 pt-16 text-sm">
-      <div className="flex flex-col justify-between gap-6 border-t border-[var(--mk-border)] pt-8 md:flex-row">
-        <div className="opacity-80">Кассовый сервис · Ростов-на-Дону, ул. М. Горького 151, 3 этаж</div>
-        <div className="flex flex-wrap gap-5 opacity-90">
-          <button type="button" title="Раздел в разработке">Политика конфиденциальности</button>
-          <button type="button" title="Раздел в разработке">Согласие на обработку персональных данных</button>
+    <footer className="px-3 pb-6 pt-16 md:px-6 md:pb-8">
+      <div className="mk-footer mx-auto max-w-6xl">
+        <a href="/" className="inline-flex items-center gap-2 text-lg font-semibold tracking-tight">
+          <span className="mk-footer-mark" aria-hidden="true" />
+          МастерКасс
+        </a>
+
+        <nav aria-label="Разделы сайта" className="mt-10 grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-4">
+          {FOOTER_COLUMNS.map((col) => (
+            <div key={col.title}>
+              <div className="text-[15px] font-semibold">{col.title}</div>
+              <ul className="mt-4 space-y-3">
+                {col.links.map(([label, href]) => (
+                  <li key={label}>
+                    <a href={href} className="mk-footer-link">{label}</a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </nav>
+
+        <div className="mt-12">
+          <div className="text-[15px] font-semibold">Решения</div>
+          <div className="mt-4 flex flex-wrap gap-2">
+            {FOOTER_TAGS.map(([label, href]) => (
+              <a key={label} href={href} className="mk-footer-chip">{label}</a>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-12 flex flex-col gap-4 border-t border-[var(--mk-border)] pt-6 text-sm text-[var(--mk-muted)] md:flex-row md:items-start md:justify-between">
+          <div>
+            <div>Ростов-на-Дону, ул. М. Горького 151, 3 этаж</div>
+            <div className="mt-1">© 2026 МастерКасс</div>
+          </div>
+          <div className="flex flex-col gap-2 md:items-end">
+            <button type="button" title="Раздел в разработке" className="mk-footer-link text-left">Политика конфиденциальности</button>
+            <button type="button" title="Раздел в разработке" className="mk-footer-link text-left">Согласие на обработку персональных данных</button>
+          </div>
         </div>
       </div>
-      <div className="mt-6 opacity-70">© 2026. Все права защищены.</div>
     </footer>
   );
 }
