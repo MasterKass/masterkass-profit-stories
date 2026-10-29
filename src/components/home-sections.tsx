@@ -426,78 +426,32 @@ export function AskAi() {
   );
 }
 
-/* 12. Подвал — карточка с разделами и SEO-ссылками */
-const FOOTER_COLUMNS: { title: string; links: [string, string][] }[] = [
-  {
-    title: "Сервис",
-    links: [
-      ["Как устроен сервис", "/#services"],
-      ["AI-сотрудник 24/7", "/#ai"],
-      ["Польза для бизнеса", "/#benefit"],
-      ["Присоединиться", "/#join"],
-      ["Вопросы о сервисе", "/#faq"],
-      ["Поддержка", "/support"],
-    ],
-  },
-  {
-    title: "Оборудование",
-    links: [
-      ["Кассы и оборудование", "/#services"],
-      ["Кассы Эвотор", "/#services"],
-      ["Кассы Касатка", "/#services"],
-      ["Замена фискального накопителя", "/support"],
-      ["Диагностика сбоев", "/support"],
-    ],
-  },
-  {
-    title: "Законы и маркировка",
-    links: [
-      ["Честный Знак", "/#services"],
-      ["ЕГАИС", "/#services"],
-      ["Меркурий", "/#services"],
-      ["ЭДО и ЭЦП", "/#services"],
-      ["54-ФЗ", "/#services"],
-    ],
-  },
-  {
-    title: "Компания",
-    links: [
-      ["Наши клиенты", "/#clients"],
-      ["Работаем рядом с вами", "/#map"],
-      ["Партнёрам", "/#partners"],
-      ["Спросить AI-помощника", "/#ask"],
-    ],
-  },
-];
-
-const FOOTER_TAGS: [string, string][] = [
-  ["Онлайн-касса в Ростове-на-Дону", "/#services"],
-  ["Обслуживание касс Эвотор", "/#services"],
-  ["Касса для кофейни", "/#services"],
-  ["Подключение маркировки", "/#services"],
-  ["Программа лояльности для клиентов", "/#ai"],
-  ["Обучение кассиров", "/#ai"],
-  ["Техподдержка касс 24/7", "/support"],
-  ["Кассы на юге России", "/#map"],
+/* 12. Подвал — карточка с разделами (будущие отдельные страницы) */
+const FOOTER_COLUMNS: { title: string; links: string[] }[] = [
+  { title: "Сервис", links: ["Как устроен сервис", "AI-сотрудник 24/7", "Тарифы", "Фонд амортизации", "Вопросы о сервисе", "Поддержка"] },
+  { title: "Оборудование", links: ["Кассы и оборудование", "Кассы Эвотор", "Кассы Касатка", "Замена фискального накопителя", "Диагностика сбоев"] },
+  { title: "Законы и маркировка", links: ["Честный Знак", "ЕГАИС", "Меркурий", "ЭДО и ЭЦП", "54-ФЗ"] },
+  { title: "Решения", links: ["Онлайн-касса в Ростове-на-Дону", "Касса для кофейни", "Подключение маркировки", "Программа лояльности", "Обучение кассиров", "Кассы на юге России"] },
+  { title: "Компания", links: ["Наши клиенты", "Истории клиентов", "Партнёрам", "Контакты"] },
 ];
 
 export function SiteFooter() {
   return (
     <footer className="px-3 pb-6 pt-16 md:px-6 md:pb-8">
       <div className="mk-footer mx-auto max-w-6xl">
-        <a href="/" className="inline-flex items-center gap-2 text-lg font-semibold tracking-tight">
+        <a href="/" className="inline-flex items-center gap-2 text-base font-semibold tracking-tight">
           <span className="mk-footer-mark" aria-hidden="true" />
           МастерКасс
         </a>
 
-        <nav aria-label="Разделы сайта" className="mt-10 grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-4">
+        <nav aria-label="Разделы сайта" className="mt-8 grid grid-cols-2 gap-x-6 gap-y-8 md:grid-cols-5">
           {FOOTER_COLUMNS.map((col) => (
             <div key={col.title}>
-              <div className="text-[15px] font-semibold">{col.title}</div>
-              <ul className="mt-4 space-y-3">
-                {col.links.map(([label, href]) => (
+              <div className="mk-footer-title">{col.title}</div>
+              <ul className="mt-3 space-y-2">
+                {col.links.map((label) => (
                   <li key={label}>
-                    <a href={href} className="mk-footer-link">{label}</a>
+                    <button type="button" title="Раздел в разработке" className="mk-footer-link text-left">{label}</button>
                   </li>
                 ))}
               </ul>
@@ -505,21 +459,9 @@ export function SiteFooter() {
           ))}
         </nav>
 
-        <div className="mt-12">
-          <div className="text-[15px] font-semibold">Решения</div>
-          <div className="mt-4 flex flex-wrap gap-2">
-            {FOOTER_TAGS.map(([label, href]) => (
-              <a key={label} href={href} className="mk-footer-chip">{label}</a>
-            ))}
-          </div>
-        </div>
-
-        <div className="mt-12 flex flex-col gap-4 border-t border-[var(--mk-border)] pt-6 text-sm text-[var(--mk-muted)] md:flex-row md:items-start md:justify-between">
-          <div>
-            <div>Ростов-на-Дону, ул. М. Горького 151, 3 этаж</div>
-            <div className="mt-1">© 2026 МастерКасс</div>
-          </div>
-          <div className="flex flex-col gap-2 md:items-end">
+        <div className="mt-10 flex flex-col gap-2 border-t border-[var(--mk-border)] pt-5 md:flex-row md:items-center md:justify-between">
+          <div className="mk-footer-link">© 2026 МастерКасс</div>
+          <div className="flex flex-col gap-2 md:flex-row md:gap-6">
             <button type="button" title="Раздел в разработке" className="mk-footer-link text-left">Политика конфиденциальности</button>
             <button type="button" title="Раздел в разработке" className="mk-footer-link text-left">Согласие на обработку персональных данных</button>
           </div>
