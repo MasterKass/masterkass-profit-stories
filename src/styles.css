@@ -369,3 +369,4 @@ body { font-family: var(--font-sans); }
 @keyframes mk-geo-pulse { from { transform: scale(1); opacity: .6; } to { transform: scale(4.5); opacity: 0; } }
 .mk-geo-hqlbl { font-size: 17px; font-weight: 700; fill: var(--mk-fg); }
 @media (prefers-reduced-motion: reduce) { .mk-geo-cam { transition: none; transform: none; } .mk-geo-pt { opacity: 1; transform: none; animation: none !important; } }
+.mk-icon-btn.mk-icon-plain { border-color: transparent; background: transparent; }
