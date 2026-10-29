@@ -259,27 +259,36 @@ export function GeoMap() {
 /* 8. Истории клиентов */
 export function ClientStories() {
   const [ref, inView] = useInView<HTMLElement>();
-  const photos = [
-    { src: cafe, alt: "Команда кофейни", cls: "left-[4%] top-[2%] w-16 md:w-24" },
-    { src: salon, alt: "Команда парикмахерской", cls: "left-[34%] top-[-4%] w-14 md:w-20" },
-    { src: florist, alt: "Команда цветочного салона", cls: "right-[30%] top-[6%] w-12 md:w-20" },
-    { src: bakery, alt: "Команда пекарни", cls: "right-[3%] top-[0%] w-16 md:w-24" },
-    { src: boutique, alt: "Владелицы магазина одежды", cls: "left-[2%] top-[38%] w-12 md:w-20 hidden md:block" },
-    { src: cafe, alt: "Гости кофейни", cls: "right-[2%] top-[40%] w-12 md:w-20 hidden md:block" },
-    { src: florist, alt: "Флорист за работой", cls: "left-[6%] bottom-[2%] w-16 md:w-24" },
-    { src: boutique, alt: "Магазин одежды", cls: "left-[36%] bottom-[-4%] w-12 md:w-20" },
-    { src: salon, alt: "Мастер салона", cls: "right-[32%] bottom-[4%] w-14 md:w-20" },
-    { src: bakery, alt: "Пекарь у витрины", cls: "right-[5%] bottom-[0%] w-16 md:w-24" },
-  ];
+  const top = [cafe, salon, florist, bakery, boutique];
+  const bottom = [florist, boutique, salon, cafe, bakery];
+  const alts = ["Команда кофейни", "Команда парикмахерской", "Команда цветочного салона", "Команда пекарни", "Владелицы магазина одежды"];
+  const Row = ({ items, offset, start }: { items: string[]; offset: number; start: number }) => (
+    <div className="flex w-full justify-between">
+      {items.map((src, i) => (
+        <img key={i} src={src} alt={alts[(i + offset) % 5]} loading="lazy" style={{ transitionDelay: `${(start + i) * 140}ms` }}
+          className="mk-stories-photo aspect-square w-[22%] max-w-28 rounded-2xl object-cover md:w-28" />
+      ))}
+    </div>
+  );
+  const Mid = ({ items, offset, start }: { items: string[]; offset: number; start: number }) => (
+    <div className="flex w-full justify-center gap-[16%]">
+      {items.map((src, i) => (
+        <img key={i} src={src} alt={alts[(i + offset) % 5]} loading="lazy" style={{ transitionDelay: `${(start + i) * 140}ms` }}
+          className="mk-stories-photo aspect-square w-[22%] max-w-28 rounded-2xl object-cover md:w-28" />
+      ))}
+    </div>
+  );
   return (
     <section ref={ref} className={`mk-section mk-stories ${inView ? "is-in" : ""}`}>
-      <div className="relative mx-auto flex min-h-[460px] max-w-5xl flex-col items-center justify-center text-center md:min-h-[560px]">
-        {photos.map((p, i) => (
-          <img key={p.alt} src={p.src} alt={p.alt} loading="lazy" style={{ transitionDelay: `${i * 140}ms` }}
-            className={`mk-stories-photo absolute aspect-square rounded-2xl object-cover ${p.cls}`} />
-        ))}
-        <h2 className="mk-h2 relative z-10">Наши клиенты</h2>
-        <div className="relative z-10 mt-8"><OutlineButton>Смотреть истории</OutlineButton></div>
+      <div className="mx-auto flex max-w-2xl flex-col items-center gap-8 text-center">
+        <Row items={top.slice(0, 3)} offset={0} start={0} />
+        <Mid items={top.slice(3)} offset={3} start={3} />
+        <div className="py-10">
+          <h2 className="mk-h2">Наши клиенты</h2>
+          <div className="mt-8"><OutlineButton>Смотреть истории</OutlineButton></div>
+        </div>
+        <Mid items={bottom.slice(0, 2)} offset={1} start={5} />
+        <Row items={bottom.slice(2)} offset={4} start={7} />
       </div>
     </section>
   );
