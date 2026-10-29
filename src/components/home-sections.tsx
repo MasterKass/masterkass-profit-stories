@@ -222,22 +222,27 @@ export function GeoMap() {
   const [rx, ry] = mp(...ROSTOV);
   const W = 700, H = 700;
   const dist = (c: [number, number]) => Math.hypot(c[0] - ROSTOV[0], c[1] - ROSTOV[1]);
+  const place = (c: (typeof CITIES)[number]) =>
+    c.lab === "l" ? { dx: -9, anchor: "end" as const, dy: 4 }
+    : c.lab === "t" ? { dx: 0, anchor: "middle" as const, dy: -10 }
+    : c.lab === "b" ? { dx: 0, anchor: "middle" as const, dy: 20 }
+    : { dx: 9, anchor: "start" as const, dy: 4 };
   return (
     <section className="mk-section">
       <h2 className="mk-h2 text-center">Работаем рядом с вами</h2>
       <p className="mx-auto mt-4 max-w-xl text-center text-[var(--mk-muted)]">Центральный офис: Ростов-на-Дону, ул. М. Горького 151, 3 этаж. Сопровождаем точки по всему Югу России.</p>
-      <div ref={ref} className="mk-geo relative mt-10 aspect-square overflow-hidden rounded-3xl border border-[var(--mk-border)] md:aspect-[16/11]" data-on={inView || undefined}>
+      <div ref={ref} className="mk-geo relative mt-10 aspect-square overflow-hidden rounded-3xl border border-[var(--mk-border)] md:aspect-[16/13]" data-on={inView || undefined}>
         <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid slice" className="absolute inset-0 h-full w-full" aria-label="Карта присутствия Мастер Касс на Юге России" role="img">
           <g className="mk-geo-cam" style={{ transformOrigin: `${rx}px ${ry}px` }}>
             <path d={mpath(AZOV, true)} className="mk-geo-sea" />
             <path d={mpath(BLACK, true)} className="mk-geo-sea" />
             <path d={mpath(DON)} className="mk-geo-river" />
             <path d={mpath(KUBAN)} className="mk-geo-river" />
-            {CITIES.map((c) => { const [x, y] = mp(...c.c); const d = 0.9 + dist(c.c) * 0.45; return (
+            {CITIES.map((c) => { const [x, y] = mp(...c.c); const d = 0.9 + dist(c.c) * 0.45; const p = place(c); return (
               <g key={c.n} className="mk-geo-pt" style={{ animationDelay: `${d}s`, transformOrigin: `${x}px ${y}px` }}>
                 <circle cx={x} cy={y} r={9} className="mk-geo-halo" />
                 <circle cx={x} cy={y} r={4} className="mk-geo-dot" />
-                {c.label && <text x={x + 9} y={y + 4} className="mk-geo-lbl">{c.n}</text>}
+                <text x={x + p.dx} y={y + (c.dy ?? p.dy)} textAnchor={p.anchor} className="mk-geo-lbl">{c.n}</text>
               </g>
             ); })}
             <g className="mk-geo-hq">
@@ -247,10 +252,10 @@ export function GeoMap() {
             </g>
           </g>
         </svg>
-        <div className="absolute inset-x-3 bottom-3 rounded-2xl border border-[var(--mk-border)] bg-[var(--mk-bg)] p-4 shadow-lg md:inset-x-5 md:bottom-5 md:p-5">
-          <div className="text-xs uppercase tracking-wide text-[var(--mk-muted)]">Центральный офис</div>
-          <div className="mt-1 font-semibold text-[var(--mk-fg)]">Ростов-на-Дону, ул. М. Горького, 151, 3 этаж</div>
-        </div>
+      </div>
+      <div className="mx-auto mt-5 flex max-w-2xl flex-col items-center rounded-2xl border border-[var(--mk-border)] bg-[var(--mk-bg)] px-6 py-4 text-center">
+        <div className="text-xs uppercase tracking-wide text-[var(--mk-muted)]">Центральный офис</div>
+        <div className="mt-1 font-semibold text-[var(--mk-fg)]">Ростов-на-Дону, ул. М. Горького, 151, 3 этаж</div>
       </div>
     </section>
   );
