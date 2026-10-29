@@ -223,11 +223,11 @@ export function GeoMap() {
         <div className="absolute inset-x-3 bottom-3 flex flex-col gap-3 rounded-2xl border border-[var(--mk-border)] bg-[var(--mk-bg)] p-4 shadow-lg sm:flex-row sm:items-center sm:justify-between md:inset-x-5 md:bottom-5 md:p-5">
           <div>
             <div className="text-xs uppercase tracking-wide text-[var(--mk-muted)]">Центральный офис</div>
-            <div className="mt-1 font-semibold text-[var(--mk-ink)]">Ростов-на-Дону, ул. М. Горького, 151, 3 этаж</div>
+            <div className="mt-1 font-semibold text-[var(--mk-fg)]">Ростов-на-Дону, ул. М. Горького, 151, 3 этаж</div>
           </div>
           <div className="flex gap-2">
-            <a href="https://yandex.ru/maps/?text=Ростов-на-Дону,%20ул.%20М.%20Горького,%20151" target="_blank" rel="noopener noreferrer" className="mk-tile-btn flex-1 text-center sm:flex-none">Яндекс Карты</a>
-            <a href="https://2gis.ru/rostov/search/Ростов-на-Дону,%20Максима%20Горького,%20151" target="_blank" rel="noopener noreferrer" className="mk-tile-btn flex-1 text-center sm:flex-none">2ГИС</a>
+            <a href="https://yandex.ru/maps/?text=Ростов-на-Дону,%20ул.%20М.%20Горького,%20151" target="_blank" rel="noopener noreferrer" className="mk-tile-btn flex-1 justify-center sm:flex-none">Яндекс Карты</a>
+            <a href="https://2gis.ru/rostov/search/Ростов-на-Дону,%20Максима%20Горького,%20151" target="_blank" rel="noopener noreferrer" className="mk-tile-btn flex-1 justify-center sm:flex-none">2ГИС</a>
           </div>
         </div>
       </div>
