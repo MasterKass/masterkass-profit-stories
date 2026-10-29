@@ -153,8 +153,15 @@ function CountUp({ to, run, suffix }: { to: number; run: boolean; suffix: string
 }
 
 export function Benefit() {
-  const [ref, inView] = useInView<HTMLDivElement>();
+  const [ref] = useInView<HTMLDivElement>();
   const [boltRef, boltOn] = useInView<HTMLSpanElement>();
+  // Цифры стартуют через 1 с после окончания первой вспышки (0.1 с задержка + 1.15 с вспышка)
+  const [inView, setCountOn] = useState(false);
+  useEffect(() => {
+    if (!boltOn) return;
+    const t = setTimeout(() => setCountOn(true), 2250);
+    return () => clearTimeout(t);
+  }, [boltOn]);
   const stats: [number, string, string][] = [
     [5, " млн+", "чеков передано"],
     [9, " лет", "в кассовом сервисе"],
