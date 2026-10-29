@@ -121,10 +121,7 @@ export function QuickActions() {
         {items.map((x) => (
           <div key={x.t} className="mk-tile">
             <span className="mk-tile-title">{x.t}</span>
-            <button type="button" title="Раздел в разработке" className="mk-tile-btn group">
-              {x.b}
-              <ArrowUpRight className="h-4 w-4 transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-            </button>
+            <button type="button" title="Раздел в разработке" className="mk-tile-btn">{x.b}</button>
           </div>
         ))}
       </div>
