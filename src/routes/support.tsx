@@ -33,7 +33,7 @@ function Support() {
         <p className="mt-4 text-lg text-muted-foreground">Выберите, с чем вам помочь.</p>
         <div className="mt-8 grid gap-4">
           {ways.map(({ icon: Icon, title, text }) => (
-            <div key={title} className="rounded-2xl border bg-card p-6">
+            <div key={title} className="rounded-xl border bg-card p-6">
               <Icon className="h-6 w-6" />
               <h2 className="mt-3 text-xl font-semibold">{title}</h2>
               <p className="mt-1 text-muted-foreground">{text}</p>

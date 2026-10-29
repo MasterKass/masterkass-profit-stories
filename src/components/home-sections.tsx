@@ -230,7 +230,7 @@ export function GeoMap() {
   return (
     <section id="map" className="mk-section">
       <h2 className="mk-h2 text-center">Работаем рядом с вами</h2>
-      <div ref={ref} className="mk-geo relative mt-10 mb-[122px] aspect-square overflow-hidden rounded-3xl border border-[var(--mk-border)] md:mb-[98px] md:aspect-[16/13]" data-on={inView || undefined}>
+      <div ref={ref} className="mk-geo relative mt-10 mb-[122px] aspect-square overflow-hidden rounded-2xl border border-[var(--mk-border)] md:mb-[98px] md:aspect-[16/13]" data-on={inView || undefined}>
         <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid slice" className="absolute inset-0 h-full w-full" aria-label="Карта присутствия Мастер Касс на Юге России" role="img">
           <g className="mk-geo-cam" style={{ transformOrigin: `${rx}px ${ry}px` }}>
             <path d={mpath(AZOV, true)} className="mk-geo-sea" />
@@ -329,7 +329,7 @@ export function ServiceFaq() {
   return (
     <section id="faq" className="mk-section">
       <h2 className="mk-h2 text-center">Вопросы о сервисе</h2>
-      <div className="mx-auto mt-10 max-w-3xl divide-y divide-[var(--mk-border)] rounded-3xl border border-[var(--mk-border)] bg-[var(--mk-surface)] backdrop-blur">
+      <div className="mx-auto mt-10 max-w-3xl divide-y divide-[var(--mk-border)] rounded-2xl border border-[var(--mk-border)] bg-[var(--mk-surface)] backdrop-blur">
         {FAQ.map(([q, a], i) => (
           <div key={q}>
             <button type="button" onClick={() => setOpen(open === i ? null : i)} aria-expanded={open === i}
@@ -396,7 +396,7 @@ export function AskAi() {
         </div>
       )}
       <form
-        className="mx-auto mt-8 max-w-2xl rounded-[28px] border border-[var(--mk-border)] bg-[var(--mk-surface)] px-5 pb-3 pt-4 text-left shadow-lg backdrop-blur"
+        className="mx-auto mt-8 max-w-2xl rounded-2xl border border-[var(--mk-border)] bg-[var(--mk-surface)] px-5 pb-3 pt-4 text-left shadow-lg backdrop-blur"
         onSubmit={(e) => { e.preventDefault(); const v = text.trim() || typed; if (v) { setQ(PROMPTS.find((p) => p.startsWith(v)) ?? v); setText(""); } }}
       >
         <div className="relative min-h-12">
