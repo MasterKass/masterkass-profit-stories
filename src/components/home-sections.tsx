@@ -119,13 +119,13 @@ export function QuickActions() {
     <section className="mk-section pt-0">
       <div className="grid gap-4 md:grid-cols-3">
         {items.map((x) => (
-          <button key={x.t} type="button" title="Раздел в разработке" className="mk-tile group">
+          <div key={x.t} className="mk-tile">
             <span className="mk-tile-title">{x.t}</span>
-            <span className="mk-tile-btn">
+            <button type="button" title="Раздел в разработке" className="mk-tile-btn group">
               {x.b}
               <ArrowUpRight className="h-4 w-4 transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-            </span>
-          </button>
+            </button>
+          </div>
         ))}
       </div>
     </section>
