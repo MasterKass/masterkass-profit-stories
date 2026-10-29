@@ -190,11 +190,13 @@ export function Benefit() {
 /* 6. Призыв подать заявку */
 export function JoinCta() {
   return (
-    <section id="join" className="mk-section text-center">
-      <h2 className="mk-h2 mx-auto max-w-4xl">Присоединяйтесь к сервису</h2>
-      <p className="mx-auto mt-5 max-w-xl text-lg text-[var(--mk-muted)] md:text-xl">Переведите кассу на надёжное сопровождение</p>
-      <div className="mt-10"><OutlineButton onClick={() => go("ask")}>Подать заявку</OutlineButton></div>
-    </section>
+    <div className="mk-band">
+      <section id="join" className="mk-section mk-section-airy text-center">
+        <h2 className="mk-h2 mx-auto max-w-4xl">Присоединяйтесь к сервису</h2>
+        <p className="mx-auto mt-5 max-w-xl text-lg text-[var(--mk-muted)] md:text-xl">Переведите кассу на надёжное сопровождение</p>
+        <div className="mt-10"><OutlineButton onClick={() => go("ask")}>Подать заявку</OutlineButton></div>
+      </section>
+    </div>
   );
 }
 
