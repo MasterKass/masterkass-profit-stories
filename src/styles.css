@@ -277,7 +277,7 @@ body { font-family: var(--font-sans); }
   --mk-fg: oklch(0.24 0.008 260);
   --mk-muted: oklch(0.4 0.009 260);
   --mk-border: oklch(0.24 0.008 260 / 0.12);
-  --mk-surface: oklch(0.993 0.002 90);
+  --mk-surface: oklch(0.97 0.008 85);
   --mk-bubble: oklch(0.24 0.008 260 / 0.06);
   --mk-reveal-dim: oklch(0.24 0.008 260 / 0.18);
   --mk-tail: linear-gradient(180deg, var(--mk-bg) 0%, oklch(0.95 0.05 70) 20%, oklch(0.92 0.12 95) 42%, oklch(0.86 0.16 135) 65%, oklch(0.78 0.13 200) 100%);
