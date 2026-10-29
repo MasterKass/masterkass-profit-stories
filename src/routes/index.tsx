@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { LogIn } from "lucide-react";
 import { WelcomeHero } from "@/components/welcome-hero";
+import { BrandMark } from "@/components/brand-mark";
 import { Button } from "@/components/ui/button";
 import { AiReveal, AskAi, Benefit, ClientStories, GeoMap, JoinCta, Partners, QuickActions, ServiceFaq, SiteFooter } from "@/components/home-sections";
 
