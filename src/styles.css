@@ -168,12 +168,6 @@
   --shadow-soft: var(--shadow-soft);
 }
 html, body { overflow-x: clip; max-width: 100%; }
-/* Мягкий пошаговый магнит на телефонах: гасит сильную инерцию свайпа, не блокируя скролл */
-@media (max-width: 767px) and (prefers-reduced-motion: no-preference) {
-  html { scroll-snap-type: y proximity; }
-  .mk-page > section { scroll-snap-align: start; scroll-margin-top: 76px; }
-  .mk-page > section.welcome-hero { scroll-margin-top: 0; }
-}
 body { font-family: var(--font-sans); }
 @utility font-display { font-family: var(--font-display); }
 
