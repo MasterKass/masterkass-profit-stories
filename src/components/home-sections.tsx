@@ -17,13 +17,13 @@ function OutlineButton({ children, onClick }: { children: React.ReactNode; onCli
   );
 }
 
-function useInView<T extends HTMLElement>() {
+function useInView<T extends HTMLElement>(opts: IntersectionObserverInit = { threshold: 0.3 }) {
   const ref = useRef<T>(null);
   const [inView, setInView] = useState(false);
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const io = new IntersectionObserver(([e]) => { if (e?.isIntersecting) { setInView(true); io.disconnect(); } }, { threshold: 0.3 });
+    const io = new IntersectionObserver(([e]) => { if (e?.isIntersecting) { setInView(true); io.disconnect(); } }, opts);
     io.observe(el);
     return () => io.disconnect();
   }, []);
@@ -258,14 +258,15 @@ export function GeoMap() {
 
 /* 8. Истории клиентов */
 export function ClientStories() {
-  const [ref, inView] = useInView<HTMLElement>();
+  const [ref, inView] = useInView<HTMLElement>({ threshold: 0, rootMargin: "0px 0px -60px 0px" });
+  const order = [2, 6, 0, 4, 1, 7, 3, 5, 9, 8];
   const top = [cafe, salon, florist, bakery, boutique];
   const bottom = [florist, boutique, salon, cafe, bakery];
   const alts = ["Команда кофейни", "Команда парикмахерской", "Команда цветочного салона", "Команда пекарни", "Владелицы магазина одежды"];
   const Row = ({ items, offset, start }: { items: string[]; offset: number; start: number }) => (
     <div className="flex w-full justify-between">
       {items.map((src, i) => (
-        <img key={i} src={src} alt={alts[(i + offset) % 5]} loading="lazy" style={{ transitionDelay: `${(start + i) * 140}ms` }}
+        <img key={i} src={src} alt={alts[(i + offset) % 5]} style={{ transitionDelay: `${order[start + i] * 70}ms` }}
           className="mk-stories-photo aspect-square w-[15%] max-w-20 rounded-lg object-cover md:w-20" />
       ))}
     </div>
@@ -273,7 +274,7 @@ export function ClientStories() {
   const Mid = ({ items, offset, start }: { items: string[]; offset: number; start: number }) => (
     <div className="flex w-full justify-center gap-[22%]">
       {items.map((src, i) => (
-        <img key={i} src={src} alt={alts[(i + offset) % 5]} loading="lazy" style={{ transitionDelay: `${(start + i) * 140}ms` }}
+        <img key={i} src={src} alt={alts[(i + offset) % 5]} style={{ transitionDelay: `${order[start + i] * 70}ms` }}
           className="mk-stories-photo aspect-square w-[15%] max-w-20 rounded-lg object-cover md:w-20" />
       ))}
     </div>
