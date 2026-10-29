@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { LogIn } from "lucide-react";
 import { WelcomeHero } from "@/components/welcome-hero";
@@ -19,11 +20,16 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
+  // Главная всегда открывается с первого экрана: браузер не возвращает прошлую позицию скролла.
+  useEffect(() => {
+    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+    if (location.hash) history.replaceState(history.state, "", location.pathname + location.search);
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div className="mk-page min-h-screen">
       <Header />
       <WelcomeHero />
-      <div id="niches" />
       <AiReveal />
       <QuickActions />
       <Benefit />
