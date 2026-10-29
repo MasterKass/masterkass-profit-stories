@@ -253,10 +253,6 @@ export function GeoMap() {
           </g>
         </svg>
       </div>
-      <div className="mx-auto mt-5 flex max-w-2xl flex-col items-center rounded-2xl border border-[var(--mk-border)] bg-[var(--mk-bg)] px-6 py-4 text-center">
-        <div className="text-xs uppercase tracking-wide text-[var(--mk-muted)]">Центральный офис</div>
-        <div className="mt-1 font-semibold text-[var(--mk-fg)]">Ростов-на-Дону, ул. М. Горького, 151, 3 этаж</div>
-      </div>
     </section>
   );
 }
