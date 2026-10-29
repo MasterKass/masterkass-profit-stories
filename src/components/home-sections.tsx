@@ -349,15 +349,21 @@ function useTypewriter(lines: string[], active: boolean) {
   useEffect(() => {
     if (!active) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return setTxt(lines[0] ?? "");
-    let li = 0, ci = 0, del = false, t = 0;
+    let li = 0, ci = 0, t = 0;
     const step = () => {
       const line = lines[li] ?? "";
-      ci += del ? -1 : 1;
-      setTxt(line.slice(0, ci));
-      let wait = del ? 25 : 55;
-      if (!del && ci === line.length) { del = true; wait = 1800; }
-      else if (del && ci === 0) { del = false; li = (li + 1) % lines.length; wait = 400; }
-      t = window.setTimeout(step, wait);
+      if (ci < line.length) {
+        ci += 1;
+        setTxt(line.slice(0, ci));
+        t = window.setTimeout(step, 22);
+        return;
+      }
+      t = window.setTimeout(() => {
+        setTxt("");
+        li = (li + 1) % lines.length;
+        ci = 0;
+        t = window.setTimeout(step, 320);
+      }, 1600);
     };
     t = window.setTimeout(step, 400);
     return () => clearTimeout(t);
