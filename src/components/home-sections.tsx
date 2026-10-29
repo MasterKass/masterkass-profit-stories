@@ -266,21 +266,21 @@ export function ClientStories() {
     <div className="flex w-full justify-between">
       {items.map((src, i) => (
         <img key={i} src={src} alt={alts[(i + offset) % 5]} loading="lazy" style={{ transitionDelay: `${(start + i) * 140}ms` }}
-          className="mk-stories-photo aspect-square w-[22%] max-w-28 rounded-2xl object-cover md:w-28" />
+          className="mk-stories-photo aspect-square w-[15%] max-w-20 rounded-lg object-cover md:w-20" />
       ))}
     </div>
   );
   const Mid = ({ items, offset, start }: { items: string[]; offset: number; start: number }) => (
-    <div className="flex w-full justify-center gap-[16%]">
+    <div className="flex w-full justify-center gap-[22%]">
       {items.map((src, i) => (
         <img key={i} src={src} alt={alts[(i + offset) % 5]} loading="lazy" style={{ transitionDelay: `${(start + i) * 140}ms` }}
-          className="mk-stories-photo aspect-square w-[22%] max-w-28 rounded-2xl object-cover md:w-28" />
+          className="mk-stories-photo aspect-square w-[15%] max-w-20 rounded-lg object-cover md:w-20" />
       ))}
     </div>
   );
   return (
     <section ref={ref} className={`mk-section mk-stories ${inView ? "is-in" : ""}`}>
-      <div className="mx-auto flex max-w-2xl flex-col items-center gap-8 text-center">
+      <div className="mx-auto flex max-w-xl flex-col items-center gap-14 px-2 text-center">
         <Row items={top.slice(0, 3)} offset={0} start={0} />
         <Mid items={top.slice(3)} offset={3} start={3} />
         <div className="py-10">
