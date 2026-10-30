@@ -5,6 +5,8 @@ import f4 from "@/assets/comic-f4.jpg";
 import f5 from "@/assets/comic-f5.jpg";
 import f6 from "@/assets/comic-f6.jpg";
 import f7 from "@/assets/comic-f7.jpg";
+import f8 from "@/assets/comic-f8.jpg";
+import f9 from "@/assets/comic-f9.jpg";
 
 type Bubble = { who: string; text: string; pos: string; tail?: "bl" | "br" | "tl" | "tr" };
 type Panel = { img: string; alt: string; span: string; ratio: string; caption?: string; captionTop?: boolean; bubbles: Bubble[] };
@@ -16,7 +18,9 @@ const panels: Panel[] = [
   { img: f4, alt: "Бариста спрашивает ИИ-помощника, на экране эквалайзер", span: "col-span-1 row-span-3 md:col-span-2 md:row-span-5", ratio: "aspect-square", bubbles: [] },
   { img: f5, alt: "Бариста закрывает смену на кассе и благодарит ИИ-помощника", span: "col-span-1 row-span-3 md:col-span-4 md:row-span-5", ratio: "aspect-square", bubbles: [] },
   { img: f6, alt: "Директор говорит с бухгалтером о платежах", span: "col-span-2 row-span-3 md:col-span-4 md:row-span-4", ratio: "aspect-square", caption: "Директор получает календарь оплат", captionTop: true, bubbles: [] },
-  { img: f7, alt: "Чашка кофе на стойке, гость заказывает флэт уайт", span: "col-span-2 row-span-2 md:col-span-2 md:row-span-4", ratio: "aspect-square", bubbles: [] },
+  { img: f8, alt: "Директор просит ИИ проанализировать систему лояльности", span: "col-span-1 row-span-3 md:col-span-2 md:row-span-4", ratio: "aspect-square", bubbles: [] },
+  { img: f9, alt: "Смартфон с графиками роста клиентов, выручки и продаж", span: "col-span-1 row-span-3 md:col-span-3 md:row-span-4", ratio: "aspect-[3/2]", bubbles: [] },
+  { img: f7, alt: "Чашка кофе на стойке, гость заказывает флэт уайт", span: "col-span-2 row-span-2 md:col-span-3 md:row-span-4", ratio: "aspect-square", bubbles: [] },
 ];
 
 export function DayComic() {
