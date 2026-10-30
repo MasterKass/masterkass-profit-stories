@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { SiteFooter, AskAi } from "@/components/home-sections";
 import { DayComic } from "@/components/day-comic";
 import { BackHome } from "@/components/back-home";
+import { RequestForm } from "@/components/request-form";
 
 export const Route = createFileRoute("/service")({
   head: () => ({
@@ -98,6 +99,10 @@ function ServicePage() {
         <section className="mt-24">
           <DayComic />
         </section>
+
+        <div className="mt-16 md:mt-20">
+          <RequestForm />
+        </div>
       </main>
       <div className="px-4 pb-6"><SiteFooter /></div>
     </div>
