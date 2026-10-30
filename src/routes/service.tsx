@@ -98,6 +98,10 @@ function ServicePage() {
         <section className="mt-24">
           <DayComic />
         </section>
+
+        <div className="mt-16 md:mt-20">
+          <RequestForm />
+        </div>
       </main>
       <div className="px-4 pb-6"><SiteFooter /></div>
     </div>
