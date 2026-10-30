@@ -41,7 +41,7 @@ export function DayComic() {
             <img src={p.img} alt={p.alt} loading="lazy" className="absolute inset-0 h-full w-full object-cover object-top" />
             <span className="absolute left-3 top-3 px-2 py-0.5 text-[11px] font-semibold" style={{ background: "var(--mk-fg)", color: "var(--mk-surface)", display: p.bubbles.some((b) => b.pos.includes("left-3 top-3")) ? "none" : undefined }}>{i + 1}</span>
             {p.caption && (
-              <figcaption className="absolute bottom-0 left-0 px-3 py-1.5 text-[12px] font-medium uppercase tracking-wide" style={{ background: "var(--mk-surface)", borderTop: "1.5px solid var(--mk-fg)", borderRight: "1.5px solid var(--mk-fg)", background: "#fff" }}>{p.caption}</figcaption>
+              <figcaption className="absolute bottom-0 left-0 px-3 py-1.5 text-[12px] font-medium uppercase tracking-wide" style={{ borderTop: "1.5px solid var(--mk-fg)", borderRight: "1.5px solid var(--mk-fg)", background: "#fff" }}>{p.caption}</figcaption>
             )}
             {p.bubbles.map((b) => (
               <div key={b.text} className={`mk-bubble ${b.pos} text-[11px] md:text-[13px]`} data-tail={b.tail ?? "bl"}>
