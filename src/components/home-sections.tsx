@@ -383,11 +383,11 @@ function useTypewriter(lines: string[], active: boolean) {
   return txt;
 }
 
-export function AskAi({ title = "Задайте вопрос нашему ИИ сотруднику" }: { title?: string }) {
+export function AskAi({ title = "Задайте вопрос нашему ИИ сотруднику", prompt }: { title?: string; prompt?: string }) {
   const [q, setQ] = useState<string | null>(null);
   const [text, setText] = useState("");
   const [voice, setVoice] = useState(false);
-  const typed = useTypewriter(PROMPTS, !text && !voice);
+  const typed = useTypewriter(prompt ? [prompt] : PROMPTS, !text && !voice);
   return (
     <section id="ask" className="mk-section text-center">
       <h2 className="mk-h2 mx-auto max-w-4xl">{title}</h2>
