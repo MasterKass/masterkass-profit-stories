@@ -15,7 +15,7 @@ const panels: Panel[] = [
   { img: f3, alt: "Бариста получает голосовое сообщение", span: "col-span-2 row-span-2 md:col-span-6 md:row-span-4", ratio: "aspect-[3/2]", caption: "08:42 · Кофейня, до открытия", bubbles: [] },
   { img: f4, alt: "Бариста спрашивает ИИ-помощника, на экране эквалайзер", span: "col-span-1 row-span-3 md:col-span-2 md:row-span-5", ratio: "aspect-square", bubbles: [] },
   { img: f5, alt: "Бариста закрывает смену на кассе и благодарит ИИ-помощника", span: "col-span-1 row-span-3 md:col-span-4 md:row-span-5", ratio: "aspect-square", bubbles: [] },
-  { img: f6, alt: "Директор говорит с бухгалтером о платежах", span: "col-span-2 row-span-3 md:col-span-4 md:row-span-4", ratio: "aspect-square", bubbles: [] },
+  { img: f6, alt: "Директор говорит с бухгалтером о платежах", span: "col-span-2 row-span-3 md:col-span-4 md:row-span-4", ratio: "aspect-square", caption: "Директор получает календарь оплат", captionTop: true, bubbles: [] },
   { img: f7, alt: "Чашка кофе на стойке, гость заказывает флэт уайт", span: "col-span-2 row-span-2 md:col-span-2 md:row-span-4", ratio: "aspect-square", bubbles: [] },
 ];
 
