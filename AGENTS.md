@@ -12,3 +12,4 @@
 - Keep the welcome photo scene in a browser-safe standalone React component with CSS perspective and scroll effects; it remains replaceable without changing the lower page sections.
 - Scope welcome-screen colors to semantic CSS tokens so its light palette does not recolor the existing service and pricing sections.
 - Home page sections below the welcome scene live in src/components/home-sections.tsx, styled via scoped --mk-* tokens; the bottom wrapper .mk-tail carries the spectrum gradient so blocks can be reordered without touching the hero.
+- The day-in-the-life comic stays a self-contained hook component (src/components/day-comic.tsx): a text-button trigger opens the panels in a dialog, and every panel's grid row-span must keep its box ratio at or below the source image ratio, because vertical cropping cuts the speech bubbles baked into the artwork.
