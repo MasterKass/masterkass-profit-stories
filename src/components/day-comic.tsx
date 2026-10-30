@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import f1 from "@/assets/comic-f1.jpg";
 import f2 from "@/assets/comic-f2.jpg";
 import f3 from "@/assets/comic-f3.jpg";
@@ -22,9 +24,34 @@ const panels: Panel[] = [
 ];
 
 export function DayComic() {
+  const [open, setOpen] = useState(false);
   return (
-    <section className="mt-8">
-      <h2 className="text-[2rem] font-semibold leading-[1.05] tracking-[-0.035em] md:text-5xl">Один день с «Мастер Касс»</h2>
+    <>
+      <button type="button" onClick={() => setOpen(true)} className="mk-card mt-8 flex w-full items-center gap-4 text-left transition-transform active:scale-[0.99]" style={{ padding: "0.75rem" }}>
+        <div className="grid shrink-0 grid-cols-4 gap-[2px] overflow-hidden" style={{ width: 112, borderRadius: 8, border: "1px solid var(--mk-fg)", background: "var(--mk-fg)" }}>
+          {panels.map((p) => <img key={p.alt} src={p.img} alt="" className="aspect-square w-full object-cover" />)}
+        </div>
+        <div className="min-w-0">
+          <span className="text-[11px] font-medium uppercase tracking-widest" style={{ color: "var(--mk-muted)" }}>Комикс · 8 кадров</span>
+          <p className="mt-1 text-[17px] font-semibold leading-tight tracking-[-0.02em]">Один день из жизни с сервисом «Мастер Касс»</p>
+          <span className="mt-2 inline-block text-[13px] font-medium underline underline-offset-4">Смотреть историю</span>
+        </div>
+      </button>
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent className="mk-page max-h-[92vh] w-[96vw] max-w-4xl overflow-y-auto p-4 md:p-8" style={{ borderRadius: 16 }}>
+          <DialogTitle className="sr-only">Один день с «Мастер Касс»</DialogTitle>
+          <DialogDescription className="sr-only">Комикс о дне директора и бариста</DialogDescription>
+          <ComicStory />
+        </DialogContent>
+      </Dialog>
+    </>
+  );
+}
+
+function ComicStory() {
+  return (
+    <section>
+      <h2 className="pr-8 text-[1.6rem] font-semibold leading-[1.05] tracking-[-0.035em] md:text-4xl">Один день с «Мастер Касс»</h2>
       <p className="mt-3 text-[15px]" style={{ color: "var(--mk-muted)" }}>Утро директора и бариста — без звонков в поддержку и паники.</p>
       <div className="mt-8 grid grid-cols-2 auto-rows-[88px] grid-flow-row-dense gap-2 md:grid-cols-6 md:auto-rows-[80px] md:gap-3">
         {panels.map((p, i) => (
