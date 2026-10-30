@@ -90,7 +90,7 @@ function ServicePage() {
         </section>
 
 
-        <AskAi title="Обратитесь к AI-менеджеру для расчета стоимости вашего проекта" />
+        <AskAi title="Задайте вопрос и менеджеру" prompt="Что входит в тариф «Учёт»? Расскажи подробнее" />
       </main>
       <div className="px-4 pb-6"><SiteFooter /></div>
     </div>

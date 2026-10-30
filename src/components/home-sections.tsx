@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { ArrowUpRight, ChevronDown, Plus, ShieldCheck, MessageCircleMore, Keyboard, Mic } from "lucide-react";
 import cafe from "@/assets/team-cafe.jpg";
@@ -383,11 +383,12 @@ function useTypewriter(lines: string[], active: boolean) {
   return txt;
 }
 
-export function AskAi({ title = "Задайте вопрос нашему ИИ сотруднику" }: { title?: string }) {
+export function AskAi({ title = "Задайте вопрос нашему ИИ сотруднику", prompt }: { title?: string; prompt?: string }) {
   const [q, setQ] = useState<string | null>(null);
   const [text, setText] = useState("");
   const [voice, setVoice] = useState(false);
-  const typed = useTypewriter(PROMPTS, !text && !voice);
+  const promptLines = useMemo(() => (prompt ? [prompt] : PROMPTS), [prompt]);
+  const typed = useTypewriter(promptLines, !text && !voice);
   return (
     <section id="ask" className="mk-section text-center">
       <h2 className="mk-h2 mx-auto max-w-4xl">{title}</h2>
