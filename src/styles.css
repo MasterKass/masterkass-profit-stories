@@ -168,6 +168,8 @@
   --shadow-soft: var(--shadow-soft);
 }
 html, body { overflow-x: clip; max-width: 100%; }
+/* Отключаем пружинный довод страницы (rubber-band): верхняя плашка остаётся на месте. */
+html, body { overscroll-behavior-y: none; }
 body { font-family: var(--font-sans); }
 @utility font-display { font-family: var(--font-display); }
 
