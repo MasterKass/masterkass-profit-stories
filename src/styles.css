@@ -464,7 +464,7 @@ body { font-family: var(--font-sans); }
 .mk-field { display: grid; gap: 0.4rem; }
 .mk-field-label { font-size: 11px; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; color: var(--mk-lead-muted); }
 .mk-field input { width: 100%; background: transparent; border: 0; border-bottom: 1px solid var(--mk-lead-line); border-radius: 0; padding: 0.55rem 0 0.6rem; font: inherit; font-size: 17px; letter-spacing: -0.01em; color: var(--mk-lead-fg); outline: none; transition: border-color 220ms ease; }
-.mk-field input::placeholder { color: color-mix(in oklch, var(--mk-lead-fg) 34%, transparent); }
+.mk-field input::placeholder { color: color-mix(in oklch, var(--mk-lead-fg) 46%, transparent); }
 .mk-field input:hover { border-bottom-color: color-mix(in oklch, var(--mk-lead-fg) 38%, transparent); }
 .mk-field input:focus-visible { border-bottom-color: var(--mk-lead-fg); }
 .mk-field input[aria-invalid="true"] { border-bottom-color: oklch(0.78 0.13 40); }

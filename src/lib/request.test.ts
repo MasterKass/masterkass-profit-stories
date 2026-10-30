@@ -35,6 +35,12 @@ describe("проверка заявки на сервис", () => {
     if (!r.ok) expect(r.errors.email).toContain("почт");
   });
 
+  it("просит заполнить поле телефона, если оно пустое", () => {
+    const r = validateRequest({ phone: "   ", email: "a@b.ru" });
+    expect(r.ok).toBe(false);
+    if (!r.ok) expect(r.errors.phone).toContain("Нужен телефон");
+  });
+
   it("не принимает пустые поля", () => {
     const r = validateRequest({ phone: "", email: "" });
     expect(r.ok).toBe(false);
