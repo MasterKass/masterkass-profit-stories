@@ -29,7 +29,7 @@ export function DayComic() {
       <div className="mt-8 grid grid-cols-2 auto-rows-[88px] grid-flow-row-dense gap-2 md:grid-cols-6 md:auto-rows-[80px] md:gap-3">
         {panels.map((p, i) => (
           <figure key={p.alt} className={`mk-comic-panel relative overflow-hidden border-[1.5px] ${p.span}`} style={{ borderColor: "var(--mk-fg)", borderRadius: 0, animationDelay: `${i * 90}ms` }}>
-            <img src={p.img} alt={p.alt} loading="lazy" className="absolute inset-0 h-full w-full object-cover object-top" />
+            <img src={p.img} alt={p.alt} loading="lazy" className="absolute inset-0 h-full w-full object-cover object-[60%_top]" />
             <span className="absolute left-3 top-3 px-2 py-0.5 text-[11px] font-semibold" style={{ background: "var(--mk-fg)", color: "var(--mk-surface)", display: p.captionTop ? "none" : undefined }}>{i + 1}</span>
             {p.caption && (p.captionTop ? (
               <figcaption className="absolute left-1/2 top-0 -translate-x-1/2 whitespace-nowrap px-3 py-1.5 text-[10px] font-semibold uppercase tracking-wide md:text-[12px]" style={{ borderBottom: "1.5px solid var(--mk-fg)", borderLeft: "1.5px solid var(--mk-fg)", borderRight: "1.5px solid var(--mk-fg)", background: "var(--mk-surface)" }}>{p.caption}</figcaption>
