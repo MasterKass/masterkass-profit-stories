@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Link } from "@tanstack/react-router";
 import { ArrowUpRight, ChevronDown, Plus, ShieldCheck, MessageCircleMore, Keyboard, AudioLines } from "lucide-react";
 import cafe from "@/assets/team-cafe.jpg";
 import florist from "@/assets/team-florist.jpg";
@@ -122,7 +123,11 @@ export function QuickActions() {
         {items.map((x) => (
           <div key={x.t} className="mk-tile">
             <span className="mk-tile-title">{x.t}</span>
-            <button type="button" title="Раздел в разработке" className="mk-tile-btn">{x.b}</button>
+            {x.t === "Как устроен сервис" ? (
+              <Link to="/service" className="mk-tile-btn">{x.b}</Link>
+            ) : (
+              <button type="button" title="Раздел в разработке" className="mk-tile-btn">{x.b}</button>
+            )}
           </div>
         ))}
       </div>
