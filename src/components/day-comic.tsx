@@ -12,13 +12,13 @@ type Panel = { img: string; alt: string; span: string; ratio: string; caption?: 
 const panels: Panel[] = [
   { img: f1, alt: "Директор открывает утренний отчёт на телефоне", span: "col-span-1 row-span-3 md:col-span-2 md:row-span-4", ratio: "aspect-square", caption: "08:30 · Отчёт директора на почте", bubbles: [] },
   { img: f2, alt: "Директор записывает голосовое сообщение", span: "col-span-1 row-span-3 md:col-span-4 md:row-span-4", ratio: "aspect-square", bubbles: [
-    { who: "Артём", text: "Аня, доброе утро! Смену вчера не закрыли — закрой, пожалуйста, перед началом работы. Как это сделать, спроси у ИИ-помощника.", pos: "right-[3%] top-[4%] w-[46%]", tail: "bl" },
+    { who: "Артём", text: "Аня, доброе утро! Смену вчера не закрыли — закрой, пожалуйста, перед началом работы. Как это сделать, спроси у ИИ-помощника.", pos: "right-[2%] top-[2%] w-[70%] md:w-[46%]", tail: "bl" },
   ] },
   { img: f3, alt: "Бариста получает голосовое сообщение", span: "col-span-2 row-span-2 md:col-span-6 md:row-span-4", ratio: "aspect-[3/2]", caption: "08:42 · Кофейня, до открытия", bubbles: [] },
   { img: f4, alt: "Бариста спрашивает ИИ-помощника, на экране эквалайзер", span: "col-span-1 row-span-3 md:col-span-2 md:row-span-5", ratio: "aspect-square", bubbles: [] },
   { img: f5, alt: "Бариста закрывает смену на кассе", span: "col-span-1 row-span-3 md:col-span-4 md:row-span-5", ratio: "aspect-square", bubbles: [
-    { who: "Аня", text: "Спасибо, всё получилось!", pos: "left-[56%] top-[3%] w-[30%]", tail: "bl" },
-    { who: "ИИ-помощник", text: "Я рад! Отличного дня и хороших чаевых.", pos: "left-[3%] top-[40%] w-[34%]", tail: "br" },
+    { who: "Аня", text: "Спасибо, всё получилось!", pos: "left-[50%] top-[3%] w-[46%] md:w-[30%]", tail: "bl" },
+    { who: "ИИ-помощник", text: "Я рад! Отличного дня и хороших чаевых.", pos: "left-[2%] top-[40%] w-[52%] md:w-[34%]", tail: "br" },
   ] },
   { img: f6, alt: "Директор говорит с бухгалтером", span: "col-span-2 row-span-3 md:col-span-4 md:row-span-4", ratio: "aspect-square", bubbles: [
     { who: "Артём", text: "Ирина, сегодня платежи — всё успеваем провести?", pos: "left-[2%] top-[2%] w-[36%]", tail: "br" },

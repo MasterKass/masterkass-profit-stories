@@ -386,7 +386,7 @@ body { font-family: var(--font-sans); }
 @keyframes mk-comic-in { from { opacity: 0; transform: translateY(12px); filter: blur(6px); } to { opacity: 1; transform: none; filter: none; } }
 
 /* Comic: magazine-page bubbles */
-.mk-bubble { position: absolute; height: auto; bottom: auto; background: #fff; color: #111; border: 1.2px solid #111; border-radius: 50%; padding: .9em 1.2em; text-align: center; line-height: 1.25; font-weight: 500; z-index: 2; }
+.mk-bubble { position: absolute; height: auto; bottom: auto; background: #fff; color: #111; border: 1.2px solid #111; border-radius: 50%; padding: .7em 1em; text-align: center; line-height: 1.25; font-weight: 500; z-index: 2; }
 .mk-bubble::after { content: ""; position: absolute; width: 14px; height: 14px; background: #fff; border-right: 1.5px solid #111; border-bottom: 1.5px solid #111; }
 .mk-bubble[data-tail="bl"]::after { left: 22%; bottom: -8px; transform: rotate(45deg) skew(12deg,12deg); }
 .mk-bubble[data-tail="br"]::after { right: 22%; bottom: -8px; transform: rotate(45deg) skew(12deg,12deg); }
