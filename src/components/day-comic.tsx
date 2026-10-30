@@ -27,7 +27,7 @@ export function DayComic() {
   const [open, setOpen] = useState(false);
   return (
     <>
-      <button type="button" onClick={() => setOpen(true)} className="mk-card mt-8 flex w-full items-center gap-4 text-left transition-transform active:scale-[0.99]" style={{ padding: "0.75rem" }}>
+      <button type="button" onClick={() => setOpen(true)} className="mk-card flex w-full items-center gap-4 text-left transition-transform active:scale-[0.99]" style={{ padding: "0.75rem" }}>
         <div className="grid shrink-0 grid-cols-4 gap-[2px] overflow-hidden" style={{ width: 112, borderRadius: 8, border: "1px solid var(--mk-fg)", background: "var(--mk-fg)" }}>
           {panels.map((p) => <img key={p.alt} src={p.img} alt="" className="aspect-square w-full object-cover" />)}
         </div>
