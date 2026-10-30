@@ -309,6 +309,13 @@ body { font-family: var(--font-sans); }
 .mk-tile-btn:active { transform: scale(0.96); box-shadow: none; transition-duration: 90ms; }
 .mk-tile-btn:focus-visible { outline: 2px solid var(--mk-fg); outline-offset: 3px; }
 @media (max-width: 767px) { .mk-tile { min-height: 230px; padding: 2rem; gap: 2rem; } }
+/* Возврат на главную: стеклянный кружок в углу, прилипает к экрану и всегда под рукой */
+.mk-back-home { position: fixed; top: calc(0.75rem + env(safe-area-inset-top)); left: calc(0.75rem + env(safe-area-inset-left)); z-index: 40; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 999px; border: 1px solid var(--mk-border); background: color-mix(in oklch, var(--mk-surface) 78%, transparent); backdrop-filter: blur(14px) saturate(150%); color: var(--mk-fg); box-shadow: 0 1px 1px color-mix(in oklch, var(--mk-fg) 6%, transparent), 0 10px 24px -14px color-mix(in oklch, var(--mk-fg) 38%, transparent); cursor: pointer; -webkit-tap-highlight-color: transparent; transition: transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 200ms; }
+.mk-back-home svg { width: 18px; height: 18px; }
+.mk-back-home:hover { transform: translateY(-1px); box-shadow: 0 1px 1px color-mix(in oklch, var(--mk-fg) 6%, transparent), 0 16px 30px -14px color-mix(in oklch, var(--mk-fg) 48%, transparent); }
+.mk-back-home:active { transform: scale(0.94); box-shadow: none; transition-duration: 90ms; }
+.mk-back-home:focus-visible { outline: 2px solid var(--mk-fg); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { .mk-back-home, .mk-back-home:hover, .mk-back-home:active { transform: none; } }
 
 .mk-outline { position: relative; display: inline-flex; align-items: center; gap: 10px; height: 56px; padding-inline: 30px; border-radius: 12px; font-size: 15px; font-weight: 600; background: transparent; color: var(--mk-fg); transition: transform 250ms; }
 .mk-outline::before { content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1.5px; background: var(--welcome-spectrum); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; }

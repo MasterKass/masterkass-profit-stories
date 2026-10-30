@@ -13,3 +13,4 @@
 - Scope welcome-screen colors to semantic CSS tokens so its light palette does not recolor the existing service and pricing sections.
 - Home page sections below the welcome scene live in src/components/home-sections.tsx, styled via scoped --mk-* tokens; the bottom wrapper .mk-tail carries the spectrum gradient so blocks can be reordered without touching the hero.
 - The day-in-the-life comic renders inline as a full magazine spread at the end of the service page (src/components/day-comic.tsx), never behind a preview button or in a dialog, and panels are laid out in justified rows that keep each artwork's own aspect ratio (.mk-comic-row), because cropping cuts the speech bubbles baked into the artwork.
+- Inner pages return to the home page through the shared src/components/back-home.tsx circle (.mk-back-home) pinned in the screen corner, not a text link at the top of the article, so the way back stays reachable without scrolling up.

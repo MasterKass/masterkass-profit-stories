@@ -1,7 +1,7 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowLeft } from "lucide-react";
+import { createFileRoute } from "@tanstack/react-router";
 import { SiteFooter, AskAi } from "@/components/home-sections";
 import { DayComic } from "@/components/day-comic";
+import { BackHome } from "@/components/back-home";
 
 export const Route = createFileRoute("/service")({
   head: () => ({
@@ -34,10 +34,8 @@ const tariffs = [
 function ServicePage() {
   return (
     <div className="mk-page min-h-screen">
+      <BackHome />
       <main className="mx-auto max-w-5xl px-5 pb-20 pt-10">
-        <Link to="/" className="inline-flex items-center gap-2 text-sm" style={{ color: "var(--mk-muted)" }}>
-          <ArrowLeft className="h-4 w-4" />На главную
-        </Link>
 
         <section className="mt-12 max-w-3xl">
           <h1 className="text-[2.5rem] font-semibold leading-[1.05] tracking-[-0.035em] md:text-6xl">Как устроен сервис</h1>
