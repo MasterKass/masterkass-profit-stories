@@ -12,21 +12,21 @@ type Panel = { img: string; alt: string; span: string; ratio: string; caption?: 
 const panels: Panel[] = [
   { img: f1, alt: "Директор открывает утренний отчёт на телефоне", span: "col-span-1 row-span-3 md:col-span-2 md:row-span-4", ratio: "aspect-square", caption: "08:30 · Отчёт директора на почте", bubbles: [] },
   { img: f2, alt: "Директор записывает голосовое сообщение", span: "col-span-1 row-span-3 md:col-span-4 md:row-span-4", ratio: "aspect-square", bubbles: [
-    { who: "Артём", text: "Аня, доброе утро! Смену вчера не закрыли — закрой, пожалуйста, перед началом работы. Как это сделать, спроси у ИИ-помощника.", pos: "left-3 right-3 top-3", tail: "br" },
+    { who: "Артём", text: "Аня, доброе утро! Смену вчера не закрыли — закрой, пожалуйста, перед началом работы. Как это сделать, спроси у ИИ-помощника.", pos: "right-[2%] top-[2%] w-[70%] md:w-[46%]", tail: "bl" },
   ] },
   { img: f3, alt: "Бариста получает голосовое сообщение", span: "col-span-2 row-span-2 md:col-span-6 md:row-span-4", ratio: "aspect-[3/2]", caption: "08:42 · Кофейня, до открытия", bubbles: [] },
   { img: f4, alt: "Бариста спрашивает ИИ-помощника, на экране эквалайзер", span: "col-span-1 row-span-3 md:col-span-2 md:row-span-5", ratio: "aspect-square", bubbles: [] },
   { img: f5, alt: "Бариста закрывает смену на кассе", span: "col-span-1 row-span-3 md:col-span-4 md:row-span-5", ratio: "aspect-square", bubbles: [
-    { who: "Аня", text: "Спасибо, всё получилось!", pos: "left-3 top-3 max-w-[70%]", tail: "bl" },
-    { who: "ИИ-помощник", text: "Я рад! Отличного дня и хороших чаевых.", pos: "right-3 bottom-4 max-w-[70%]", tail: "tr" },
+    { who: "Аня", text: "Спасибо, всё получилось!", pos: "left-[50%] top-[3%] w-[46%] md:w-[30%]", tail: "bl" },
+    { who: "ИИ-помощник", text: "Я рад! Отличного дня и хороших чаевых.", pos: "left-[2%] top-[40%] w-[52%] md:w-[34%]", tail: "br" },
   ] },
   { img: f6, alt: "Директор говорит с бухгалтером", span: "col-span-2 row-span-3 md:col-span-4 md:row-span-4", ratio: "aspect-square", bubbles: [
-    { who: "Артём", text: "Ирина, сегодня платежи — всё успеваем провести?", pos: "left-3 top-3 max-w-[48%]", tail: "bl" },
-    { who: "Ирина", text: "Да, Артём, всё вижу — сегодня оплатим.", pos: "right-3 top-16 max-w-[48%]", tail: "br" },
+    { who: "Артём", text: "Ирина, сегодня платежи — всё успеваем провести?", pos: "left-[2%] top-[2%] w-[36%]", tail: "br" },
+    { who: "Ирина", text: "Да, Артём, всё вижу — сегодня оплатим.", pos: "right-[2%] top-[2%] w-[36%]", tail: "bl" },
   ] },
   { img: f7, alt: "Чашка кофе на стойке", span: "col-span-2 row-span-2 md:col-span-2 md:row-span-4", ratio: "aspect-square", bubbles: [
-    { who: "Гость", text: "Флэт уайт, пожалуйста!", pos: "left-3 top-3 max-w-[80%]", tail: "br" },
-    { who: "Аня", text: "С бонусами по номеру?", pos: "right-3 bottom-4 max-w-[80%]", tail: "tl" },
+    { who: "Гость", text: "Флэт уайт, пожалуйста!", pos: "right-[4%] top-[4%] w-[42%]", tail: "bl" },
+    { who: "Аня", text: "С бонусами по номеру?", pos: "left-[4%] bottom-[5%] w-[40%]", tail: "tr" },
   ] },
 ];
 
@@ -44,7 +44,7 @@ export function DayComic() {
               <figcaption className="absolute bottom-0 left-0 px-3 py-1.5 text-[12px] font-medium uppercase tracking-wide" style={{ borderTop: "1.5px solid var(--mk-fg)", borderRight: "1.5px solid var(--mk-fg)", background: "#fff" }}>{p.caption}</figcaption>
             )}
             {p.bubbles.map((b) => (
-              <div key={b.text} className={`mk-bubble ${b.pos} text-[11px] md:text-[13px]`} data-tail={b.tail ?? "bl"}>
+              <div key={b.text} className={`mk-bubble ${b.pos} text-[8.5px] md:text-[11px]`} data-tail={b.tail ?? "bl"}>
                                 {b.text}
               </div>
             ))}
