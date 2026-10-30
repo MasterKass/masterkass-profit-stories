@@ -5,6 +5,7 @@ export const requestSchema = z.object({
   phone: z
     .string()
     .trim()
+    .min(1, "Нужен телефон: по нему мы свяжемся")
     .max(24, "Телефон слишком длинный")
     .refine((v) => /^[0-9+().\-\s]+$/.test(v), "Телефон можно написать только цифрами")
     .transform((v) => v.replace(/\D/g, ""))
