@@ -44,7 +44,7 @@ export function DayComic() {
               <figcaption className="absolute bottom-3 left-3 rounded-lg px-3 py-1.5 text-[12px] font-medium" style={{ background: "var(--mk-surface)", border: "1px solid var(--mk-fg)" }}>{p.caption}</figcaption>
             )}
             {p.bubbles.map((b) => (
-              <div key={b.text} className={`absolute ${b.pos} rounded-2xl px-3 py-2 text-[13px] leading-snug shadow-sm`} style={{ background: "var(--mk-surface)", border: "1px solid var(--mk-fg)" }}>
+              <div key={b.text} className={`absolute ${b.pos} rounded-2xl px-2 py-1.5 text-[11px] md:px-3 md:py-2 md:text-[13px] leading-snug shadow-sm`} style={{ background: "var(--mk-surface)", border: "1px solid var(--mk-fg)" }}>
                 <span className="block text-[10px] font-semibold uppercase tracking-wider" style={{ color: "var(--mk-muted)" }}>{b.who}</span>
                 {b.text}
               </div>
