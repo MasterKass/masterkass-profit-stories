@@ -27,15 +27,16 @@ export function DayComic() {
   const [open, setOpen] = useState(false);
   return (
     <>
-      <button type="button" onClick={() => setOpen(true)} className="mk-card flex w-full items-center gap-4 text-left transition-transform active:scale-[0.99]" style={{ padding: "0.75rem" }}>
-        <div className="grid shrink-0 grid-cols-4 gap-[2px] overflow-hidden" style={{ width: 112, borderRadius: 8, border: "1px solid var(--mk-fg)", background: "var(--mk-fg)" }}>
+      <button type="button" onClick={() => setOpen(true)} className="mk-card w-full text-left transition-transform active:scale-[0.99]" style={{ padding: "0.75rem", display: "flex", alignItems: "center", gap: "1.25rem" }}>
+        <div className="grid shrink-0 grid-cols-4 gap-[2px] overflow-hidden w-[104px] md:w-[188px]" style={{ borderRadius: 8, border: "1px solid var(--mk-fg)", background: "var(--mk-fg)" }}>
           {panels.map((p) => <img key={p.alt} src={p.img} alt="" className="aspect-square w-full object-cover" />)}
         </div>
-        <div className="min-w-0">
+        <div className="min-w-0 flex-1">
           <span className="text-[11px] font-medium uppercase tracking-widest" style={{ color: "var(--mk-muted)" }}>Комикс · 8 кадров</span>
-          <p className="mt-1 text-[17px] font-semibold leading-tight tracking-[-0.02em]">Один день из жизни с сервисом «Мастер Касс»</p>
-          <span className="mt-2 inline-block text-[13px] font-medium underline underline-offset-4">Смотреть историю</span>
+          <p className="mt-1 text-[16px] font-semibold leading-tight tracking-[-0.02em] md:text-[22px]">Один день из жизни с сервисом «Мастер Касс»</p>
+          <span className="mt-2 inline-block text-[13px] font-medium underline underline-offset-4 md:hidden">Смотреть историю</span>
         </div>
+        <span aria-hidden className="hidden shrink-0 items-center px-5 py-2.5 text-[13px] font-medium md:inline-flex" style={{ background: "var(--mk-fg)", color: "var(--mk-surface)", borderRadius: 10 }}>Смотреть историю</span>
       </button>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="mk-page max-h-[92vh] w-[96vw] max-w-4xl overflow-y-auto p-4 md:p-8" style={{ borderRadius: 16 }}>
