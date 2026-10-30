@@ -1,12 +1,12 @@
 import { Link } from "@tanstack/react-router";
-import { ArrowLeft } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 
 /** Верхняя полупрозрачная вуаль без границы (растворяется книзу) с кружком возврата на главную. */
 export function BackHome() {
   return (
     <div className="mk-top-veil">
       <Link to="/" className="mk-back-home" aria-label="Вернуться на главную">
-        <ArrowLeft aria-hidden="true" />
+        <ChevronLeft aria-hidden="true" />
       </Link>
     </div>
   );
