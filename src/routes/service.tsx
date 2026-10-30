@@ -68,7 +68,7 @@ function ServicePage() {
                 <ul className="mt-6 space-y-2 text-[14px]">
                   {t.items.map((i) => <li key={i}>— {i}</li>)}
                 </ul>
-                <p className="mt-6 text-xs" style={{ color: "var(--mk-muted)" }}>Включая 750 ₽ в фонд новой кассы</p>
+                <p className="mt-6 text-xs" style={{ color: "var(--mk-muted)" }}>Включая 750 рублей в фонд «Новой кассы» каждый месяц</p>
               </div>
             ))}
           </div>
