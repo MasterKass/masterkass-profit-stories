@@ -13,14 +13,14 @@ type Bubble = { who: string; text: string; pos: string; tail?: "bl" | "br" | "tl
 type Panel = { img: string; alt: string; span: string; ratio: string; caption?: string; captionTop?: boolean; bubbles: Bubble[] };
 
 const panels: Panel[] = [
-  { img: f1, alt: "Директор открывает утренний отчёт на телефоне", span: "col-span-1 row-span-3 md:col-span-2 md:row-span-4", ratio: "aspect-square", caption: "08:30 · Отчёт директора на почте", bubbles: [] },
-  { img: f2, alt: "Директор записывает голосовое сообщение Ане", span: "col-span-1 row-span-3 md:col-span-4 md:row-span-4", ratio: "aspect-square", bubbles: [] },
-  { img: f3, alt: "Бариста получает голосовое сообщение", span: "col-span-2 row-span-2 md:col-span-6 md:row-span-4", ratio: "aspect-[3/2]", caption: "08:42 · Кофейня, до открытия", bubbles: [] },
-  { img: f4, alt: "Бариста спрашивает ИИ-помощника, на экране эквалайзер", span: "col-span-1 row-span-3 md:col-span-2 md:row-span-5", ratio: "aspect-square", bubbles: [] },
-  { img: f5, alt: "Бариста закрывает смену на кассе и благодарит ИИ-помощника", span: "col-span-1 row-span-3 md:col-span-4 md:row-span-5", ratio: "aspect-square", bubbles: [] },
-  { img: f6, alt: "Директор говорит с бухгалтером о платежах", span: "col-span-2 row-span-3 md:col-span-3 md:row-span-5", ratio: "aspect-square", caption: "Директор получает календарь оплат", captionTop: true, bubbles: [] },
-  { img: f8, alt: "Директор голосом просит ИИ проанализировать систему лояльности, на смартфоне графики роста", span: "col-span-2 row-span-3 md:col-span-3 md:row-span-5", ratio: "aspect-[3/2]", bubbles: [] },
-  { img: f7, alt: "Гость заказывает флэт уайт, бариста спрашивает про карту постоянного клиента и про баллы", span: "col-span-2 row-span-3 md:col-span-6 md:row-span-7", ratio: "aspect-[3/2]", bubbles: [] },
+  { img: f1, alt: "Директор открывает утренний отчёт на телефоне", span: "col-span-1 row-span-2 md:col-span-2 md:row-span-3", ratio: "aspect-square", caption: "08:30 · Отчёт директора на почте", bubbles: [] },
+  { img: f2, alt: "Директор записывает голосовое сообщение Ане", span: "col-span-2 row-span-4 md:col-span-4 md:row-span-6", ratio: "aspect-square", bubbles: [] },
+  { img: f3, alt: "Бариста получает голосовое сообщение", span: "col-span-2 row-span-3 md:col-span-6 md:row-span-6", ratio: "aspect-[3/2]", caption: "08:42 · Кофейня, до открытия", bubbles: [] },
+  { img: f4, alt: "Бариста спрашивает ИИ-помощника, на экране эквалайзер", span: "col-span-1 row-span-2 md:col-span-2 md:row-span-3", ratio: "aspect-square", bubbles: [] },
+  { img: f5, alt: "Бариста закрывает смену на кассе и благодарит ИИ-помощника", span: "col-span-2 row-span-4 md:col-span-4 md:row-span-6", ratio: "aspect-square", bubbles: [] },
+  { img: f6, alt: "Директор говорит с бухгалтером о платежах", span: "col-span-1 row-span-2 md:col-span-2 md:row-span-3", ratio: "aspect-square", caption: "Директор получает календарь оплат", captionTop: true, bubbles: [] },
+  { img: f8, alt: "Директор голосом просит ИИ проанализировать систему лояльности, на смартфоне графики роста", span: "col-span-2 row-span-3 md:col-span-6 md:row-span-6", ratio: "aspect-[3/2]", bubbles: [] },
+  { img: f7, alt: "Гость заказывает флэт уайт, бариста спрашивает про карту постоянного клиента и про баллы", span: "col-span-2 row-span-3 md:col-span-6 md:row-span-6", ratio: "aspect-[3/2]", bubbles: [] },
 ];
 
 export function DayComic() {
