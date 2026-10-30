@@ -38,7 +38,7 @@ export function DayComic() {
       <div className="mt-8 grid grid-cols-2 auto-rows-[88px] grid-flow-row-dense gap-2 md:grid-cols-6 md:auto-rows-[80px] md:gap-3">
         {panels.map((p, i) => (
           <figure key={p.alt} className={`mk-comic-panel relative overflow-hidden rounded-2xl border ${p.span}`} style={{ borderColor: "var(--mk-fg)", animationDelay: `${i * 90}ms` }}>
-            <img src={p.img} alt={p.alt} loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
+            <img src={p.img} alt={p.alt} loading="lazy" className="absolute inset-0 h-full w-full object-cover object-top" />
             <span className="absolute left-3 top-3 rounded-lg px-2 py-0.5 text-[11px] font-semibold" style={{ background: "var(--mk-fg)", color: "var(--mk-surface)", display: p.bubbles.some((b) => b.pos.includes("left-3 top-3")) ? "none" : undefined }}>{i + 1}</span>
             {p.caption && (
               <figcaption className="absolute bottom-3 left-3 rounded-lg px-3 py-1.5 text-[12px] font-medium" style={{ background: "var(--mk-surface)", border: "1px solid var(--mk-fg)" }}>{p.caption}</figcaption>
