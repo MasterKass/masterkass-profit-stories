@@ -175,7 +175,7 @@ export function Benefit() {
     <section id="benefit" className="mk-section text-center">
       <p className="mx-auto max-w-2xl text-[1.05rem] leading-[1.42] tracking-[-0.015em] text-[var(--mk-muted)] md:text-xl md:leading-[1.45]">
         Любимое кафе, магазин у дома, автосервис, салон красоты и детская студия. У них есть что-то общее.{" "}
-        <span ref={boltRef} className={`mk-bolt${boltOn ? " is-on" : ""}`}>Каждый пробитый чек — это реальная польза, которую получил человек:</span>{" "}
+        <span ref={boltRef} className={`mk-bolt${boltOn ? " is-on" : ""}`}>Каждый пробитый чек - реальная польза, которую получил человек:</span>{" "}
         горячий кофе, свежий хлеб, исправный автомобиль, аккуратная стрижка или уроки танцев.
       </p>
       <div ref={ref} className="mx-auto mt-16 grid max-w-3xl grid-cols-2 gap-x-8 gap-y-12">
