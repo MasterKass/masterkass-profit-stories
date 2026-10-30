@@ -1,5 +1,6 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowLeft, Bot, Phone, Wrench } from "lucide-react";
+import { createFileRoute } from "@tanstack/react-router";
+import { Bot, Phone, Wrench } from "lucide-react";
+import { BackHome } from "@/components/back-home";
 import { SiteFooter } from "@/components/home-sections";
 
 export const Route = createFileRoute("/support")({
@@ -25,10 +26,8 @@ const ways = [
 function Support() {
   return (
     <div className="mk-page min-h-screen">
+      <BackHome />
       <main className="mx-auto max-w-3xl px-5 py-12">
-        <Link to="/" className="inline-flex items-center gap-2 text-sm text-muted-foreground">
-          <ArrowLeft className="h-4 w-4" />На главную
-        </Link>
         <h1 className="mt-8 text-4xl font-bold tracking-tight">Обратиться в поддержку</h1>
         <p className="mt-4 text-lg text-muted-foreground">Выберите, с чем вам помочь.</p>
         <div className="mt-8 grid gap-4">
