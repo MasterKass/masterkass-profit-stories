@@ -14,18 +14,9 @@ const panels: Panel[] = [
   { img: f2, alt: "Директор записывает голосовое сообщение Ане", span: "col-span-1 row-span-3 md:col-span-4 md:row-span-4", ratio: "aspect-square", bubbles: [] },
   { img: f3, alt: "Бариста получает голосовое сообщение", span: "col-span-2 row-span-2 md:col-span-6 md:row-span-4", ratio: "aspect-[3/2]", caption: "08:42 · Кофейня, до открытия", bubbles: [] },
   { img: f4, alt: "Бариста спрашивает ИИ-помощника, на экране эквалайзер", span: "col-span-1 row-span-3 md:col-span-2 md:row-span-5", ratio: "aspect-square", bubbles: [] },
-  { img: f5, alt: "Бариста закрывает смену на кассе", span: "col-span-1 row-span-3 md:col-span-4 md:row-span-5", ratio: "aspect-square", bubbles: [
-    { who: "Аня", text: "Спасибо, всё получилось!", pos: "left-[50%] top-[3%] w-[46%] md:w-[30%]", tail: "bl" },
-    { who: "ИИ-помощник", text: "Я рад! Отличного дня и хороших чаевых.", pos: "left-[2%] top-[40%] w-[52%] md:w-[34%]", tail: "br" },
-  ] },
-  { img: f6, alt: "Директор говорит с бухгалтером", span: "col-span-2 row-span-3 md:col-span-4 md:row-span-4", ratio: "aspect-square", bubbles: [
-    { who: "Артём", text: "Ирина, сегодня платежи — всё успеваем провести?", pos: "left-[2%] top-[2%] w-[36%]", tail: "br" },
-    { who: "Ирина", text: "Да, Артём, всё вижу — сегодня оплатим.", pos: "right-[2%] top-[2%] w-[36%]", tail: "bl" },
-  ] },
-  { img: f7, alt: "Чашка кофе на стойке", span: "col-span-2 row-span-2 md:col-span-2 md:row-span-4", ratio: "aspect-square", bubbles: [
-    { who: "Гость", text: "Флэт уайт, пожалуйста!", pos: "right-[4%] top-[4%] w-[42%]", tail: "bl" },
-    { who: "Аня", text: "С бонусами по номеру?", pos: "left-[4%] bottom-[5%] w-[40%]", tail: "tr" },
-  ] },
+  { img: f5, alt: "Бариста закрывает смену на кассе и благодарит ИИ-помощника", span: "col-span-1 row-span-3 md:col-span-4 md:row-span-5", ratio: "aspect-square", bubbles: [] },
+  { img: f6, alt: "Директор говорит с бухгалтером о платежах", span: "col-span-2 row-span-3 md:col-span-4 md:row-span-4", ratio: "aspect-square", bubbles: [] },
+  { img: f7, alt: "Чашка кофе на стойке, гость заказывает флэт уайт", span: "col-span-2 row-span-2 md:col-span-2 md:row-span-4", ratio: "aspect-square", bubbles: [] },
 ];
 
 export function DayComic() {
