@@ -18,7 +18,7 @@ const panels: Panel[] = [
   { img: f5, alt: "Бариста закрывает смену на кассе и благодарит ИИ-помощника", span: "col-span-1 row-span-3 md:col-span-4 md:row-span-5", ratio: "aspect-square", bubbles: [] },
   { img: f6, alt: "Директор говорит с бухгалтером о платежах", span: "col-span-2 row-span-3 md:col-span-3 md:row-span-5", ratio: "aspect-square", caption: "Директор получает календарь оплат", captionTop: true, bubbles: [] },
   { img: f8, alt: "Директор голосом просит ИИ проанализировать систему лояльности, на смартфоне графики роста", span: "col-span-2 row-span-3 md:col-span-3 md:row-span-5", ratio: "aspect-[3/2]", bubbles: [] },
-  { img: f7, alt: "Чашка кофе на стойке, гость заказывает флэт уайт", span: "col-span-2 row-span-3 md:col-span-6 md:row-span-5", ratio: "aspect-square", bubbles: [] },
+  { img: f7, alt: "Гость заказывает флэт уайт, бариста спрашивает про карту постоянного клиента и про баллы", span: "col-span-2 row-span-3 md:col-span-6 md:row-span-7", ratio: "aspect-[3/2]", bubbles: [] },
 ];
 
 export function DayComic() {
