@@ -36,7 +36,7 @@ export function DayComic() {
             key={k}
             onClick={() => setTab(k)}
             className="rounded-[10px] px-4 py-2 text-sm font-medium transition-colors"
-            style={tab === k ? { background: "var(--mk-ink)", color: "var(--mk-surface)" } : { color: "var(--mk-muted)" }}
+            style={tab === k ? { background: "var(--mk-fg)", color: "var(--mk-surface)" } : { color: "var(--mk-muted)" }}
           >
             {l}
           </button>
@@ -46,8 +46,8 @@ export function DayComic() {
         {panels.map((p, i) => (
           <article key={p.time} className="mk-comic-panel" style={{ animationDelay: `${i * 90}ms` }}>
             <div className="relative">
-              <img src={p.img} alt={p.title} width={1024} height={768} loading="lazy" className="block w-full rounded-xl border" style={{ borderColor: "var(--mk-ink)" }} />
-              <span className="absolute left-3 top-3 rounded-lg px-2 py-1 text-xs font-semibold" style={{ background: "var(--mk-surface)", border: "1px solid var(--mk-ink)" }}>{p.time}</span>
+              <img src={p.img} alt={p.title} width={1024} height={768} loading="lazy" className="block w-full rounded-xl border" style={{ borderColor: "var(--mk-fg)" }} />
+              <span className="absolute left-3 top-3 rounded-lg px-2 py-1 text-xs font-semibold" style={{ background: "var(--mk-surface)", border: "1px solid var(--mk-fg)" }}>{p.time}</span>
               <div className="mk-bubble">
                 <span className="block text-[11px] font-semibold uppercase tracking-wider" style={{ color: "var(--mk-muted)" }}>{p.who}</span>
                 {p.line}
