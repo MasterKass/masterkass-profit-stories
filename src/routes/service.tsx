@@ -66,7 +66,12 @@ function ServicePage() {
                 <p className="mt-2 text-sm" style={{ color: "var(--mk-muted)" }}>{t.who}</p>
                 <p className="mt-6 text-4xl font-semibold tracking-[-0.03em]">{t.price} <span className="text-base font-medium">₽/мес</span></p>
                 <ul className="mt-6 space-y-2 text-[14px]">
-                  {t.items.map((i) => <li key={i}>— {i}</li>)}
+                  {t.items.map((i) => (
+                    <li key={i} className="flex items-start gap-2.5">
+                      <span aria-hidden className="mt-[0.55em] size-[5px] shrink-0 rounded-full" style={{ background: "var(--mk-tariff-deep)" }} />
+                      <span>{i}</span>
+                    </li>
+                  ))}
                 </ul>
                 <p className="mt-6 text-xs" style={{ color: "var(--mk-muted)" }}>Включая 750 рублей в фонд «Новой кассы» каждый месяц</p>
               </div>
