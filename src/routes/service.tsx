@@ -38,6 +38,7 @@ function ServicePage() {
           <ArrowLeft className="h-4 w-4" />На главную
         </Link>
 
+        <DayComic />
         <section className="mt-12 max-w-3xl">
           <h1 className="text-[2.5rem] font-semibold leading-[1.05] tracking-[-0.035em] md:text-6xl">Как устроен сервис</h1>
           <p className="mt-6 text-lg leading-relaxed" style={{ color: "var(--mk-muted)" }}>
@@ -88,7 +89,6 @@ function ServicePage() {
           </div>
         </section>
 
-        <DayComic />
 
         <div className="mt-16">
           <Link to="/support" className="mk-tile-btn">Обратиться в поддержку</Link>
