@@ -1,63 +1,58 @@
-import { useState } from "react";
-import d1 from "@/assets/comic-d1.jpg";
-import d2 from "@/assets/comic-d2.jpg";
-import d3 from "@/assets/comic-d3.jpg";
-import d4 from "@/assets/comic-d4.jpg";
-import k1 from "@/assets/comic-k1.jpg";
-import k2 from "@/assets/comic-k2.jpg";
-import k3 from "@/assets/comic-k3.jpg";
-import k4 from "@/assets/comic-k4.jpg";
+import f1 from "@/assets/comic-f1.jpg";
+import f2 from "@/assets/comic-f2.jpg";
+import f3 from "@/assets/comic-f3.jpg";
+import f4 from "@/assets/comic-f4.jpg";
+import f5 from "@/assets/comic-f5.jpg";
+import f6 from "@/assets/comic-f6.jpg";
+import f7 from "@/assets/comic-f7.jpg";
 
-type Panel = { time: string; title: string; img: string; who: string; line: string; note: string };
+type Bubble = { who: string; text: string; pos: string };
+type Panel = { img: string; alt: string; span: string; ratio: string; caption?: string; bubbles: Bubble[] };
 
-const director: Panel[] = [
-  { time: "08:30", title: "Кофе и утренний отчёт", img: d1, who: "Директор", line: "Так, на второй точке не закрыта вчерашняя смена. Сейчас напишу Ане.", note: "Утренний PDF на почте заранее предупреждает о риске блокировки кассы." },
-  { time: "08:40", title: "Голосовое бухгалтеру", img: d2, who: "Директор", line: "Марина, доброе утро! Сегодня по графику оплата сервисов на кассе — успеваем?", note: "Сумма и дата платежей уже посчитаны в отчёте — никаких внезапных отключений." },
-  { time: "14:30", title: "Идея с бонусами", img: d3, who: "Директор", line: "Цифры сходятся. Давай запустим!", note: "AI-помощник за минуты считает экономику бонусов, запуск — по SMS-коду." },
-  { time: "21:30", title: "Спокойный вечер", img: d4, who: "Директор", line: "Смены закрыты, выручка учтена. Отчёт будет утром.", note: "Без звонков и планёрок — время для семьи." },
-];
-
-const cashier: Panel[] = [
-  { time: "08:42", title: "Сообщение от директора", img: k1, who: "Аня, бариста", line: "Ой, смена не закрыта… Сейчас спрошу у помощника.", note: "Директор пишет спокойно и коротко — помощник всё объяснит." },
-  { time: "08:44", title: "Голосом — к AI-помощнику", img: k2, who: "AI-помощник", line: "Отчёты → Кассовый отчёт → Закрыть смену. Затем — Открыть смену. Штрафа не будет.", note: "15 секунд голосом, не отходя от кассы." },
-  { time: "14:52", title: "Новая фраза для гостя", img: k3, who: "Аня, бариста", line: "Хотите, начислим 100 бонусов на десерт по номеру телефона?", note: "Готовый текст сам появился в телефоне — учить ничего не нужно." },
-  { time: "21:05", title: "Смена закрыта", img: k4, who: "AI-помощник", line: "Все чеки переданы, расхождений нет. Отличная работа!", note: "Утром у директора в отчёте всё зелёное." },
+const panels: Panel[] = [
+  { img: f1, alt: "Директор открывает утренний отчёт на телефоне", span: "md:col-span-3", ratio: "aspect-square", caption: "08:30 · Утренний отчёт уже на почте", bubbles: [] },
+  { img: f2, alt: "Директор записывает голосовое сообщение", span: "md:col-span-3", ratio: "aspect-square", bubbles: [
+    { who: "Артём", text: "Аня, доброе утро! Смену вчера не закрыли — закрой, пожалуйста, перед началом работы. Как это сделать, спроси у ИИ-помощника.", pos: "left-3 right-3 bottom-3" },
+  ] },
+  { img: f3, alt: "Бариста получает голосовое сообщение", span: "md:col-span-6", ratio: "aspect-[3/2]", caption: "08:42 · Кофейня, до открытия", bubbles: [] },
+  { img: f4, alt: "Бариста спрашивает ИИ-помощника, на экране эквалайзер", span: "md:col-span-3", ratio: "aspect-square", bubbles: [] },
+  { img: f5, alt: "Бариста закрывает смену на кассе", span: "md:col-span-3", ratio: "aspect-square", bubbles: [
+    { who: "Аня", text: "Спасибо, всё получилось!", pos: "left-3 top-3 max-w-[70%]" },
+    { who: "ИИ-помощник", text: "Я рад! Отличного дня и хороших чаевых.", pos: "right-3 bottom-3 max-w-[70%]" },
+  ] },
+  { img: f6, alt: "Директор говорит с бухгалтером", span: "md:col-span-4", ratio: "aspect-square", bubbles: [
+    { who: "Артём", text: "Ирина, сегодня платежи — всё успеваем провести?", pos: "left-3 top-3 max-w-[48%]" },
+    { who: "Ирина", text: "Да, Артём, всё вижу — сегодня оплатим.", pos: "right-3 bottom-3 max-w-[48%]" },
+  ] },
+  { img: f7, alt: "Чашка кофе на стойке", span: "md:col-span-2", ratio: "aspect-square", bubbles: [
+    { who: "Гость", text: "Флэт уайт, пожалуйста!", pos: "left-3 top-3 max-w-[80%]" },
+    { who: "Аня", text: "С бонусами по номеру?", pos: "right-3 bottom-3 max-w-[80%]" },
+  ] },
 ];
 
 export function DayComic() {
-  const [tab, setTab] = useState<"d" | "k">("d");
-  const panels = tab === "d" ? director : cashier;
   return (
     <section className="mt-24">
       <h2 className="text-3xl font-semibold tracking-[-0.03em] md:text-4xl">Один день с «Мастер Касс»</h2>
-      <div className="mt-6 inline-flex rounded-xl border p-1" style={{ borderColor: "var(--mk-border)", background: "var(--mk-surface)" }}>
-        {([["d", "День директора"], ["k", "День кассира"]] as const).map(([k, l]) => (
-          <button
-            key={k}
-            onClick={() => setTab(k)}
-            className="rounded-[10px] px-4 py-2 text-sm font-medium transition-colors"
-            style={tab === k ? { background: "var(--mk-fg)", color: "var(--mk-surface)" } : { color: "var(--mk-muted)" }}
-          >
-            {l}
-          </button>
-        ))}
-      </div>
-      <div key={tab} className="mt-8 grid gap-4 md:grid-cols-2">
+      <p className="mt-3 text-[15px]" style={{ color: "var(--mk-muted)" }}>Утро директора и бариста — без звонков в поддержку и паники.</p>
+      <div className="mt-8 grid grid-cols-1 gap-3 md:grid-cols-6">
         {panels.map((p, i) => (
-          <article key={p.time} className="mk-comic-panel" style={{ animationDelay: `${i * 90}ms` }}>
-            <div className="relative">
-              <img src={p.img} alt={p.title} width={1024} height={768} loading="lazy" className="block w-full rounded-xl border" style={{ borderColor: "var(--mk-fg)" }} />
-              <span className="absolute left-3 top-3 rounded-lg px-2 py-1 text-xs font-semibold" style={{ background: "var(--mk-surface)", border: "1px solid var(--mk-fg)" }}>{p.time}</span>
-              <div className="mk-bubble">
-                <span className="block text-[11px] font-semibold uppercase tracking-wider" style={{ color: "var(--mk-muted)" }}>{p.who}</span>
-                {p.line}
+          <figure key={p.alt} className={`mk-comic-panel relative overflow-hidden rounded-2xl border ${p.span} ${p.ratio}`} style={{ borderColor: "var(--mk-fg)", animationDelay: `${i * 90}ms` }}>
+            <img src={p.img} alt={p.alt} loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
+            <span className="absolute left-3 top-3 rounded-lg px-2 py-0.5 text-[11px] font-semibold" style={{ background: "var(--mk-fg)", color: "var(--mk-surface)", display: p.bubbles.some((b) => b.pos.includes("left-3 top-3")) ? "none" : undefined }}>{i + 1}</span>
+            {p.caption && (
+              <figcaption className="absolute bottom-3 left-3 rounded-lg px-3 py-1.5 text-[12px] font-medium" style={{ background: "var(--mk-surface)", border: "1px solid var(--mk-fg)" }}>{p.caption}</figcaption>
+            )}
+            {p.bubbles.map((b) => (
+              <div key={b.text} className={`absolute ${b.pos} rounded-2xl px-3 py-2 text-[13px] leading-snug shadow-sm`} style={{ background: "var(--mk-surface)", border: "1px solid var(--mk-fg)" }}>
+                <span className="block text-[10px] font-semibold uppercase tracking-wider" style={{ color: "var(--mk-muted)" }}>{b.who}</span>
+                {b.text}
               </div>
-            </div>
-            <h3 className="mt-4 text-lg font-semibold tracking-[-0.02em]">{p.title}</h3>
-            <p className="mt-1 text-[14px] leading-relaxed" style={{ color: "var(--mk-muted)" }}>{p.note}</p>
-          </article>
+            ))}
+          </figure>
         ))}
       </div>
+      <p className="mt-6 text-lg font-semibold tracking-[-0.02em]">Технологии работают сами — директор спокоен, бизнес растёт.</p>
     </section>
   );
 }
