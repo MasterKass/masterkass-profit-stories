@@ -1,7 +1,3 @@
-import { useState } from "react";
-import { ArrowUp } from "lucide-react";
-import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { BrandMark } from "@/components/brand-mark";
 import f1 from "@/assets/comic-f1.jpg";
 import f2 from "@/assets/comic-f2.jpg";
 import f3 from "@/assets/comic-f3.jpg";
@@ -26,26 +22,6 @@ const panels: Panel[] = [
 ];
 
 export function DayComic() {
-  const [open, setOpen] = useState(false);
-  return (
-    <>
-      <button type="button" onClick={() => setOpen(true)} className="mk-card w-full text-left transition-transform active:scale-[0.99]" style={{ padding: "1.15rem 1.25rem", display: "flex", alignItems: "center", gap: "0.9rem" }}>
-        <BrandMark size={30} />
-        <span className="min-w-0 flex-1 text-[17px] font-semibold leading-tight tracking-[-0.02em] md:text-[24px]">Один день из жизни с сервисом Мастер Касс</span>
-        <ArrowUp aria-hidden className="mk-cue-up size-5 shrink-0 md:size-6" />
-      </button>
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="mk-page max-h-[92vh] w-[96vw] max-w-4xl overflow-y-auto p-4 md:p-8" style={{ borderRadius: 16 }}>
-          <DialogTitle className="sr-only">Один день с «Мастер Касс»</DialogTitle>
-          <DialogDescription className="sr-only">Комикс о дне директора и бариста</DialogDescription>
-          <ComicStory />
-        </DialogContent>
-      </Dialog>
-    </>
-  );
-}
-
-function ComicStory() {
   return (
     <section>
       <h2 className="pr-8 text-[1.6rem] font-semibold leading-[1.05] tracking-[-0.035em] md:text-4xl">Один день с «Мастер Касс»</h2>
@@ -62,7 +38,7 @@ function ComicStory() {
             ))}
             {p.bubbles.map((b) => (
               <div key={b.text} className={`mk-bubble ${b.pos} text-[8.5px] md:text-[11px]`} data-tail={b.tail ?? "bl"}>
-                                {b.text}
+                {b.text}
               </div>
             ))}
           </figure>

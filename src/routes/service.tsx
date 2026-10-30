@@ -58,9 +58,6 @@ function ServicePage() {
           ))}
         </section>
 
-        <section className="mt-16">
-          <DayComic />
-        </section>
 
         <section className="mt-24">
           <h2 className="text-3xl font-semibold tracking-[-0.03em] md:text-4xl">Три тарифа</h2>
@@ -99,6 +96,10 @@ function ServicePage() {
 
 
         <AskAi title={"Задайте вопрос\nИИ-менеджеру"} prompt={"Что входит в тариф «Учёт»?\nРасскажи подробнее"} />
+
+        <section className="mt-24">
+          <DayComic />
+        </section>
       </main>
       <div className="px-4 pb-6"><SiteFooter /></div>
     </div>
