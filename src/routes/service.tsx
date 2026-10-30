@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { SiteFooter, AskAi } from "@/components/home-sections";
 import { DayComic } from "@/components/day-comic";
 import { BackHome } from "@/components/back-home";
+import { RequestForm } from "@/components/request-form";
 
 export const Route = createFileRoute("/service")({
   head: () => ({
