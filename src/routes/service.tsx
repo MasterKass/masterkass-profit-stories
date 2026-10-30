@@ -21,7 +21,8 @@ const pillars = [
   { n: "01", t: "Инженерный мост", d: "Сами диагностируем проблему, говорим с поддержкой приложений, банков и ОФД на их языке — и переводим ответ кассиру в простую инструкцию." },
   { n: "02", t: "AI-сотрудник 24/7", d: "Голосом и текстом: разбор ошибок, зависших чеков и блокировок. Вводит нового кассира за одну смену и подсказывает при любых изменениях законов." },
   { n: "03", t: "Цифровой паспорт точки", d: "Касса, сканер, весы, срок ФН, подключённые программы и подписки — в одном окне. Календарь платежей без внезапных блокировок." },
-  { n: "04", t: "Лояльность, которая окупает сервис", d: "Помогаем настроить бонусы, проверяем гипотезы и анализируем возврат гостей. Повторные продажи перекрывают стоимость обслуживания." },
+  { n: "04", t: "Новая касса каждые 3 года", d: "750 ₽ из каждого платежа уходят в ваш фонд. За 36 месяцев накапливается 27 000 ₽ — и вы получаете новый аппарат с переносом баз и перерегистрацией под ключ." },
+  { n: "05", t: "Утренний дайджест", d: "Каждое утро на почту — аккуратный PDF: выручка, средний чек, эффект акций и календарь ближайших платежей за программы кассы.", wide: true },
 ];
 
 const tariffs = [
@@ -48,9 +49,11 @@ function ServicePage() {
 
         <section className="mt-20 grid gap-4 md:grid-cols-2">
           {pillars.map((p) => (
-            <div key={p.n} className="mk-card">
-              <span className="text-xs font-medium tracking-widest" style={{ color: "var(--mk-muted)" }}>{p.n}</span>
-              <h2 className="mt-6 text-2xl font-semibold tracking-[-0.03em]">{p.t}</h2>
+            <div key={p.n} className={`mk-card${p.wide ? " mk-pillar-wide" : ""}${p.wide ? " md:col-span-2" : ""}`}>
+              <div>
+                <span className="text-xs font-medium tracking-widest" style={{ color: "var(--mk-muted)" }}>{p.n}</span>
+                <h2 className="mt-6 text-2xl font-semibold tracking-[-0.03em]">{p.t}</h2>
+              </div>
               <p className="mt-3 text-[15px] leading-relaxed" style={{ color: "var(--mk-muted)" }}>{p.d}</p>
             </div>
           ))}
@@ -79,17 +82,14 @@ function ServicePage() {
           </div>
         </section>
 
-        <section className="mt-24 grid gap-4 md:grid-cols-2">
-          <div className="mk-card">
-            <h2 className="text-2xl font-semibold tracking-[-0.03em]">Новая касса каждые 3 года</h2>
+        <section className="mt-24">
+          <div className="mk-card mk-pillar-wide">
+            <div>
+              <span className="text-xs font-medium tracking-widest" style={{ color: "var(--mk-muted)" }}>Лояльность</span>
+              <h2 className="mt-6 text-2xl font-semibold tracking-[-0.03em]">Лояльность, которая окупает сервис</h2>
+            </div>
             <p className="mt-3 text-[15px] leading-relaxed" style={{ color: "var(--mk-muted)" }}>
-              750 ₽ из каждого платежа уходят в ваш фонд. За 36 месяцев накапливается 27 000 ₽ — и вы получаете новый аппарат с переносом баз и перерегистрацией под ключ.
-            </p>
-          </div>
-          <div className="mk-card">
-            <h2 className="text-2xl font-semibold tracking-[-0.03em]">Утренний дайджест</h2>
-            <p className="mt-3 text-[15px] leading-relaxed" style={{ color: "var(--mk-muted)" }}>
-              Каждое утро на почту — аккуратный PDF: выручка, средний чек, эффект акций и календарь ближайших платежей за программы кассы.
+              Помогаем настроить бонусы, проверяем гипотезы и анализируем возврат гостей. Повторные продажи перекрывают стоимость обслуживания.
             </p>
           </div>
         </section>

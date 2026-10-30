@@ -295,6 +295,12 @@ body { font-family: var(--font-sans); }
 .mk-reveal .mk-reveal-icon.is-on { transform: scale(1); opacity: 1; color: var(--mk-fg); }
 .mk-card { display: block; padding: 1.75rem; border-radius: 1rem; border: 1px solid var(--mk-border); background: var(--mk-surface); transition: transform 250ms; }
 .mk-card:hover { transform: translateY(-3px); }
+/* Широкая опора сервиса: заголовок слева, текст справа */
+.mk-pillar-wide { display: grid; align-items: start; }
+@media (min-width: 768px) {
+  .mk-pillar-wide { grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); column-gap: 3rem; }
+  .mk-pillar-wide p { margin-top: 1.9rem; }
+}
 /* Карточки действий: воздух внутри, кнопка прижата к нижнему краю */
 .mk-tile { display: flex; flex-direction: column; justify-content: space-between; gap: 3rem; min-height: 440px; padding: 2rem; border-radius: 1rem; border: 1px solid var(--mk-border); background: var(--mk-surface); text-align: left; }
 .mk-tile-title { font-size: clamp(2rem, 2.6vw, 2.25rem); font-weight: 600; line-height: 1.08; letter-spacing: -0.035em; }
