@@ -90,9 +90,7 @@ function ServicePage() {
         </section>
 
 
-        <div className="mt-16">
-          <Link to="/support" className="mk-tile-btn">Обратиться в поддержку</Link>
-        </div>
+        <AskAi title="Обратитесь к AI-менеджеру для расчета стоимости вашего проекта" />
       </main>
       <div className="px-4 pb-6"><SiteFooter /></div>
     </div>
