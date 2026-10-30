@@ -391,10 +391,10 @@ export function AskAi({ title = "Задайте вопрос нашему ИИ �
   const typed = useTypewriter(promptLines, !text && !voice);
   return (
     <section id="ask" className="mk-section text-center">
-      <h2 className="mk-h2 mx-auto max-w-4xl">{title}</h2>
+      <h2 className="mk-h2 mx-auto max-w-4xl">{title.split("\n").map((t, i) => <span key={i} className="block">{t}</span>)}</h2>
       {q && (
         <div className="mx-auto mt-10 max-w-2xl space-y-3 text-left text-sm">
-          <div className="ml-auto w-fit max-w-[85%] rounded-2xl bg-[var(--mk-fg)] p-3 text-[var(--mk-bg)]">{q}</div>
+          <div className="ml-auto w-fit max-w-[85%] whitespace-pre-line rounded-2xl bg-[var(--mk-fg)] p-3 text-[var(--mk-bg)]">{q}</div>
           <div className="w-fit max-w-[85%] rounded-2xl bg-[var(--mk-bubble)] p-3">{DEMO[q] ?? "Спасибо за вопрос! Скоро здесь будет отвечать настоящий AI-помощник."}</div>
         </div>
       )}
@@ -413,7 +413,7 @@ export function AskAi({ title = "Задайте вопрос нашему ИИ �
           ) : (
             <>
               <input value={text} onChange={(e) => setText(e.target.value)} aria-label="Ваш вопрос" className="h-12 w-full bg-transparent text-base outline-none" />
-              {!text && <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center truncate pr-4 text-base text-[var(--mk-muted)] opacity-60">{typed}</span>}
+              {!text && <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center whitespace-pre-line pr-4 text-base leading-snug text-[var(--mk-muted)] opacity-60">{typed}</span>}
             </>
           )}
         </div>
