@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { ArrowUpRight, ChevronDown, Plus, ShieldCheck, MessageCircleMore, Keyboard, AudioLines } from "lucide-react";
+import { ArrowUpRight, ChevronDown, Plus, ShieldCheck, MessageCircleMore, Keyboard, Mic } from "lucide-react";
 import cafe from "@/assets/team-cafe.jpg";
 import florist from "@/assets/team-florist.jpg";
 import bakery from "@/assets/team-bakery.jpg";
@@ -420,7 +420,7 @@ export function AskAi({ title = "Задайте вопрос нашему ИИ �
           <button type="button" aria-label="Добавить" className="mk-icon-btn mk-icon-plain"><Plus className="h-5 w-5" /></button>
           <div className="flex items-center gap-1">
             <button type="button" onClick={() => setVoice(false)} aria-label="Ввести текстом" className={`mk-icon-btn mk-icon-plain ${voice ? "opacity-50" : ""}`}><Keyboard className="h-5 w-5" /></button>
-            <button type="button" onClick={() => setVoice(true)} aria-label="Задать вопрос голосом" className={`mk-icon-btn mk-icon-plain ${voice ? "" : "opacity-60"}`}><AudioLines className="h-5 w-5" /></button>
+            <button type="button" onClick={() => setVoice(true)} aria-label="Задать вопрос голосом" className={`mk-icon-btn mk-icon-plain ${voice ? "" : "opacity-60"}`}><Mic className="h-5 w-5" /></button>
           </div>
         </div>
       </form>
