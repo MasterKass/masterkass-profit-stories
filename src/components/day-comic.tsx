@@ -11,9 +11,7 @@ type Panel = { img: string; alt: string; span: string; ratio: string; caption?: 
 
 const panels: Panel[] = [
   { img: f1, alt: "Директор открывает утренний отчёт на телефоне", span: "col-span-1 row-span-3 md:col-span-2 md:row-span-4", ratio: "aspect-square", caption: "08:30 · Отчёт директора на почте", bubbles: [] },
-  { img: f2, alt: "Директор записывает голосовое сообщение", span: "col-span-1 row-span-3 md:col-span-4 md:row-span-4", ratio: "aspect-square", bubbles: [
-    { who: "Артём", text: "Аня, доброе утро! Смену вчера не закрыли — закрой, пожалуйста, перед началом работы. Как это сделать, спроси у ИИ-помощника.", pos: "right-[2%] top-[2%] w-[70%] md:w-[46%]", tail: "bl" },
-  ] },
+  { img: f2, alt: "Директор записывает голосовое сообщение Ане", span: "col-span-1 row-span-3 md:col-span-4 md:row-span-4", ratio: "aspect-square", bubbles: [] },
   { img: f3, alt: "Бариста получает голосовое сообщение", span: "col-span-2 row-span-2 md:col-span-6 md:row-span-4", ratio: "aspect-[3/2]", caption: "08:42 · Кофейня, до открытия", bubbles: [] },
   { img: f4, alt: "Бариста спрашивает ИИ-помощника, на экране эквалайзер", span: "col-span-1 row-span-3 md:col-span-2 md:row-span-5", ratio: "aspect-square", bubbles: [] },
   { img: f5, alt: "Бариста закрывает смену на кассе", span: "col-span-1 row-span-3 md:col-span-4 md:row-span-5", ratio: "aspect-square", bubbles: [
