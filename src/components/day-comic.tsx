@@ -49,7 +49,7 @@ function ComicStory() {
   return (
     <section>
       <h2 className="pr-8 text-[1.6rem] font-semibold leading-[1.05] tracking-[-0.035em] md:text-4xl">Один день с «Мастер Касс»</h2>
-      <p className="mt-3 text-[15px]" style={{ color: "var(--mk-muted)" }}>Утро директора и бариста — без звонков в поддержку и паники.</p>
+      <p className="mt-3 text-[15px]" style={{ color: "var(--mk-muted)" }}>Утро директора и бариста без звонков в поддержку и паники.</p>
       <div className="mt-8 grid grid-cols-1 auto-rows-[30px] gap-2 md:grid-cols-6 md:auto-rows-[80px] md:gap-3 md:grid-flow-row-dense">
         {panels.map((p, i) => (
           <figure key={p.alt} className={`mk-comic-panel relative overflow-hidden border-[1.5px] ${p.span}`} style={{ borderColor: "var(--mk-fg)", borderRadius: 0, animationDelay: `${i * 90}ms` }}>
@@ -68,7 +68,7 @@ function ComicStory() {
           </figure>
         ))}
       </div>
-      <p className="mt-6 text-lg font-semibold tracking-[-0.02em]">Технологии работают сами — директор спокоен, бизнес растёт.</p>
+      <p className="mt-6 text-lg font-semibold tracking-[-0.02em]">Технологии работают сами. Директор спокоен, бизнес растёт.</p>
     </section>
   );
 }

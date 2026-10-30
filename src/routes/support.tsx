@@ -5,7 +5,7 @@ import { SiteFooter } from "@/components/home-sections";
 export const Route = createFileRoute("/support")({
   head: () => ({
     meta: [
-      { title: "Поддержка — Мастер Касс" },
+      { title: "Поддержка · Мастер Касс" },
       { name: "description", content: "Обратитесь в поддержку Мастер Касс: AI-наставник круглосуточно и инженеры сервиса." },
       { property: "og:title", content: "Поддержка Мастер Касс" },
       { property: "og:description", content: "AI-наставник 24/7 и инженеры кассового сервиса." },
