@@ -9,9 +9,9 @@ import { AiReveal, AskAi, Benefit, ClientStories, GeoMap, JoinCta, Partners, Qui
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Мастер Касс — кассовый сервис в Ростове-на-Дону и на юге" },
+      { title: "Мастер Касс · кассовый сервис в Ростове-на-Дону и на юге" },
       { name: "description", content: "Заботимся о технологиях, пока вы заботитесь о клиентах. Сопровождение касс и AI-наставник с 9-летним опытом инженеров." },
-      { property: "og:title", content: "Мастер Касс — кассовый сервис" },
+      { property: "og:title", content: "Мастер Касс · кассовый сервис" },
       { property: "og:description", content: "Сопровождение касс, AI-наставник и 9 лет опыта сервисных инженеров." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
