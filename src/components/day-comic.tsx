@@ -7,7 +7,7 @@ import f6 from "@/assets/comic-f6.jpg";
 import f7 from "@/assets/comic-f7.jpg";
 
 type Bubble = { who: string; text: string; pos: string; tail?: "bl" | "br" | "tl" | "tr" };
-type Panel = { img: string; alt: string; span: string; ratio: string; caption?: string; bubbles: Bubble[] };
+type Panel = { img: string; alt: string; span: string; ratio: string; caption?: string; captionTop?: boolean; bubbles: Bubble[] };
 
 const panels: Panel[] = [
   { img: f1, alt: "Директор открывает утренний отчёт на телефоне", span: "col-span-1 row-span-3 md:col-span-2 md:row-span-4", ratio: "aspect-square", caption: "08:30 · Отчёт директора на почте", bubbles: [] },
@@ -28,10 +28,12 @@ export function DayComic() {
         {panels.map((p, i) => (
           <figure key={p.alt} className={`mk-comic-panel relative overflow-hidden border-[1.5px] ${p.span}`} style={{ borderColor: "var(--mk-fg)", borderRadius: 0, animationDelay: `${i * 90}ms` }}>
             <img src={p.img} alt={p.alt} loading="lazy" className="absolute inset-0 h-full w-full object-cover object-top" />
-            <span className="absolute left-3 top-3 px-2 py-0.5 text-[11px] font-semibold" style={{ background: "var(--mk-fg)", color: "var(--mk-surface)", display: p.bubbles.some((b) => b.pos.includes("left-3 top-3")) ? "none" : undefined }}>{i + 1}</span>
-            {p.caption && (
+            <span className="absolute left-3 top-3 px-2 py-0.5 text-[11px] font-semibold" style={{ background: "var(--mk-fg)", color: "var(--mk-surface)", display: p.captionTop ? "none" : undefined }}>{i + 1}</span>
+            {p.caption && (p.captionTop ? (
+              <figcaption className="absolute left-1/2 top-0 -translate-x-1/2 whitespace-nowrap px-3 py-1.5 text-[10px] font-semibold uppercase tracking-wide md:text-[12px]" style={{ borderBottom: "1.5px solid var(--mk-fg)", borderLeft: "1.5px solid var(--mk-fg)", borderRight: "1.5px solid var(--mk-fg)", background: "var(--mk-surface)" }}>{p.caption}</figcaption>
+            ) : (
               <figcaption className="absolute bottom-0 left-0 px-3 py-1.5 text-[12px] font-medium uppercase tracking-wide" style={{ borderTop: "1.5px solid var(--mk-fg)", borderRight: "1.5px solid var(--mk-fg)", background: "#fff" }}>{p.caption}</figcaption>
-            )}
+            ))}
             {p.bubbles.map((b) => (
               <div key={b.text} className={`mk-bubble ${b.pos} text-[8.5px] md:text-[11px]`} data-tail={b.tail ?? "bl"}>
                                 {b.text}
