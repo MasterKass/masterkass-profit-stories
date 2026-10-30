@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeft } from "lucide-react";
 import { SiteFooter } from "@/components/home-sections";
+import { DayComic } from "@/components/day-comic";
 
 export const Route = createFileRoute("/service")({
   head: () => ({
@@ -86,6 +87,8 @@ function ServicePage() {
             </p>
           </div>
         </section>
+
+        <DayComic />
 
         <div className="mt-16">
           <Link to="/support" className="mk-tile-btn">Обратиться в поддержку</Link>
