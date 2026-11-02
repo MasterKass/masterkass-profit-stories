@@ -5,6 +5,7 @@ import {
   AMORTIZATION_FUND,
   CASHIER_FREE_NOTE,
   FIRST_MONTH_BADGE,
+  FIRST_MONTH_BADGE_NOTE,
   FIRST_MONTH_NOTE,
   FREE_TEST_NOTE,
   SERVICE_TARIFFS,
@@ -33,7 +34,7 @@ describe("Тарифы и учёт AI-юнитов", () => {
 
   it("обещает первый месяц бесплатно на интеграцию и тесты", () => {
     expect(FIRST_MONTH_BADGE).toContain("бесплатно");
-    expect(FIRST_MONTH_BADGE).toContain("интеграция");
+    expect(FIRST_MONTH_BADGE_NOTE).toContain("интеграцию");
     expect(FIRST_MONTH_NOTE).toContain("Первый месяц бесплатно");
     expect(FREE_TEST_NOTE).toContain("бесплатно 1 месяц");
   });

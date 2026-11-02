@@ -432,7 +432,9 @@ body { font-family: var(--font-sans); }
 .mk-tariff-units span { display: block; margin-top: 2px; font-size: 12.5px; line-height: 1.45; color: color-mix(in oklch, var(--mk-tariff-deep) 82%, var(--mk-fg)); }
 
 /* Знак «первый месяц бесплатно» в карточке тарифа */
-.mk-tariff-free { align-self: flex-start; display: inline-block; margin-bottom: 0.9rem; padding: 0.35rem 0.65rem; border-radius: 10px; background: color-mix(in oklch, var(--mk-tariff-accent) 40%, var(--mk-surface)); border: 1px solid color-mix(in oklch, var(--mk-tariff-deep) 22%, transparent); font-size: 11.5px; font-weight: 600; letter-spacing: -0.005em; white-space: nowrap; color: var(--mk-tariff-deep); }
+.mk-tariff-free { align-self: flex-start; display: inline-block; margin-bottom: 0.9rem; padding: 0.45rem 0.7rem; border-radius: 10px; background: color-mix(in oklch, var(--mk-tariff-accent) 40%, var(--mk-surface)); border: 1px solid color-mix(in oklch, var(--mk-tariff-deep) 22%, transparent); }
+.mk-tariff-free b { display: block; font-size: 12.5px; font-weight: 600; letter-spacing: -0.01em; color: var(--mk-tariff-deep); }
+.mk-tariff-free span { display: block; margin-top: 1px; font-size: 11.5px; line-height: 1.35; color: color-mix(in oklch, var(--mk-tariff-deep) 80%, var(--mk-fg)); }
 
 /* Расшифровка учёта юнитов под сеткой тарифов */
 .mk-units-note { margin-top: 1rem; padding: 1.1rem 1.25rem; border-radius: 16px; background: var(--mk-surface); border: 1px solid var(--mk-border); }

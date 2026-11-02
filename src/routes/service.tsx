@@ -9,6 +9,7 @@ import {
   AMORTIZATION_FUND,
   CASHIER_FREE_NOTE,
   FIRST_MONTH_BADGE,
+  FIRST_MONTH_BADGE_NOTE,
   FIRST_MONTH_NOTE,
   SERVICE_TARIFFS,
   TOPUP_PACKAGES,
@@ -73,7 +74,10 @@ function ServicePage() {
           <div className="mt-8 grid gap-4 md:grid-cols-3">
             {tariffs.map((t) => (
               <div key={t.name} className={`mk-card mk-tariff mk-tariff-${t.tone} flex flex-col`}>
-                <span className="mk-tariff-free">{FIRST_MONTH_BADGE}</span>
+                <span className="mk-tariff-free">
+                  <b>{FIRST_MONTH_BADGE}</b>
+                  <span>{FIRST_MONTH_BADGE_NOTE}</span>
+                </span>
                 <h3 className="text-xl font-semibold">{t.name}</h3>
                 <p className="mt-2 text-sm" style={{ color: "var(--mk-muted)" }}>{t.who}</p>
                 <p className="mt-6 text-4xl font-semibold tracking-[-0.03em]">{t.price} <span className="text-base font-medium">₽/мес</span></p>
