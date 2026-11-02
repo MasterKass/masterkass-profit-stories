@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Check, ArrowUpRight } from "lucide-react";
 import { validateRequest, type RequestErrors } from "@/lib/request";
+import { FREE_TEST_NOTE } from "@/lib/tariffs";
 
 /** Тёмная плашка заявки на сервис: только телефон и почта. */
 export function RequestForm() {
@@ -33,8 +34,8 @@ export function RequestForm() {
           <span className="mk-lead-kicker">Заявка</span>
           <h2 id="request-title" className="mk-lead-title">Подать заявку на сервис</h2>
           <p className="mk-lead-note">
-            Первый месяц бесплатно и со всеми функциями. Оставьте телефон и почту: свяжемся в рабочее
-            время, разберём вашу кассу и подберём сопровождение.
+            {FREE_TEST_NOTE}. Оставьте телефон и почту: свяжемся в рабочее время, разберём вашу кассу
+            и подберём сопровождение.
           </p>
         </header>
 

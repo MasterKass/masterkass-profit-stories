@@ -4,6 +4,9 @@ import {
   AI_UNIT_SIZE,
   AMORTIZATION_FUND,
   CASHIER_FREE_NOTE,
+  FIRST_MONTH_BADGE,
+  FIRST_MONTH_NOTE,
+  FREE_TEST_NOTE,
   SERVICE_TARIFFS,
   TOPUP_PACKAGES,
   unitsLabel,
@@ -26,6 +29,13 @@ describe("Тарифы и учёт AI-юнитов", () => {
   it("переносит в карточку фонд 750 рублей и бесплатные вопросы кассира", () => {
     expect(AMORTIZATION_FUND).toContain("750");
     expect(CASHIER_FREE_NOTE).toContain("кассир");
+  });
+
+  it("обещает первый месяц бесплатно на интеграцию и тесты", () => {
+    expect(FIRST_MONTH_BADGE).toContain("бесплатно");
+    expect(FIRST_MONTH_BADGE).toContain("интеграция");
+    expect(FIRST_MONTH_NOTE).toContain("Первый месяц бесплатно");
+    expect(FREE_TEST_NOTE).toContain("бесплатно 1 месяц");
   });
 
   it("держит пакеты докупки 500/500, 1 500/1 350 и 5 000/4 000", () => {
