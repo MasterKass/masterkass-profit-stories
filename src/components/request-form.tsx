@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "@tanstack/react-router";
 import { Check, ArrowUpRight } from "lucide-react";
 import { validateRequest, type RequestErrors } from "@/lib/request";
 import { FREE_TEST_NOTE } from "@/lib/tariffs";
@@ -31,12 +32,8 @@ export function RequestForm() {
     <section className="mk-lead" id="request" aria-labelledby="request-title">
       <div className="mk-lead-grid">
         <header className="max-w-md">
-          <span className="mk-lead-kicker">Заявка</span>
           <h2 id="request-title" className="mk-lead-title">Подать заявку на сервис</h2>
-          <p className="mk-lead-note">
-            {FREE_TEST_NOTE}. Оставьте телефон и почту: свяжемся в рабочее время, разберём вашу кассу
-            и подберём сопровождение.
-          </p>
+          <p className="mk-lead-note">{FREE_TEST_NOTE}.</p>
         </header>
 
         {sent ? (
@@ -100,8 +97,8 @@ export function RequestForm() {
                 <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
               </button>
               <p className="mk-lead-privacy">
-                Телефон и почта нужны, чтобы связаться с вами и прислать расчёт. Отправляя заявку,
-                вы соглашаетесь на обработку персональных данных.
+                Отправляя заявку, соглашаетесь на обработку персональных данных согласно{" "}
+                <Link to="/privacy">Политике обработки персональных данных</Link>.
               </p>
             </div>
           </form>
