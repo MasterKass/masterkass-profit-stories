@@ -1,6 +1,7 @@
 import { QueryClient } from "@tanstack/react-query";
-import { createRouter, rootRouteId } from "@tanstack/react-router";
-import { describe, expect, it } from "vitest";
+import { createMemoryHistory, createRouter, rootRouteId, RouterProvider } from "@tanstack/react-router";
+import { cleanup, render, screen } from "@testing-library/react";
+import { afterEach, describe, expect, it } from "vitest";
 
 import { routeTree } from "@/routeTree.gen";
 
@@ -21,5 +22,35 @@ describe("App routing", () => {
     const matches = router.matchRoutes("/privacy");
 
     expect(matches.at(-1)?.routeId).not.toBe(rootRouteId);
+  });
+});
+
+function renderPage(path: string) {
+  const router = createRouter({
+    routeTree,
+    history: createMemoryHistory({ initialEntries: [path] }),
+    context: { queryClient: new QueryClient() },
+  });
+  return render(<RouterProvider router={router} />);
+}
+
+describe("Legal and return links", () => {
+  afterEach(cleanup);
+
+  it("sends both footer legal links to the privacy page", () => {
+    renderPage("/");
+
+    for (const label of ["Политика конфиденциальности", "Согласие на обработку персональных данных"]) {
+      expect(screen.getByRole("link", { name: label })).toHaveAttribute("href", "/privacy");
+    }
+  });
+
+  it("returns from the privacy page to the request form, not to the home page", () => {
+    renderPage("/privacy");
+
+    expect(screen.getByRole("link", { name: "Вернуться к подаче заявки" })).toHaveAttribute(
+      "href",
+      "/service#request",
+    );
   });
 });
