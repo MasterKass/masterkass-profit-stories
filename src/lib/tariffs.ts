@@ -59,7 +59,7 @@ export const CASHIER_FREE_NOTE = "Вопросы кассира по кассе 
 /** Первый месяц стоит 0 ₽ и идёт на интеграцию оборудования и тесты (mem://pricing/onboarding-free-month.md) */
 export const FIRST_MONTH_BADGE = "1-й месяц бесплатно";
 export const FIRST_MONTH_BADGE_NOTE = "на интеграцию и тесты";
-export const FIRST_MONTH_NOTE = "Первый месяц бесплатно, со всеми функциями. Он идёт на интеграцию и тесты.";
+export const FIRST_MONTH_NOTE = "Первый месяц бесплатно, со всеми функциями.";
 export const FREE_TEST_NOTE = "Протестируете работу нашего сервиса бесплатно 1 месяц";
 
 /** 1 000 -> «1 000» с неразрывным пробелом, чтобы число не разрывалось в карточке */
