@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteFooter, AskAi } from "@/components/home-sections";
 import { DayComic } from "@/components/day-comic";
 import { BackHome } from "@/components/back-home";
@@ -94,7 +94,8 @@ function ServicePage() {
                   ))}
                 </ul>
                 <div className="mt-auto pt-6">
-                  <p className="text-xs" style={{ color: "var(--mk-muted)" }}>{CASHIER_FREE_NOTE}</p>
+                  <Link to="/onboarding" search={{ tariff: t.tone }} className="mk-tariff-cta">Начать бесплатно</Link>
+                  <p className="mt-4 text-xs" style={{ color: "var(--mk-muted)" }}>{CASHIER_FREE_NOTE}</p>
                   <p className="mt-1.5 text-xs" style={{ color: "var(--mk-muted)" }}>Включая {AMORTIZATION_FUND}</p>
                 </div>
               </div>
