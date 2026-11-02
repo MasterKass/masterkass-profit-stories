@@ -418,21 +418,30 @@ body { font-family: var(--font-sans); }
 .mk-bubble[data-tail="tl"]::after { left: 22%; top: -8px; transform: rotate(225deg) skew(12deg,12deg); }
 .mk-bubble[data-tail="tr"]::after { right: 22%; top: -8px; transform: rotate(225deg) skew(12deg,12deg); }
 
-/* Тарифы: фирменная палитра — «Просто» голубой, «Учёт» зелёный, «Контроль» оранжевый */
-.mk-tariff { position: relative; display: flex; flex-direction: column; background: var(--mk-tariff-bg); border-color: var(--mk-tariff-line); }
-.mk-tariff::before { content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px; background: linear-gradient(90deg, transparent 0 16px, oklch(0.68 0.19 45) 24px, oklch(0.8 0.17 95) 34%, oklch(0.72 0.19 135) 56%, oklch(0.72 0.13 205) 76%, transparent calc(100% - 16px) 100%); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; clip-path: inset(0 0 calc(100% - 24px) 0); pointer-events: none; }
+/* Тарифы: тот же яркий фирменный спектр наискосок, что и в плашке заявки, без прозрачности, рамки и верхней линии.
+   В каждом тарифе своим цветом больше: «Просто» — голубого, «Учёт» — зелёного, «Контроль» — оранжевого. */
+.mk-tariff { position: relative; display: flex; flex-direction: column; border: 0; background: var(--mk-tariff-grad); }
 .mk-tariff h3 { color: var(--mk-tariff-deep); }
-.mk-tariff-cyan { --mk-tariff-bg: oklch(0.968 0.02 205); --mk-tariff-line: oklch(0.7 0.08 205 / 0.4); --mk-tariff-accent: oklch(0.85 0.12 200); --mk-tariff-deep: oklch(0.44 0.1 215); }
-.mk-tariff-lime { --mk-tariff-bg: oklch(0.97 0.032 130); --mk-tariff-line: oklch(0.7 0.12 135 / 0.42); --mk-tariff-accent: oklch(0.82 0.18 140); --mk-tariff-deep: oklch(0.42 0.12 135); }
-.mk-tariff-amber { --mk-tariff-bg: oklch(0.968 0.028 75); --mk-tariff-line: oklch(0.72 0.13 60 / 0.45); --mk-tariff-accent: oklch(0.72 0.17 50); --mk-tariff-deep: oklch(0.45 0.13 55); }
+.mk-tariff-cyan {
+  --mk-tariff-grad: linear-gradient(135deg, oklch(0.88 0.1 195) 0%, oklch(0.85 0.14 205) 30%, oklch(0.81 0.16 213) 58%, oklch(0.84 0.15 175) 82%, oklch(0.88 0.16 125) 100%);
+  --mk-tariff-deep: oklch(0.37 0.11 220);
+}
+.mk-tariff-lime {
+  --mk-tariff-grad: linear-gradient(135deg, oklch(0.89 0.14 108) 0%, oklch(0.87 0.18 130) 28%, oklch(0.84 0.19 143) 58%, oklch(0.84 0.16 168) 82%, oklch(0.87 0.12 200) 100%);
+  --mk-tariff-deep: oklch(0.36 0.12 135);
+}
+.mk-tariff-amber {
+  --mk-tariff-grad: linear-gradient(135deg, oklch(0.78 0.18 44) 0%, oklch(0.82 0.18 66) 28%, oklch(0.86 0.17 88) 58%, oklch(0.87 0.16 104) 82%, oklch(0.88 0.15 124) 100%);
+  --mk-tariff-deep: oklch(0.39 0.13 55);
+}
 
 /* Включённые AI-юниты в карточке тарифа */
-.mk-tariff-units { margin-top: 1.15rem; padding: 0.7rem 0.85rem; border-radius: 12px; background: color-mix(in oklch, var(--mk-tariff-accent) 24%, var(--mk-surface)); border: 1px solid color-mix(in oklch, var(--mk-tariff-deep) 15%, transparent); }
+.mk-tariff-units { margin-top: 1.15rem; padding: 0.7rem 0.85rem; border-radius: 12px; border: 0; background: var(--mk-surface); }
 .mk-tariff-units b { display: block; font-size: 15px; font-weight: 600; letter-spacing: -0.015em; color: var(--mk-tariff-deep); }
 .mk-tariff-units span { display: block; margin-top: 2px; font-size: 12.5px; line-height: 1.45; color: color-mix(in oklch, var(--mk-tariff-deep) 82%, var(--mk-fg)); }
 
 /* Знак «первый месяц бесплатно» в карточке тарифа */
-.mk-tariff-free { align-self: flex-start; display: inline-block; margin-bottom: 0.9rem; padding: 0.45rem 0.7rem; border-radius: 10px; background: color-mix(in oklch, var(--mk-tariff-accent) 40%, var(--mk-surface)); border: 1px solid color-mix(in oklch, var(--mk-tariff-deep) 22%, transparent); }
+.mk-tariff-free { align-self: flex-start; display: inline-block; margin-bottom: 0.9rem; padding: 0.45rem 0.7rem; border-radius: 10px; border: 0; background: color-mix(in oklch, var(--mk-tariff-deep) 12%, var(--mk-surface)); }
 .mk-tariff-free b { display: block; font-size: 12.5px; font-weight: 600; letter-spacing: -0.01em; color: var(--mk-tariff-deep); }
 .mk-tariff-free span { display: block; margin-top: 1px; font-size: 11.5px; line-height: 1.35; color: color-mix(in oklch, var(--mk-tariff-deep) 80%, var(--mk-fg)); }
 
