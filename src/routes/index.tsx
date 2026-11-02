@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { LogIn } from "lucide-react";
 import { WelcomeHero } from "@/components/welcome-hero";
 import { BrandMark } from "@/components/brand-mark";
