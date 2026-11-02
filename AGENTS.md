@@ -16,3 +16,4 @@
 - Inner pages return to the home page through the shared src/components/back-home.tsx circle (.mk-back-home) pinned in the screen corner, not a text link at the top of the article, so the way back stays reachable without scrolling up.
 - .mk-card is unlayered CSS with display:block, so it beats Tailwind's flex utility; a card that needs flex layout (like bottom-aligned footnotes) must declare display:flex in its own .mk-* class in src/styles.css.
 - Tariff data and AI-unit numbers live in src/lib/tariffs.ts and are asserted by src/lib/tariffs.test.ts; change the figures only together with the billing decision they come from.
+- FAQ items in src/components/home-sections.tsx are {q, a: string[]} objects and every answer paragraph renders as its own <p>, so long trust answers stay readable on phones; add new questions in that same shape.
