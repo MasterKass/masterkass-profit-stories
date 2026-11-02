@@ -21,7 +21,7 @@ export const Route = createFileRoute("/login")({
       { title: "Вход в кабинет · Мастер Касс" },
       { name: "description", content: "Вход в личный кабинет Мастер Касс по номеру телефона и коду из SMS, без паролей." },
       { property: "og:title", content: "Вход в кабинет · Мастер Касс" },
-      { property: "og:description", content: "Вход по номеру телефона и SMS-коду. Доступ по ролям: директор, кассир, бухгалтер." },
+      { property: "og:description", content: "Вход по номеру телефона и SMS-коду. Доступ по ролям: директор, администратор, бухгалтер, кассир." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],

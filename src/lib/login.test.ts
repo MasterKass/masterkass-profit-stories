@@ -1,5 +1,15 @@
 import { describe, expect, it } from "vitest";
-import { formatPhone, normalizePhone, verifyCode, CODE_LENGTH, RESEND_SECONDS } from "./login";
+import {
+  CODE_LENGTH,
+  DEMO_ACCOUNTS,
+  DEMO_CODE,
+  OWNER_PHONES,
+  RESEND_SECONDS,
+  formatPhone,
+  normalizePhone,
+  roleForPhone,
+  verifyCode,
+} from "./login";
 
 describe("вход по SMS", () => {
   it("принимает номер с 8, +7 и без кода страны", () => {
@@ -17,12 +27,24 @@ describe("вход по SMS", () => {
   });
   it("каждый демо-номер открывает свою роль", () => {
     expect(verifyCode("+79000000001", "1234")).toEqual({ ok: true, role: "director" });
-    expect(verifyCode("+79000000002", "1234")).toEqual({ ok: true, role: "cashier" });
+    expect(verifyCode("+79000000002", "1234")).toEqual({ ok: true, role: "administrator" });
     expect(verifyCode("+79000000003", "1234")).toEqual({ ok: true, role: "accountant" });
-    expect(verifyCode("+79000000004", "1234")).toEqual({ ok: true, role: "owner" });
+    expect(verifyCode("+79000000004", "1234")).toEqual({ ok: true, role: "cashier" });
+  });
+  it("на экране входа только четыре роли: директор, администратор, бухгалтер, кассир", () => {
+    expect(DEMO_ACCOUNTS.map((a) => a.role)).toEqual(["director", "administrator", "accountant", "cashier"]);
+    expect(DEMO_ACCOUNTS.some((a) => a.role === "owner")).toBe(false);
+  });
+  it("хозяин скрыт: открывается ровно двумя номерами", () => {
+    expect(OWNER_PHONES).toHaveLength(2);
+    expect(roleForPhone("+79000000007")).toBe("owner");
+    expect(roleForPhone("+79000000008")).toBe("owner");
+    expect(verifyCode("+79000000007", "1234")).toEqual({ ok: true, role: "owner" });
+    expect(DEMO_ACCOUNTS.some((a) => OWNER_PHONES.includes(a.phone))).toBe(false);
   });
   it("неверный код и чужой номер не пускают", () => {
     expect(verifyCode("+79000000001", "0000").ok).toBe(false);
     expect(verifyCode("+79991112233", "1234").ok).toBe(false);
+    expect(roleForPhone("+79991112233")).toBeNull();
   });
 });
