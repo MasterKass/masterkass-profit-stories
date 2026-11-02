@@ -33,7 +33,7 @@ export const Route = createFileRoute("/onboarding")({
   component: Onboarding,
 });
 
-const fmt = (d: Date) => d.toLocaleDateString("ru-RU", { day: "numeric", month: "long", year: "numeric" });
+const fmt = (d: Date) => d.toLocaleDateString("ru-RU", { day: "numeric", month: "long", year: "numeric" }).replace(/ г\.$/, "");
 
 function Onboarding() {
   const search = Route.useSearch();
