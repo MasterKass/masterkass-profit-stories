@@ -1,28 +1,33 @@
 /** Вход по номеру телефона и SMS-коду. Пока работает демонстрационный режим без настоящего SMS-шлюза. */
 
-export type Role = "director" | "cashier" | "accountant" | "owner";
+export type Role = "director" | "administrator" | "accountant" | "cashier" | "owner";
 
 export const ROLE_LABELS: Record<Role, string> = {
   director: "Директор",
-  cashier: "Кассир",
+  administrator: "Администратор",
   accountant: "Бухгалтер",
+  cashier: "Кассир",
   owner: "Хозяин",
 };
 
 export const ROLE_ACCESS: Record<Role, string[]> = {
   director: ["Выручка", "Сроки оплат", "Лояльность", "Фонд «Новая касса»", "Утренний PDF-дайджест"],
-  cashier: ["ИИ-наставник", "Вызов инженера", "Обучение"],
+  administrator: ["Товароучёт и накладные", "Контроль смен и расписания", "Инвентаризация и техкарты", "Регламенты точки"],
   accountant: ["Счета", "Закрывающие акты", "Сроки оплат"],
+  cashier: ["ИИ-наставник", "Вызов инженера", "Обучение"],
   owner: ["Финансы компании", "Клиенты", "Команда", "База знаний", "Стратегический ИИ"],
 };
 
-/** Демонстрационные номера: каждый открывает свою роль. */
+/** Демонстрационные номера: каждый открывает свою роль. Показываются на экране входа. */
 export const DEMO_ACCOUNTS: { phone: string; role: Role }[] = [
   { phone: "+79000000001", role: "director" },
-  { phone: "+79000000002", role: "cashier" },
+  { phone: "+79000000002", role: "administrator" },
   { phone: "+79000000003", role: "accountant" },
-  { phone: "+79000000004", role: "owner" },
+  { phone: "+79000000004", role: "cashier" },
 ];
+
+/** Скрытый доступ владельца: ровно эти два номера. Нигде на экране не показываются. */
+export const OWNER_PHONES: string[] = ["+79000000007", "+79000000008"];
 
 export const DEMO_CODE = "1234";
 export const CODE_LENGTH = 4;
@@ -50,6 +55,7 @@ export function formatPhone(input: string): string {
 }
 
 export function roleForPhone(phone: string): Role | null {
+  if (OWNER_PHONES.includes(phone)) return "owner";
   return DEMO_ACCOUNTS.find((a) => a.phone === phone)?.role ?? null;
 }
 
