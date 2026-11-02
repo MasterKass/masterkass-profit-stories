@@ -395,6 +395,9 @@ body { font-family: var(--font-sans); }
 .mk-footer-link { font-size: 12.5px; line-height: 1.4; letter-spacing: 0.005em; color: var(--mk-muted); cursor: pointer; transition: color 200ms; -webkit-tap-highlight-color: transparent; }
 .mk-footer-link:hover, .mk-footer-link:focus-visible { color: var(--mk-fg); }
 
+/* Якорь блока тарифов: заголовок не уходит под прилипшую шапку */
+#tariffs { scroll-margin-top: 6.5rem; }
+
 /* Карточки FAQ: плотный белый, тонкая рамка, микро-тень */
 .mk-faq-card { border-radius: 1rem; background: var(--mk-surface); border: 1px solid var(--mk-border); }
 

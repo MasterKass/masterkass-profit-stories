@@ -68,7 +68,7 @@ function ServicePage() {
         </section>
 
 
-        <section className="mt-24">
+        <section className="mt-24" id="tariffs">
           <h2 className="text-3xl font-semibold tracking-[-0.03em] md:text-4xl">Три тарифа</h2>
           <p className="mt-3 text-[15px]" style={{ color: "var(--mk-muted)" }}>{FIRST_MONTH_NOTE}</p>
           <div className="mt-8 grid gap-4 md:grid-cols-3">

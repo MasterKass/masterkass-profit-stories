@@ -456,7 +456,12 @@ export function AskAi({ title = "Задайте вопрос нашему ИИ �
   );
 }
 
-/* 12. Подвал — карточка с разделами (будущие отдельные страницы) */
+/* 12. Подвал — карточка с разделами (часть слов ведёт на готовые страницы) */
+/** Слова подвала, у которых уже есть адрес: «Тарифы» открывают блок тарифов на странице сервиса. */
+const FOOTER_ROUTES: Record<string, { to: "/service"; hash?: string }> = {
+  "Тарифы": { to: "/service", hash: "tariffs" },
+};
+
 const FOOTER_COLUMNS: { title: string; links: string[] }[] = [
   { title: "Сервис", links: ["Как устроен сервис", "AI-сотрудник 24/7", "Тарифы", "Фонд амортизации", "Вопросы о сервисе", "Поддержка"] },
   { title: "Оборудование", links: ["Кассы и оборудование", "Кассы Эвотор", "Кассы Касатка", "Замена фискального накопителя", "Диагностика сбоев"] },
@@ -478,11 +483,18 @@ export function SiteFooter() {
             <div key={col.title}>
               <div className="mk-footer-title">{col.title}</div>
               <ul className="mt-3 space-y-2">
-                {col.links.map((label) => (
-                  <li key={label}>
-                    <button type="button" title="Раздел в разработке" className="mk-footer-link text-left">{label}</button>
-                  </li>
-                ))}
+                {col.links.map((label) => {
+                  const route = FOOTER_ROUTES[label];
+                  return (
+                    <li key={label}>
+                      {route ? (
+                        <Link to={route.to} {...(route.hash ? { hash: route.hash } : {})} className="mk-footer-link text-left">{label}</Link>
+                      ) : (
+                        <button type="button" title="Раздел в разработке" className="mk-footer-link text-left">{label}</button>
+                      )}
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           ))}
