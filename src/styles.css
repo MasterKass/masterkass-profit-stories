@@ -419,12 +419,22 @@ body { font-family: var(--font-sans); }
 .mk-bubble[data-tail="tr"]::after { right: 22%; top: -8px; transform: rotate(225deg) skew(12deg,12deg); }
 
 /* Тарифы: фирменная палитра — «Просто» голубой, «Учёт» зелёный, «Контроль» оранжевый */
-.mk-tariff { position: relative; background: var(--mk-tariff-bg); border-color: var(--mk-tariff-line); }
+.mk-tariff { position: relative; display: flex; flex-direction: column; background: var(--mk-tariff-bg); border-color: var(--mk-tariff-line); }
 .mk-tariff::before { content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px; background: linear-gradient(90deg, transparent 0 16px, oklch(0.68 0.19 45) 24px, oklch(0.8 0.17 95) 34%, oklch(0.72 0.19 135) 56%, oklch(0.72 0.13 205) 76%, transparent calc(100% - 16px) 100%); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; clip-path: inset(0 0 calc(100% - 24px) 0); pointer-events: none; }
 .mk-tariff h3 { color: var(--mk-tariff-deep); }
 .mk-tariff-cyan { --mk-tariff-bg: oklch(0.968 0.02 205); --mk-tariff-line: oklch(0.7 0.08 205 / 0.4); --mk-tariff-accent: oklch(0.85 0.12 200); --mk-tariff-deep: oklch(0.44 0.1 215); }
 .mk-tariff-lime { --mk-tariff-bg: oklch(0.97 0.032 130); --mk-tariff-line: oklch(0.7 0.12 135 / 0.42); --mk-tariff-accent: oklch(0.82 0.18 140); --mk-tariff-deep: oklch(0.42 0.12 135); }
 .mk-tariff-amber { --mk-tariff-bg: oklch(0.968 0.028 75); --mk-tariff-line: oklch(0.72 0.13 60 / 0.45); --mk-tariff-accent: oklch(0.72 0.17 50); --mk-tariff-deep: oklch(0.45 0.13 55); }
+
+/* Включённые AI-юниты в карточке тарифа */
+.mk-tariff-units { margin-top: 1.15rem; padding: 0.7rem 0.85rem; border-radius: 12px; background: color-mix(in oklch, var(--mk-tariff-accent) 24%, var(--mk-surface)); border: 1px solid color-mix(in oklch, var(--mk-tariff-deep) 15%, transparent); }
+.mk-tariff-units b { display: block; font-size: 15px; font-weight: 600; letter-spacing: -0.015em; color: var(--mk-tariff-deep); }
+.mk-tariff-units span { display: block; margin-top: 2px; font-size: 12.5px; line-height: 1.45; color: color-mix(in oklch, var(--mk-tariff-deep) 82%, var(--mk-fg)); }
+
+/* Расшифровка учёта юнитов под сеткой тарифов */
+.mk-units-note { margin-top: 1rem; padding: 1.1rem 1.25rem; border-radius: 16px; background: var(--mk-surface); border: 1px solid var(--mk-border); }
+.mk-units-note-title { display: block; font-size: 11px; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; color: var(--mk-muted); }
+.mk-units-note p { margin-top: 0.5rem; font-size: 13.5px; line-height: 1.55; color: var(--mk-muted); }
 
 /* Заявка на сервис: тёмная плашка, минималистичная форма (телефон и почта) */
 .mk-lead {

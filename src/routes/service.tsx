@@ -3,6 +3,15 @@ import { SiteFooter, AskAi } from "@/components/home-sections";
 import { DayComic } from "@/components/day-comic";
 import { BackHome } from "@/components/back-home";
 import { RequestForm } from "@/components/request-form";
+import {
+  AI_UNIT_PRICE,
+  AI_UNIT_SIZE,
+  AMORTIZATION_FUND,
+  CASHIER_FREE_NOTE,
+  SERVICE_TARIFFS,
+  TOPUP_PACKAGES,
+  unitsLabel,
+} from "@/lib/tariffs";
 
 export const Route = createFileRoute("/service")({
   head: () => ({
@@ -26,13 +35,11 @@ const pillars = [
   { n: "05", t: "Новая касса каждые 3 года", d: "750 ₽ из каждого платежа уходят в ваш фонд. За 36 месяцев накапливается 27 000 ₽, и вы получаете новый аппарат с переносом баз и перерегистрацией под ключ.", wide: true },
 ];
 
-const tariffs = [
-  { name: "Просто", tone: "cyan", price: "1 950", who: "Услуги: студии, абонементы. До 10 позиций номенклатуры.", items: ["Мониторинг ФН и ОФД 24/7", "ИИ-помощник и инженер", "Базовая лояльность", "Утренний дайджест"] },
-  { name: "Учёт", tone: "lime", price: "3 850", who: "Магазины, кофейни, пекарни. Широкий ассортимент.", items: ["Помощь в настройке и ведении товароучёта", "Техкарты и инвентаризации", "Настройка лояльности и анализ", "Расширенный дайджест"] },
-  { name: "Контроль", tone: "amber", price: "5 650", who: "Бизнес с госсистемами. Маркеты, общепит, лавки.", items: ["Всё из тарифа «Учёт»", "Честный Знак, Меркурий, ЕГАИС", "ЭДО и ЭЦП под контролем", "Приоритетная аварийная линия"] },
-];
+const tariffs = SERVICE_TARIFFS;
 
 function ServicePage() {
+  const topups = TOPUP_PACKAGES.map((p) => `${unitsLabel(p.units)} за ${p.price} ₽`).join(", ");
+
   return (
     <div className="mk-page min-h-screen">
       <BackHome />
@@ -67,6 +74,10 @@ function ServicePage() {
                 <h3 className="text-xl font-semibold">{t.name}</h3>
                 <p className="mt-2 text-sm" style={{ color: "var(--mk-muted)" }}>{t.who}</p>
                 <p className="mt-6 text-4xl font-semibold tracking-[-0.03em]">{t.price} <span className="text-base font-medium">₽/мес</span></p>
+                <div className="mk-tariff-units">
+                  <b>{unitsLabel(t.units)} AI-юнитов в месяц</b>
+                  <span>{t.unitsNote}</span>
+                </div>
                 <ul className="mt-6 space-y-2 text-[14px]">
                   {t.items.map((i) => (
                     <li key={i} className="flex items-start gap-2.5">
@@ -75,9 +86,19 @@ function ServicePage() {
                     </li>
                   ))}
                 </ul>
-                <p className="mt-6 text-xs" style={{ color: "var(--mk-muted)" }}>Включая 750 рублей в фонд «Новой кассы» каждый месяц</p>
+                <div className="mt-auto pt-6">
+                  <p className="text-xs" style={{ color: "var(--mk-muted)" }}>{CASHIER_FREE_NOTE}</p>
+                  <p className="mt-1.5 text-xs" style={{ color: "var(--mk-muted)" }}>Включая {AMORTIZATION_FUND}</p>
+                </div>
               </div>
             ))}
+          </div>
+
+          <div className="mk-units-note">
+            <span className="mk-units-note-title">Как считаются AI-юниты</span>
+            <p>
+              1 юнит равен {unitsLabel(AI_UNIT_SIZE)} токенов, это примерно один разговор с помощником. Цена {AI_UNIT_PRICE}. Тарифные юниты обновляются 1-го числа, неиспользованные за месяц сгорают. Купленные пакеты не сгорают и переходят на следующий месяц: {topups}. Баланс и историю списаний покажем в личном кабинете.
+            </p>
           </div>
         </section>
 
