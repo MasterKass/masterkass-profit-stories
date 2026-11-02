@@ -491,8 +491,8 @@ export function SiteFooter() {
         <div className="mt-10 flex flex-col gap-2 border-t border-[var(--mk-border)] pt-5 md:flex-row md:items-center md:justify-between">
           <div className="mk-footer-link">© 2026 МастерКасс</div>
           <div className="flex flex-col gap-2 md:flex-row md:gap-6">
-            <button type="button" title="Раздел в разработке" className="mk-footer-link text-left">Политика конфиденциальности</button>
-            <button type="button" title="Раздел в разработке" className="mk-footer-link text-left">Согласие на обработку персональных данных</button>
+            <Link to="/privacy" className="mk-footer-link text-left">Политика конфиденциальности</Link>
+            <Link to="/privacy" className="mk-footer-link text-left">Согласие на обработку персональных данных</Link>
           </div>
         </div>
       </div>

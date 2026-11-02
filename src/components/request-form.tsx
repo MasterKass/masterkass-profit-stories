@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Check, ArrowUpRight } from "lucide-react";
 import { validateRequest, type RequestErrors } from "@/lib/request";
@@ -11,6 +11,31 @@ export function RequestForm() {
   const [honeypot, setHoneypot] = useState("");
   const [errors, setErrors] = useState<RequestErrors>({});
   const [sent, setSent] = useState(false);
+
+  // Кружок возврата со страницы политики ведёт сюда. Страница ещё догружается
+  // (кадры комикса, печатающийся текст помощника) и плашка «уезжает» вниз,
+  // поэтому подстраиваемся, пока высота страницы меняется.
+  useEffect(() => {
+    if (window.location.hash !== "#request") return;
+    const node = document.getElementById("request");
+    if (!node) return;
+
+    const OFFSET = 90;
+    node.scrollIntoView({ block: "start" });
+
+    let lastHeight = document.documentElement.scrollHeight;
+    let tries = 0;
+    const timer = window.setInterval(() => {
+      const height = document.documentElement.scrollHeight;
+      if (++tries > 12 || height === lastHeight) return window.clearInterval(timer);
+      lastHeight = height;
+      if (Math.abs(node.getBoundingClientRect().top - OFFSET) > 8) node.scrollIntoView({ block: "start" });
+    }, 150);
+
+    return () => window.clearInterval(timer);
+  }, []);
+
+
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
