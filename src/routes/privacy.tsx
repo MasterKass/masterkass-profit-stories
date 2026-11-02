@@ -67,7 +67,7 @@ const sections = [
 function PrivacyPage() {
   return (
     <div className="mk-page min-h-screen">
-      <BackHome />
+      <BackHome destination="request" />
       <main className="mx-auto max-w-3xl px-5 pb-20 pt-12">
         <h1 className="text-[2.25rem] font-semibold leading-[1.08] tracking-[-0.035em] md:text-5xl">
           Политика обработки персональных данных
