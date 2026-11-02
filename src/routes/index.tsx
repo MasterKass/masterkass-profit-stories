@@ -52,7 +52,7 @@ function Header() {
     <header className="welcome-header sticky top-0 z-30">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5 md:px-8">
         <span className="welcome-brand flex items-center gap-1"><BrandMark />Мастер Касс</span>
-        <Button type="button" variant="outline" title="Раздел в разработке" className="welcome-login"><LogIn />Войти</Button>
+        <Button asChild variant="outline" className="welcome-login"><Link to="/login"><LogIn />Войти</Link></Button>
       </div>
     </header>
   );
