@@ -25,28 +25,29 @@ describe("App routing", () => {
   });
 });
 
-function renderPage(path: string) {
+async function renderPage(path: string) {
   const router = createRouter({
     routeTree,
     history: createMemoryHistory({ initialEntries: [path] }),
     context: { queryClient: new QueryClient() },
   });
+  await router.load();
   return render(<RouterProvider router={router} />);
 }
 
 describe("Legal and return links", () => {
   afterEach(cleanup);
 
-  it("sends both footer legal links to the privacy page", () => {
-    renderPage("/");
+  it("sends both footer legal links to the privacy page", async () => {
+    await renderPage("/");
 
     for (const label of ["Политика конфиденциальности", "Согласие на обработку персональных данных"]) {
       expect(screen.getByRole("link", { name: label })).toHaveAttribute("href", "/privacy");
     }
   });
 
-  it("returns from the privacy page to the request form, not to the home page", () => {
-    renderPage("/privacy");
+  it("returns from the privacy page to the request form, not to the home page", async () => {
+    await renderPage("/privacy");
 
     expect(screen.getByRole("link", { name: "Вернуться к подаче заявки" })).toHaveAttribute(
       "href",
