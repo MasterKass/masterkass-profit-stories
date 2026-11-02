@@ -53,3 +53,16 @@ describe("Тарифы и учёт AI-юнитов", () => {
     expect(unitsLabel(300)).toBe("300");
   });
 });
+
+import { TARIFF_STAFF as STAFF, SERVICE_TARIFFS as T2 } from "./tariffs";
+import { isValidPhone } from "./onboarding";
+describe("лимиты сотрудников", () => {
+  it("Просто — 3, Учёт — 5, Контроль — 5", () => {
+    expect(STAFF).toEqual({ cyan: 3, lime: 5, amber: 5 });
+    expect(T2.map((t) => t.items[0])).toEqual(["3 сотрудника", "5 сотрудников", "5 сотрудников"]);
+  });
+  it("телефон директора проверяется", () => {
+    expect(isValidPhone("+7 900 123-45-67")).toBe(true);
+    expect(isValidPhone("12345")).toBe(false);
+  });
+});

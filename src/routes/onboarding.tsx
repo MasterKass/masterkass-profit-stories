@@ -10,6 +10,7 @@ import {
   firstChargeDate,
   isValidCard,
   isValidEmail,
+  isValidPhone,
   startingUnits,
 } from "@/lib/onboarding";
 
@@ -46,6 +47,7 @@ function Onboarding() {
   const [manual, setManual] = useState(false);
   const [token, setToken] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [emailErr, setEmailErr] = useState("");
   const [chargeDate, setChargeDate] = useState("");
 
@@ -67,6 +69,7 @@ function Onboarding() {
   };
   const saveEmail = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!isValidPhone(phone)) return setEmailErr("Укажите телефон директора в формате +7 900 000-00-00");
     if (!isValidEmail(email)) return setEmailErr("Укажите почту в формате name@company.ru");
     setEmailErr("");
     setStep(3);
@@ -143,9 +146,12 @@ function Onboarding() {
 
         {step === 2 && (
           <form className="mk-card mk-onb-card" onSubmit={saveEmail} noValidate>
-            <h2>Почта для утреннего дайджеста</h2>
-            <p className="mk-onb-muted">Каждое утро пришлём отчёт о выручке, чеках и оплатах за вчерашний день.</p>
-            <label>Почта
+            <h2>Контакты директора</h2>
+            <p className="mk-onb-muted">По этому номеру вы будете входить в кабинет как директор. Доступы сотрудникам выдадите сами в кабинете.</p>
+            <label>Телефон директора
+              <input type="tel" autoComplete="tel" placeholder="+7 900 000-00-00" value={phone} onChange={(e) => setPhone(e.target.value)} />
+            </label>
+            <label>Почта для утреннего дайджеста
               <input type="email" autoComplete="email" placeholder="name@company.ru" value={email} onChange={(e) => setEmail(e.target.value)} />
             </label>
             {emailErr && <p className="mk-onb-err">{emailErr}</p>}
