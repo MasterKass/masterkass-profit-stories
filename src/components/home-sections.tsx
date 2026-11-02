@@ -488,7 +488,7 @@ export function SiteFooter() {
                   return (
                     <li key={label}>
                       {route ? (
-                        <Link to={route.to} hash={route.hash} className="mk-footer-link text-left">{label}</Link>
+                        <Link to={route.to} {...(route.hash ? { hash: route.hash } : {})} className="mk-footer-link text-left">{label}</Link>
                       ) : (
                         <button type="button" title="Раздел в разработке" className="mk-footer-link text-left">{label}</button>
                       )}
