@@ -36,7 +36,7 @@ describe("Тарифы и учёт AI-юнитов", () => {
     expect(FIRST_MONTH_BADGE).toContain("бесплатно");
     expect(FIRST_MONTH_BADGE_NOTE).toContain("интеграцию");
     expect(FIRST_MONTH_NOTE).toContain("Первый месяц бесплатно");
-    expect(FREE_TEST_NOTE).toContain("бесплатно 1 месяц");
+    expect(FREE_TEST_NOTE).toContain("бесплатно один месяц");
   });
 
   it("держит пакеты докупки 500/500, 1 500/1 350 и 5 000/4 000", () => {

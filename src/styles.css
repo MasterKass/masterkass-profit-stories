@@ -472,8 +472,7 @@ body { font-family: var(--font-sans); }
 @media (min-width: 900px) {
   .mk-lead-grid { grid-template-columns: 1fr 1fr; gap: 3.5rem; align-items: start; }
 }
-.mk-lead-kicker { display: block; font-size: 11px; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; color: var(--mk-lead-muted); }
-.mk-lead-title { margin-top: 0.9rem; font-size: clamp(1.75rem, 4vw, 2.4rem); font-weight: 700; line-height: 1.06; letter-spacing: -0.04em; }
+.mk-lead-title { font-size: clamp(1.75rem, 4vw, 2.4rem); font-weight: 700; line-height: 1.06; letter-spacing: -0.04em; }
 .mk-lead-note { margin-top: 1rem; font-size: 15px; line-height: 1.55; color: var(--mk-lead-muted); }
 .mk-lead-form { display: grid; gap: 1.5rem; }
 .mk-field { display: grid; gap: 0.4rem; }
@@ -491,6 +490,8 @@ body { font-family: var(--font-sans); }
 .mk-lead-btn:active { transform: scale(0.97); box-shadow: none; transition-duration: 90ms; }
 .mk-lead-btn:focus-visible { outline: 2px solid var(--mk-lead-fg); outline-offset: 3px; }
 .mk-lead-privacy { font-size: 12px; line-height: 1.45; color: color-mix(in oklch, var(--mk-lead-fg) 55%, transparent); }
+.mk-lead-privacy a { color: inherit; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: color-mix(in oklch, var(--mk-lead-fg) 40%, transparent); }
+.mk-lead-privacy a:hover { color: var(--mk-lead-fg); text-decoration-color: currentColor; }
 .mk-lead-done { display: flex; align-items: flex-start; gap: 0.9rem; padding: 1.25rem 1.35rem; border-radius: 16px; border: 1px solid var(--mk-lead-line); background: color-mix(in oklch, var(--mk-lead-fg) 7%, transparent); }
 .mk-lead-done-icon { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 999px; background: var(--mk-surface); color: var(--mk-fg); flex-shrink: 0; }
 .mk-lead-done-title { font-size: 17px; font-weight: 600; letter-spacing: -0.02em; }
