@@ -45,7 +45,7 @@ function ServicePage() {
 
   return (
     <div className="mk-page min-h-screen">
-      <BackHome />
+      <BackHome showLogin />
       <main className="mx-auto max-w-5xl px-5 pb-20 pt-10">
 
         <section className="mt-12 max-w-3xl">
