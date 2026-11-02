@@ -73,7 +73,7 @@ function Onboarding() {
   };
 
   return (
-    <main className="mk-page mk-onb">
+    <main className="mk-page mk-onb min-h-screen">
       <BackHome />
       <div className="mx-auto max-w-xl px-5 pb-20 pt-24">
         <ol className="mk-onb-steps" aria-label="Шаги подключения">
