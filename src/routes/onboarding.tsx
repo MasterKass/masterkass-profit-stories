@@ -73,8 +73,8 @@ function Onboarding() {
   };
 
   return (
-    <main className="mk-onb">
-      <BackHome to="/service" />
+    <main className="mk-page mk-onb">
+      <BackHome />
       <div className="mx-auto max-w-xl px-5 pb-20 pt-24">
         <ol className="mk-onb-steps" aria-label="Шаги подключения">
           {ONBOARDING_STEPS.map((s, i) => (
