@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Check, ArrowUpRight } from "lucide-react";
 import { validateRequest, type RequestErrors } from "@/lib/request";
@@ -11,6 +11,17 @@ export function RequestForm() {
   const [honeypot, setHoneypot] = useState("");
   const [errors, setErrors] = useState<RequestErrors>({});
   const [sent, setSent] = useState(false);
+
+  // Кружок возврата со страницы политики ведёт сюда: доводим браузер до плашки заявки.
+  useEffect(() => {
+    if (window.location.hash !== "#request") return;
+    const node = document.getElementById("request");
+    if (!node) return;
+    const id = window.setTimeout(() => node.scrollIntoView({ block: "start" }), 60);
+    return () => window.clearTimeout(id);
+  }, []);
+
+
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();

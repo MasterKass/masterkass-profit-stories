@@ -447,6 +447,7 @@ body { font-family: var(--font-sans); }
   --mk-lead-fg: oklch(0.97 0.008 85);
   --mk-lead-muted: oklch(0.79 0.014 260);
   --mk-lead-line: color-mix(in oklch, var(--mk-lead-fg) 20%, transparent);
+  scroll-margin-top: calc(5.5rem + env(safe-area-inset-top));
   position: relative;
   overflow: hidden;
   border-radius: 18px;
