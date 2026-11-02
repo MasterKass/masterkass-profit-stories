@@ -3,6 +3,15 @@ import { SiteFooter, AskAi } from "@/components/home-sections";
 import { DayComic } from "@/components/day-comic";
 import { BackHome } from "@/components/back-home";
 import { RequestForm } from "@/components/request-form";
+import {
+  AI_UNIT_PRICE,
+  AI_UNIT_SIZE,
+  AMORTIZATION_FUND,
+  CASHIER_FREE_NOTE,
+  SERVICE_TARIFFS,
+  TOPUP_PACKAGES,
+  unitsLabel,
+} from "@/lib/tariffs";
 
 export const Route = createFileRoute("/service")({
   head: () => ({
@@ -26,11 +35,7 @@ const pillars = [
   { n: "05", t: "Новая касса каждые 3 года", d: "750 ₽ из каждого платежа уходят в ваш фонд. За 36 месяцев накапливается 27 000 ₽, и вы получаете новый аппарат с переносом баз и перерегистрацией под ключ.", wide: true },
 ];
 
-const tariffs = [
-  { name: "Просто", tone: "cyan", price: "1 950", who: "Услуги: студии, абонементы. До 10 позиций номенклатуры.", items: ["Мониторинг ФН и ОФД 24/7", "ИИ-помощник и инженер", "Базовая лояльность", "Утренний дайджест"] },
-  { name: "Учёт", tone: "lime", price: "3 850", who: "Магазины, кофейни, пекарни. Широкий ассортимент.", items: ["Помощь в настройке и ведении товароучёта", "Техкарты и инвентаризации", "Настройка лояльности и анализ", "Расширенный дайджест"] },
-  { name: "Контроль", tone: "amber", price: "5 650", who: "Бизнес с госсистемами. Маркеты, общепит, лавки.", items: ["Всё из тарифа «Учёт»", "Честный Знак, Меркурий, ЕГАИС", "ЭДО и ЭЦП под контролем", "Приоритетная аварийная линия"] },
-];
+const tariffs = SERVICE_TARIFFS;
 
 function ServicePage() {
   return (
