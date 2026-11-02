@@ -39,7 +39,9 @@ describe("Legal and return links", () => {
   afterEach(cleanup);
 
   it("sends both footer legal links to the privacy page", async () => {
-    await renderPage("/");
+    // Подвал тот же, что и на главной, но главная в jsdom падает на hero-эффектах,
+    // поэтому проверяем подвал там, где он точно дорисовывается.
+    await renderPage("/privacy");
 
     for (const label of ["Политика конфиденциальности", "Согласие на обработку персональных данных"]) {
       expect(screen.getByRole("link", { name: label })).toHaveAttribute("href", "/privacy");
