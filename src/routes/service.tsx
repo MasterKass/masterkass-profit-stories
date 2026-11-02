@@ -94,7 +94,7 @@ function ServicePage() {
                   ))}
                 </ul>
                 <div className="mt-auto pt-6">
-                  <Link to="/onboarding" search={{ tariff: t.tone }} className="mk-tariff-cta">Начать бесплатно</Link>
+                  <Link to="/onboarding" search={{ tariff: t.tone, ref: undefined }} className="mk-tariff-cta">Начать бесплатно</Link>
                   <p className="mt-4 text-xs" style={{ color: "var(--mk-muted)" }}>{CASHIER_FREE_NOTE}</p>
                   <p className="mt-1.5 text-xs" style={{ color: "var(--mk-muted)" }}>Включая {AMORTIZATION_FUND}</p>
                 </div>

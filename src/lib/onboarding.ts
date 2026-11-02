@@ -1,13 +1,13 @@
 // Мастер подключения тарифа: карта (0 ₽) → касса → почта для дайджеста → готово.
 // Пока демо: карта, Эвотор и почта не отправляются на сервер.
-import { SERVICE_TARIFFS, type TariffTone } from "@/lib/tariffs";
+import { SERVICE_TARIFFS, type ServiceTariff, type TariffTone } from "@/lib/tariffs";
 
 export const ONBOARDING_STEPS = ["Карта", "Касса", "Почта", "Готово"] as const;
 export const REFERRAL_BONUS_UNITS = 300;
 export const TRIAL_DAYS = 30;
 
 export function findTariff(tone: string | undefined) {
-  return SERVICE_TARIFFS.find((t) => t.tone === tone) ?? SERVICE_TARIFFS[0];
+  return (SERVICE_TARIFFS.find((t) => t.tone === tone) ?? SERVICE_TARIFFS[0]) as ServiceTariff;
 }
 
 /** Дата первого списания: через 30 дней после привязки карты */

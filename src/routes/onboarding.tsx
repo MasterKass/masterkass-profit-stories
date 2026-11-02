@@ -13,12 +13,12 @@ import {
   startingUnits,
 } from "@/lib/onboarding";
 
-type Search = { tariff?: string; ref?: string };
+type Search = { tariff?: string | undefined; ref?: string | undefined };
 
 export const Route = createFileRoute("/onboarding")({
   validateSearch: (s: Record<string, unknown>): Search => ({
-    tariff: typeof s.tariff === "string" ? s.tariff : undefined,
-    ref: typeof s.ref === "string" ? s.ref : undefined,
+    tariff: typeof s["tariff"] === "string" ? s["tariff"] : undefined,
+    ref: typeof s["ref"] === "string" ? s["ref"] : undefined,
   }),
   head: () => ({
     meta: [
