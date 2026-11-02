@@ -483,11 +483,18 @@ export function SiteFooter() {
             <div key={col.title}>
               <div className="mk-footer-title">{col.title}</div>
               <ul className="mt-3 space-y-2">
-                {col.links.map((label) => (
-                  <li key={label}>
-                    <button type="button" title="Раздел в разработке" className="mk-footer-link text-left">{label}</button>
-                  </li>
-                ))}
+                {col.links.map((label) => {
+                  const route = FOOTER_ROUTES[label];
+                  return (
+                    <li key={label}>
+                      {route ? (
+                        <Link to={route.to} hash={route.hash} className="mk-footer-link text-left">{label}</Link>
+                      ) : (
+                        <button type="button" title="Раздел в разработке" className="mk-footer-link text-left">{label}</button>
+                      )}
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           ))}
