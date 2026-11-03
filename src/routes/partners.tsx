@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { BackHome } from "@/components/back-home";
 import { PartnerLeadForm } from "@/components/partner-lead-form";
