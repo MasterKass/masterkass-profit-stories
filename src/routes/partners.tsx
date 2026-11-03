@@ -151,39 +151,9 @@ function Partners() {
 
         <section className="mt-24">
           <h2 className="text-3xl font-semibold tracking-[-0.03em] md:text-4xl">Как это работает</h2>
-          <div className="relative mx-auto mt-10 max-w-2xl">
-            {STEPS.map((s, i) => {
-              const left = i % 2 === 0;
-              const last = i === STEPS.length - 1;
-              const hues = ["#f5a524", "#f7c948", "#b5d84a", "#5fd6a0", "#3fc8d8", "#6bb8f0"];
-              const c = hues[i % hues.length];
-              const next = hues[(i + 1) % hues.length];
-              return (
-                <div key={s.n}>
-                  <div className={`flex ${left ? "justify-start" : "justify-end"}`}>
-                    <div className="w-[68%] rounded-[16px] p-4"
-                      style={{ background: `linear-gradient(135deg, ${c}38, ${c}10 70%)`, boxShadow: `inset 0 0 0 1px ${c}55` }}>
-                      <h3 className="text-lg font-semibold leading-snug">{s.t}</h3>
-                      <p className="mt-1 text-[14px] leading-relaxed" style={{ color: "var(--mk-muted)" }}>{s.d}</p>
-                    </div>
-                  </div>
-                  {!last && (
-                    <svg viewBox="0 0 300 70" className="my-1 h-16 w-full" fill="none" aria-hidden
-                      style={{ transform: left ? undefined : "scaleX(-1)" }}>
-                      <defs>
-                        <linearGradient id={`arr-${i}`} x1="0" x2="1">
-                          <stop offset="0" stopColor={c} /><stop offset="1" stopColor={next} />
-                        </linearGradient>
-                      </defs>
-                      <path d="M90 10 C 130 -12, 200 0, 222 54" stroke={`url(#arr-${i})`} strokeWidth="1.5" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
-                      <path d="M213 47 L222 56 L228 44" stroke={next} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" vectorEffect="non-scaling-stroke" />
-                    </svg>
-                  )}
-                </div>
-              );
-            })}
-          </div>
+          <StepsSnake />
         </section>
+
 
         <section className="mt-24 mk-card">
           <h2 className="text-2xl font-semibold tracking-[-0.03em]">Договор и документы</h2>
