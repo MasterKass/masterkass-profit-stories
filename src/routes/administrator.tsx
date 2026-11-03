@@ -77,7 +77,7 @@ function Administrator() {
                 <span>Голосовой режим скоро заработает</span>
               </div>
             ) : (
-              <textarea ref={field} value={q} onChange={(e) => setQ(e.target.value)} rows={2} placeholder="Например: как пробить чек коррекции за вчера?" aria-label="Вопрос ИИ-помощнику"
+              <textarea ref={field} value={q} onChange={(e) => setQ(e.target.value)} rows={2} placeholder="Например: как принять накладную с расхождением?" aria-label="Вопрос ИИ-помощнику"
                 onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); e.currentTarget.form?.requestSubmit(); } }} />
             )}
             {files.length > 0 && (
@@ -104,7 +104,7 @@ function Administrator() {
           {asked && (
             <div className="mk-csh-answer" role="status">
               <p className="mk-csh-asked">{asked}</p>
-              <p className="mk-cab-muted">В демо-режиме ИИ пока не отвечает. Живые ответы по 54-ФЗ подключим после запуска.</p>
+              <p className="mk-cab-muted">В демо-режиме ИИ пока не отвечает. Живые ответы подключим после запуска.</p>
             </div>
           )}
         </section>
