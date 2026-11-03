@@ -62,9 +62,9 @@ function Administrator() {
         <header className="mk-cab-head">
           <div>
             <p className="mk-cab-org">Кофейня «Утро»</p>
-            <p className="mk-cab-muted">Марина С. · бухгалтер · 2 точки</p>
+            <p className="mk-cab-muted">Ольга Р. · администратор · 2 точки</p>
           </div>
-          <span className="mk-csh-status"><Check size={14} aria-hidden="true" />Все чеки переданы в налоговую</span>
+          <span className="mk-csh-status"><Check size={14} aria-hidden="true" />Обе точки открыты</span>
         </header>
 
         <section className="mk-card mk-csh-ai" aria-label="Вопрос ИИ-помощнику">
@@ -109,24 +109,34 @@ function Administrator() {
           )}
         </section>
 
-        <section className="mk-card mk-acc-block" aria-label="График оплат">
-          <p className="mk-cab-kicker"><CalendarClock size={14} aria-hidden="true" />График оплат кассовых сервисов</p>
+        <section className="mk-card mk-acc-block" aria-label="Смены и сотрудники">
+          <p className="mk-cab-kicker"><Users size={14} aria-hidden="true" />Смены и сотрудники сегодня</p>
           <ul className="mk-acc-list">
-            {PAYMENTS.map((p) => (
-              <li key={p.what}>
-                <span className="mk-acc-date" data-soon={p.soon}>{p.date}</span>
-                <span className="mk-acc-name">{p.what}</span>
-                <b>{p.sum}</b>
+            {STAFF.map((s) => (
+              <li key={s.name}>
+                <span className="mk-acc-name">{s.name}<small>{s.role}</small></span>
+                <b className="mk-acc-date" data-soon={s.warn}>{s.status}</b>
               </li>
             ))}
           </ul>
-          <p className="mk-cab-muted mt-3">Итого в ноябре: 9 540 ₽</p>
         </section>
 
-        <section className="mk-card mk-acc-block" aria-label="Сроки">
-          <p className="mk-cab-kicker"><ShieldCheck size={14} aria-hidden="true" />Сроки накопителей и подписей</p>
+        <section className="mk-card mk-acc-block" aria-label="Приёмка накладных">
+          <p className="mk-cab-kicker"><Truck size={14} aria-hidden="true" />Приёмка накладных</p>
           <ul className="mk-acc-list">
-            {DEADLINES.map((d) => (
+            {INVOICES.map((d) => (
+              <li key={d.name}>
+                <span className="mk-acc-name">{d.name}</span>
+                <b className="mk-acc-date" data-soon={d.warn}>{d.status}</b>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <section className="mk-card mk-acc-block" aria-label="Остатки">
+          <p className="mk-cab-kicker"><Package size={14} aria-hidden="true" />Заканчивается, пора заказать</p>
+          <ul className="mk-acc-list">
+            {STOCK.map((d) => (
               <li key={d.what}>
                 <span className="mk-acc-name">{d.what}</span>
                 <b className="mk-acc-date" data-soon={d.warn}>{d.left}</b>
@@ -135,31 +145,16 @@ function Administrator() {
           </ul>
         </section>
 
-        <section className="mk-card mk-acc-block" aria-label="Документы">
-          <p className="mk-cab-kicker"><FileText size={14} aria-hidden="true" />Документы от Мастер Касс</p>
+        <section className="mk-card mk-acc-block" aria-label="Чек-лист точки">
+          <p className="mk-cab-kicker"><ClipboardCheck size={14} aria-hidden="true" />Чек-лист точки</p>
           <ul className="mk-acc-list">
-            {DOCS.map((d) => (
-              <li key={d.name}>
-                <span className="mk-acc-name">{d.name}<small>{d.status}</small></span>
-                <button type="button" className="mk-csh-ibtn" aria-label={`Скачать: ${d.name}`} onClick={() => alert("Скачивание заработает после запуска")}><Download size={18} aria-hidden="true" /></button>
+            {CHECKS.map((c) => (
+              <li key={c.what}>
+                <span className="mk-acc-name">{c.what}</span>
+                {c.ok ? <Check size={16} aria-label="Выполнено" /> : <b className="mk-acc-date" data-soon="true">Впереди</b>}
               </li>
             ))}
           </ul>
-        </section>
-
-        <section className="mk-card mk-acc-block" aria-label="Сверка смен">
-          <p className="mk-cab-kicker"><Receipt size={14} aria-hidden="true" />Сверка смен, ₽</p>
-          <div className="overflow-x-auto">
-            <table className="mk-acc-table">
-              <thead><tr><th>День</th><th>Наличные</th><th>Карта</th><th>СБП</th><th>ОФД</th></tr></thead>
-              <tbody>
-                {SHIFTS.map((s) => (
-                  <tr key={s.day}><td>{s.day}</td><td>{s.cash}</td><td>{s.card}</td><td>{s.sbp}</td>
-                    <td>{s.ok ? <Check size={16} aria-label="Передано" /> : <span className="mk-acc-date" data-soon="true">1 возврат</span>}</td></tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
         </section>
       </div>
     </main>
