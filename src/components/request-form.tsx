@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Check, ArrowUpRight } from "lucide-react";
+import { useServerFn } from "@tanstack/react-start";
 import { validateRequest, type RequestErrors } from "@/lib/request";
+import { submitServiceRequest } from "@/lib/request.functions";
 import { FREE_TEST_NOTE } from "@/lib/tariffs";
 
 /** Тёмная плашка заявки на сервис: только телефон и почта. */
@@ -11,6 +13,9 @@ export function RequestForm() {
   const [honeypot, setHoneypot] = useState("");
   const [errors, setErrors] = useState<RequestErrors>({});
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [failed, setFailed] = useState(false);
+  const submit = useServerFn(submitServiceRequest);
 
   // Кружок возврата со страницы политики ведёт сюда. Страница ещё догружается
   // (кадры комикса, печатающийся текст помощника) и плашка «уезжает» вниз,
@@ -37,7 +42,7 @@ export function RequestForm() {
 
 
 
-  const onSubmit = (e: React.FormEvent) => {
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const result = validateRequest({ phone, email });
     if (!result.ok) {
@@ -45,12 +50,17 @@ export function RequestForm() {
       return;
     }
     setErrors({});
-    // Ловушка для ботов: люди это поле не видят, поэтому тихо уходим в «спасибо».
-    if (honeypot.trim()) {
-      setSent(true);
-      return;
+    setFailed(false);
+    setSending(true);
+    try {
+      const res = await submit({ data: { phone, email, company: honeypot } });
+      if (res.ok) setSent(true);
+      else setFailed(true);
+    } catch {
+      setFailed(true);
+    } finally {
+      setSending(false);
     }
-    setSent(true);
   };
 
   return (
@@ -117,10 +127,15 @@ export function RequestForm() {
             />
 
             <div className="mk-lead-actions">
-              <button type="submit" className="mk-lead-btn">
-                Отправить заявку
+              <button type="submit" className="mk-lead-btn" disabled={sending}>
+                {sending ? "Отправляем…" : "Отправить заявку"}
                 <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
               </button>
+              {failed && (
+                <span className="mk-field-error" role="alert">
+                  Не получилось отправить заявку. Попробуйте ещё раз через минуту.
+                </span>
+              )}
               <p className="mk-lead-privacy">
                 Отправляя заявку, соглашаетесь на обработку персональных данных согласно{" "}
                 <Link to="/privacy">Политике обработки персональных данных</Link>.
