@@ -95,19 +95,25 @@ function StepsSnake() {
         <path d={d} stroke="url(#mk-snake-grad)" strokeWidth="1.5" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
       </svg>
 
+      {STEPS.slice(1).map((_, i) => {
+        const j = i + 1;
+        const right = i % 2 === 0;
+        return (
+          <span key={`arrow-${j}`} className="mk-snake-arrow" aria-hidden
+            style={{ top: `calc(${j} * var(--mk-step-h))`, color: mix(HUES[j - 1], HUES[j]), transform: `translate(-50%, -50%)${right ? "" : " scaleX(-1)"}` }}>
+            <svg viewBox="0 0 12 10" width="12" height="10" fill="none">
+              <path d="M2 1.5 L7 5 L2 8.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </span>
+        );
+      })}
+
       {STEPS.map((t, i) => {
         const left = i % 2 === 0;
         const hue = HUES[i % HUES.length];
         return (
           <div key={t} className={`mk-step ${left ? "mk-step-left" : "mk-step-right"}`}>
             <span className="mk-step-dot" aria-hidden style={{ background: hue, boxShadow: `0 0 0 5px ${hue}1f` }} />
-            {i > 0 && (
-              <span className="mk-step-arrow" aria-hidden style={{ color: hue }}>
-                <svg viewBox="0 0 12 8" width="12" height="8" fill="none">
-                  <path d="M1 1 L6 6.5 L11 1" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </span>
-            )}
             <span className="mk-step-text">{t}</span>
           </div>
         );
@@ -115,6 +121,7 @@ function StepsSnake() {
     </div>
   );
 }
+
 
 
 function Partners() {
