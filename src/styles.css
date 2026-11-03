@@ -537,14 +537,17 @@ body { font-family: var(--font-sans); }
 
 /* Форма лида на тёмной странице партнёрки: светлый текст на графите. */
 .mk-dark-page .mk-partner-lead {
-  --mk-lead-bg: var(--mk-bg);
+  --mk-lead-bg: var(--mk-surface);
   --mk-lead-fg: var(--mk-fg);
   --mk-lead-muted: var(--mk-muted);
   --mk-lead-line: color-mix(in oklch, var(--mk-fg) 30%, transparent);
+  background: var(--mk-surface);
+  border: 1px solid var(--mk-border);
 }
 .mk-dark-page .mk-partner-lead .mk-lead-btn { background: var(--mk-fg); color: var(--mk-bg); }
 .mk-dark-page .mk-partner-lead .mk-lead-done-icon { background: var(--mk-fg); color: var(--mk-bg); }
 .mk-dark-page .mk-partner-lead .mk-lead-btn:focus-visible { outline-color: var(--mk-fg); }
+a.mk-tariff-cta { text-decoration: none; }
 
 
 /* Кнопка «Войти» справа в верхней вуали */
