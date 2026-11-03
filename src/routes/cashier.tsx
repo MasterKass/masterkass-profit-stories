@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
-import { ChevronDown, Mic, Send, Wrench, Check, HeartHandshake, GraduationCap, Plus, Paperclip, X } from "lucide-react";
+import { useRef, useState } from "react";
+import { ChevronDown, Keyboard, Mic, Send, Wrench, Check, HeartHandshake, GraduationCap, Plus, Paperclip, X } from "lucide-react";
 import { BackHome } from "@/components/back-home";
 
 export const Route = createFileRoute("/cashier")({
@@ -38,6 +38,8 @@ const LESSONS: [string, string[]][] = [
 
 function Cashier() {
   const [q, setQ] = useState("");
+  const [voice, setVoice] = useState(false);
+  const field = useRef<HTMLTextAreaElement>(null);
   const [files, setFiles] = useState<File[]>([]);
   const [asked, setAsked] = useState<string | null>(null);
   const [called, setCalled] = useState(false);
