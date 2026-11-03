@@ -1,15 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { CalendarClock, Check, Download, FileText, Keyboard, Mic, Paperclip, Plus, Receipt, Send, ShieldCheck, X } from "lucide-react";
+import { Check, ClipboardCheck, Keyboard, Mic, Package, Paperclip, Plus, Send, Truck, Users, X } from "lucide-react";
 import { BackHome } from "@/components/back-home";
 
 export const Route = createFileRoute("/administrator")({
   head: () => ({
     meta: [
-      { title: "Кабинет бухгалтера · Мастер Касс" },
-      { name: "description", content: "Кабинет бухгалтера: график оплат кассовых сервисов, сроки ФН и подписей, документы от Мастер Касс, сверка смен и ИИ-помощник по 54-ФЗ." },
-      { property: "og:title", content: "Кабинет бухгалтера · Мастер Касс" },
-      { property: "og:description", content: "Платежи, документы и сверка кассы в одном окне." },
+      { title: "Кабинет администратора · Мастер Касс" },
+      { name: "description", content: "Кабинет администратора точки: смены и сотрудники, приёмка накладных, остатки, инвентаризация и чек-листы с ИИ-помощником." },
+      { property: "og:title", content: "Кабинет администратора · Мастер Касс" },
+      { property: "og:description", content: "Смены, товароучёт и порядок на точке в одном окне." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "robots", content: "noindex" },
@@ -18,30 +18,29 @@ export const Route = createFileRoute("/administrator")({
   component: Administrator,
 });
 
-const PAYMENTS = [
-  { date: "5 ноя", what: "ОФД, точка №1", sum: "3 000 ₽", soon: true },
-  { date: "8 ноя", what: "Приложения Эвотор", sum: "1 490 ₽", soon: true },
-  { date: "15 ноя", what: "Тариф «Учёт», Мастер Касс", sum: "3 850 ₽" },
-  { date: "20 ноя", what: "Маркировка, Честный Знак", sum: "1 200 ₽" },
+const STAFF = [
+  { name: "Алина К.", role: "Бариста, точка №1", status: "На смене с 07:55" },
+  { name: "Игорь П.", role: "Кассир, точка №2", status: "Опоздание 12 мин", warn: true },
+  { name: "Даша М.", role: "Бариста, точка №2", status: "Смена с 14:00" },
 ];
 
-const DEADLINES = [
-  { what: "Фискальный накопитель, точка №1", left: "24 дня", warn: true },
-  { what: "Фискальный накопитель, точка №2", left: "211 дней" },
-  { what: "Электронная подпись директора", left: "47 дней" },
+const INVOICES = [
+  { name: "Накладная № 452, молочная продукция", status: "Ждёт приёмки", warn: true },
+  { name: "Накладная № 449, кофе в зёрнах", status: "Расхождение: 2 кг", warn: true },
+  { name: "Накладная № 447, выпечка", status: "Оприходована" },
 ];
 
-const DOCS = [
-  { name: "Счёт № 1184 на тариф «Учёт», ноябрь", status: "К оплате" },
-  { name: "УПД № 1027 за октябрь", status: "В ЭДО, ждёт подписи" },
-  { name: "Акт сверки за 3 квартал", status: "Подписан" },
-  { name: "Счёт № 1102 на фискальный накопитель", status: "Оплачен" },
+const STOCK = [
+  { what: "Молоко 3,2%", left: "6 л", warn: true },
+  { what: "Стаканы 300 мл", left: "120 шт", warn: true },
+  { what: "Сироп карамельный", left: "4 бут." },
 ];
 
-const SHIFTS = [
-  { day: "2 ноя", cash: "18 420", card: "41 300", sbp: "6 150", ok: true },
-  { day: "1 ноя", cash: "21 080", card: "39 760", sbp: "5 420", ok: true },
-  { day: "31 окт", cash: "16 900", card: "44 210", sbp: "7 030", ok: false },
+const CHECKS = [
+  { what: "Смена открыта, касса и терминал проверены", ok: true },
+  { what: "Размен в кассе на начало дня", ok: true },
+  { what: "Вчерашняя смена закрыта, Z-отчёт", ok: true },
+  { what: "Инвентаризация точки №1: 10 ноября", ok: false },
 ];
 
 function Administrator() {
