@@ -72,7 +72,7 @@ function OwnerPage() {
     <div className="mk-page min-h-screen">
       <BackHome brand />
       <main className="mk-own">
-        <h1 className="mk-own-title">Польза - Диалог Развития</h1>
+        <h1 className="mk-own-title">Польза - Диалог - Развитие</h1>
 
         <section className="mk-card mk-cab-pulse" aria-label="Выручка компании">
           <p className="mk-cab-kicker">Выручка сегодня · все клиенты</p>
