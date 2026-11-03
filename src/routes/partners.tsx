@@ -87,9 +87,10 @@ function StepsSnake() {
   const xs = STEPS.map((_, i) => (i % 2 === 0 ? 12 : 88));
   const ys = STEPS.map((_, i) => i * ROW_H + ROW_H / 2);
   const k = ROW_H * 0.55;
-  let d = `M ${xs[0]} ${ys[0]}`;
+  let d = `M ${xs[0] ?? 0} ${ys[0] ?? 0}`;
   for (let i = 0; i < n - 1; i++) {
-    d += ` C ${xs[i]} ${ys[i] + k}, ${xs[i + 1]} ${ys[i + 1] - k}, ${xs[i + 1]} ${ys[i + 1]}`;
+    d += ` C ${xs[i] ?? 0} ${(ys[i] ?? 0) + k}, ${xs[i + 1] ?? 0} ${(ys[i + 1] ?? 0) - k}, ${xs[i + 1] ?? 0} ${ys[i + 1] ?? 0}`;
+
   }
 
   return (
@@ -110,7 +111,7 @@ function StepsSnake() {
         const right = i % 2 === 0;
         return (
           <span key={`arrow-${j}`} className="mk-snake-arrow" aria-hidden
-            style={{ top: `calc(${j} * var(--mk-step-h))`, color: mix(HUES[j - 1], HUES[j]), transform: `translate(-50%, -50%)${right ? "" : " scaleX(-1)"}` }}>
+            style={{ top: `calc(${j} * var(--mk-step-h))`, color: mix(hueAt(j - 1), hueAt(j)), transform: `translate(-50%, -50%)${right ? "" : " scaleX(-1)"}` }}>
             <svg viewBox="0 0 12 10" width="12" height="10" fill="none">
               <path d="M2 1.5 L7 5 L2 8.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
@@ -120,7 +121,7 @@ function StepsSnake() {
 
       {STEPS.map((t, i) => {
         const left = i % 2 === 0;
-        const hue = HUES[i % HUES.length];
+        const hue = hueAt(i);
         return (
           <div key={t} className={`mk-step ${left ? "mk-step-left" : "mk-step-right"}`}>
             <span className="mk-step-dot" aria-hidden style={{ background: hue, boxShadow: `0 0 0 5px ${hue}1f` }} />
