@@ -6,6 +6,7 @@ import {
   CODE_LENGTH,
   DEMO_ACCOUNTS,
   DEMO_CODE,
+  OWNER_PHONES,
   RESEND_SECONDS,
   ROLE_ACCESS,
   ROLE_LABELS,
@@ -161,6 +162,7 @@ function LoginPage() {
               </ul>
               {role === "director" && <Link to="/cabinet" className="mk-login-btn" style={{ marginTop: "1.5rem" }}>Открыть кабинет директора</Link>}
               {role === "cashier" && <Link to="/cashier" className="mk-login-btn" style={{ marginTop: "1.5rem" }}>Открыть кабинет кассира</Link>}
+              {role === "owner" && <Link to="/owner" className="mk-login-btn" style={{ marginTop: "1.5rem" }}>Открыть пространство «Хозяин»</Link>}
               <button type="button" className="mk-login-btn mk-login-btn-ghost" onClick={() => { setStep("phone"); setRole(null); setPhone(""); }}>Выйти</button>
             </div>
           )}
@@ -177,6 +179,10 @@ function LoginPage() {
                   <span>{formatPhone(a.phone)}</span>
                 </button>
               ))}
+              <button type="button" className="mk-login-demo-owner" onClick={() => sendCode(OWNER_PHONES[0]!)}>
+                <b>Хозяин</b>
+                <span>{formatPhone(OWNER_PHONES[0]!)}</span>
+              </button>
             </div>
           </aside>
         )}
