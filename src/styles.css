@@ -655,3 +655,13 @@ body { font-family: var(--font-sans); }
 .mk-csh-eng { margin-top: .85rem; padding-top: .85rem; border-top: 1px solid var(--mk-border); font-size: 14.5px; }
 .mk-csh-eng button { display: inline-flex; align-items: center; gap: 8px; margin-top: .6rem; padding: .7rem 1rem; border-radius: 10px; background: var(--mk-fg); color: var(--mk-surface); font-weight: 600; }
 .mk-csh-sent { display: flex; align-items: center; gap: 6px; margin-top: .6rem; font-weight: 600; }
+.mk-csh-ai { background: linear-gradient(170deg, oklch(0.93 0.11 100), oklch(0.89 0.12 130)); }
+.mk-csh-title { font-size: 26px; font-weight: 700; line-height: 1.1; letter-spacing: -.03em; text-align: center; margin: .5rem 0 1rem; }
+.mk-csh-box { display: block; padding: 1rem 1rem .6rem; border-radius: 18px; background: var(--mk-surface); border: 1px solid var(--mk-border); }
+.mk-csh-box textarea { width: 100%; resize: none; border: 0; outline: none; background: transparent; font-size: 17px; line-height: 1.4; }
+.mk-csh-bar { display: flex; align-items: center; gap: .25rem; margin-top: .4rem; }
+.mk-csh-ibtn { display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 12px; cursor: pointer; color: var(--mk-fg); }
+.mk-csh-send { background: var(--mk-fg); color: var(--mk-surface); }
+.mk-csh-files { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .4rem; }
+.mk-csh-files li { display: inline-flex; align-items: center; gap: 5px; max-width: 100%; padding: .3rem .4rem .3rem .6rem; border-radius: 10px; background: var(--mk-bg); border: 1px solid var(--mk-border); font-size: 13px; }
+.mk-csh-files span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 180px; }
