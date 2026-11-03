@@ -72,6 +72,15 @@ const STEPS = [
 const HUES = ["#f5a524", "#f7c948", "#b5d84a", "#5fd6a0", "#3fc8d8", "#6bb8f0"];
 const ROW_H = 100;
 
+function mix(a: string, b: string) {
+  const p = (h: string) => [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16)];
+  const [r1, g1, b1] = p(a);
+  const [r2, g2, b2] = p(b);
+  const c = (x: number, y: number) => Math.round((x + y) / 2).toString(16).padStart(2, "0");
+  return `#${c(r1, r2)}${c(g1, g2)}${c(b1, b2)}`;
+}
+
+
 function StepsSnake() {
   const n = STEPS.length;
   const xs = STEPS.map((_, i) => (i % 2 === 0 ? 12 : 88));
