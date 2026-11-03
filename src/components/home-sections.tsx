@@ -314,7 +314,7 @@ export function Partners() {
       <p className="mx-auto mt-5 max-w-2xl text-lg text-[var(--mk-muted)]">
         Работаем в партнёрстве с бухгалтерами, юристами и нашими клиентами. Приглашаем стать партнёрами сервиса.
       </p>
-      <div className="mt-10"><OutlineButton>Узнать подробнее</OutlineButton></div>
+      <div className="mt-10"><Link to="/partners" className="mk-outline">Узнать подробнее<ArrowUpRight className="h-4 w-4" /></Link></div>
     </section>
   );
 }
@@ -458,8 +458,9 @@ export function AskAi({ title = "Задайте вопрос нашему ИИ �
 
 /* 12. Подвал — карточка с разделами (часть слов ведёт на готовые страницы) */
 /** Слова подвала, у которых уже есть адрес: «Тарифы» открывают блок тарифов на странице сервиса. */
-const FOOTER_ROUTES: Record<string, { to: "/service"; hash?: string }> = {
+const FOOTER_ROUTES: Record<string, { to: "/service" | "/partners"; hash?: string }> = {
   "Тарифы": { to: "/service", hash: "tariffs" },
+  "Партнёрам": { to: "/partners" },
 };
 
 const FOOTER_COLUMNS: { title: string; links: string[] }[] = [
