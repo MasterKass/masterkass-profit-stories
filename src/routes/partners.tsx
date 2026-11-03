@@ -61,10 +61,12 @@ const TYPES = [
 ];
 
 const STEPS = [
-  { n: "01", t: "Получаете ссылку", d: "Регистрируетесь как партнёр и получаете персональную ссылку и промокод." },
-  { n: "02", t: "Клиент пробует бесплатно", d: "Приглашённый подключается и месяц пользуется сервисом со всеми функциями." },
-  { n: "03", t: "Первая оплата", d: "Клиент оплачивает подписку. Вознаграждение сразу начисляется вам." },
-  { n: "04", t: "Выплата", d: "Самозанятым по чеку из «Мой налог», ИП и компаниям по акту. Клиентам бонус приходит на баланс." },
+  { n: "01", t: "Регистрация и подписание договора", d: "Регистрируетесь как партнёр и принимаете партнёрское соглашение онлайн." },
+  { n: "02", t: "Ссылка и QR-код", d: "Получаете персональную ссылку и QR-код для мессенджеров, визиток и рекламы." },
+  { n: "03", t: "Клиент вносит первую оплату", d: "После бесплатного месяца клиент оплачивает подписку." },
+  { n: "04", t: "Вознаграждение видно в кабинете", d: "Сумма сразу отображается на вашем балансе в личном кабинете." },
+  { n: "05", t: "Вывод на карту", d: "Выводите вознаграждение на карту или расчётный счёт." },
+  { n: "06", t: "Закрывающие документы при необходимости", d: "Чек из «Мой налог» для самозанятых, акт для ИП и компаний." },
 ];
 
 function Partners() {
@@ -101,14 +103,29 @@ function Partners() {
 
         <section className="mt-24">
           <h2 className="text-3xl font-semibold tracking-[-0.03em] md:text-4xl">Как это работает</h2>
-          <div className="mt-8 grid gap-4 md:grid-cols-4">
-            {STEPS.map((s) => (
-              <div key={s.n} className="mk-card">
-                <span className="text-xs font-medium tracking-widest" style={{ color: "var(--mk-muted)" }}>{s.n}</span>
-                <h3 className="mt-5 text-lg font-semibold">{s.t}</h3>
-                <p className="mt-2 text-[14px] leading-relaxed" style={{ color: "var(--mk-muted)" }}>{s.d}</p>
-              </div>
-            ))}
+          <div className="relative mx-auto mt-10 max-w-2xl">
+            {STEPS.map((s, i) => {
+              const left = i % 2 === 0;
+              const last = i === STEPS.length - 1;
+              return (
+                <div key={s.n}>
+                  <div className={`flex ${left ? "justify-start" : "justify-end"}`}>
+                    <div className={`w-[62%] ${left ? "text-left" : "text-right"}`}>
+                      <span className="text-xs font-medium tracking-widest" style={{ color: "var(--mk-muted)" }}>{s.n}</span>
+                      <h3 className="mt-1 text-lg font-semibold leading-snug">{s.t}</h3>
+                      <p className="mt-1 text-[14px] leading-relaxed" style={{ color: "var(--mk-muted)" }}>{s.d}</p>
+                    </div>
+                  </div>
+                  {!last && (
+                    <svg viewBox="0 0 300 70" className="my-1 h-16 w-full" fill="none" aria-hidden
+                      style={{ transform: left ? undefined : "scaleX(-1)", color: "var(--mk-muted)" }}>
+                      <path d="M70 4 C 60 50, 140 62, 228 40" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+                      <path d="M218 32 L229 40 L216 46" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" vectorEffect="non-scaling-stroke" />
+                    </svg>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </section>
 
