@@ -76,7 +76,7 @@ function Cashier() {
 
         <section className="mk-card mk-csh-ai" aria-label="ИИ-наставник">
           <p className="mk-cab-kicker">ИИ-наставник</p>
-          <h2 className="mk-csh-title">Задайте вопрос нашему ИИ-сотруднику</h2>
+          <h2 className="mk-csh-title">Задайте вопрос ИИ-помощнику</h2>
           <form className="mk-csh-box" onSubmit={(e) => { e.preventDefault(); if (q.trim() || files.length) ask(q.trim() || `Фото: ${files[0]?.name ?? ""}`); setFiles([]); }}>
             <textarea value={q} onChange={(e) => setQ(e.target.value)} rows={2} placeholder="Опишите, что случилось на кассе" aria-label="Вопрос ИИ-сотруднику"
               onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); e.currentTarget.form?.requestSubmit(); } }} />
