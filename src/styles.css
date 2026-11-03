@@ -660,6 +660,7 @@ body { font-family: var(--font-sans); }
 .mk-csh-box { display: block; padding: 1rem 1rem .6rem; border-radius: 18px; background: var(--mk-surface); border: 1px solid var(--mk-border); }
 .mk-csh-box textarea { width: 100%; resize: none; border: 0; outline: none; background: transparent; font-size: 17px; line-height: 1.4; }
 .mk-csh-bar { display: flex; align-items: center; gap: .25rem; margin-top: .4rem; }
+.mk-csh-voice { display: flex; align-items: center; gap: .75rem; min-height: 52px; color: var(--mk-muted); font-size: 15px; }
 .mk-csh-ibtn { display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 12px; cursor: pointer; color: var(--mk-fg); }
 .mk-csh-send { background: var(--mk-fg); color: var(--mk-surface); }
 .mk-csh-files { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .4rem; }
