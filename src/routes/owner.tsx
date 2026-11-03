@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useRef, useState } from "react";
-import { ArrowUp, Crown, FileText, Plus, Sparkles } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Crown, FileText, Keyboard, Mic, Paperclip, Plus, Send, X } from "lucide-react";
 import { BackHome } from "@/components/back-home";
 
 export const Route = createFileRoute("/owner")({
@@ -38,14 +38,20 @@ const SECTIONS: Record<string, Doc[]> = {
   ],
 };
 
-const CHIPS = ["План постов на неделю", "Фонд при 100 кассах", "Регламент для инженера"];
-
 function OwnerPage() {
   const [docs, setDocs] = useState(SECTIONS);
   const [tab, setTab] = useState("Маркетинг");
   const [q, setQ] = useState("");
+  const [voice, setVoice] = useState(false);
+  const [files, setFiles] = useState<File[]>([]);
+  const field = useRef<HTMLTextAreaElement>(null);
+  const wantFocus = useRef(false);
   const [answer, setAnswer] = useState<{ q: string; src: string } | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (!voice && wantFocus.current) { wantFocus.current = false; field.current?.focus(); }
+  }, [voice]);
 
   const ask = (text: string) => {
     if (!text.trim()) return;
@@ -59,7 +65,19 @@ function OwnerPage() {
       <main className="mk-own">
         <span className="mk-own-badge"><Crown aria-hidden="true" />Хозяин</span>
         <h1 className="mk-own-title">Пространство Мастер Касс</h1>
-        <p className="mk-own-note">Наши файлы и наработки. ИИ-помощник отвечает на их основе.</p>
+        <p className="mk-own-note">Наши файлы и наработки. ИИ-сотрудник отвечает на их основе.</p>
+
+        <section className="mk-card mk-cab-pulse" aria-label="Выручка компании">
+          <p className="mk-cab-kicker">Выручка сегодня · все клиенты</p>
+          <p className="mk-cab-big">186 400 ₽</p>
+          <p className="mk-cab-up">+9% к прошлому вторнику</p>
+          <dl className="mk-cab-stats">
+            <div><dt>За месяц</dt><dd>1,42 млн ₽</dd></div>
+            <div><dt>План месяца</dt><dd>76%</dd></div>
+            <div><dt>Клиентов</dt><dd>58</dd></div>
+          </dl>
+        </section>
+
 
         <nav className="mk-own-tabs" aria-label="Разделы">
           {Object.keys(docs).map((s) => (
@@ -94,22 +112,48 @@ function OwnerPage() {
           />
         </section>
 
-        <section className="mk-card mk-own-ai" aria-label="Стратегический ИИ-помощник">
-          <h2><Sparkles aria-hidden="true" />Стратегический ИИ-помощник</h2>
+        <section className="mk-card mk-csh-ai" aria-label="ИИ-сотрудник">
+          <h2 className="mk-csh-title">Задайте вопрос ИИ-сотруднику</h2>
+          <form className="mk-csh-box" onSubmit={(e) => { e.preventDefault(); if (q.trim() || files.length) ask(q.trim() || `Файл: ${files[0]?.name ?? ""}`); setFiles([]); }}>
+            {voice ? (
+              <div className="mk-csh-voice">
+                <span className="mk-wave flex h-5 items-center gap-1" aria-hidden="true">
+                  {Array.from({ length: 14 }).map((_, i) => <span key={i} style={{ animationDelay: `${i * 70}ms` }} />)}
+                </span>
+                <span>Голосовой режим скоро заработает</span>
+              </div>
+            ) : (
+              <textarea ref={field} value={q} onChange={(e) => setQ(e.target.value)} rows={2} placeholder={`Вопрос по разделу «${tab}»`} aria-label="Вопрос ИИ-сотруднику"
+                onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); e.currentTarget.form?.requestSubmit(); } }} />
+            )}
+            {files.length > 0 && (
+              <ul className="mk-csh-files">
+                {files.map((f, i) => (
+                  <li key={f.name + i}><Paperclip size={13} aria-hidden="true" /><span>{f.name}</span>
+                    <button type="button" aria-label={`Убрать ${f.name}`} onClick={() => setFiles(files.filter((_, j) => j !== i))}><X size={13} aria-hidden="true" /></button></li>
+                ))}
+              </ul>
+            )}
+            <div className="mk-csh-bar">
+              <label className="mk-csh-ibtn" aria-label="Прикрепить файл">
+                <Plus size={22} aria-hidden="true" />
+                <input type="file" multiple className="sr-only" onChange={(e) => { setFiles([...files, ...Array.from(e.target.files ?? [])]); e.target.value = ""; }} />
+              </label>
+              <span className="flex-1" />
+              <button type="button" onClick={() => { wantFocus.current = true; setVoice(false); }} aria-label="Ввести текстом" className={`mk-csh-ibtn ${voice ? "opacity-50" : ""}`}><Keyboard size={20} aria-hidden="true" /></button>
+              <button type="button" onClick={() => setVoice(true)} aria-label="Спросить голосом" className={`mk-csh-ibtn ${voice ? "" : "opacity-60"}`}><Mic size={22} aria-hidden="true" /></button>
+              {(q.trim().length > 0 || files.length > 0) && (
+                <button type="submit" className="mk-csh-ibtn mk-csh-send" aria-label="Отправить"><Send size={18} aria-hidden="true" /></button>
+              )}
+            </div>
+          </form>
           {answer && (
-            <div className="mk-own-answer">
+            <div className="mk-own-answer" role="status">
               <p><b>Вы:</b> {answer.q}</p>
               <p>Демо-ответ. Когда подключим ИИ, здесь будет ответ по вашим документам.</p>
               <small>Основано на файле: {answer.src}</small>
             </div>
           )}
-          <form className="mk-own-ask" onSubmit={(e) => { e.preventDefault(); ask(q); }}>
-            <input value={q} onChange={(e) => setQ(e.target.value)} placeholder={`Вопрос по разделу «${tab}»`} aria-label="Вопрос ИИ-помощнику" />
-            <button type="submit" aria-label="Отправить"><ArrowUp /></button>
-          </form>
-          <div className="mk-own-chips">
-            {CHIPS.map((c) => <button key={c} type="button" onClick={() => ask(c)}>{c}</button>)}
-          </div>
         </section>
       </main>
     </div>
