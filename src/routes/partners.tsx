@@ -69,7 +69,7 @@ const STEPS = [
 
 function Partners() {
   return (
-    <main className="mk-page min-h-screen">
+    <main className="mk-page mk-dark-page min-h-screen">
       <BackHome />
       <div className="mx-auto max-w-5xl px-5 pb-24 pt-24">
         <h1 className="text-4xl font-semibold tracking-[-0.04em] md:text-6xl">Партнёрская программа</h1>
