@@ -296,6 +296,23 @@ body { font-family: var(--font-sans); }
   --welcome-background: oklch(0.16 0.006 260);
 }
 .mk-dark-page .mk-tariff { --mk-fg: oklch(0.2 0.015 260); --mk-muted: oklch(0.32 0.02 260); --mk-surface: oklch(0.97 0.008 85); --mk-border: oklch(0.24 0.008 260 / 0.12); color: var(--mk-fg); }
+/* Змейка шагов партнёрской программы: непрерывная спектральная линия со стрелочками */
+.mk-snake { position: relative; --mk-step-h: 88px; }
+.mk-snake-line { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.mk-step { position: relative; display: flex; align-items: center; height: var(--mk-step-h); }
+.mk-step-left { justify-content: flex-start; padding-left: calc(12% + 22px); }
+.mk-step-right { justify-content: flex-end; padding-right: calc(12% + 22px); }
+.mk-step-text { max-width: 72%; font-size: clamp(17px, 2.1vw, 21px); font-weight: 600; line-height: 1.25; letter-spacing: -0.03em; }
+.mk-step-right .mk-step-text { text-align: right; }
+.mk-step-dot { position: absolute; top: 50%; width: 9px; height: 9px; border-radius: 999px; transform: translate(-50%, -50%); }
+.mk-step-left .mk-step-dot { left: 12%; }
+.mk-step-right .mk-step-dot { left: 88%; }
+.mk-snake-arrow { position: absolute; left: 50%; line-height: 0; }
+@media (max-width: 640px) {
+  .mk-snake { --mk-step-h: 78px; }
+  .mk-step-text { max-width: 74%; }
+}
+
 .mk-section { max-width: 72rem; margin-inline: auto; padding: 6rem 1.5rem; }
 .mk-h2 { font-size: clamp(2rem, 4.5vw, 3.5rem); font-weight: 700; line-height: 1.05; letter-spacing: -0.05em; }
 .mk-reveal { max-width: 60rem; margin-inline: auto; font-size: clamp(1.9rem, 4.6vw, 3.4rem); font-weight: 700; line-height: 1.2; letter-spacing: -0.04em; }
