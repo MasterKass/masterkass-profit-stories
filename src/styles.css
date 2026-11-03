@@ -673,7 +673,9 @@ body { font-family: var(--font-sans); }
 .mk-own-badge svg { width: 15px; height: 15px; }
 .mk-own-title { font-size: 30px; font-weight: 700; letter-spacing: -.03em; margin: .75rem 0 .25rem; }
 .mk-own-note { color: color-mix(in oklch, var(--mk-fg) 60%, transparent); margin-bottom: 1.25rem; }
-.mk-own-tabs { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
+.mk-own-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 1rem; }
+.mk-own-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.mk-own-brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 18px; }
 .mk-own-tabs button { flex: none; padding: 8px 12px; border-radius: 10px; border: 1px solid var(--mk-border); background: var(--mk-surface); font-size: 14px; cursor: pointer; }
 .mk-own-tabs button span { opacity: .5; margin-left: 4px; }
 .mk-own-tabs button[aria-pressed="true"] { background: var(--mk-fg); color: var(--mk-surface); }
