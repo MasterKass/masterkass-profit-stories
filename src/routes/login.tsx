@@ -160,6 +160,7 @@ function LoginPage() {
                 {ROLE_ACCESS[role].map((a) => <li key={a}>{a}</li>)}
               </ul>
               {role === "director" && <Link to="/cabinet" className="mk-login-btn" style={{ marginTop: "1.5rem" }}>Открыть кабинет директора</Link>}
+              {role === "cashier" && <Link to="/cashier" className="mk-login-btn" style={{ marginTop: "1.5rem" }}>Открыть кабинет кассира</Link>}
               <button type="button" className="mk-login-btn mk-login-btn-ghost" onClick={() => { setStep("phone"); setRole(null); setPhone(""); }}>Выйти</button>
             </div>
           )}

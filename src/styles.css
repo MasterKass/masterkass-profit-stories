@@ -633,3 +633,25 @@ body { font-family: var(--font-sans); }
 .mk-dg-action { margin-top: .8rem; padding: .7rem .85rem; border-radius: 12px; background: var(--mk-bg); border: 1px solid var(--mk-border); font-weight: 500; }
 .mk-dg-foot { display: flex; flex-direction: column; gap: .75rem; padding: 1rem .25rem; font-size: 14px; }
 .mk-dg-btn { display: block; text-align: center; padding: .85rem 1rem; border-radius: 12px; background: var(--mk-fg); color: var(--mk-surface); font-weight: 600; }
+
+/* Кабинет кассира */
+.mk-csh-status { display: inline-flex; align-items: center; gap: 6px; padding: .45rem .75rem; border-radius: 10px; background: color-mix(in oklab, oklch(0.72 0.17 145) 16%, var(--mk-surface)); font-size: 13px; font-weight: 600; }
+.mk-csh-script, .mk-csh-ai { padding: 1.25rem; margin-top: .75rem; }
+.mk-csh-script .mk-cab-kicker, .mk-cab-kicker:has(svg) { display: flex; align-items: center; gap: 6px; }
+.mk-csh-quote { font-size: 18px; font-weight: 600; line-height: 1.4; letter-spacing: -.01em; }
+.mk-csh-rules { margin-top: .75rem; font-size: 14px; color: var(--mk-muted); }
+.mk-csh-rules li { margin-top: .2rem; }
+.mk-csh-mic { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 1.1rem; border-radius: 12px; background: var(--mk-fg); color: var(--mk-surface); font-size: 16px; font-weight: 600; }
+.mk-csh-form { display: flex; gap: .5rem; margin-top: .6rem; }
+.mk-csh-form input { flex: 1; min-width: 0; padding: .75rem .9rem; border-radius: 10px; border: 1px solid var(--mk-border); background: var(--mk-surface); font-size: 16px; }
+.mk-csh-form button { padding: 0 .9rem; border-radius: 10px; border: 1px solid var(--mk-border); }
+.mk-csh-chips { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .75rem; }
+.mk-csh-chips button { padding: .45rem .7rem; border-radius: 10px; border: 1px solid var(--mk-border); font-size: 13.5px; background: var(--mk-surface); }
+.mk-csh-chips button[data-active="true"] { background: var(--mk-fg); color: var(--mk-surface); }
+.mk-csh-answer { margin-top: 1rem; padding: 1rem; border-radius: 12px; background: var(--mk-bg); border: 1px solid var(--mk-border); }
+.mk-csh-asked { font-weight: 600; margin-bottom: .4rem; }
+.mk-csh-answer ol, .mk-csh-steps { list-style: decimal; padding-left: 1.2rem; font-size: 14.5px; line-height: 1.5; }
+.mk-csh-steps { padding: 0 1.1rem 1rem 2.3rem; }
+.mk-csh-eng { margin-top: .85rem; padding-top: .85rem; border-top: 1px solid var(--mk-border); font-size: 14.5px; }
+.mk-csh-eng button { display: inline-flex; align-items: center; gap: 8px; margin-top: .6rem; padding: .7rem 1rem; border-radius: 10px; background: var(--mk-fg); color: var(--mk-surface); font-weight: 600; }
+.mk-csh-sent { display: flex; align-items: center; gap: 6px; margin-top: .6rem; font-weight: 600; }

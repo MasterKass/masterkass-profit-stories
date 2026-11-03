@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CabinetRouteImport } from './routes/cabinet'
+import { Route as CashierRouteImport } from './routes/cashier'
 import { Route as DigestRouteImport } from './routes/digest'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
@@ -26,6 +27,11 @@ const IndexRoute = IndexRouteImport.update({
 const CabinetRoute = CabinetRouteImport.update({
   id: '/cabinet',
   path: '/cabinet',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CashierRoute = CashierRouteImport.update({
+  id: '/cashier',
+  path: '/cashier',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DigestRoute = DigestRouteImport.update({
@@ -62,6 +68,7 @@ const SupportRoute = SupportRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/cabinet': typeof CabinetRoute
+  '/cashier': typeof CashierRoute
   '/digest': typeof DigestRoute
   '/login': typeof LoginRoute
   '/onboarding': typeof OnboardingRoute
@@ -72,6 +79,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/cabinet': typeof CabinetRoute
+  '/cashier': typeof CashierRoute
   '/digest': typeof DigestRoute
   '/login': typeof LoginRoute
   '/onboarding': typeof OnboardingRoute
@@ -83,6 +91,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/cabinet': typeof CabinetRoute
+  '/cashier': typeof CashierRoute
   '/digest': typeof DigestRoute
   '/login': typeof LoginRoute
   '/onboarding': typeof OnboardingRoute
@@ -95,6 +104,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/cabinet'
+    | '/cashier'
     | '/digest'
     | '/login'
     | '/onboarding'
@@ -105,6 +115,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/cabinet'
+    | '/cashier'
     | '/digest'
     | '/login'
     | '/onboarding'
@@ -115,6 +126,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/cabinet'
+    | '/cashier'
     | '/digest'
     | '/login'
     | '/onboarding'
@@ -126,6 +138,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CabinetRoute: typeof CabinetRoute
+  CashierRoute: typeof CashierRoute
   DigestRoute: typeof DigestRoute
   LoginRoute: typeof LoginRoute
   OnboardingRoute: typeof OnboardingRoute
@@ -148,6 +161,13 @@ declare module '@tanstack/react-router' {
       path: '/cabinet'
       fullPath: '/cabinet'
       preLoaderRoute: typeof CabinetRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cashier': {
+      id: '/cashier'
+      path: '/cashier'
+      fullPath: '/cashier'
+      preLoaderRoute: typeof CashierRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/digest': {
@@ -198,6 +218,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CabinetRoute: CabinetRoute,
+  CashierRoute: CashierRoute,
   DigestRoute: DigestRoute,
   LoginRoute: LoginRoute,
   OnboardingRoute: OnboardingRoute,
