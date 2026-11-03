@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "@tanstack/react-router";
+import { PrivacyLink } from "@/components/privacy-dialog";
 import { Check, ArrowUpRight } from "lucide-react";
 import { useServerFn } from "@tanstack/react-start";
 import { validatePartnerLead, type PartnerLeadErrors } from "@/lib/partner-lead";
@@ -113,7 +113,7 @@ export function PartnerLeadForm() {
               )}
               <p className="mk-lead-privacy">
                 Отправляя форму, соглашаетесь на обработку персональных данных согласно{" "}
-                <Link to="/privacy">Политике обработки персональных данных</Link>.
+                <PrivacyLink />.
               </p>
             </div>
           </form>
