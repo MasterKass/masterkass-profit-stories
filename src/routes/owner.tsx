@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { Crown, FileText, Keyboard, Mic, Paperclip, Plus, Send, X } from "lucide-react";
+import { FileText, Keyboard, Mic, Paperclip, Plus, Send, X } from "lucide-react";
 import { BackHome } from "@/components/back-home";
 
 export const Route = createFileRoute("/owner")({
@@ -63,11 +63,7 @@ function OwnerPage() {
     <div className="mk-page min-h-screen">
       <BackHome brand />
       <main className="mk-own">
-        <header className="mk-own-head">
-          <span />
-          <span className="mk-own-badge"><Crown aria-hidden="true" />Хозяин</span>
-        </header>
-        <h1 className="mk-own-title">Польза - диалог развития</h1>
+        <h1 className="mk-own-title">Польза - Диалог Развития</h1>
 
         <section className="mk-card mk-cab-pulse" aria-label="Выручка компании">
           <p className="mk-cab-kicker">Выручка сегодня · все клиенты</p>
