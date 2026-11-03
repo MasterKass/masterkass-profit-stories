@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, Check, ShieldCheck } from "lucide-react";
 import { BackHome } from "@/components/back-home";
@@ -39,6 +39,7 @@ function LoginPage() {
   const [seconds, setSeconds] = useState(0);
   const [role, setRole] = useState<Role | null>(null);
   const cells = useRef<(HTMLInputElement | null)[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (seconds <= 0) return;
@@ -69,8 +70,8 @@ function LoginPage() {
     if (!n) return;
     const r = verifyCode(n, code);
     if (r.ok) {
-      setRole(r.role);
-      setStep("done");
+      const to = r.role === "cashier" ? "/cashier" : r.role === "owner" ? "/owner" : "/cabinet";
+      navigate({ to });
     } else {
       setCodeError(r.error);
     }
