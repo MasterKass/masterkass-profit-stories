@@ -86,7 +86,7 @@ function StepsSnake() {
   const n = STEPS.length;
   const xs = STEPS.map((_, i) => (i % 2 === 0 ? 12 : 88));
   const ys = STEPS.map((_, i) => i * ROW_H + ROW_H / 2);
-  const k = ROW_H * 0.55;
+  const k = ROW_H * 0.9;
   let d = `M ${xs[0] ?? 0} ${ys[0] ?? 0}`;
   for (let i = 0; i < n - 1; i++) {
     d += ` C ${xs[i] ?? 0} ${(ys[i] ?? 0) + k}, ${xs[i + 1] ?? 0} ${(ys[i + 1] ?? 0) - k}, ${xs[i + 1] ?? 0} ${ys[i + 1] ?? 0}`;
