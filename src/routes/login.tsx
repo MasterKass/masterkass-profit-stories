@@ -179,9 +179,9 @@ function LoginPage() {
                   <span>{formatPhone(a.phone)}</span>
                 </button>
               ))}
-              <button type="button" className="mk-login-demo-owner" onClick={() => sendCode(OWNER_PHONES[0])}>
+              <button type="button" className="mk-login-demo-owner" onClick={() => sendCode(OWNER_PHONES[0]!)}>
                 <b>Хозяин</b>
-                <span>{formatPhone(OWNER_PHONES[0])}</span>
+                <span>{formatPhone(OWNER_PHONES[0]!)}</span>
               </button>
             </div>
           </aside>

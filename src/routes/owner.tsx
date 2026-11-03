@@ -49,7 +49,7 @@ function OwnerPage() {
 
   const ask = (text: string) => {
     if (!text.trim()) return;
-    setAnswer({ q: text, src: docs[tab][0]?.name ?? "файлы раздела" });
+    setAnswer({ q: text, src: (docs[tab] ?? [])[0]?.name ?? "файлы раздела" });
     setQ("");
   };
 
@@ -64,13 +64,13 @@ function OwnerPage() {
         <nav className="mk-own-tabs" aria-label="Разделы">
           {Object.keys(docs).map((s) => (
             <button key={s} type="button" aria-pressed={tab === s} onClick={() => setTab(s)}>
-              {s} <span>{docs[s].length}</span>
+              {s} <span>{(docs[s] ?? []).length}</span>
             </button>
           ))}
         </nav>
 
         <section className="mk-card mk-own-files" aria-label={`Файлы: ${tab}`}>
-          {docs[tab].map((d) => (
+          {(docs[tab] ?? []).map((d) => (
             <div key={d.name} className="mk-own-file">
               <FileText aria-hidden="true" />
               <div><b>{d.name}</b><span>{d.note}</span></div>
@@ -88,7 +88,7 @@ function OwnerPage() {
             onChange={(e) => {
               const f = e.target.files?.[0];
               if (!f) return;
-              setDocs((p) => ({ ...p, [tab]: [{ name: f.name, date: "сегодня", note: "Загружено вами" }, ...p[tab]] }));
+              setDocs((p) => ({ ...p, [tab]: [{ name: f.name, date: "сегодня", note: "Загружено вами" }, ...(p[tab] ?? [])] }));
               e.target.value = "";
             }}
           />
