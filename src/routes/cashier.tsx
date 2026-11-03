@@ -40,6 +40,7 @@ function Cashier() {
   const [q, setQ] = useState("");
   const [voice, setVoice] = useState(false);
   const field = useRef<HTMLTextAreaElement>(null);
+  const wantFocus = useRef(false);
   const [files, setFiles] = useState<File[]>([]);
   const [asked, setAsked] = useState<string | null>(null);
   const [called, setCalled] = useState(false);
@@ -49,6 +50,10 @@ function Cashier() {
   const answer: Answer | null = asked
     ? QUICK[asked] ?? { steps: ["В демо-режиме ИИ отвечает на быстрые вопросы ниже. Живые ответы подключим после запуска."] }
     : null;
+
+  useEffect(() => {
+    if (!voice && wantFocus.current) { wantFocus.current = false; field.current?.focus(); }
+  }, [voice]);
 
   return (
     <main className="mk-page mk-cab min-h-screen">
