@@ -87,7 +87,6 @@ function OwnerPage() {
 
 
         <section className="mk-card mk-csh-ai" aria-label="ИИ-сотрудник">
-          <h2 className="mk-csh-title">Задайте вопрос ИИ-сотруднику</h2>
           <form className="mk-csh-box" onSubmit={(e) => { e.preventDefault(); if (q.trim() || files.length) ask(q.trim() || `Файл: ${files[0]?.name ?? ""}`); setFiles([]); }}>
             {voice ? (
               <div className="mk-csh-voice">
