@@ -161,7 +161,7 @@ export function OwnerBoard({ section }: { section: string }) {
               <CartesianGrid vertical={false} stroke="var(--mk-border)" />
               <XAxis dataKey="label" tickLine={false} axisLine={false} fontSize={12} />
               <YAxis tickLine={false} axisLine={false} fontSize={12} />
-              <Tooltip formatter={(v, n) => [v, n === "a" ? b.legend[0] : b.legend[1]]} />
+              <Tooltip separator="" formatter={(v) => [v, ""]} />
               <Area dataKey="a" stroke="var(--mk-chart-1)" fill="var(--mk-chart-1)" fillOpacity={0.35} strokeWidth={2} />
               <Area dataKey="b" stroke="var(--mk-chart-2)" fill="var(--mk-chart-2)" fillOpacity={0.25} strokeWidth={2} />
             </AreaChart>
