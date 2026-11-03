@@ -61,13 +61,61 @@ const TYPES = [
 ];
 
 const STEPS = [
-  { n: "01", t: "Регистрация и подписание договора", d: "Регистрируетесь как партнёр и принимаете партнёрское соглашение онлайн." },
-  { n: "02", t: "Ссылка и QR-код", d: "Получаете персональную ссылку и QR-код для мессенджеров, визиток и рекламы." },
-  { n: "03", t: "Клиент вносит первую оплату", d: "После бесплатного месяца клиент оплачивает подписку." },
-  { n: "04", t: "Вознаграждение видно в кабинете", d: "Сумма сразу отображается на вашем балансе в личном кабинете." },
-  { n: "05", t: "Вывод на карту", d: "Выводите вознаграждение на карту или расчётный счёт." },
-  { n: "06", t: "Закрывающие документы при необходимости", d: "Чек из «Мой налог» для самозанятых, акт для ИП и компаний." },
+  "Регистрация и подписание договора",
+  "Ссылка и QR-код",
+  "Клиент вносит первую оплату",
+  "Вознаграждение видно в кабинете",
+  "Вывод на карту",
+  "Закрывающие документы при необходимости",
 ];
+
+const HUES = ["#f5a524", "#f7c948", "#b5d84a", "#5fd6a0", "#3fc8d8", "#6bb8f0"];
+const ROW_H = 100;
+
+function StepsSnake() {
+  const n = STEPS.length;
+  const xs = STEPS.map((_, i) => (i % 2 === 0 ? 12 : 88));
+  const ys = STEPS.map((_, i) => i * ROW_H + ROW_H / 2);
+  const k = ROW_H * 0.55;
+  let d = `M ${xs[0]} ${ys[0]}`;
+  for (let i = 0; i < n - 1; i++) {
+    d += ` C ${xs[i]} ${ys[i] + k}, ${xs[i + 1]} ${ys[i + 1] - k}, ${xs[i + 1]} ${ys[i + 1]}`;
+  }
+
+  return (
+    <div className="mk-snake mx-auto mt-10 max-w-2xl" style={{ height: `calc(${n} * var(--mk-step-h))` }}>
+      <svg className="mk-snake-line" viewBox={`0 0 100 ${n * ROW_H}`} preserveAspectRatio="none" fill="none" aria-hidden>
+        <defs>
+          <linearGradient id="mk-snake-grad" x1="0" y1="0" x2="0" y2="1">
+            {HUES.map((h, i) => (
+              <stop key={h} offset={`${(i / (n - 1)) * 100}%`} stopColor={h} />
+            ))}
+          </linearGradient>
+        </defs>
+        <path d={d} stroke="url(#mk-snake-grad)" strokeWidth="1.5" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+      </svg>
+
+      {STEPS.map((t, i) => {
+        const left = i % 2 === 0;
+        const hue = HUES[i % HUES.length];
+        return (
+          <div key={t} className={`mk-step ${left ? "mk-step-left" : "mk-step-right"}`}>
+            <span className="mk-step-dot" aria-hidden style={{ background: hue, boxShadow: `0 0 0 5px ${hue}1f` }} />
+            {i > 0 && (
+              <span className="mk-step-arrow" aria-hidden style={{ color: hue }}>
+                <svg viewBox="0 0 12 8" width="12" height="8" fill="none">
+                  <path d="M1 1 L6 6.5 L11 1" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </span>
+            )}
+            <span className="mk-step-text">{t}</span>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 
 function Partners() {
   return (
