@@ -48,35 +48,8 @@ const SECTIONS: Section[] = [
   ] },
 ];
 
-const DIGEST_NAME = "Дайджест-Кофейня-Утро-3-ноября.pdf";
-let digestBlob: Blob | null = null;
-
-async function saveDigest() {
-  const blob = digestBlob ?? (await (await fetch("/downloads/digest-utro.pdf")).blob());
-  const file = new File([blob], DIGEST_NAME, { type: "application/pdf" });
-  if (matchMedia("(pointer: coarse)").matches && navigator.canShare?.({ files: [file] })) {
-    try { await navigator.share({ files: [file], title: DIGEST_NAME }); return; }
-    catch (e) { if ((e as DOMException).name === "AbortError") return; }
-  }
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url; a.download = DIGEST_NAME;
-  document.body.appendChild(a); a.click(); a.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 30_000);
-}
-
 function Cabinet() {
   const [open, setOpen] = useState<string | null>("finance");
-  const [digest, setDigest] = useState(false);
-  useEffect(() => {
-    if (!digest) return;
-    if (!digestBlob) fetch("/downloads/digest-utro.pdf").then((r) => r.blob()).then((b) => { digestBlob = b; });
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setDigest(false); };
-    window.addEventListener("keydown", onKey);
-    return () => { document.body.style.overflow = prev; window.removeEventListener("keydown", onKey); };
-  }, [digest]);
   return (
     <main className="mk-page mk-cab min-h-screen">
       <BackHome />
