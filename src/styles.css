@@ -671,7 +671,7 @@ body { font-family: var(--font-sans); }
 .mk-own { max-width: 760px; margin: 0 auto; padding: 4.5rem 1rem 3rem; }
 .mk-own-badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 10px; font-size: 13px; font-weight: 600; background: linear-gradient(110deg, oklch(0.88 0.12 75), oklch(0.92 0.13 100), oklch(0.9 0.12 135)); }
 .mk-own-badge svg { width: 15px; height: 15px; }
-.mk-own-title { font-size: 30px; font-weight: 700; letter-spacing: -.03em; margin: .75rem 0 .25rem; }
+.mk-own-title { font-size: 30px; font-weight: 700; letter-spacing: -.03em; margin: 1rem 0 1.25rem; }
 .mk-own-note { color: color-mix(in oklch, var(--mk-fg) 60%, transparent); margin-bottom: 1.25rem; }
 .mk-own-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 1rem; }
 .mk-own-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
