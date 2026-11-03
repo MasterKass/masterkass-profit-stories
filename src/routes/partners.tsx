@@ -1,5 +1,6 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { BackHome } from "@/components/back-home";
+import { PartnerLeadForm } from "@/components/partner-lead-form";
 
 export const Route = createFileRoute("/partners")({
   head: () => ({
@@ -178,10 +179,11 @@ function Partners() {
           <p className="mt-3 text-[15px] leading-relaxed" style={{ color: "var(--mk-muted)" }}>
             Работаем по партнёрскому соглашению, которое принимается при регистрации. Выплаты проводим самозанятым, ИП и компаниям. Вознаграждение начисляется только за клиентов, которые оплатили подписку после бесплатного месяца.
           </p>
-          <div className="mt-6">
-            <Link to="/service" hash="tariffs" className="mk-outline">Посмотреть тарифы</Link>
-          </div>
         </section>
+
+        <div className="mt-24">
+          <PartnerLeadForm />
+        </div>
       </div>
     </main>
   );
