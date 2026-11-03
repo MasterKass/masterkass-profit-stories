@@ -2,7 +2,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { ChevronDown, Mic, Send, Wrench, Check, HeartHandshake, GraduationCap, Plus, Paperclip, X } from "lucide-react";
 import { BackHome } from "@/components/back-home";
-import { BrandMark } from "@/components/brand-mark";
 
 export const Route = createFileRoute("/cashier")({
   head: () => ({
@@ -55,7 +54,6 @@ function Cashier() {
       <div className="mx-auto max-w-3xl px-5 pb-20 pt-24">
         <header className="mk-cab-head">
           <div className="flex items-center gap-3">
-            <BrandMark />
             <div>
               <p className="mk-cab-org">Кофейня «Утро»</p>
               <p className="mk-cab-muted">Анна К. · кассир · смена с 08:00</p>
@@ -75,7 +73,6 @@ function Cashier() {
         </section>
 
         <section className="mk-card mk-csh-ai" aria-label="ИИ-наставник">
-          <p className="mk-cab-kicker">ИИ-наставник</p>
           <h2 className="mk-csh-title">Задайте вопрос ИИ-помощнику</h2>
           <form className="mk-csh-box" onSubmit={(e) => { e.preventDefault(); if (q.trim() || files.length) ask(q.trim() || `Фото: ${files[0]?.name ?? ""}`); setFiles([]); }}>
             <textarea value={q} onChange={(e) => setQ(e.target.value)} rows={2} placeholder="Опишите, что случилось на кассе" aria-label="Вопрос ИИ-сотруднику"
