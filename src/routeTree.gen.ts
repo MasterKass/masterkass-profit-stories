@@ -18,6 +18,7 @@ import { Route as DigestRouteImport } from './routes/digest'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as OwnerRouteImport } from './routes/owner'
+import { Route as PartnersRouteImport } from './routes/partners'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as ServiceRouteImport } from './routes/service'
 import { Route as SupportRouteImport } from './routes/support'
@@ -67,6 +68,11 @@ const OwnerRoute = OwnerRouteImport.update({
   path: '/owner',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PartnersRoute = PartnersRouteImport.update({
+  id: '/partners',
+  path: '/partners',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PrivacyRoute = PrivacyRouteImport.update({
   id: '/privacy',
   path: '/privacy',
@@ -93,6 +99,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/onboarding': typeof OnboardingRoute
   '/owner': typeof OwnerRoute
+  '/partners': typeof PartnersRoute
   '/privacy': typeof PrivacyRoute
   '/service': typeof ServiceRoute
   '/support': typeof SupportRoute
@@ -107,6 +114,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/onboarding': typeof OnboardingRoute
   '/owner': typeof OwnerRoute
+  '/partners': typeof PartnersRoute
   '/privacy': typeof PrivacyRoute
   '/service': typeof ServiceRoute
   '/support': typeof SupportRoute
@@ -122,6 +130,7 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/onboarding': typeof OnboardingRoute
   '/owner': typeof OwnerRoute
+  '/partners': typeof PartnersRoute
   '/privacy': typeof PrivacyRoute
   '/service': typeof ServiceRoute
   '/support': typeof SupportRoute
@@ -138,6 +147,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/onboarding'
     | '/owner'
+    | '/partners'
     | '/privacy'
     | '/service'
     | '/support'
@@ -152,6 +162,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/onboarding'
     | '/owner'
+    | '/partners'
     | '/privacy'
     | '/service'
     | '/support'
@@ -166,6 +177,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/onboarding'
     | '/owner'
+    | '/partners'
     | '/privacy'
     | '/service'
     | '/support'
@@ -181,6 +193,7 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   OnboardingRoute: typeof OnboardingRoute
   OwnerRoute: typeof OwnerRoute
+  PartnersRoute: typeof PartnersRoute
   PrivacyRoute: typeof PrivacyRoute
   ServiceRoute: typeof ServiceRoute
   SupportRoute: typeof SupportRoute
@@ -251,6 +264,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OwnerRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/partners': {
+      id: '/partners'
+      path: '/partners'
+      fullPath: '/partners'
+      preLoaderRoute: typeof PartnersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/privacy': {
       id: '/privacy'
       path: '/privacy'
@@ -285,6 +305,7 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   OnboardingRoute: OnboardingRoute,
   OwnerRoute: OwnerRoute,
+  PartnersRoute: PartnersRoute,
   PrivacyRoute: PrivacyRoute,
   ServiceRoute: ServiceRoute,
   SupportRoute: SupportRoute,
