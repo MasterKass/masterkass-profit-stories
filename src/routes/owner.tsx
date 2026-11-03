@@ -72,7 +72,7 @@ function OwnerPage() {
           <p className="mk-cab-big">186 400 ₽</p>
           <p className="mk-cab-up">+9% к прошлому вторнику</p>
           <dl className="mk-cab-stats">
-            <div><dt>За месяц</dt><dd>1 420 000 ₽</dd></div>
+            <div><dt>За месяц</dt><dd>1,42 млн ₽</dd></div>
             <div><dt>План месяца</dt><dd>76%</dd></div>
             <div><dt>Клиентов</dt><dd>58</dd></div>
           </dl>
