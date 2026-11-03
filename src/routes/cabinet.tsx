@@ -1,0 +1,116 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
+import {
+  ChevronDown, Wallet, HeartHandshake, FileSignature, Package, Users, MonitorSmartphone, Landmark, Mic, Sparkles,
+} from "lucide-react";
+import { BackHome } from "@/components/back-home";
+import { BrandMark } from "@/components/brand-mark";
+
+export const Route = createFileRoute("/cabinet")({
+  head: () => ({
+    meta: [
+      { title: "Кабинет директора · Мастер Касс" },
+      { name: "description", content: "Пульт директора: выручка дня, финансы, лояльность, ЭДО, ассортимент, сотрудники, оборудование и новости госрегулирования." },
+      { property: "og:title", content: "Кабинет директора · Мастер Касс" },
+      { property: "og:description", content: "Всё о вашей точке на одном экране." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
+      { name: "robots", content: "noindex" },
+    ],
+  }),
+  component: Cabinet,
+});
+
+type Section = { id: string; title: string; icon: typeof Wallet; summary: string; rows: [string, string][] };
+
+const SECTIONS: Section[] = [
+  { id: "finance", title: "Финансы", icon: Wallet, summary: "Месяц: 1 240 000 ₽ · план выполнен на 82%", rows: [
+    ["Выручка за месяц", "1 240 000 ₽"], ["План на месяц", "1 510 000 ₽"], ["Средний чек за неделю", "648 ₽"],
+    ["Ближайший платёж", "ОФД, 1 800 ₽ · 12 ноября"], ["Фонд «Новая касса»", "накоплено 4 500 ₽"],
+  ] },
+  { id: "loyalty", title: "Маркетинг и лояльность", icon: HeartHandshake, summary: "186 постоянных гостей · +14 карт за неделю", rows: [
+    ["Постоянные гости", "186"], ["Новые карты за неделю", "14"], ["Списано бонусов", "3 400"], ["Вернулись за 30 дней", "61%"],
+  ] },
+  { id: "edo", title: "Поставщики и ЭДО", icon: FileSignature, summary: "1 накладная ждёт подписи", rows: [
+    ["«Кофе-Опт»", "24 500 ₽ · ждёт подписи"], ["«Молочный двор»", "14 200 ₽ · подписано"], ["Документов за неделю", "9"],
+  ] },
+  { id: "assortment", title: "Ассортимент", icon: Package, summary: "Топ: капучино 300 мл · 34% выручки", rows: [
+    ["Лидер продаж", "Капучино 300 мл, 34%"], ["Растёт", "Раф лавандовый, +18%"], ["Заканчивается", "Сироп ваниль, 1 шт"],
+  ] },
+  { id: "staff", title: "Сотрудники и доступы", icon: Users, summary: "Подключено 2 из 3 сотрудников", rows: [
+    ["Анна К. · кассир", "на смене с 08:00"], ["Ирина П. · бухгалтер", "была в сети вчера"], ["Свободно мест", "1 из 3"],
+  ] },
+  { id: "equipment", title: "Оборудование", icon: MonitorSmartphone, summary: "Эвотор 7.2 · связь отличная", rows: [
+    ["Касса №1", "Эвотор 7.2 · в сети"], ["Фискальный накопитель", "действует ещё 45 дней"], ["Износ кассы", "38% · замена через фонд"],
+  ] },
+  { id: "news", title: "Новости госрегулирования", icon: Landmark, summary: "Разрешительный режим: касса обновлена", rows: [
+    ["Маркировка молочной продукции", "проверено, ошибок нет"], ["Разрешительный режим", "касса готова"], ["Новые форматы ФФД", "обновление не требуется"],
+  ] },
+];
+
+function Cabinet() {
+  const [open, setOpen] = useState<string | null>("finance");
+  return (
+    <main className="mk-page mk-cab min-h-screen">
+      <BackHome />
+      <div className="mx-auto max-w-3xl px-5 pb-20 pt-24">
+        <header className="mk-cab-head">
+          <div className="flex items-center gap-3">
+            <BrandMark />
+            <div>
+              <p className="mk-cab-org">Кофейня «Утро»</p>
+              <p className="mk-cab-muted">Директор · демо-данные</p>
+            </div>
+          </div>
+          <span className="mk-cab-units"><Sparkles size={14} aria-hidden="true" />1 300 AI-юнитов</span>
+        </header>
+
+        <section className="mk-card mk-cab-pulse" aria-label="Сегодня на точке">
+          <p className="mk-cab-kicker">Сегодня на точке</p>
+          <p className="mk-cab-big">48 650 ₽</p>
+          <p className="mk-cab-up">+12% к прошлому вторнику</p>
+          <dl className="mk-cab-stats">
+            <div><dt>Чеков</dt><dd>73</dd></div>
+            <div><dt>Средний чек</dt><dd>665 ₽</dd></div>
+            <div><dt>Смена</dt><dd>Анна К., с 08:00</dd></div>
+          </dl>
+        </section>
+
+        <section className="mk-card mk-cab-attn" aria-label="Требует внимания">
+          <p className="mk-cab-kicker">Требует внимания</p>
+          <ul>
+            <li data-tone="warn">ЭДО: накладная «Кофе-Опт» на 24 500 ₽ ждёт подписи</li>
+            <li data-tone="warn">Сироп ваниль заканчивается: остался 1 шт</li>
+            <li data-tone="ok">Маркировка проверена, ошибок нет</li>
+          </ul>
+        </section>
+
+        <button type="button" className="mk-cab-ask"><Mic size={16} aria-hidden="true" />Спросить AI: «Сравни выручку этой недели с прошлой»</button>
+
+        <div className="mk-cab-list">
+          {SECTIONS.map((s) => {
+            const isOpen = open === s.id;
+            const Icon = s.icon;
+            return (
+              <section key={s.id} className="mk-card mk-cab-sec">
+                <button type="button" aria-expanded={isOpen} onClick={() => setOpen(isOpen ? null : s.id)}>
+                  <span className="mk-cab-ico"><Icon size={18} aria-hidden="true" /></span>
+                  <span className="flex-1 text-left">
+                    <span className="mk-cab-title">{s.title}</span>
+                    <span className="mk-cab-muted">{s.summary}</span>
+                  </span>
+                  <ChevronDown size={18} className="mk-cab-chev" data-open={isOpen} aria-hidden="true" />
+                </button>
+                {isOpen && (
+                  <dl className="mk-cab-rows">
+                    {s.rows.map(([k, v]) => <div key={k}><dt>{k}</dt><dd>{v}</dd></div>)}
+                  </dl>
+                )}
+              </section>
+            );
+          })}
+        </div>
+      </div>
+    </main>
+  );
+}

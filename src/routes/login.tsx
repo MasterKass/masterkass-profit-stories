@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, Check, ShieldCheck } from "lucide-react";
 import { BackHome } from "@/components/back-home";
@@ -159,6 +159,7 @@ function LoginPage() {
               <ul className="mk-login-access">
                 {ROLE_ACCESS[role].map((a) => <li key={a}>{a}</li>)}
               </ul>
+              {role === "director" && <Link to="/cabinet" className="mk-login-btn" style={{ marginTop: "1.5rem" }}>Открыть кабинет директора</Link>}
               <button type="button" className="mk-login-btn mk-login-btn-ghost" onClick={() => { setStep("phone"); setRole(null); setPhone(""); }}>Выйти</button>
             </div>
           )}
