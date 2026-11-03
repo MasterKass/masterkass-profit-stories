@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { ChevronDown, Mic, Send, Wrench, Check, HeartHandshake, GraduationCap } from "lucide-react";
+import { ChevronDown, Mic, Send, Wrench, Check, HeartHandshake, GraduationCap, Plus, Paperclip, X } from "lucide-react";
 import { BackHome } from "@/components/back-home";
 import { BrandMark } from "@/components/brand-mark";
 
@@ -39,6 +39,7 @@ const LESSONS: [string, string[]][] = [
 
 function Cashier() {
   const [q, setQ] = useState("");
+  const [files, setFiles] = useState<File[]>([]);
   const [asked, setAsked] = useState<string | null>(null);
   const [called, setCalled] = useState(false);
   const [open, setOpen] = useState<number | null>(null);
@@ -75,10 +76,30 @@ function Cashier() {
 
         <section className="mk-card mk-csh-ai" aria-label="ИИ-наставник">
           <p className="mk-cab-kicker">ИИ-наставник</p>
-          <button type="button" className="mk-csh-mic"><Mic size={22} aria-hidden="true" />Зажмите и спросите голосом</button>
-          <form className="mk-csh-form" onSubmit={(e) => { e.preventDefault(); if (q.trim()) ask(q.trim()); }}>
-            <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Или напишите вопрос" aria-label="Вопрос ИИ-наставнику" />
-            <button type="submit" aria-label="Отправить"><Send size={16} aria-hidden="true" /></button>
+          <h2 className="mk-csh-title">Задайте вопрос нашему ИИ-сотруднику</h2>
+          <form className="mk-csh-box" onSubmit={(e) => { e.preventDefault(); if (q.trim() || files.length) ask(q.trim() || `Фото: ${files[0].name}`); setFiles([]); }}>
+            <textarea value={q} onChange={(e) => setQ(e.target.value)} rows={2} placeholder="Опишите, что случилось на кассе" aria-label="Вопрос ИИ-сотруднику"
+              onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); e.currentTarget.form?.requestSubmit(); } }} />
+            {files.length > 0 && (
+              <ul className="mk-csh-files">
+                {files.map((f, i) => (
+                  <li key={f.name + i}><Paperclip size={13} aria-hidden="true" /><span>{f.name}</span>
+                    <button type="button" aria-label={`Убрать ${f.name}`} onClick={() => setFiles(files.filter((_, j) => j !== i))}><X size={13} aria-hidden="true" /></button></li>
+                ))}
+              </ul>
+            )}
+            <div className="mk-csh-bar">
+              <label className="mk-csh-ibtn" aria-label="Прикрепить фото или файл">
+                <Plus size={22} aria-hidden="true" />
+                <input type="file" multiple accept="image/*,.pdf,.txt" className="sr-only" onChange={(e) => { setFiles([...files, ...Array.from(e.target.files ?? [])]); e.target.value = ""; }} />
+              </label>
+              <span className="flex-1" />
+              {q.trim() || files.length ? (
+                <button type="submit" className="mk-csh-ibtn mk-csh-send" aria-label="Отправить"><Send size={18} aria-hidden="true" /></button>
+              ) : (
+                <button type="button" className="mk-csh-ibtn" aria-label="Спросить голосом"><Mic size={22} aria-hidden="true" /></button>
+              )}
+            </div>
           </form>
           <div className="mk-csh-chips">
             {Object.keys(QUICK).map((k) => (
