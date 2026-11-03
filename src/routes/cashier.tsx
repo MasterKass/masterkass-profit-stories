@@ -77,8 +77,17 @@ function Cashier() {
         <section className="mk-card mk-csh-ai" aria-label="ИИ-наставник">
           <h2 className="mk-csh-title">Задайте вопрос ИИ-помощнику</h2>
           <form className="mk-csh-box" onSubmit={(e) => { e.preventDefault(); if (q.trim() || files.length) ask(q.trim() || `Фото: ${files[0]?.name ?? ""}`); setFiles([]); }}>
-            <textarea value={q} onChange={(e) => setQ(e.target.value)} rows={2} placeholder="Опишите, что случилось на кассе" aria-label="Вопрос ИИ-сотруднику"
-              onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); e.currentTarget.form?.requestSubmit(); } }} />
+            {voice ? (
+              <div className="mk-csh-voice">
+                <span className="mk-wave flex h-5 items-center gap-1" aria-hidden="true">
+                  {Array.from({ length: 14 }).map((_, i) => <span key={i} style={{ animationDelay: `${i * 70}ms` }} />)}
+                </span>
+                <span>Голосовой режим скоро заработает</span>
+              </div>
+            ) : (
+              <textarea ref={field} value={q} onChange={(e) => setQ(e.target.value)} rows={2} placeholder="Опишите, что случилось на кассе" aria-label="Вопрос ИИ-сотруднику"
+                onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); e.currentTarget.form?.requestSubmit(); } }} />
+            )}
             {files.length > 0 && (
               <ul className="mk-csh-files">
                 {files.map((f, i) => (
@@ -93,10 +102,10 @@ function Cashier() {
                 <input type="file" multiple accept="image/*,.pdf,.txt" className="sr-only" onChange={(e) => { setFiles([...files, ...Array.from(e.target.files ?? [])]); e.target.value = ""; }} />
               </label>
               <span className="flex-1" />
-              {q.trim() || files.length ? (
+              <button type="button" onClick={() => { wantFocus.current = true; setVoice(false); }} aria-label="Ввести текстом" className={`mk-csh-ibtn ${voice ? "opacity-50" : ""}`}><Keyboard size={20} aria-hidden="true" /></button>
+              <button type="button" onClick={() => setVoice(true)} aria-label="Спросить голосом" className={`mk-csh-ibtn ${voice ? "" : "opacity-60"}`}><Mic size={22} aria-hidden="true" /></button>
+              {(q.trim() || files.length) > 0 && (
                 <button type="submit" className="mk-csh-ibtn mk-csh-send" aria-label="Отправить"><Send size={18} aria-hidden="true" /></button>
-              ) : (
-                <button type="button" className="mk-csh-ibtn" aria-label="Спросить голосом"><Mic size={22} aria-hidden="true" /></button>
               )}
             </div>
           </form>
