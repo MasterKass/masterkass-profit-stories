@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ChevronDown, Keyboard, Mic, Send, Wrench, Check, HeartHandshake, GraduationCap, Plus, Paperclip, X } from "lucide-react";
 import { BackHome } from "@/components/back-home";
 
@@ -104,7 +104,7 @@ function Cashier() {
               <span className="flex-1" />
               <button type="button" onClick={() => { wantFocus.current = true; setVoice(false); }} aria-label="Ввести текстом" className={`mk-csh-ibtn ${voice ? "opacity-50" : ""}`}><Keyboard size={20} aria-hidden="true" /></button>
               <button type="button" onClick={() => setVoice(true)} aria-label="Спросить голосом" className={`mk-csh-ibtn ${voice ? "" : "opacity-60"}`}><Mic size={22} aria-hidden="true" /></button>
-              {(q.trim() || files.length) > 0 && (
+              {(q.trim().length > 0 || files.length > 0) && (
                 <button type="submit" className="mk-csh-ibtn mk-csh-send" aria-label="Отправить"><Send size={18} aria-hidden="true" /></button>
               )}
             </div>
