@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
-  ChevronDown, Wallet, HeartHandshake, FileSignature, Package, Users, MonitorSmartphone, Landmark, Mic, Sparkles, Download, FileText, X,
+  ChevronDown, Wallet, HeartHandshake, FileSignature, Package, Users, MonitorSmartphone, Landmark, Mic, Sparkles, FileText,
 } from "lucide-react";
 import { BackHome } from "@/components/back-home";
 import { BrandMark } from "@/components/brand-mark";
