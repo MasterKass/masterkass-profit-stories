@@ -696,3 +696,4 @@ body { font-family: var(--font-sans); }
 .mk-own-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: .75rem; }
 .mk-own-chips button { padding: 6px 10px; border-radius: 10px; border: 1px solid var(--mk-border); font-size: 13px; background: var(--mk-surface); cursor: pointer; }
 .mk-login-demo-owner { grid-column: 1 / -1; background: linear-gradient(110deg, oklch(0.88 0.12 75), oklch(0.92 0.13 100), oklch(0.9 0.12 135)) !important; border: 0 !important; }
+.mk-veil-brand { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 16px; color: var(--mk-fg); pointer-events: none; }
