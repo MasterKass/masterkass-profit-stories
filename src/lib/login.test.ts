@@ -32,7 +32,7 @@ describe("вход по SMS", () => {
     expect(verifyCode("+79000000004", "1234")).toEqual({ ok: true, role: "cashier" });
   });
   it("на экране входа только четыре роли: директор, администратор, бухгалтер, кассир", () => {
-    expect(DEMO_ACCOUNTS.map((a) => a.role)).toEqual(["director", "administrator", "accountant", "cashier"]);
+    expect(DEMO_ACCOUNTS.map((a) => a.role)).toEqual(["director", "administrator", "accountant", "cashier", "partner"]);
     expect(DEMO_ACCOUNTS.some((a) => a.role === "owner")).toBe(false);
   });
   it("хозяин скрыт: открывается ровно двумя номерами", () => {
@@ -46,5 +46,11 @@ describe("вход по SMS", () => {
     expect(verifyCode("+79000000001", "0000").ok).toBe(false);
     expect(verifyCode("+79991112233", "1234").ok).toBe(false);
     expect(roleForPhone("+79991112233")).toBeNull();
+  });
+});
+
+describe("partner login", () => {
+  it("opens the partner role for the partner demo phone", () => {
+    expect(verifyCode("+79000000005", "1234")).toEqual({ ok: true, role: "partner" });
   });
 });
