@@ -535,6 +535,17 @@ body { font-family: var(--font-sans); }
 .mk-lead-done-text { margin-top: 0.35rem; font-size: 14px; line-height: 1.5; color: var(--mk-lead-muted); }
 .mk-lead-hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
 
+/* Форма лида на тёмной странице партнёрки: светлый текст на графите. */
+.mk-dark-page .mk-partner-lead {
+  --mk-lead-bg: var(--mk-bg);
+  --mk-lead-fg: var(--mk-fg);
+  --mk-lead-muted: var(--mk-muted);
+  --mk-lead-line: color-mix(in oklch, var(--mk-fg) 30%, transparent);
+}
+.mk-dark-page .mk-partner-lead .mk-lead-btn { background: var(--mk-fg); color: var(--mk-bg); }
+.mk-dark-page .mk-partner-lead .mk-lead-done-icon { background: var(--mk-fg); color: var(--mk-bg); }
+.mk-dark-page .mk-partner-lead .mk-lead-btn:focus-visible { outline-color: var(--mk-fg); }
+
 
 /* Кнопка «Войти» справа в верхней вуали */
 .mk-top-veil { padding-right: calc(0.75rem + env(safe-area-inset-right)); justify-content: space-between; }

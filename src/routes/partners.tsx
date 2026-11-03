@@ -162,7 +162,7 @@ function Partners() {
                 ))}
               </ul>
               <div className="mt-auto pt-6">
-                <button type="button" className="mk-tariff-cta w-full" title="Кабинет партнёра скоро заработает">{t.cta}</button>
+                <a href="#partner-guide" className="mk-tariff-cta w-full">{t.cta}</a>
               </div>
             </div>
           ))}
