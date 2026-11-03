@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AccountantRouteImport } from './routes/accountant'
 import { Route as CabinetRouteImport } from './routes/cabinet'
 import { Route as CashierRouteImport } from './routes/cashier'
 import { Route as DigestRouteImport } from './routes/digest'
@@ -23,6 +24,11 @@ import { Route as SupportRouteImport } from './routes/support'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AccountantRoute = AccountantRouteImport.update({
+  id: '/accountant',
+  path: '/accountant',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CabinetRoute = CabinetRouteImport.update({
@@ -73,6 +79,7 @@ const SupportRoute = SupportRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/accountant': typeof AccountantRoute
   '/cabinet': typeof CabinetRoute
   '/cashier': typeof CashierRoute
   '/digest': typeof DigestRoute
@@ -85,6 +92,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/accountant': typeof AccountantRoute
   '/cabinet': typeof CabinetRoute
   '/cashier': typeof CashierRoute
   '/digest': typeof DigestRoute
@@ -98,6 +106,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/accountant': typeof AccountantRoute
   '/cabinet': typeof CabinetRoute
   '/cashier': typeof CashierRoute
   '/digest': typeof DigestRoute
@@ -112,6 +121,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/accountant'
     | '/cabinet'
     | '/cashier'
     | '/digest'
@@ -124,6 +134,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/accountant'
     | '/cabinet'
     | '/cashier'
     | '/digest'
@@ -136,6 +147,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/accountant'
     | '/cabinet'
     | '/cashier'
     | '/digest'
@@ -149,6 +161,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AccountantRoute: typeof AccountantRoute
   CabinetRoute: typeof CabinetRoute
   CashierRoute: typeof CashierRoute
   DigestRoute: typeof DigestRoute
@@ -167,6 +180,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/accountant': {
+      id: '/accountant'
+      path: '/accountant'
+      fullPath: '/accountant'
+      preLoaderRoute: typeof AccountantRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/cabinet': {
@@ -237,6 +257,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AccountantRoute: AccountantRoute,
   CabinetRoute: CabinetRoute,
   CashierRoute: CashierRoute,
   DigestRoute: DigestRoute,
