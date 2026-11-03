@@ -61,13 +61,79 @@ const TYPES = [
 ];
 
 const STEPS = [
-  { n: "01", t: "Регистрация и подписание договора", d: "Регистрируетесь как партнёр и принимаете партнёрское соглашение онлайн." },
-  { n: "02", t: "Ссылка и QR-код", d: "Получаете персональную ссылку и QR-код для мессенджеров, визиток и рекламы." },
-  { n: "03", t: "Клиент вносит первую оплату", d: "После бесплатного месяца клиент оплачивает подписку." },
-  { n: "04", t: "Вознаграждение видно в кабинете", d: "Сумма сразу отображается на вашем балансе в личном кабинете." },
-  { n: "05", t: "Вывод на карту", d: "Выводите вознаграждение на карту или расчётный счёт." },
-  { n: "06", t: "Закрывающие документы при необходимости", d: "Чек из «Мой налог» для самозанятых, акт для ИП и компаний." },
+  "Регистрация и подписание договора",
+  "Ссылка и QR-код",
+  "Клиент вносит первую оплату",
+  "Вознаграждение видно в кабинете",
+  "Вывод на карту",
+  "Закрывающие документы при необходимости",
 ];
+
+const HUES = ["#f5a524", "#f7c948", "#b5d84a", "#5fd6a0", "#3fc8d8", "#6bb8f0"];
+const ROW_H = 100;
+
+function mix(a: string, b: string) {
+  const ch = (h: string, i: number) => parseInt(h.slice(i, i + 2), 16);
+  const c = (x: number, y: number) => Math.round((x + y) / 2).toString(16).padStart(2, "0");
+  return `#${c(ch(a, 1), ch(b, 1))}${c(ch(a, 3), ch(b, 3))}${c(ch(a, 5), ch(b, 5))}`;
+}
+
+const hueAt = (i: number) => HUES[i % HUES.length] ?? "#f5a524";
+
+
+
+function StepsSnake() {
+  const n = STEPS.length;
+  const xs = STEPS.map((_, i) => (i % 2 === 0 ? 12 : 88));
+  const ys = STEPS.map((_, i) => i * ROW_H + ROW_H / 2);
+  const k = ROW_H * 0.9;
+  let d = `M ${xs[0] ?? 0} ${ys[0] ?? 0}`;
+  for (let i = 0; i < n - 1; i++) {
+    d += ` C ${xs[i] ?? 0} ${(ys[i] ?? 0) + k}, ${xs[i + 1] ?? 0} ${(ys[i + 1] ?? 0) - k}, ${xs[i + 1] ?? 0} ${ys[i + 1] ?? 0}`;
+
+  }
+
+  return (
+    <div className="mk-snake mx-auto mt-10 max-w-2xl" style={{ height: `calc(${n} * var(--mk-step-h))` }}>
+      <svg className="mk-snake-line" viewBox={`0 0 100 ${n * ROW_H}`} preserveAspectRatio="none" fill="none" aria-hidden>
+        <defs>
+          <linearGradient id="mk-snake-grad" x1="0" y1="0" x2="0" y2="1">
+            {HUES.map((h, i) => (
+              <stop key={h} offset={`${(i / (n - 1)) * 100}%`} stopColor={h} />
+            ))}
+          </linearGradient>
+        </defs>
+        <path d={d} stroke="url(#mk-snake-grad)" strokeWidth="1.5" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+      </svg>
+
+      {STEPS.slice(1).map((_, i) => {
+        const j = i + 1;
+        const right = i % 2 === 0;
+        return (
+          <span key={`arrow-${j}`} className="mk-snake-arrow" aria-hidden
+            style={{ top: `calc(${j} * var(--mk-step-h))`, color: mix(hueAt(j - 1), hueAt(j)), transform: `translate(-50%, -50%)${right ? "" : " scaleX(-1)"}` }}>
+            <svg viewBox="0 0 12 10" width="12" height="10" fill="none">
+              <path d="M2 1.5 L7 5 L2 8.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </span>
+        );
+      })}
+
+      {STEPS.map((t, i) => {
+        const left = i % 2 === 0;
+        const hue = hueAt(i);
+        return (
+          <div key={t} className={`mk-step ${left ? "mk-step-left" : "mk-step-right"}`}>
+            <span className="mk-step-dot" aria-hidden style={{ background: hue, boxShadow: `0 0 0 5px ${hue}1f` }} />
+            <span className="mk-step-text">{t}</span>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+
 
 function Partners() {
   return (
@@ -103,39 +169,9 @@ function Partners() {
 
         <section className="mt-24">
           <h2 className="text-3xl font-semibold tracking-[-0.03em] md:text-4xl">Как это работает</h2>
-          <div className="relative mx-auto mt-10 max-w-2xl">
-            {STEPS.map((s, i) => {
-              const left = i % 2 === 0;
-              const last = i === STEPS.length - 1;
-              const hues = ["#f5a524", "#f7c948", "#b5d84a", "#5fd6a0", "#3fc8d8", "#6bb8f0"];
-              const c = hues[i % hues.length];
-              const next = hues[(i + 1) % hues.length];
-              return (
-                <div key={s.n}>
-                  <div className={`flex ${left ? "justify-start" : "justify-end"}`}>
-                    <div className="w-[68%] rounded-[16px] p-4"
-                      style={{ background: `linear-gradient(135deg, ${c}38, ${c}10 70%)`, boxShadow: `inset 0 0 0 1px ${c}55` }}>
-                      <h3 className="text-lg font-semibold leading-snug">{s.t}</h3>
-                      <p className="mt-1 text-[14px] leading-relaxed" style={{ color: "var(--mk-muted)" }}>{s.d}</p>
-                    </div>
-                  </div>
-                  {!last && (
-                    <svg viewBox="0 0 300 70" className="my-1 h-16 w-full" fill="none" aria-hidden
-                      style={{ transform: left ? undefined : "scaleX(-1)" }}>
-                      <defs>
-                        <linearGradient id={`arr-${i}`} x1="0" x2="1">
-                          <stop offset="0" stopColor={c} /><stop offset="1" stopColor={next} />
-                        </linearGradient>
-                      </defs>
-                      <path d="M90 10 C 130 -12, 200 0, 222 54" stroke={`url(#arr-${i})`} strokeWidth="1.5" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
-                      <path d="M213 47 L222 56 L228 44" stroke={next} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" vectorEffect="non-scaling-stroke" />
-                    </svg>
-                  )}
-                </div>
-              );
-            })}
-          </div>
+          <StepsSnake />
         </section>
+
 
         <section className="mt-24 mk-card">
           <h2 className="text-2xl font-semibold tracking-[-0.03em]">Договор и документы</h2>
