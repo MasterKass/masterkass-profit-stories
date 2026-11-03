@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
-  ChevronDown, Wallet, HeartHandshake, FileSignature, Package, Users, MonitorSmartphone, Landmark, Mic, Sparkles, FileText, Download, X,
+  ChevronDown, Wallet, HeartHandshake, FileSignature, Package, Users, MonitorSmartphone, Landmark, Mic, Sparkles, FileText,
 } from "lucide-react";
 import { BackHome } from "@/components/back-home";
 import { BrandMark } from "@/components/brand-mark";
@@ -50,15 +50,6 @@ const SECTIONS: Section[] = [
 
 function Cabinet() {
   const [open, setOpen] = useState<string | null>("finance");
-  const [digest, setDigest] = useState(false);
-  useEffect(() => {
-    if (!digest) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setDigest(false); };
-    window.addEventListener("keydown", onKey);
-    return () => { document.body.style.overflow = prev; window.removeEventListener("keydown", onKey); };
-  }, [digest]);
   return (
     <main className="mk-page mk-cab min-h-screen">
       <BackHome />
@@ -96,21 +87,9 @@ function Cabinet() {
 
         <button type="button" className="mk-cab-ask"><Mic size={16} aria-hidden="true" />Спросить AI: «Сравни выручку этой недели с прошлой»</button>
 
-        <button type="button" onClick={() => setDigest(true)} className="mk-cab-ask mk-cab-dl">
-          <FileText size={16} aria-hidden="true" />Дайджест за 3 ноября: открыть и скачать
-        </button>
-
-        {digest && (
-          <div className="mk-dv" role="dialog" aria-modal="true" aria-label="Дайджест за 3 ноября">
-            <div className="mk-dv-bar">
-              <button type="button" onClick={() => setDigest(false)} aria-label="Закрыть"><X size={18} aria-hidden="true" />Закрыть</button>
-              <a href="/downloads/digest-utro.pdf" target="_blank" rel="noopener" className="mk-dv-save"><Download size={16} aria-hidden="true" />Скачать PDF</a>
-            </div>
-            <div className="mk-dv-body">
-              <img src="/downloads/digest-utro.png" alt="Утренний дайджест: кофейня «Утро», 3 ноября" />
-            </div>
-          </div>
-        )}
+        <a href="/downloads/digest-utro.pdf" target="_blank" rel="noopener" className="mk-cab-ask mk-cab-dl">
+          <FileText size={16} aria-hidden="true" />Дайджест за 3 ноября: открыть и скачать (PDF)
+        </a>
 
         <div className="mk-cab-list">
           {SECTIONS.map((s) => {
