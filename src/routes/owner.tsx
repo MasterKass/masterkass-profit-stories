@@ -77,39 +77,6 @@ function OwnerPage() {
         </section>
 
 
-        <nav className="mk-own-tabs" aria-label="Разделы">
-          {Object.keys(docs).map((s) => (
-            <button key={s} type="button" aria-pressed={tab === s} onClick={() => setTab(s)}>
-              {s} <span>{(docs[s] ?? []).length}</span>
-            </button>
-          ))}
-        </nav>
-
-        <section className="mk-card mk-own-files" aria-label={`Файлы: ${tab}`}>
-          {(docs[tab] ?? []).map((d) => (
-            <div key={d.name} className="mk-own-file">
-              <FileText aria-hidden="true" />
-              <div><b>{d.name}</b><span>{d.note}</span></div>
-              <time>{d.date}</time>
-            </div>
-          ))}
-          <button type="button" className="mk-own-upload" onClick={() => fileRef.current?.click()}>
-            <Plus aria-hidden="true" />Загрузить файл (PDF, DOCX, таблицы)
-          </button>
-          <input
-            ref={fileRef}
-            type="file"
-            hidden
-            accept=".pdf,.doc,.docx,.xls,.xlsx,.csv,.txt"
-            onChange={(e) => {
-              const f = e.target.files?.[0];
-              if (!f) return;
-              setDocs((p) => ({ ...p, [tab]: [{ name: f.name, date: "сегодня", note: "Загружено вами" }, ...(p[tab] ?? [])] }));
-              e.target.value = "";
-            }}
-          />
-        </section>
-
         <section className="mk-card mk-csh-ai" aria-label="ИИ-сотрудник">
           <h2 className="mk-csh-title">Задайте вопрос ИИ-сотруднику</h2>
           <form className="mk-csh-box" onSubmit={(e) => { e.preventDefault(); if (q.trim() || files.length) ask(q.trim() || `Файл: ${files[0]?.name ?? ""}`); setFiles([]); }}>
@@ -153,6 +120,40 @@ function OwnerPage() {
             </div>
           )}
         </section>
+
+        <nav className="mk-own-tabs" aria-label="Разделы">
+          {Object.keys(docs).map((s) => (
+            <button key={s} type="button" aria-pressed={tab === s} onClick={() => setTab(s)}>
+              {s} <span>{(docs[s] ?? []).length}</span>
+            </button>
+          ))}
+        </nav>
+
+        <section className="mk-card mk-own-files" aria-label={`Файлы: ${tab}`}>
+          {(docs[tab] ?? []).map((d) => (
+            <div key={d.name} className="mk-own-file">
+              <FileText aria-hidden="true" />
+              <div><b>{d.name}</b><span>{d.note}</span></div>
+              <time>{d.date}</time>
+            </div>
+          ))}
+          <button type="button" className="mk-own-upload" onClick={() => fileRef.current?.click()}>
+            <Plus aria-hidden="true" />Загрузить файл (PDF, DOCX, таблицы)
+          </button>
+          <input
+            ref={fileRef}
+            type="file"
+            hidden
+            accept=".pdf,.doc,.docx,.xls,.xlsx,.csv,.txt"
+            onChange={(e) => {
+              const f = e.target.files?.[0];
+              if (!f) return;
+              setDocs((p) => ({ ...p, [tab]: [{ name: f.name, date: "сегодня", note: "Загружено вами" }, ...(p[tab] ?? [])] }));
+              e.target.value = "";
+            }}
+          />
+        </section>
+
       </main>
     </div>
   );
