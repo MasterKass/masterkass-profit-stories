@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import {
-  ChevronDown, Wallet, HeartHandshake, FileSignature, Package, Users, MonitorSmartphone, Landmark, Mic, Sparkles,
+  ChevronDown, Wallet, HeartHandshake, FileSignature, Package, Users, MonitorSmartphone, Landmark, Mic, Sparkles, Download,
 } from "lucide-react";
 import { BackHome } from "@/components/back-home";
 import { BrandMark } from "@/components/brand-mark";
@@ -86,6 +86,10 @@ function Cabinet() {
         </section>
 
         <button type="button" className="mk-cab-ask"><Mic size={16} aria-hidden="true" />Спросить AI: «Сравни выручку этой недели с прошлой»</button>
+
+        <a href="/downloads/digest-utro.pdf" download="Дайджест-Кофейня-Утро-3-ноября.pdf" className="mk-cab-ask mk-cab-dl">
+          <Download size={16} aria-hidden="true" />Скачать дайджест за 3 ноября (PDF)
+        </a>
 
         <div className="mk-cab-list">
           {SECTIONS.map((s) => {

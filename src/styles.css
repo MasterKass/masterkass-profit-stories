@@ -596,6 +596,7 @@ body { font-family: var(--font-sans); }
 .mk-cab-attn li::before { content: ""; position: absolute; left: 0; top: .55em; width: 8px; height: 8px; border-radius: 3px; background: oklch(0.75 0.17 60); }
 .mk-cab-attn li[data-tone="ok"]::before { background: oklch(0.72 0.17 145); }
 .mk-cab-ask { display: flex; align-items: center; gap: 8px; width: 100%; margin-top: .75rem; padding: .9rem 1rem; border-radius: 12px; background: var(--mk-fg); color: var(--mk-surface); font-size: 14px; font-weight: 500; text-align: left; }
+.mk-cab-dl { background: var(--mk-surface); color: var(--mk-fg); border: 1px solid color-mix(in oklab, var(--mk-fg) 18%, transparent); }
 .mk-cab-list { display: flex; flex-direction: column; gap: .6rem; margin-top: 1.5rem; }
 .mk-card.mk-cab-sec { padding: 0; }
 .mk-card.mk-cab-sec:hover { transform: none; }
