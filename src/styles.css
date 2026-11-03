@@ -697,3 +697,21 @@ body { font-family: var(--font-sans); }
 .mk-own-chips button { padding: 6px 10px; border-radius: 10px; border: 1px solid var(--mk-border); font-size: 13px; background: var(--mk-surface); cursor: pointer; }
 .mk-login-demo-owner { grid-column: 1 / -1; background: linear-gradient(110deg, oklch(0.88 0.12 75), oklch(0.92 0.13 100), oklch(0.9 0.12 135)) !important; border: 0 !important; }
 .mk-veil-brand { position: absolute; left: 50%; top: calc(2px + env(safe-area-inset-top)); height: calc(3.75rem - 1.5rem + 2px); transform: translateX(-50%); display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 16px; color: var(--mk-fg); pointer-events: none; }
+.mk-own-board { padding: 1rem; margin-top: .75rem; --mk-chart-1: oklch(0.78 0.15 140); --mk-chart-2: oklch(0.8 0.15 75); --mk-chart-mute: color-mix(in oklch, var(--mk-fg) 15%, transparent); }
+.mk-own-board-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.mk-own-board-top h2 { font-size: 20px; font-weight: 700; }
+.mk-own-kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 1rem 0; }
+.mk-own-kpis div { padding: 10px; border-radius: 12px; border: 1px solid var(--mk-border); }
+.mk-own-kpis dt { font-size: 12px; color: color-mix(in oklch, var(--mk-fg) 55%, transparent); }
+.mk-own-kpis dd { font-weight: 700; font-size: 16px; margin-top: 2px; }
+.mk-own-sub { font-size: 13px; font-weight: 600; margin-bottom: .25rem; }
+.mk-own-chart { height: 180px; }
+.mk-own-legend { display: flex; flex-wrap: wrap; gap: 12px; font-size: 12px; margin: .25rem 0 1rem; color: color-mix(in oklch, var(--mk-fg) 65%, transparent); }
+.mk-own-legend span::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 5px; vertical-align: -1px; background: var(--mk-chart-1); }
+.mk-own-legend span[data-c="2"]::before { background: var(--mk-chart-2); }
+.mk-own-legend em { font-style: normal; font-weight: 600; color: var(--mk-fg); }
+.mk-own-table-wrap { overflow-x: auto; }
+.mk-own-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.mk-own-table th { text-align: left; font-weight: 600; font-size: 12px; color: color-mix(in oklch, var(--mk-fg) 55%, transparent); padding: 6px 8px 6px 0; border-bottom: 1px solid var(--mk-border); white-space: nowrap; }
+.mk-own-table td { padding: 8px 8px 8px 0; border-bottom: 1px solid var(--mk-border); white-space: nowrap; }
+.mk-own-table td:first-child { font-weight: 600; }

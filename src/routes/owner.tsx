@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { FileText, Keyboard, Mic, Paperclip, Plus, Send, X } from "lucide-react";
 import { BackHome } from "@/components/back-home";
+import { OwnerBoard } from "@/components/owner-dashboards";
 
 export const Route = createFileRoute("/owner")({
   head: () => ({
@@ -128,6 +129,8 @@ function OwnerPage() {
             </button>
           ))}
         </nav>
+
+        <OwnerBoard section={tab} />
 
         <section className="mk-card mk-own-files" aria-label={`Файлы: ${tab}`}>
           {(docs[tab] ?? []).map((d) => (
