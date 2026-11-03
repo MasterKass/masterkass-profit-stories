@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { FileText, Keyboard, Mic, Paperclip, Plus, Send, X } from "lucide-react";
 import { BackHome } from "@/components/back-home";
 import { OwnerBoard } from "@/components/owner-dashboards";
+import { DataPathDoc, DATA_PATH_DOC_NAME } from "@/components/data-path-doc";
 
 export const Route = createFileRoute("/owner")({
   head: () => ({
@@ -31,6 +32,7 @@ const SECTIONS: Record<string, Doc[]> = {
     { name: "Фонд «Новая касса».pdf", date: "20 окт", note: "Модель накопления 750 ₽ в месяц" },
   ],
   Интеграции: [
+    { name: DATA_PATH_DOC_NAME, date: "3 ноя", note: "Регламент 152-ФЗ: роли, Битрикс24, «Цифровой сейф» и ИИ" },
     { name: "Битрикс24: приём заявок.docx", date: "1 ноя", note: "Схема от Дениса" },
     { name: "Эвотор: приложение.pdf", date: "2 ноя", note: "Черновик требований" },
   ],
@@ -50,6 +52,7 @@ const SECTIONS: Record<string, Doc[]> = {
 function OwnerPage() {
   const [docs, setDocs] = useState(SECTIONS);
   const [tab, setTab] = useState("Маркетинг");
+  const [docOpen, setDocOpen] = useState(false);
   const [q, setQ] = useState("");
   const [voice, setVoice] = useState(false);
   const [files, setFiles] = useState<File[]>([]);
@@ -141,7 +144,13 @@ function OwnerPage() {
 
         <section className="mk-card mk-own-files" aria-label={`Файлы: ${tab}`}>
           {(docs[tab] ?? []).map((d) => (
-            <div key={d.name} className="mk-own-file">
+            <div
+              key={d.name}
+              className="mk-own-file"
+              {...(d.name === DATA_PATH_DOC_NAME
+                ? { role: "button", tabIndex: 0, style: { cursor: "pointer" }, onClick: () => setDocOpen(true), onKeyDown: (e: React.KeyboardEvent) => { if (e.key === "Enter") setDocOpen(true); } }
+                : {})}
+            >
               <FileText aria-hidden="true" />
               <div><b>{d.name}</b><span>{d.note}</span></div>
               <time>{d.date}</time>
@@ -165,6 +174,7 @@ function OwnerPage() {
         </section>
 
       </main>
+      <DataPathDoc open={docOpen} onOpenChange={setDocOpen} />
     </div>
   );
 }
