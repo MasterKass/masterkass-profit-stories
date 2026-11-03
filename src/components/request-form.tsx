@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "@tanstack/react-router";
+import { PrivacyLink } from "@/components/privacy-dialog";
 import { Check, ArrowUpRight } from "lucide-react";
 import { useServerFn } from "@tanstack/react-start";
 import { validateRequest, type RequestErrors } from "@/lib/request";
@@ -138,7 +138,7 @@ export function RequestForm() {
               )}
               <p className="mk-lead-privacy">
                 Отправляя заявку, соглашаетесь на обработку персональных данных согласно{" "}
-                <Link to="/privacy">Политике обработки персональных данных</Link>.
+                <PrivacyLink />.
               </p>
             </div>
           </form>
