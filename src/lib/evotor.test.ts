@@ -67,3 +67,12 @@ describe("fnReplacementTask", () => {
   });
   it("крайний срок задачи за 7 дней до конца ФН", () => expect(t.deadline).toBe("2028-06-03"));
 });
+
+import { linkStatus as _link } from "./evotor";
+describe("linkStatus", () => {
+  const now = Date.parse("2026-11-05T12:00:00Z");
+  it("меньше 24 ч: на связи", () => expect(_link("2026-11-05T02:00:00Z", now)?.level).toBe("ok"));
+  it("от 1 до 7 дней: предупреждение", () => expect(_link("2026-11-03T12:00:00Z", now)?.level).toBe("warn"));
+  it("7 дней и больше: тревога", () => expect(_link("2026-10-29T12:00:00Z", now)?.level).toBe("alert"));
+  it("нет данных: статуса нет", () => expect(_link(null, now)).toBeNull());
+});
