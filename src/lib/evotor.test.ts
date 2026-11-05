@@ -45,3 +45,13 @@ describe("fnLife", () => {
     expect(fnLife("9283440300258493", "2019-06-13T00:00:00Z")).toBeNull();
   });
 });
+
+import { fnNeedsAlert } from "./evotor";
+
+describe("fnNeedsAlert: предупреждение за 30 дней", () => {
+  const base = { since: "2025-06-10", until: "2028-06-10", months: 36 };
+  it("31 день: рано", () => expect(fnNeedsAlert({ ...base, daysLeft: 31 })).toBe(false));
+  it("30 дней: предупреждаем", () => expect(fnNeedsAlert({ ...base, daysLeft: 30 })).toBe(true));
+  it("срок истёк: предупреждаем", () => expect(fnNeedsAlert({ ...base, daysLeft: -3 })).toBe(true));
+  it("нет данных: молчим", () => expect(fnNeedsAlert(null)).toBe(false));
+});
