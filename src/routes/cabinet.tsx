@@ -7,6 +7,7 @@ import { BackHome } from "@/components/back-home";
 import { BrandMark } from "@/components/brand-mark";
 import { useQuery } from "@tanstack/react-query";
 import { getEvotorCabinet } from "@/lib/evotor.functions";
+import { fnNeedsAlert } from "@/lib/evotor";
 
 const rub = (n: number) => `${n.toLocaleString("ru-RU", { maximumFractionDigits: 2 })} ₽`;
 const fmtDay = (d: string) => new Date(`${d}T12:00:00Z`).toLocaleDateString("ru-RU", { day: "numeric", month: "long" });
@@ -128,6 +129,13 @@ function Cabinet() {
         <section className="mk-card mk-cab-attn" aria-label="Требует внимания">
           <p className="mk-cab-kicker">Требует внимания</p>
           <ul>
+            {live?.fn && fnNeedsAlert(live.fn) && (
+              <li data-tone="warn">
+                {live.fn.daysLeft > 0
+                  ? `ФН: осталось ${live.fn.daysLeft} дн. (до ${fmtDate(live.fn.until)}), пора планировать замену. Мы уже свяжемся с вами.`
+                  : `ФН: срок истёк ${fmtDate(live.fn.until)}, нужна срочная замена`}
+              </li>
+            )}
             <li data-tone="warn">ЭДО: накладная «Кофе-Опт» на 24 500 ₽ ждёт подписи</li>
             <li data-tone="warn">Сироп ваниль заканчивается: остался 1 шт</li>
             <li data-tone="ok">Маркировка проверена, ошибок нет</li>
