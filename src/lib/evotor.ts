@@ -55,6 +55,18 @@ export function fnNeedsAlert(fn: FnLife | null): boolean {
   return !!fn && fn.daysLeft <= FN_ALERT_DAYS;
 }
 
+/** Связь кассы по «тишине»: сколько часов от кассы не было документов. Порог блокировки ФН — 30 дней без передачи в ОФД. */
+export type LinkStatus = { level: "ok" | "warn" | "alert"; hours: number; label: string };
+
+export function linkStatus(lastEventAt: string | null, now = Date.now()): LinkStatus | null {
+  if (!lastEventAt) return null;
+  const hours = Math.max(0, Math.floor((now - Date.parse(lastEventAt)) / 3600000));
+  const days = Math.floor(hours / 24);
+  if (hours < 24) return { level: "ok", hours, label: hours < 1 ? "на связи, данные меньше часа назад" : `на связи, данные ${hours} ч назад` };
+  if (days < 7) return { level: "warn", hours, label: `нет данных ${days} дн.` };
+  return { level: "alert", hours, label: `нет данных ${days} дн.` };
+}
+
 const round = (n: number) => Math.round(n * 100) / 100;
 
 function localDay(d: EvotorDoc) {
