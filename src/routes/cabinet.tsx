@@ -7,7 +7,7 @@ import { BackHome } from "@/components/back-home";
 import { BrandMark } from "@/components/brand-mark";
 import { useQuery } from "@tanstack/react-query";
 import { getEvotorCabinet } from "@/lib/evotor.functions";
-import { fnNeedsAlert } from "@/lib/evotor";
+import { fnNeedsAlert, linkStatus } from "@/lib/evotor";
 
 const rub = (n: number) => `${n.toLocaleString("ru-RU", { maximumFractionDigits: 2 })} ₽`;
 const fmtDay = (d: string) => new Date(`${d}T12:00:00Z`).toLocaleDateString("ru-RU", { day: "numeric", month: "long" });
@@ -111,6 +111,7 @@ function Cabinet() {
                 </div>
               )}
               {live.summary.lastEventAt && <div><dt>Последнее событие</dt><dd>{new Date(live.summary.lastEventAt).toLocaleString("ru-RU", { timeZone: "Europe/Moscow" })}</dd></div>}
+              {link && <div><dt>Связь с кассой</dt><dd><span className="mk-link-dot" data-level={link.level} aria-hidden="true" />{link.label}</dd></div>}
             </dl>
           </section>
         ) : (
@@ -130,6 +131,11 @@ function Cabinet() {
           <p className="mk-cab-kicker">Требует внимания</p>
           <ul>
             {live?.fn && <FnAlert fn={live.fn} />}
+            {link && link.level !== "ok" && (
+              <li data-tone="warn">
+                Касса не передаёт данные {Math.floor(link.hours / 24)} дн. Проверьте интернет на точке: если чеки не уходят в ОФД 30 дней, касса заблокируется.
+              </li>
+            )}
             <li data-tone="warn">ЭДО: накладная «Кофе-Опт» на 24 500 ₽ ждёт подписи</li>
             <li data-tone="warn">Сироп ваниль заканчивается: остался 1 шт</li>
             <li data-tone="ok">Маркировка проверена, ошибок нет</li>
