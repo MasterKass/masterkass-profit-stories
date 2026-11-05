@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { FileText, Keyboard, Mic, Paperclip, Plus, Send, X } from "lucide-react";
 import { BackHome } from "@/components/back-home";
 import { OwnerBoard } from "@/components/owner-dashboards";
-import { DataPathDoc, DATA_PATH_DOC_NAME, OFD_DOC_NAME, OWNER_DOCS } from "@/components/data-path-doc";
+import { DataPathDoc, DATA_PATH_DOC_NAME, EVOTOR_DOC_NAME, OFD_DOC_NAME, OWNER_DOCS } from "@/components/data-path-doc";
 
 export const Route = createFileRoute("/owner")({
   head: () => ({
@@ -32,6 +32,7 @@ const SECTIONS: Record<string, Doc[]> = {
     { name: "Фонд «Новая касса».pdf", date: "20 окт", note: "Модель накопления 750 ₽ в месяц" },
   ],
   Интеграции: [
+    { name: EVOTOR_DOC_NAME, date: "5 ноя", note: "Тестовое приложение, токен клиента, ограничения Маркета и шаги" },
     { name: OFD_DOC_NAME, date: "5 ноя", note: "Партнёрский ключ Платформы ОФД, Эвотор и изоляция данных клиентов" },
     { name: DATA_PATH_DOC_NAME, date: "3 ноя", note: "Регламент 152-ФЗ: роли, Битрикс24, «Цифровой сейф» и ИИ" },
     { name: "Битрикс24: приём заявок.docx", date: "1 ноя", note: "Схема от Дениса" },
