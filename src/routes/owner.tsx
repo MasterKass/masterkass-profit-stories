@@ -156,6 +156,7 @@ function OwnerPage() {
         <OwnerBoard section={tab} />
 
         {tab === "Сервис" && <LinkRadar />}
+        {tab === "Сервис" && <CashTroubleshooter />}
         {tab === "Сервис" && <FnTaskTest />}
 
         <section className="mk-card mk-own-files" aria-label={`Файлы: ${tab}`}>
