@@ -17,3 +17,4 @@
 - .mk-card is unlayered CSS with display:block, so it beats Tailwind's flex utility; a card that needs flex layout (like bottom-aligned footnotes) must declare display:flex in its own .mk-* class in src/styles.css.
 - Tariff data and AI-unit numbers live in src/lib/tariffs.ts and are asserted by src/lib/tariffs.test.ts; change the figures only together with the billing decision they come from.
 - FAQ items in src/components/home-sections.tsx are {q, a: string[]} objects and every answer paragraph renders as its own <p>, so long trust answers stay readable on phones; add new questions in that same shape.
+- Evotor cash-register data reaches cabinets only through the server function in src/lib/evotor.functions.ts (token in a server secret) with pure math in src/lib/evotor.ts, so the token never reaches the browser and the sums stay testable.
