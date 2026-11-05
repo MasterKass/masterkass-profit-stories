@@ -147,7 +147,7 @@ export function linkSilenceTask(p: { store: string; device: string; days: number
     "Если удалённо не получилось, согласовать выезд инженера до блокировки ФН.",
   ];
   return {
-    title: `${p.test ? "[ТЕСТ] " : ""}Касса не на связи ${p.days} дн.: ${p.store}`,
+    title: `${p.test ? "[ТЕСТ] " : ""}Касса не на связи: ${p.store} (${p.days} дн.)`,
     deadline,
     description: [
       `Точка: ${p.store}`, `Касса: ${p.device}`,
