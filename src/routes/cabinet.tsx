@@ -7,7 +7,6 @@ import { BackHome } from "@/components/back-home";
 import { BrandMark } from "@/components/brand-mark";
 import { useQuery } from "@tanstack/react-query";
 import { getEvotorCabinet } from "@/lib/evotor.functions";
-import { useServerFn } from "@tanstack/react-start";
 import { fnNeedsAlert } from "@/lib/evotor";
 
 const rub = (n: number) => `${n.toLocaleString("ru-RU", { maximumFractionDigits: 2 })} ₽`;
