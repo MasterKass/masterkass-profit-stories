@@ -5,7 +5,9 @@ import { BackHome } from "@/components/back-home";
 import { OwnerBoard } from "@/components/owner-dashboards";
 import { DataPathDoc, DATA_PATH_DOC_NAME, EVOTOR_DOC_NAME, FN_DOC_NAME, OFD_DOC_NAME, OWNER_DOCS } from "@/components/data-path-doc";
 import { useServerFn } from "@tanstack/react-start";
-import { createFnReplacementTask } from "@/lib/evotor.functions";
+import { createFnReplacementTask, getEvotorCabinet } from "@/lib/evotor.functions";
+import { linkStatus } from "@/lib/evotor";
+import { useQuery } from "@tanstack/react-query";
 
 export const Route = createFileRoute("/owner")({
   head: () => ({
@@ -153,6 +155,7 @@ function OwnerPage() {
 
         <OwnerBoard section={tab} />
 
+        {tab === "Сервис" && <LinkRadar />}
         {tab === "Сервис" && <FnTaskTest />}
 
         <section className="mk-card mk-own-files" aria-label={`Файлы: ${tab}`}>
@@ -189,6 +192,37 @@ function OwnerPage() {
       </main>
       <DataPathDoc name={docOpen} onClose={() => setDocOpen(null)} />
     </div>
+  );
+}
+
+const LINK_TEXT = { ok: "на связи", warn: "молчит до 7 дней", alert: "молчит 7+ дней" } as const;
+
+function LinkRadar() {
+  const { data, isLoading } = useQuery({ queryKey: ["evotor-cabinet"], queryFn: () => getEvotorCabinet(), staleTime: 60_000 });
+  const live = data?.ok ? data : null;
+  const link = live ? linkStatus(live.summary.lastEventAt) : null;
+  const counts = { ok: 0, warn: 0, alert: 0 };
+  if (link) counts[link.level]++;
+  return (
+    <section className="mk-card mk-own-files" aria-label="Связь касс клиентов">
+      <p><strong>Радар связи касс</strong></p>
+      <p className="mk-cab-muted">Если от кассы нет данных, вероятно, пропал интернет и чеки не уходят в ОФД. Через 30 дней ФН блокируется, поэтому связываемся с точкой заранее.</p>
+      <p className="mk-link-sum">
+        {(["ok", "warn", "alert"] as const).map((l) => (
+          <span key={l}><span className="mk-link-dot" data-level={l} aria-hidden="true" />{LINK_TEXT[l]}: {counts[l]}</span>
+        ))}
+      </p>
+      {isLoading ? <p className="mk-cab-muted">Загружаем кассы…</p> : live ? (
+        <ul className="mk-link-list">
+          {live.devices.map((d) => (
+            <li key={d.serial}>
+              <span className="mk-link-dot" data-level={link?.level ?? "warn"} aria-hidden="true" />
+              {live.store} · {d.model} (№ {d.serial}): {link?.label ?? "данных пока нет"}
+            </li>
+          ))}
+        </ul>
+      ) : <p className="mk-cab-muted">{data && !data.ok ? data.error : "Кассы не подключены"}</p>}
+    </section>
   );
 }
 

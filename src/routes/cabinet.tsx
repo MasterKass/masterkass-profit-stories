@@ -59,6 +59,7 @@ function Cabinet() {
   const [open, setOpen] = useState<string | null>("finance");
   const [digest, setDigest] = useState(false);
   const { data: live, isLoading } = useQuery({ queryKey: ["evotor-cabinet"], queryFn: () => getEvotorCabinet(), staleTime: 60_000 });
+  const link = live?.ok ? linkStatus(live.summary.lastEventAt) : null;
   useEffect(() => {
     if (!digest) return;
     const prev = document.body.style.overflow;

@@ -782,3 +782,9 @@ a.mk-tariff-cta { text-decoration: none; }
 
 .mk-cab-fnbtn { margin-top: .4rem; font-size: .8rem; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; background: none; border: 0; padding: 0; color: inherit; cursor: pointer; }
 .mk-cab-fnbtn:disabled { opacity: .6; cursor: wait; }
+
+.mk-link-dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; vertical-align: middle; background: oklch(0.72 0.17 145); }
+.mk-link-dot[data-level="warn"] { background: oklch(0.8 0.16 80); }
+.mk-link-dot[data-level="alert"] { background: oklch(0.62 0.22 27); }
+.mk-link-sum { display: flex; flex-wrap: wrap; gap: 14px; font-size: 14px; margin: 8px 0; }
+.mk-link-list { list-style: none; padding: 0; margin: 6px 0 0; font-size: 14px; display: grid; gap: 6px; }
