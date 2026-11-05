@@ -6,7 +6,7 @@ import { OwnerBoard } from "@/components/owner-dashboards";
 import { DataPathDoc, DATA_PATH_DOC_NAME, EVOTOR_DOC_NAME, FN_DOC_NAME, OFD_DOC_NAME, OWNER_DOCS } from "@/components/data-path-doc";
 import { useServerFn } from "@tanstack/react-start";
 import { createFnReplacementTask, getEvotorCabinet } from "@/lib/evotor.functions";
-import { linkStatus } from "@/lib/evotor";
+import { linkStatus, linkNeedsTask } from "@/lib/evotor";
 import { useQuery } from "@tanstack/react-query";
 
 export const Route = createFileRoute("/owner")({
@@ -203,6 +203,19 @@ function LinkRadar() {
   const link = live ? linkStatus(live.summary.lastEventAt) : null;
   const counts = { ok: 0, warn: 0, alert: 0 };
   if (link) counts[link.level]++;
+  const sendLink = useServerFn(createLinkSilenceTask);
+  const [linkMsg, setLinkMsg] = useState<string | null>(null);
+  const autoSent = useRef(false);
+  useEffect(() => {
+    if (autoSent.current || !linkNeedsTask(link)) return;
+    autoSent.current = true;
+    sendLink({ data: { test: false } }).then((r) => setLinkMsg(r.ok ? `Касса молчит 7+ дней: в Битрикс24 создана задача № ${r.id}` : r.error));
+  }, [link, sendLink]);
+  const testLink = async () => {
+    setLinkMsg("Отправляем…");
+    const r = await sendLink({ data: { test: true } });
+    setLinkMsg(r.ok ? `Тестовая задача создана в Битрикс24: № ${r.id}` : r.error);
+  };
   return (
     <section className="mk-card mk-own-files" aria-label="Связь касс клиентов">
       <p><strong>Радар связи касс</strong></p>
@@ -222,6 +235,9 @@ function LinkRadar() {
           ))}
         </ul>
       ) : <p className="mk-cab-muted">{data && !data.ok ? data.error : "Кассы не подключены"}</p>}
+      <p className="mk-cab-muted">Если касса молчит 7 дней и дольше, задача на прозвон точки сразу уходит в Битрикс24.</p>
+      <button type="button" className="mk-cab-fnbtn" onClick={testLink}>Тест: задача «касса не на связи»</button>
+      {linkMsg && <p className="mk-cab-muted">{linkMsg}</p>}
     </section>
   );
 }

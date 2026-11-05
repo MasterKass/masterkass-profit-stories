@@ -1,5 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
-import { fnLife, fnNeedsAlert, fnReplacementTask, summarize, type EvotorDoc } from "./evotor";
+import { fnLife, fnNeedsAlert, fnReplacementTask, linkNeedsTask, linkSilenceTask, linkStatus, summarize, type EvotorDoc } from "./evotor";
 
 const API = "https://api.evotor.ru";
 
@@ -123,5 +123,38 @@ export const createFnReplacementTask = createServerFn({ method: "POST" })
       return { ok: true as const, kind: "lead" as const, id: String(lj.result) };
     }
     console.error("Bitrix24 lead fallback error", lead.status, lj?.error);
+    return { ok: false as const, error: "Битрикс24 не принял задачу" };
+  });
+
+// Задача в Битрикс24, если касса молчит 7+ дней. Повтор не чаще раза в сутки на кассу.
+export const createLinkSilenceTask = createServerFn({ method: "POST" })
+  .inputValidator((d: unknown) => ({ test: !!(d as { test?: boolean } | null)?.test }))
+  .handler(async ({ data }) => {
+    const base = process.env["BITRIX24_WEBHOOK_URL"];
+    if (!base) return { ok: false as const, error: "Битрикс24 не подключён" };
+    const cab = await loadCabinet();
+    if (!cab.ok) return { ok: false as const, error: "Нет данных с кассы" };
+    const link = linkStatus(cab.summary.lastEventAt);
+    if (!link) return { ok: false as const, error: "Нет данных о связи кассы" };
+    if (!data.test && !linkNeedsTask(link)) return { ok: false as const, error: "Касса на связи, задача не нужна" };
+    const dev = cab.devices[0];
+    const device = dev ? `${dev.model} (№ ${dev.serial})` : "касса";
+    const key = `link:${dev?.serial ?? cab.store}:${data.test}`;
+    const last = sentTasks.get(key);
+    if (last && Date.now() - last < (data.test ? 10 * 60000 : 24 * 3600000)) return { ok: false as const, error: "Задача уже создана" };
+    const t = linkSilenceTask({ store: cab.store, device, days: Math.floor(link.hours / 24), test: data.test });
+    const responsible = Number(process.env["BITRIX24_RESPONSIBLE_ID"] ?? 1);
+    const res = await fetch(base.replace(/\/?$/, "/") + "tasks.task.add.json", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ fields: { TITLE: t.title, DESCRIPTION: t.description, RESPONSIBLE_ID: responsible, DEADLINE: `${t.deadline}T18:00:00+03:00` } }),
+    });
+    const j = (await res.json().catch(() => null)) as { result?: { task?: { id?: string } }; error?: string } | null;
+    const taskId = j?.result?.task?.id;
+    if (res.ok && taskId) {
+      sentTasks.set(key, Date.now());
+      return { ok: true as const, id: String(taskId) };
+    }
+    console.error("Bitrix24 link task error", res.status, j?.error);
     return { ok: false as const, error: "Битрикс24 не принял задачу" };
   });

@@ -131,3 +131,28 @@ export function fnReplacementTask(p: { fn: FnLife; fnSerial: string; store: stri
     ].filter((x) => x !== null).join("\n"),
   };
 }
+
+/** Касса молчит 7 дней и дольше: сразу ставим задачу в CRM, не дожидаясь блокировки ФН на 30-й день. */
+export const LINK_TASK_DAYS = 7;
+export function linkNeedsTask(link: LinkStatus | null): boolean {
+  return !!link && link.hours >= LINK_TASK_DAYS * 24;
+}
+
+export function linkSilenceTask(p: { store: string; device: string; days: number; test?: boolean; now?: number }) {
+  const left = Math.max(0, 30 - p.days);
+  const deadline = new Date((p.now ?? Date.now()) + 86400000).toISOString().slice(0, 10);
+  const steps = [
+    "Позвонить на точку: проверить интернет (Wi-Fi, SIM-карта, баланс) и включена ли касса.",
+    "Помочь кассиру вернуть кассу в сеть и убедиться, что неотправленные чеки ушли в ОФД.",
+    "Если удалённо не получилось, согласовать выезд инженера до блокировки ФН.",
+  ];
+  return {
+    title: `${p.test ? "[ТЕСТ] " : ""}Касса не на связи ${p.days} дн.: ${p.store}`,
+    deadline,
+    description: [
+      `Точка: ${p.store}`, `Касса: ${p.device}`,
+      `Нет данных ${p.days} дн. До блокировки ФН (30 дней без ОФД) осталось около ${left} дн.`, "",
+      ...steps.map((s, i) => `${i + 1}. ${s}`),
+    ].join("\n"),
+  };
+}
