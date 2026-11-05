@@ -48,6 +48,13 @@ export function fnLife(serial: string | null, firstUse: string | null, now = Dat
   return { since: start.toISOString().slice(0, 10), until: end.toISOString().slice(0, 10), daysLeft, months };
 }
 
+/** За сколько дней до конца срока ФН предупреждаем директора и ставим задачу в CRM. */
+export const FN_ALERT_DAYS = 30;
+
+export function fnNeedsAlert(fn: FnLife | null): boolean {
+  return !!fn && fn.daysLeft <= FN_ALERT_DAYS;
+}
+
 const round = (n: number) => Math.round(n * 100) / 100;
 
 function localDay(d: EvotorDoc) {
