@@ -5,7 +5,7 @@ import { BackHome } from "@/components/back-home";
 import { OwnerBoard } from "@/components/owner-dashboards";
 import { DataPathDoc, DATA_PATH_DOC_NAME, EVOTOR_DOC_NAME, FN_DOC_NAME, OFD_DOC_NAME, OWNER_DOCS } from "@/components/data-path-doc";
 import { useServerFn } from "@tanstack/react-start";
-import { createFnReplacementTask, createLinkSilenceTask, getEvotorCabinet } from "@/lib/evotor.functions";
+import { createFnReplacementTask, createLinkSilenceTask, getEvotorCabinet, troubleshootCashRegister } from "@/lib/evotor.functions";
 import { linkStatus, linkNeedsTask } from "@/lib/evotor";
 import { useQuery } from "@tanstack/react-query";
 
