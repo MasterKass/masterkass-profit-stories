@@ -35,7 +35,8 @@ function localDay(d: EvotorDoc) {
 export function summarize(docs: EvotorDoc[]): EvotorSummary {
   const sorted = [...docs].sort((a, b) => Date.parse(a.close_date) - Date.parse(b.close_date));
   const sales = sorted.filter((d) => d.type === "SELL" || d.type === "PAYBACK");
-  const day = sales.length ? localDay(sales[sales.length - 1]) : null;
+  const lastSale = sales[sales.length - 1];
+  const day = lastSale ? localDay(lastSale) : null;
   let revenue = 0, cash = 0, card = 0, receipts = 0, refunds = 0;
   for (const d of sales) {
     if (localDay(d) !== day) continue;
@@ -60,6 +61,6 @@ export function summarize(docs: EvotorDoc[]): EvotorSummary {
   return {
     day, revenue: round(revenue), cash: round(cash), card: round(card), receipts, refunds,
     avgCheck: receipts ? round(revenue / receipts) : 0, sessionOpen,
-    lastEventAt: sorted.length ? sorted[sorted.length - 1].close_date : null, fnSerial, kktReg,
+    lastEventAt: sorted[sorted.length - 1]?.close_date ?? null, fnSerial, kktReg,
   };
 }
