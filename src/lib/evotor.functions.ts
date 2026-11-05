@@ -7,7 +7,7 @@ const API = "https://api.evotor.ru";
 export const getEvotorCabinet = createServerFn({ method: "GET" }).handler(async () => {
   const token = process.env["EVOTOR_TEST_TOKEN"];
   if (!token) return { ok: false as const, error: "Касса не подключена" };
-  const headers = { "X-Authorization": token };
+  const headers = { "X-Authorization": token, Accept: "*/*" };
   try {
     const [storesRes, devicesRes] = await Promise.all([
       fetch(`${API}/stores`, { headers }),
