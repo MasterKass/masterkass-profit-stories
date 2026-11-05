@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { FileText, Keyboard, Mic, Paperclip, Plus, Send, X } from "lucide-react";
 import { BackHome } from "@/components/back-home";
 import { OwnerBoard } from "@/components/owner-dashboards";
-import { DataPathDoc, DATA_PATH_DOC_NAME, EVOTOR_DOC_NAME, OFD_DOC_NAME, OWNER_DOCS } from "@/components/data-path-doc";
+import { DataPathDoc, DATA_PATH_DOC_NAME, EVOTOR_DOC_NAME, FN_DOC_NAME, OFD_DOC_NAME, OWNER_DOCS } from "@/components/data-path-doc";
 
 export const Route = createFileRoute("/owner")({
   head: () => ({
@@ -32,6 +32,7 @@ const SECTIONS: Record<string, Doc[]> = {
     { name: "Фонд «Новая касса».pdf", date: "20 окт", note: "Модель накопления 750 ₽ в месяц" },
   ],
   Интеграции: [
+    { name: FN_DOC_NAME, date: "5 ноя", note: "Предупреждение за 30 дней, дайджест директора и задача в Битрикс24" },
     { name: EVOTOR_DOC_NAME, date: "5 ноя", note: "Тестовое приложение, токен клиента, ограничения Маркета и шаги" },
     { name: OFD_DOC_NAME, date: "5 ноя", note: "Партнёрский ключ Платформы ОФД, Эвотор и изоляция данных клиентов" },
     { name: DATA_PATH_DOC_NAME, date: "3 ноя", note: "Регламент 152-ФЗ: роли, Битрикс24, «Цифровой сейф» и ИИ" },
@@ -42,6 +43,7 @@ const SECTIONS: Record<string, Doc[]> = {
     { name: "Регламент инженера.docx", date: "15 окт", note: "Выезд, диагностика, отчёт" },
   ],
   Сервис: [
+    { name: FN_DOC_NAME, date: "5 ноя", note: "Плановая замена ФН: звонок клиенту и выезд за 30 дней" },
     { name: "Nova: сценарии голоса.docx", date: "2 ноя", note: "Обучение голосового сотрудника, ведёт Денис" },
     { name: "Мануал Эвотор: сбои печати.pdf", date: "1 ноя", note: "Материал для обучения ИИ-агентов" },
     { name: "Мануал Касатка: смены и ОФД.pdf", date: "31 окт", note: "Материал для обучения ИИ-агентов" },
