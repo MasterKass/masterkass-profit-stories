@@ -5,6 +5,11 @@ import {
 } from "lucide-react";
 import { BackHome } from "@/components/back-home";
 import { BrandMark } from "@/components/brand-mark";
+import { useQuery } from "@tanstack/react-query";
+import { getEvotorCabinet } from "@/lib/evotor.functions";
+
+const rub = (n: number) => `${n.toLocaleString("ru-RU", { maximumFractionDigits: 2 })} ₽`;
+const fmtDay = (d: string) => new Date(`${d}T12:00:00Z`).toLocaleDateString("ru-RU", { day: "numeric", month: "long" });
 
 export const Route = createFileRoute("/cabinet")({
   head: () => ({
@@ -51,6 +56,7 @@ const SECTIONS: Section[] = [
 function Cabinet() {
   const [open, setOpen] = useState<string | null>("finance");
   const [digest, setDigest] = useState(false);
+  const { data: live, isLoading } = useQuery({ queryKey: ["evotor-cabinet"], queryFn: () => getEvotorCabinet(), staleTime: 60_000 });
   useEffect(() => {
     if (!digest) return;
     const prev = document.body.style.overflow;
@@ -74,16 +80,40 @@ function Cabinet() {
           <span className="mk-cab-units"><Sparkles size={14} aria-hidden="true" />1 300 AI-юнитов</span>
         </header>
 
-        <section className="mk-card mk-cab-pulse" aria-label="Сегодня на точке">
-          <p className="mk-cab-kicker">Сегодня на точке</p>
-          <p className="mk-cab-big">48 650 ₽</p>
-          <p className="mk-cab-up">+12% к прошлому вторнику</p>
-          <dl className="mk-cab-stats">
-            <div><dt>Чеков</dt><dd>73</dd></div>
-            <div><dt>Средний чек</dt><dd>665 ₽</dd></div>
-            <div><dt>Смена</dt><dd>Анна К., с 08:00</dd></div>
-          </dl>
-        </section>
+        {live?.ok ? (
+          <section className="mk-card mk-cab-pulse" aria-label="Касса Эвотор">
+            <p className="mk-cab-kicker">Живые данные кассы · {live.store}</p>
+            <p className="mk-cab-big">{rub(live.summary.revenue)}</p>
+            <p className="mk-cab-muted">
+              {live.summary.day ? `Выручка за ${fmtDay(live.summary.day)}` : "Продаж за 14 дней нет"}
+              {live.summary.refunds ? ` · возвратов: ${live.summary.refunds}` : ""}
+            </p>
+            <dl className="mk-cab-stats">
+              <div><dt>Чеков</dt><dd>{live.summary.receipts}</dd></div>
+              <div><dt>Средний чек</dt><dd>{rub(live.summary.avgCheck)}</dd></div>
+              <div><dt>Наличные / карта</dt><dd>{rub(live.summary.cash)} / {rub(live.summary.card)}</dd></div>
+            </dl>
+            <dl className="mk-cab-rows">
+              {live.devices.map((d) => (
+                <div key={d.serial}><dt>{d.name}</dt><dd>{d.model} · зав. № {d.serial}</dd></div>
+              ))}
+              <div><dt>Смена</dt><dd>{live.summary.sessionOpen ? "открыта" : "закрыта"}</dd></div>
+              {live.summary.fnSerial && <div><dt>Фискальный накопитель</dt><dd>№ {live.summary.fnSerial}</dd></div>}
+              {live.summary.lastEventAt && <div><dt>Последнее событие</dt><dd>{new Date(live.summary.lastEventAt).toLocaleString("ru-RU", { timeZone: "Europe/Moscow" })}</dd></div>}
+            </dl>
+          </section>
+        ) : (
+          <section className="mk-card mk-cab-pulse" aria-label="Сегодня на точке">
+            <p className="mk-cab-kicker">{isLoading ? "Загружаем данные кассы…" : "Сегодня на точке · демо"}</p>
+            <p className="mk-cab-big">48 650 ₽</p>
+            <p className="mk-cab-up">{live && !live.ok ? live.error : "+12% к прошлому вторнику"}</p>
+            <dl className="mk-cab-stats">
+              <div><dt>Чеков</dt><dd>73</dd></div>
+              <div><dt>Средний чек</dt><dd>665 ₽</dd></div>
+              <div><dt>Смена</dt><dd>Анна К., с 08:00</dd></div>
+            </dl>
+          </section>
+        )}
 
         <section className="mk-card mk-cab-attn" aria-label="Требует внимания">
           <p className="mk-cab-kicker">Требует внимания</p>
