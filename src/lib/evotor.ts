@@ -25,6 +25,29 @@ export type EvotorSummary = {
   kktReg: string | null;
 };
 
+// Срок службы ФН по серии номера (первые 4 цифры). Неизвестная серия: срок не угадываем.
+// 738x: ФН-1.1М на 36 месяцев, 728x: ФН-1.1М на 15 месяцев. Требует сверки с паспортом ФН.
+export function fnTermMonths(serial: string | null): number | null {
+  if (!serial) return null;
+  if (/^738\d/.test(serial)) return 36;
+  if (/^728\d/.test(serial)) return 15;
+  return null;
+}
+
+export type FnLife = { since: string; until: string; daysLeft: number; months: number };
+
+// Начало отсчёта: первый фискальный документ с этим ФН (на день позже регистрации или в тот же день).
+export function fnLife(serial: string | null, firstUse: string | null, now = Date.now()): FnLife | null {
+  const months = fnTermMonths(serial);
+  if (!months || !firstUse) return null;
+  const start = new Date(firstUse);
+  if (Number.isNaN(start.getTime())) return null;
+  const end = new Date(start);
+  end.setUTCMonth(end.getUTCMonth() + months);
+  const daysLeft = Math.floor((end.getTime() - now) / 86400000);
+  return { since: start.toISOString().slice(0, 10), until: end.toISOString().slice(0, 10), daysLeft, months };
+}
+
 const round = (n: number) => Math.round(n * 100) / 100;
 
 function localDay(d: EvotorDoc) {
