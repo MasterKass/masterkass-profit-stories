@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { FileText, Keyboard, Mic, Paperclip, Plus, Send, X } from "lucide-react";
 import { BackHome } from "@/components/back-home";
 import { OwnerBoard } from "@/components/owner-dashboards";
@@ -258,7 +258,7 @@ function CashTroubleshooter() {
   const ask = useServerFn(troubleshootCashRegister);
   const [problem, setProblem] = useState("");
   const [state, setState] = useState<{ busy?: boolean; plan?: string; error?: string }>({});
-  const go = async (e: React.FormEvent) => {
+  const go = async (e: FormEvent) => {
     e.preventDefault();
     if (problem.trim().length < 3 || state.busy) return;
     setState({ busy: true });
