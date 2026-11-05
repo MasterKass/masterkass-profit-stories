@@ -47,6 +47,11 @@ const SECTIONS: Record<string, Doc[]> = {
   Биллинг: [
     { name: "Модель юнитов.xlsx", date: "3 ноя", note: "1 юнит = 1 000 токенов ≈ 1 ₽, лимиты тарифов" },
   ],
+  Конкуренты: [
+    { name: "Срез рынка: Ростов и юг.pdf", date: "5 ноя", note: "8 игроков: тарифы ТО, замена ФН, акции" },
+    { name: "Скрытые доплаты конкурентов.docx", date: "4 ноя", note: "Платные выезды, маркировка, лицензии" },
+    { name: "КП клиентов от конкурентов", date: "3 ноя", note: "Сюда загружаем предложения, которые показывают клиенты" },
+  ],
 };
 
 function OwnerPage() {
@@ -99,7 +104,7 @@ function OwnerPage() {
                 <span>Голосовой режим скоро заработает</span>
               </div>
             ) : (
-              <textarea ref={field} value={q} onChange={(e) => setQ(e.target.value)} rows={2} placeholder={`Вопрос по разделу «${tab}»`} aria-label="Вопрос ИИ-сотруднику"
+              <textarea ref={field} value={q} onChange={(e) => setQ(e.target.value)} rows={2} placeholder={tab === "Конкуренты" ? "Анализ рынка: цены, тренды, изменения игроков" : `Вопрос по разделу «${tab}»`} aria-label="Вопрос ИИ-сотруднику"
                 onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); e.currentTarget.form?.requestSubmit(); } }} />
             )}
             {files.length > 0 && (
