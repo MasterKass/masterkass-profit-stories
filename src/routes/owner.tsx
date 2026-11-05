@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { FileText, Keyboard, Mic, Paperclip, Plus, Send, X } from "lucide-react";
 import { BackHome } from "@/components/back-home";
 import { OwnerBoard } from "@/components/owner-dashboards";
-import { DataPathDoc, DATA_PATH_DOC_NAME } from "@/components/data-path-doc";
+import { DataPathDoc, DATA_PATH_DOC_NAME, OFD_DOC_NAME, OWNER_DOCS } from "@/components/data-path-doc";
 
 export const Route = createFileRoute("/owner")({
   head: () => ({
@@ -32,6 +32,7 @@ const SECTIONS: Record<string, Doc[]> = {
     { name: "Фонд «Новая касса».pdf", date: "20 окт", note: "Модель накопления 750 ₽ в месяц" },
   ],
   Интеграции: [
+    { name: OFD_DOC_NAME, date: "5 ноя", note: "Партнёрский ключ Платформы ОФД, Эвотор и изоляция данных клиентов" },
     { name: DATA_PATH_DOC_NAME, date: "3 ноя", note: "Регламент 152-ФЗ: роли, Битрикс24, «Цифровой сейф» и ИИ" },
     { name: "Битрикс24: приём заявок.docx", date: "1 ноя", note: "Схема от Дениса" },
     { name: "Эвотор: приложение.pdf", date: "2 ноя", note: "Черновик требований" },
@@ -57,7 +58,7 @@ const SECTIONS: Record<string, Doc[]> = {
 function OwnerPage() {
   const [docs, setDocs] = useState(SECTIONS);
   const [tab, setTab] = useState("Маркетинг");
-  const [docOpen, setDocOpen] = useState(false);
+  const [docOpen, setDocOpen] = useState<string | null>(null);
   const [q, setQ] = useState("");
   const [voice, setVoice] = useState(false);
   const [files, setFiles] = useState<File[]>([]);
@@ -152,8 +153,8 @@ function OwnerPage() {
             <div
               key={d.name}
               className="mk-own-file"
-              {...(d.name === DATA_PATH_DOC_NAME
-                ? { role: "button", tabIndex: 0, style: { cursor: "pointer" }, onClick: () => setDocOpen(true), onKeyDown: (e: React.KeyboardEvent) => { if (e.key === "Enter") setDocOpen(true); } }
+              {...(OWNER_DOCS[d.name]
+                ? { role: "button", tabIndex: 0, style: { cursor: "pointer" }, onClick: () => setDocOpen(d.name), onKeyDown: (e: React.KeyboardEvent) => { if (e.key === "Enter") setDocOpen(d.name); } }
                 : {})}
             >
               <FileText aria-hidden="true" />
@@ -179,7 +180,7 @@ function OwnerPage() {
         </section>
 
       </main>
-      <DataPathDoc open={docOpen} onOpenChange={setDocOpen} />
+      <DataPathDoc name={docOpen} onClose={() => setDocOpen(null)} />
     </div>
   );
 }
