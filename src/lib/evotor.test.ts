@@ -29,3 +29,19 @@ describe("summarize", () => {
     expect(s.sessionOpen).toBe(false);
   });
 });
+
+import { fnLife, fnTermMonths } from "./evotor";
+
+describe("fnLife", () => {
+  it("ФН серии 738x служит 36 месяцев от первого документа", () => {
+    const l = fnLife("7381440900838685", "2025-06-10T07:51:43.000+0000", Date.parse("2026-11-05T00:00:00Z"));
+    expect(l?.until).toBe("2028-06-10");
+    expect(l?.daysLeft).toBe(583);
+  });
+  it("ФН серии 728x служит 15 месяцев", () => {
+    expect(fnTermMonths("7281000000000000")).toBe(15);
+  });
+  it("неизвестная серия: срок не показываем", () => {
+    expect(fnLife("9283440300258493", "2019-06-13T00:00:00Z")).toBeNull();
+  });
+});
