@@ -76,3 +76,10 @@ describe("linkStatus", () => {
   it("7 дней и больше: тревога", () => expect(_link("2026-10-29T12:00:00Z", now)?.level).toBe("alert"));
   it("нет данных: статуса нет", () => expect(_link(null, now)).toBeNull());
 });
+
+import { linkNeedsTask as _lnt, linkStatus as _ls } from "./evotor";
+describe("задача при молчании кассы", () => {
+  const now = Date.parse("2026-11-10T12:00:00Z");
+  it("6 дней тишины: задачи нет", () => expect(_lnt(_ls("2026-11-04T13:00:00Z", now))).toBe(false));
+  it("7 дней тишины: задача", () => expect(_lnt(_ls("2026-11-03T12:00:00Z", now))).toBe(true));
+});
