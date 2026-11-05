@@ -4,6 +4,8 @@ import { FileText, Keyboard, Mic, Paperclip, Plus, Send, X } from "lucide-react"
 import { BackHome } from "@/components/back-home";
 import { OwnerBoard } from "@/components/owner-dashboards";
 import { DataPathDoc, DATA_PATH_DOC_NAME, EVOTOR_DOC_NAME, FN_DOC_NAME, OFD_DOC_NAME, OWNER_DOCS } from "@/components/data-path-doc";
+import { useServerFn } from "@tanstack/react-start";
+import { createFnReplacementTask } from "@/lib/evotor.functions";
 
 export const Route = createFileRoute("/owner")({
   head: () => ({
@@ -151,6 +153,8 @@ function OwnerPage() {
 
         <OwnerBoard section={tab} />
 
+        {tab === "Сервис" && <FnTaskTest />}
+
         <section className="mk-card mk-own-files" aria-label={`Файлы: ${tab}`}>
           {(docs[tab] ?? []).map((d) => (
             <div
@@ -185,5 +189,25 @@ function OwnerPage() {
       </main>
       <DataPathDoc name={docOpen} onClose={() => setDocOpen(null)} />
     </div>
+  );
+}
+
+function FnTaskTest() {
+  const send = useServerFn(createFnReplacementTask);
+  const [state, setState] = useState<{ busy?: boolean; msg?: string }>({});
+  const go = async () => {
+    setState({ busy: true });
+    const r = await send({ data: { test: true } });
+    setState({ msg: r.ok ? `Создано в Битрикс24: ${r.kind === "task" ? "задача" : "лид"} № ${r.id}` : r.error });
+  };
+  return (
+    <section className="mk-card mk-own-files" aria-label="Замена ФН">
+      <p><strong>Плановая замена ФН</strong></p>
+      <p className="mk-cab-muted">Созвон и согласование счёта, оплата, через 1–2 недели согласование точного времени выезда, замена ФН инженером.</p>
+      <button type="button" className="mk-cab-fnbtn" disabled={state.busy} onClick={go}>
+        {state.busy ? "Отправляем…" : "Тест: создать задачу в Битрикс24"}
+      </button>
+      {state.msg && <p className="mk-cab-muted">{state.msg}</p>}
+    </section>
   );
 }
