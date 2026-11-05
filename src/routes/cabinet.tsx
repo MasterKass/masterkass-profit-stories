@@ -10,6 +10,7 @@ import { getEvotorCabinet } from "@/lib/evotor.functions";
 
 const rub = (n: number) => `${n.toLocaleString("ru-RU", { maximumFractionDigits: 2 })} ₽`;
 const fmtDay = (d: string) => new Date(`${d}T12:00:00Z`).toLocaleDateString("ru-RU", { day: "numeric", month: "long" });
+const fmtDate = (d: string) => new Date(`${d}T12:00:00Z`).toLocaleDateString("ru-RU", { day: "numeric", month: "long", year: "numeric" });
 
 export const Route = createFileRoute("/cabinet")({
   head: () => ({
@@ -103,8 +104,8 @@ function Cabinet() {
                 <div>
                   <dt>Срок ФН (оценка)</dt>
                   <dd>
-                    {live.fn.daysLeft > 0 ? `осталось ${live.fn.daysLeft} дн., до ${fmtDay(live.fn.until)}` : `истёк ${fmtDay(live.fn.until)}`}
-                    <br /><span className="mk-cab-muted">ФН на {live.fn.months} мес., в работе с {fmtDay(live.fn.since)}</span>
+                    {live.fn.daysLeft > 0 ? `осталось ${live.fn.daysLeft} дн., до ${fmtDate(live.fn.until)}` : `истёк ${fmtDate(live.fn.until)}`}
+                    <br /><span className="mk-cab-muted">ФН на {live.fn.months} мес., в работе с {fmtDate(live.fn.since)}</span>
                   </dd>
                 </div>
               )}
