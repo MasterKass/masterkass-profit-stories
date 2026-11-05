@@ -6,7 +6,8 @@ import {
 import { BackHome } from "@/components/back-home";
 import { BrandMark } from "@/components/brand-mark";
 import { useQuery } from "@tanstack/react-query";
-import { getEvotorCabinet } from "@/lib/evotor.functions";
+import { getEvotorCabinet, createFnReplacementTask } from "@/lib/evotor.functions";
+import { useServerFn } from "@tanstack/react-start";
 import { fnNeedsAlert } from "@/lib/evotor";
 
 const rub = (n: number) => `${n.toLocaleString("ru-RU", { maximumFractionDigits: 2 })} ₽`;
@@ -129,13 +130,7 @@ function Cabinet() {
         <section className="mk-card mk-cab-attn" aria-label="Требует внимания">
           <p className="mk-cab-kicker">Требует внимания</p>
           <ul>
-            {live?.fn && fnNeedsAlert(live.fn) && (
-              <li data-tone="warn">
-                {live.fn.daysLeft > 0
-                  ? `ФН: осталось ${live.fn.daysLeft} дн. (до ${fmtDate(live.fn.until)}), пора планировать замену. Мы уже свяжемся с вами.`
-                  : `ФН: срок истёк ${fmtDate(live.fn.until)}, нужна срочная замена`}
-              </li>
-            )}
+            {live?.fn && <FnAlert fn={live.fn} />}
             <li data-tone="warn">ЭДО: накладная «Кофе-Опт» на 24 500 ₽ ждёт подписи</li>
             <li data-tone="warn">Сироп ваниль заканчивается: остался 1 шт</li>
             <li data-tone="ok">Маркировка проверена, ошибок нет</li>
@@ -185,5 +180,44 @@ function Cabinet() {
         </div>
       </div>
     </main>
+  );
+}
+
+type Fn = { since: string; until: string; daysLeft: number; months: number };
+
+function FnAlert({ fn }: { fn: Fn }) {
+  const send = useServerFn(createFnReplacementTask);
+  const [preview, setPreview] = useState(false);
+  const [state, setState] = useState<{ busy?: boolean; msg?: string }>({});
+  const real = fnNeedsAlert(fn);
+  const shown = real || preview;
+  const days = real ? fn.daysLeft : 30;
+  const go = async () => {
+    setState({ busy: true });
+    const r = await send({ data: { test: !real } });
+    setState({ msg: r.ok ? `Задача в Битрикс24 создана: ${r.kind === "task" ? "задача" : "лид"} № ${r.id}` : r.error });
+  };
+  return (
+    <>
+      {shown && (
+        <li data-tone="warn">
+          {days > 0
+            ? `ФН: осталось ${days} дн. (до ${fmtDate(fn.until)}). Пора планировать замену, иначе касса перестанет пробивать чеки. Мы позвоним, выставим счёт и согласуем выезд инженера.`
+            : `ФН: срок истёк ${fmtDate(fn.until)}, нужна срочная замена`}
+          <br />
+          <button type="button" className="mk-cab-fnbtn" disabled={state.busy} onClick={go}>
+            {state.busy ? "Отправляем…" : real ? "Создать задачу в Битрикс24" : "Тест: создать задачу в Битрикс24"}
+          </button>
+          {state.msg && <span className="mk-cab-muted"> {state.msg}</span>}
+        </li>
+      )}
+      {!real && (
+        <li>
+          <button type="button" className="mk-cab-fnbtn" onClick={() => setPreview((v) => !v)}>
+            {preview ? "Скрыть пример предупреждения о ФН" : "Показать, как выглядит предупреждение за 30 дней до конца ФН"}
+          </button>
+        </li>
+      )}
+    </>
   );
 }

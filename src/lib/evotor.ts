@@ -94,3 +94,28 @@ export function summarize(docs: EvotorDoc[]): EvotorSummary {
     lastEventAt: sorted[sorted.length - 1]?.close_date ?? null, fnSerial, kktReg,
   };
 }
+
+/** Задача в CRM на плановую замену ФН: прозвон, счёт, оплата, выезд инженера. */
+export function fnReplacementTask(p: { fn: FnLife; fnSerial: string; store: string; kkt: string | null; test?: boolean }) {
+  const until = new Date(`${p.fn.until}T12:00:00Z`).toLocaleDateString("ru-RU", { day: "numeric", month: "long", year: "numeric" });
+  const deadline = new Date(Date.parse(`${p.fn.until}T12:00:00Z`) - 7 * 86400000).toISOString().slice(0, 10);
+  const steps = [
+    "Позвонить клиенту: предупредить об окончании срока ФН и согласовать замену.",
+    "Выставить организации счёт на новый ФН и работы по замене, отправить на почту.",
+    "Проконтролировать оплату счёта.",
+    "Согласовать с клиентом дату и время выезда инженера.",
+    "Выезд инженера: закрыть архив старого ФН, установить новый, перерегистрировать ККТ в ФНС и ОФД, пробить тестовый чек.",
+  ];
+  return {
+    title: `${p.test ? "[ТЕСТ] " : ""}Замена ФН: ${p.store}, до ${until}`,
+    deadline,
+    steps,
+    description: [
+      `Точка: ${p.store}`,
+      p.kkt ? `ККТ: ${p.kkt}` : null,
+      `ФН № ${p.fnSerial}, срок ${p.fn.months} мес., до ${until} (осталось ${p.fn.daysLeft} дн.)`,
+      "",
+      ...steps.map((s, i) => `${i + 1}. ${s}`),
+    ].filter((x) => x !== null).join("\n"),
+  };
+}
