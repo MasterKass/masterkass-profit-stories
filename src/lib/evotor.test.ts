@@ -55,3 +55,15 @@ describe("fnNeedsAlert: предупреждение за 30 дней", () => {
   it("срок истёк: предупреждаем", () => expect(fnNeedsAlert({ ...base, daysLeft: -3 })).toBe(true));
   it("нет данных: молчим", () => expect(fnNeedsAlert(null)).toBe(false));
 });
+
+import { fnReplacementTask } from "./evotor";
+
+describe("fnReplacementTask", () => {
+  const t = fnReplacementTask({ fn: { since: "2025-06-10", until: "2028-06-10", months: 36, daysLeft: 30 }, fnSerial: "7381", store: "Мой магазин", kkt: null });
+  it("пять шагов: прозвон, счёт, оплата, согласование, выезд", () => {
+    expect(t.steps).toHaveLength(5);
+    expect(t.steps[1]).toContain("счёт");
+    expect(t.steps[4]).toContain("Выезд инженера");
+  });
+  it("крайний срок задачи за 7 дней до конца ФН", () => expect(t.deadline).toBe("2028-06-03"));
+});
