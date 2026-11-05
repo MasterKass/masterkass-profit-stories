@@ -99,6 +99,15 @@ function Cabinet() {
               ))}
               <div><dt>Смена</dt><dd>{live.summary.sessionOpen ? "открыта" : "закрыта"}</dd></div>
               {live.summary.fnSerial && <div><dt>Фискальный накопитель</dt><dd>№ {live.summary.fnSerial}</dd></div>}
+              {live.fn && (
+                <div>
+                  <dt>Срок ФН (оценка)</dt>
+                  <dd>
+                    {live.fn.daysLeft > 0 ? `осталось ${live.fn.daysLeft} дн., до ${fmtDay(live.fn.until)}` : `истёк ${fmtDay(live.fn.until)}`}
+                    <br /><span className="mk-cab-muted">ФН на {live.fn.months} мес., в работе с {fmtDay(live.fn.since)}</span>
+                  </dd>
+                </div>
+              )}
               {live.summary.lastEventAt && <div><dt>Последнее событие</dt><dd>{new Date(live.summary.lastEventAt).toLocaleString("ru-RU", { timeZone: "Europe/Moscow" })}</dd></div>}
             </dl>
           </section>
