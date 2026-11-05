@@ -6,7 +6,7 @@ import {
 import { BackHome } from "@/components/back-home";
 import { BrandMark } from "@/components/brand-mark";
 import { useQuery } from "@tanstack/react-query";
-import { getEvotorCabinet, createFnReplacementTask } from "@/lib/evotor.functions";
+import { getEvotorCabinet } from "@/lib/evotor.functions";
 import { useServerFn } from "@tanstack/react-start";
 import { fnNeedsAlert } from "@/lib/evotor";
 
@@ -186,29 +186,17 @@ function Cabinet() {
 type Fn = { since: string; until: string; daysLeft: number; months: number };
 
 function FnAlert({ fn }: { fn: Fn }) {
-  const send = useServerFn(createFnReplacementTask);
   const [preview, setPreview] = useState(false);
-  const [state, setState] = useState<{ busy?: boolean; msg?: string }>({});
   const real = fnNeedsAlert(fn);
   const shown = real || preview;
   const days = real ? fn.daysLeft : 30;
-  const go = async () => {
-    setState({ busy: true });
-    const r = await send({ data: { test: !real } });
-    setState({ msg: r.ok ? `Задача в Битрикс24 создана: ${r.kind === "task" ? "задача" : "лид"} № ${r.id}` : r.error });
-  };
   return (
     <>
       {shown && (
         <li data-tone="warn">
           {days > 0
-            ? `ФН: осталось ${days} дн. (до ${fmtDate(fn.until)}). Пора планировать замену, иначе касса перестанет пробивать чеки. Мы позвоним, выставим счёт и согласуем выезд инженера.`
-            : `ФН: срок истёк ${fmtDate(fn.until)}, нужна срочная замена`}
-          <br />
-          <button type="button" className="mk-cab-fnbtn" disabled={state.busy} onClick={go}>
-            {state.busy ? "Отправляем…" : real ? "Создать задачу в Битрикс24" : "Тест: создать задачу в Битрикс24"}
-          </button>
-          {state.msg && <span className="mk-cab-muted"> {state.msg}</span>}
+            ? `ФН: осталось ${days} дн. (до ${fmtDate(fn.until)}). Мы уже готовим замену: менеджер позвонит вам, чтобы согласовать счёт и удобное время приезда инженера.`
+            : `ФН: срок истёк ${fmtDate(fn.until)}. Менеджер свяжется с вами для срочной замены.`}
         </li>
       )}
       {!real && (

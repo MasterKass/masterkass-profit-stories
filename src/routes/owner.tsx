@@ -151,6 +151,8 @@ function OwnerPage() {
 
         <OwnerBoard section={tab} />
 
+        {tab === "Сервис" && <FnTaskTest />}
+
         <section className="mk-card mk-own-files" aria-label={`Файлы: ${tab}`}>
           {(docs[tab] ?? []).map((d) => (
             <div
