@@ -1,84 +1,13 @@
 import { createServerFn } from "@tanstack/react-start";
-import { fnLife, fnNeedsAlert, fnReplacementTask, linkNeedsTask, linkSilenceTask, linkStatus, summarize, type EvotorDoc } from "./evotor";
+import { fnNeedsAlert, fnReplacementTask, linkStatus } from "./evotor";
+import { bitrixRoot, loadCabinet, runLinkSilenceCheck } from "./evotor.server";
 
-const API = "https://api.evotor.ru";
-
-const fnStartCache = new Map<string, string>();
-const hasFn = (d: EvotorDoc, fn: string) =>
-  d.body?.pos_print_results?.some((p) => p.fn_serial_number === fn) ?? false;
-
-// Ищем первый документ с этим ФН: идём по месяцам назад, пока ФН встречается.
-async function findFnFirstUse(storeId: string, fn: string, headers: Record<string, string>) {
-  const cached = fnStartCache.get(fn);
-  if (cached) return cached;
-  const now = new Date();
-  let earliest: string | null = null;
-  for (let back = 0; back < 40; back++) {
-    const from = Date.UTC(now.getUTCFullYear(), now.getUTCMonth() - back, 1);
-    const to = Date.UTC(now.getUTCFullYear(), now.getUTCMonth() - back + 1, 1);
-    let url = `${API}/stores/${storeId}/documents?since=${from}&until=${to}`;
-    let found: string | null = null, any = false;
-    for (let i = 0; i < 6 && url && !found; i++) {
-      const r = await fetch(url, { headers });
-      if (!r.ok) return earliest;
-      const j = await r.json();
-      const items = (j.items ?? []) as EvotorDoc[];
-      if (items.length) any = true;
-      const hit = items.filter((d) => hasFn(d, fn)).sort((a, b) => Date.parse(a.close_date) - Date.parse(b.close_date))[0];
-      if (hit) found = hit.close_date;
-      const c = j.paging?.next_cursor;
-      url = c ? `${API}/stores/${storeId}/documents?cursor=${encodeURIComponent(c)}` : "";
-    }
-    if (found) earliest = found;
-    else if (earliest && any) break; // в этом месяце работал прежний ФН
-  }
-  if (earliest) fnStartCache.set(fn, earliest);
-  return earliest;
-}
-
-// Тестовая касса: токен хранится только на сервере, браузер получает готовые цифры.
-async function loadCabinet() {
-  const token = process.env["EVOTOR_TEST_TOKEN"];
-  if (!token) return { ok: false as const, error: "Касса не подключена" };
-  const headers = { "X-Authorization": token, Accept: "*/*" };
-  try {
-    const [storesRes, devicesRes] = await Promise.all([
-      fetch(`${API}/stores`, { headers }),
-      fetch(`${API}/devices`, { headers }),
-    ]);
-    if (!storesRes.ok || !devicesRes.ok) throw new Error(`evotor ${storesRes.status}/${devicesRes.status}`);
-    const stores = (await storesRes.json()).items as { id: string; name: string }[];
-    const devices = (await devicesRes.json()).items as { id: string; name: string; serial_number: string; model: string }[];
-    const store = stores[0];
-    const docs: EvotorDoc[] = [];
-    if (store) {
-      const since = Date.now() - 14 * 86400000;
-      let url = `${API}/stores/${store.id}/documents?since=${since}`;
-      for (let i = 0; i < 10 && url; i++) {
-        const r = await fetch(url, { headers });
-        if (!r.ok) throw new Error(`documents ${r.status}`);
-        const j = await r.json();
-        docs.push(...(j.items ?? []));
-        const cursor = j.paging?.next_cursor;
-        url = cursor ? `${API}/stores/${store.id}/documents?cursor=${encodeURIComponent(cursor)}` : "";
-      }
-    }
-    const summary = summarize(docs);
-    const firstUse = store && summary.fnSerial ? await findFnFirstUse(store.id, summary.fnSerial, headers) : null;
-    return {
-      ok: true as const,
-      fn: fnLife(summary.fnSerial, firstUse),
-      store: store?.name ?? "Магазин",
-      devices: devices.map((d) => ({ name: d.name, serial: d.serial_number, model: `Эвотор ${d.model}` })),
-      summary,
-    };
-  } catch (e) {
-    console.error("evotor sync failed", e);
-    return { ok: false as const, error: "Эвотор сейчас не отвечает" };
-  }
-}
-
-export const getEvotorCabinet = createServerFn({ method: "GET" }).handler(() => loadCabinet());
+export const getEvotorCabinet = createServerFn({ method: "GET" }).handler(async () => {
+  const cab = await loadCabinet();
+  if (!cab.ok) return cab;
+  const { events: _events, ...rest } = cab;
+  return rest;
+});
 
 const sentTasks = new Map<string, number>();
 
@@ -87,8 +16,8 @@ const sentTasks = new Map<string, number>();
 export const createFnReplacementTask = createServerFn({ method: "POST" })
   .inputValidator((d: unknown) => ({ test: !!(d as { test?: boolean } | null)?.test }))
   .handler(async ({ data }) => {
-    const base = process.env["BITRIX24_WEBHOOK_URL"];
-    if (!base) return { ok: false as const, error: "Битрикс24 не подключён" };
+    const root = bitrixRoot();
+    if (!root) return { ok: false as const, error: "Битрикс24 не подключён" };
     const cab = await loadCabinet();
     if (!cab.ok || !cab.fn || !cab.summary.fnSerial) return { ok: false as const, error: "Нет данных о сроке ФН" };
     if (!data.test && !fnNeedsAlert(cab.fn)) return { ok: false as const, error: "До конца срока ФН больше 30 дней" };
@@ -97,7 +26,6 @@ export const createFnReplacementTask = createServerFn({ method: "POST" })
     if (last && Date.now() - last < 10 * 60000) return { ok: false as const, error: "Задача уже создана недавно" };
 
     const t = fnReplacementTask({ fn: cab.fn, fnSerial: cab.summary.fnSerial, store: cab.store, kkt: cab.summary.kktReg, test: data.test });
-    const root = base.replace(/\/?$/, "/");
     const responsible = Number(process.env["BITRIX24_RESPONSIBLE_ID"] ?? 1);
     const res = await fetch(root + "tasks.task.add.json", {
       method: "POST",
@@ -111,7 +39,6 @@ export const createFnReplacementTask = createServerFn({ method: "POST" })
       return { ok: true as const, kind: "task" as const, id: String(taskId) };
     }
     console.error("Bitrix24 task error", res.status, j?.error, j?.error_description);
-    // Запасной путь: у вебхука нет прав на задачи, ставим лид в CRM.
     const lead = await fetch(root + "crm.lead.add.json", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -129,32 +56,64 @@ export const createFnReplacementTask = createServerFn({ method: "POST" })
 // Задача в Битрикс24, если касса молчит 7+ дней. Повтор не чаще раза в сутки на кассу.
 export const createLinkSilenceTask = createServerFn({ method: "POST" })
   .inputValidator((d: unknown) => ({ test: !!(d as { test?: boolean } | null)?.test }))
+  .handler(async ({ data }) => runLinkSilenceCheck(data.test));
+
+// AI-диагностика: владелец описывает проблему, модель составляет план по статусу связи и событиям кассы.
+export const troubleshootCashRegister = createServerFn({ method: "POST" })
+  .inputValidator((d: unknown) => {
+    const problem = String((d as { problem?: unknown } | null)?.problem ?? "").trim().slice(0, 1500);
+    if (problem.length < 3) throw new Error("Опишите проблему чуть подробнее");
+    return { problem };
+  })
   .handler(async ({ data }) => {
-    const base = process.env["BITRIX24_WEBHOOK_URL"];
-    if (!base) return { ok: false as const, error: "Битрикс24 не подключён" };
+    const apiKey = process.env["LOVABLE_API_KEY"];
+    if (!apiKey) return { ok: false as const, error: "AI-помощник не настроен" };
     const cab = await loadCabinet();
-    if (!cab.ok) return { ok: false as const, error: "Нет данных с кассы" };
-    const link = linkStatus(cab.summary.lastEventAt);
-    if (!link) return { ok: false as const, error: "Нет данных о связи кассы" };
-    if (!data.test && !linkNeedsTask(link)) return { ok: false as const, error: "Касса на связи, задача не нужна" };
-    const dev = cab.devices[0];
-    const device = dev ? `${dev.model} (№ ${dev.serial})` : "касса";
-    const key = `link:${dev?.serial ?? cab.store}:${data.test}`;
-    const last = sentTasks.get(key);
-    if (last && Date.now() - last < (data.test ? 10 * 60000 : 24 * 3600000)) return { ok: false as const, error: "Задача уже создана" };
-    const t = linkSilenceTask({ store: cab.store, device, days: Math.floor(link.hours / 24), test: data.test });
-    const responsible = Number(process.env["BITRIX24_RESPONSIBLE_ID"] ?? 1);
-    const res = await fetch(base.replace(/\/?$/, "/") + "tasks.task.add.json", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ fields: { TITLE: t.title, DESCRIPTION: t.description, RESPONSIBLE_ID: responsible, DEADLINE: `${t.deadline}T18:00:00+03:00` } }),
+    const link = cab.ok ? linkStatus(cab.summary.lastEventAt) : null;
+    const context = cab.ok
+      ? [
+          `Точка: ${cab.store}`,
+          `Кассы: ${cab.devices.map((d) => `${d.model} № ${d.serial}`).join("; ") || "нет данных"}`,
+          `Связь: ${link ? `${link.level}, ${link.label}` : "нет данных"}`,
+          `Последнее событие: ${cab.summary.lastEventAt ?? "нет"}`,
+          `Смена: ${cab.summary.sessionOpen ? "открыта" : "закрыта"}`,
+          `ФН: ${cab.fn ? `до ${cab.fn.until}, осталось ${cab.fn.daysLeft} дн.` : "срок неизвестен"}`,
+          `История событий (новые сверху): ${cab.events.map((e) => `${e.type} ${e.at}`).join(", ") || "пусто"}`,
+        ].join("\n")
+      : `Данные с кассы недоступны: ${cab.error}`;
+
+    const { createOpenAI } = await import("@ai-sdk/openai");
+    const { streamText } = await import("ai");
+    const openai = createOpenAI({
+      baseURL: "https://ai.gateway.lovable.dev/v1",
+      apiKey,
+      headers: { "Lovable-API-Key": apiKey, "X-Lovable-AIG-SDK": "vercel-ai-sdk" },
     });
-    const j = (await res.json().catch(() => null)) as { result?: { task?: { id?: string } }; error?: string } | null;
-    const taskId = j?.result?.task?.id;
-    if (res.ok && taskId) {
-      sentTasks.set(key, Date.now());
-      return { ok: true as const, id: String(taskId) };
+    try {
+      let failure: unknown = null;
+      const result = streamText({
+        model: openai.responses("openai/gpt-6-astra"),
+        maxRetries: 0,
+        system:
+          "Ты инженер сервиса МастерКасс с 9-летним опытом по кассам Эвотор и Касатка. Отвечай по-русски, тепло и по делу, без длинных тире. " +
+          "Составь короткий план устранения неполадки: 1) вероятная причина с опорой на статус связи и историю событий, 2) пронумерованные шаги для кассира (3–6 шагов), " +
+          "3) когда звать инженера МастерКасс. Не предлагай перепрошивку, настройку ФН или вмешательство в фискальные данные: это делает только инженер. " +
+          "Помни, что без передачи чеков в ОФД 30 дней ФН блокируется.",
+        prompt: `Данные кассы:\n${context}\n\nОписание проблемы от владельца:\n${data.problem}`,
+        providerOptions: { openai: { forceReasoning: true, reasoningEffort: "low", store: false } },
+        onError: ({ error }) => { failure = error; },
+      });
+      const text = (await result.text).trim();
+      if (failure || !text) {
+        console.error("AI troubleshoot failed", failure);
+        const status = (failure as { statusCode?: number } | null)?.statusCode;
+        if (status === 429) return { ok: false as const, error: "Слишком много запросов, попробуйте через минуту" };
+        if (status === 402) return { ok: false as const, error: "Закончились AI-кредиты, пополните баланс в настройках" };
+        return { ok: false as const, error: "AI-помощник сейчас не ответил, попробуйте ещё раз" };
+      }
+      return { ok: true as const, plan: text, linkLevel: link?.level ?? null };
+    } catch (e) {
+      console.error("AI troubleshoot error", e);
+      return { ok: false as const, error: "AI-помощник сейчас не ответил, попробуйте ещё раз" };
     }
-    console.error("Bitrix24 link task error", res.status, j?.error);
-    return { ok: false as const, error: "Битрикс24 не принял задачу" };
   });

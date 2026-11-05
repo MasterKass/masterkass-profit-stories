@@ -23,6 +23,7 @@ import { Route as PartnersRouteImport } from './routes/partners'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as ServiceRouteImport } from './routes/service'
 import { Route as SupportRouteImport } from './routes/support'
+import { Route as ApiPublicCronLinkCheckRouteImport } from './routes/api/public/cron/link-check'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -94,6 +95,11 @@ const SupportRoute = SupportRouteImport.update({
   path: '/support',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicCronLinkCheckRoute = ApiPublicCronLinkCheckRouteImport.update({
+  id: '/api/public/cron/link-check',
+  path: '/api/public/cron/link-check',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -110,6 +116,7 @@ export interface FileRoutesByFullPath {
   '/privacy': typeof PrivacyRoute
   '/service': typeof ServiceRoute
   '/support': typeof SupportRoute
+  '/api/public/cron/link-check': typeof ApiPublicCronLinkCheckRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -126,6 +133,7 @@ export interface FileRoutesByTo {
   '/privacy': typeof PrivacyRoute
   '/service': typeof ServiceRoute
   '/support': typeof SupportRoute
+  '/api/public/cron/link-check': typeof ApiPublicCronLinkCheckRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -143,6 +151,7 @@ export interface FileRoutesById {
   '/privacy': typeof PrivacyRoute
   '/service': typeof ServiceRoute
   '/support': typeof SupportRoute
+  '/api/public/cron/link-check': typeof ApiPublicCronLinkCheckRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -161,6 +170,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/service'
     | '/support'
+    | '/api/public/cron/link-check'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -177,6 +187,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/service'
     | '/support'
+    | '/api/public/cron/link-check'
   id:
     | '__root__'
     | '/'
@@ -193,6 +204,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/service'
     | '/support'
+    | '/api/public/cron/link-check'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -210,6 +222,7 @@ export interface RootRouteChildren {
   PrivacyRoute: typeof PrivacyRoute
   ServiceRoute: typeof ServiceRoute
   SupportRoute: typeof SupportRoute
+  ApiPublicCronLinkCheckRoute: typeof ApiPublicCronLinkCheckRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -312,6 +325,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SupportRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/cron/link-check': {
+      id: '/api/public/cron/link-check'
+      path: '/api/public/cron/link-check'
+      fullPath: '/api/public/cron/link-check'
+      preLoaderRoute: typeof ApiPublicCronLinkCheckRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -330,6 +350,7 @@ const rootRouteChildren: RootRouteChildren = {
   PrivacyRoute: PrivacyRoute,
   ServiceRoute: ServiceRoute,
   SupportRoute: SupportRoute,
+  ApiPublicCronLinkCheckRoute: ApiPublicCronLinkCheckRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -18,3 +18,4 @@
 - Tariff data and AI-unit numbers live in src/lib/tariffs.ts and are asserted by src/lib/tariffs.test.ts; change the figures only together with the billing decision they come from.
 - FAQ items in src/components/home-sections.tsx are {q, a: string[]} objects and every answer paragraph renders as its own <p>, so long trust answers stay readable on phones; add new questions in that same shape.
 - Evotor cash-register data reaches cabinets only through the server function in src/lib/evotor.functions.ts (token in a server secret) with pure math in src/lib/evotor.ts, so the token never reaches the browser and the sums stay testable.
+- Evotor/Bitrix24 server logic lives in src/lib/evotor.server.ts and is shared by server functions and the scheduled route /api/public/cron/link-check (Bearer CRON_SECRET); Bitrix24 itself is the dedup log (task search for the last 24h), because worker memory does not persist between runs.

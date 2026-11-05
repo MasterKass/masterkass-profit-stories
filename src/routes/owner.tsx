@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { FileText, Keyboard, Mic, Paperclip, Plus, Send, X } from "lucide-react";
 import { BackHome } from "@/components/back-home";
 import { OwnerBoard } from "@/components/owner-dashboards";
 import { DataPathDoc, DATA_PATH_DOC_NAME, EVOTOR_DOC_NAME, FN_DOC_NAME, OFD_DOC_NAME, OWNER_DOCS } from "@/components/data-path-doc";
 import { useServerFn } from "@tanstack/react-start";
-import { createFnReplacementTask, createLinkSilenceTask, getEvotorCabinet } from "@/lib/evotor.functions";
+import { createFnReplacementTask, createLinkSilenceTask, getEvotorCabinet, troubleshootCashRegister } from "@/lib/evotor.functions";
 import { linkStatus, linkNeedsTask } from "@/lib/evotor";
 import { useQuery } from "@tanstack/react-query";
 
@@ -156,6 +156,7 @@ function OwnerPage() {
         <OwnerBoard section={tab} />
 
         {tab === "Сервис" && <LinkRadar />}
+        {tab === "Сервис" && <CashTroubleshooter />}
         {tab === "Сервис" && <FnTaskTest />}
 
         <section className="mk-card mk-own-files" aria-label={`Файлы: ${tab}`}>
@@ -206,14 +207,24 @@ function LinkRadar() {
   const sendLink = useServerFn(createLinkSilenceTask);
   const [linkMsg, setLinkMsg] = useState<string | null>(null);
   const autoSent = useRef(false);
+  const report = (r: Awaited<ReturnType<typeof sendLink>>, trigger: "auto" | "test") => {
+    if (r.ok) window.__lovableEvents?.track?.("project.bitrix24_task_created", { scenario: "link_silence", trigger });
+    else if (r.reason === "bitrix_error" || r.reason === "no_bitrix")
+      window.__lovableEvents?.track?.("project.bitrix24_task_failed", { scenario: "link_silence", trigger, reason: r.reason });
+  };
   useEffect(() => {
-    if (autoSent.current || !linkNeedsTask(link)) return;
+    if (autoSent.current || !link || !linkNeedsTask(link)) return;
     autoSent.current = true;
-    sendLink({ data: { test: false } }).then((r) => setLinkMsg(r.ok ? `Касса молчит 7+ дней: в Битрикс24 создана задача № ${r.id}` : r.error));
+    window.__lovableEvents?.track?.("project.cash_register_connection_lost", { days_silent: Math.floor(link.hours / 24) });
+    sendLink({ data: { test: false } }).then((r) => {
+      report(r, "auto");
+      setLinkMsg(r.ok ? `Касса молчит 7+ дней: в Битрикс24 создана задача № ${r.id}` : r.error);
+    });
   }, [link, sendLink]);
   const testLink = async () => {
     setLinkMsg("Отправляем…");
     const r = await sendLink({ data: { test: true } });
+    report(r, "test");
     setLinkMsg(r.ok ? `Тестовая задача создана в Битрикс24: № ${r.id}` : r.error);
   };
   return (
@@ -238,6 +249,46 @@ function LinkRadar() {
       <p className="mk-cab-muted">Если касса молчит 7 дней и дольше, задача на прозвон точки сразу уходит в Битрикс24.</p>
       <button type="button" className="mk-cab-fnbtn" onClick={testLink}>Тест: задача «касса не на связи»</button>
       {linkMsg && <p className="mk-cab-muted">{linkMsg}</p>}
+      <p className="mk-cab-muted">Проверка идёт и без открытия кабинета: сервер сверяет связь по расписанию.</p>
+    </section>
+  );
+}
+
+function CashTroubleshooter() {
+  const ask = useServerFn(troubleshootCashRegister);
+  const [problem, setProblem] = useState("");
+  const [state, setState] = useState<{ busy?: boolean; plan?: string; error?: string }>({});
+  const go = async (e: FormEvent) => {
+    e.preventDefault();
+    if (problem.trim().length < 3 || state.busy) return;
+    setState({ busy: true });
+    try {
+      const r = await ask({ data: { problem } });
+      setState(r.ok ? { plan: r.plan } : { error: r.error });
+    } catch (err) {
+      setState({ error: err instanceof Error ? err.message : "Не получилось, попробуйте ещё раз" });
+    }
+  };
+  return (
+    <section className="mk-card mk-own-files" aria-label="AI-диагностика кассы">
+      <p><strong>AI-диагностика кассы</strong></p>
+      <p className="mk-cab-muted">Опишите, что происходит с кассой. Помощник учтёт статус связи и последние события и предложит план действий.</p>
+      <form onSubmit={go}>
+        <textarea
+          className="mk-own-ai-input"
+          rows={3}
+          maxLength={1500}
+          value={problem}
+          onChange={(e) => setProblem(e.target.value)}
+          placeholder="Например: касса пишет «нет связи с ОФД», чеки не уходят"
+          style={{ width: "100%", padding: 10, borderRadius: 10, border: "1px solid var(--border)" }}
+        />
+        <button type="submit" className="mk-cab-fnbtn" disabled={state.busy || problem.trim().length < 3}>
+          {state.busy ? "Составляем план…" : "Составить план устранения"}
+        </button>
+      </form>
+      {state.error && <p className="mk-cab-muted">{state.error}</p>}
+      {state.plan && <div className="mk-cab-muted" style={{ whiteSpace: "pre-wrap", marginTop: 10 }}>{state.plan}</div>}
     </section>
   );
 }
