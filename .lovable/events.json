@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "events": {
+    "project.bitrix24_task_created": {
+      "event_schema_version": 1,
+      "description": "Задача в Битрикс24 по сценарию кассы успешно создана.",
+      "privacy": {
+        "contains_pii": false,
+        "purpose": "product_analytics"
+      },
+      "properties_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "scenario",
+          "trigger"
+        ],
+        "properties": {
+          "scenario": {
+            "type": "string",
+            "enum": [
+              "link_silence"
+            ]
+          },
+          "trigger": {
+            "type": "string",
+            "enum": [
+              "auto",
+              "test"
+            ]
+          }
+        }
+      }
+    },
+    "project.bitrix24_task_failed": {
+      "event_schema_version": 1,
+      "description": "Отправка задачи в Битрикс24 по сценарию кассы завершилась ошибкой.",
+      "privacy": {
+        "contains_pii": false,
+        "purpose": "product_analytics"
+      },
+      "properties_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "scenario",
+          "trigger",
+          "reason"
+        ],
+        "properties": {
+          "scenario": {
+            "type": "string",
+            "enum": [
+              "link_silence"
+            ]
+          },
+          "trigger": {
+            "type": "string",
+            "enum": [
+              "auto",
+              "test"
+            ]
+          },
+          "reason": {
+            "type": "string",
+            "enum": [
+              "bitrix_error",
+              "no_bitrix"
+            ]
+          }
+        }
+      }
+    },
+    "project.cash_register_connection_lost": {
+      "event_schema_version": 1,
+      "description": "В кабинете «Хозяин» обнаружена касса без связи 7 дней и дольше.",
+      "privacy": {
+        "contains_pii": false,
+        "purpose": "product_analytics"
+      },
+      "properties_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "days_silent"
+        ],
+        "properties": {
+          "days_silent": {
+            "type": "number"
+          }
+        }
+      }
+    }
+  }
+}
