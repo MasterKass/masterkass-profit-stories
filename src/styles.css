@@ -788,3 +788,19 @@ a.mk-tariff-cta { text-decoration: none; }
 .mk-link-dot[data-level="alert"] { background: oklch(0.62 0.22 27); }
 .mk-link-sum { display: flex; flex-wrap: wrap; gap: 14px; font-size: 14px; margin: 8px 0; }
 .mk-link-list { list-style: none; padding: 0; margin: 6px 0 0; font-size: 14px; display: grid; gap: 6px; }
+
+.mk-doc-download {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  align-self: flex-start;
+  margin-top: 0.5rem;
+  padding: 0.55rem 1rem;
+  border-radius: 10px;
+  background: var(--foreground);
+  color: var(--background);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.mk-doc-download:hover { opacity: 0.85; }

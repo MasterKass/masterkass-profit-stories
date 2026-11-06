@@ -352,6 +352,26 @@ export const OWNER_DOCS: Record<string, Doc> = {
   [OFD_DOC_NAME]: { title: OFD_DOC_NAME, meta: "Архитектурное решение «Мастер Касс». Версия 1.0, 5 ноября 2026.", sections: ofdSections },
 };
 
+function esc(s: string) {
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+function downloadText(doc: Doc) {
+  const body = doc.sections
+    .map((s) => `<h2>${esc(s.n)}</h2><ul>${s.items.map((i) => `<li>${esc(i)}</li>`).join("")}</ul>`)
+    .join("");
+  const html = `<html><head><meta charset="utf-8"><title>${esc(doc.title)}</title></head><body style="font-family:Arial,sans-serif"><h1>${esc(doc.title)}</h1><p><i>${esc(doc.meta)}</i></p>${body}</body></html>`;
+  const blob = new Blob(["\ufeff", html], { type: "application/msword" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `${doc.title.replace(/[\\/:*?"<>|«»]/g, "").slice(0, 80)}.doc`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 30_000);
+}
+
 export function DataPathDoc({ name, onClose }: { name: string | null; onClose: () => void }) {
   const doc = name ? OWNER_DOCS[name] : undefined;
   const open = !!doc;
