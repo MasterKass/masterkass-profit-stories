@@ -22,7 +22,7 @@ export const Route = createFileRoute("/service")({
       { title: "Как устроен сервис · Мастер Касс" },
       { name: "description", content: "Помогаем внедрить технологии в ваш бизнес: ИИ-сотрудник 24/7, единое окно поддержки, лояльность, три тарифа и новая касса каждые 3 года." },
       { property: "og:title", content: "Как устроен сервис Мастер Касс" },
-      { property: "og:description", content: "Единое окно для кассы, программ и поддержки. Бесплатный ознакомительный период." },
+      { property: "og:description", content: "Единое окно для кассы, программ и поддержки. Бесплатный период." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
