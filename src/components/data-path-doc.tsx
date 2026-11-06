@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 export const DATA_PATH_DOC_NAME = "Путь данных клиента и безопасность";
@@ -356,20 +357,66 @@ function esc(s: string) {
   return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
-function downloadText(doc: Doc) {
-  const body = doc.sections
-    .map((s) => `<h2>${esc(s.n)}</h2><ul>${s.items.map((i) => `<li>${esc(i)}</li>`).join("")}</ul>`)
-    .join("");
-  const html = `<html><head><meta charset="utf-8"><title>${esc(doc.title)}</title></head><body style="font-family:Arial,sans-serif"><h1>${esc(doc.title)}</h1><p><i>${esc(doc.meta)}</i></p>${body}</body></html>`;
-  const blob = new Blob(["\ufeff", html], { type: "application/msword" });
+void esc;
+
+function fileName(doc: Doc) {
+  return `${doc.title.replace(/[\\/:*?"<>|«»„“]/g, "").trim().slice(0, 80)}.docx`;
+}
+
+async function buildDocx(doc: Doc): Promise<Blob> {
+  const { Document, Packer, Paragraph, TextRun, HeadingLevel, LevelFormat, AlignmentType } = await import("docx");
+  const children = [
+    new Paragraph({ heading: HeadingLevel.HEADING_1, children: [new TextRun(doc.title)] }),
+    new Paragraph({ spacing: { after: 240 }, children: [new TextRun({ text: doc.meta, italics: true, color: "666666" })] }),
+  ];
+  for (const s of doc.sections) {
+    children.push(new Paragraph({ heading: HeadingLevel.HEADING_2, children: [new TextRun(s.n)] }));
+    for (const i of s.items) children.push(new Paragraph({ numbering: { reference: "b", level: 0 }, children: [new TextRun(i)] }));
+  }
+  const d = new Document({
+    styles: {
+      default: { document: { run: { font: "Arial", size: 22 } } },
+      paragraphStyles: [
+        { id: "Heading1", name: "Heading 1", basedOn: "Normal", next: "Normal", quickFormat: true, run: { size: 32, bold: true, font: "Arial" }, paragraph: { spacing: { after: 120 }, outlineLevel: 0 } },
+        { id: "Heading2", name: "Heading 2", basedOn: "Normal", next: "Normal", quickFormat: true, run: { size: 26, bold: true, font: "Arial" }, paragraph: { spacing: { before: 240, after: 120 }, outlineLevel: 1 } },
+      ],
+    },
+    numbering: { config: [{ reference: "b", levels: [{ level: 0, format: LevelFormat.BULLET, text: "•", alignment: AlignmentType.LEFT, style: { paragraph: { indent: { left: 720, hanging: 360 } } } }] }] },
+    sections: [{ properties: { page: { size: { width: 11906, height: 16838 }, margin: { top: 1134, right: 1134, bottom: 1134, left: 1134 } } }, children }],
+  });
+  return Packer.toBlob(d);
+}
+
+function deliverFile(blob: Blob, filename: string) {
+  const file = new File([blob], filename, { type: blob.type });
+  const touch = matchMedia("(pointer: coarse)").matches;
+  if (touch && navigator.canShare?.({ files: [file] })) {
+    navigator.share({ files: [file], title: filename }).catch(() => {});
+    return;
+  }
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = `${doc.title.replace(/[\\/:*?"<>|«»]/g, "").slice(0, 80)}.doc`;
+  a.download = filename;
   document.body.appendChild(a);
   a.click();
   a.remove();
   setTimeout(() => URL.revokeObjectURL(url), 30_000);
+}
+
+function GeneratedDownload({ doc }: { doc: Doc }) {
+  const [blob, setBlob] = useState<Blob | null>(null);
+  useEffect(() => {
+    let alive = true;
+    setBlob(null);
+    buildDocx(doc).then((b) => { if (alive) setBlob(b); });
+    return () => { alive = false; };
+  }, [doc]);
+  return (
+    <button type="button" className="mk-doc-download" disabled={!blob} onClick={() => blob && deliverFile(blob, fileName(doc))}>
+      {blob ? "Скачать Word" : "Готовим файл…"}
+    </button>
+  );
 }
 
 export function DataPathDoc({ name, onClose }: { name: string | null; onClose: () => void }) {
@@ -388,7 +435,7 @@ export function DataPathDoc({ name, onClose }: { name: string | null; onClose: (
             doc.file ? (
               <a href={doc.file} download className="mk-doc-download">Скачать Word</a>
             ) : (
-              <button type="button" className="mk-doc-download" onClick={() => downloadText(doc)}>Скачать документ</button>
+              <GeneratedDownload doc={doc} />
             )
           )}
         </DialogHeader>
