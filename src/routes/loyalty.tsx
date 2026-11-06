@@ -53,7 +53,7 @@ function LoyaltyPage() {
       <BackHome showLogin />
       <main className="mx-auto max-w-5xl px-5 pb-20 pt-10">
         <section className="mt-12 max-w-3xl">
-          <h1 className="text-[2.5rem] font-semibold leading-[1.05] tracking-[-0.035em] md:text-6xl"><span className="welcome-brand-dot">МК Бонус</span></h1>
+          <h1 className="text-[2.5rem] font-semibold leading-[1.05] tracking-[-0.035em] md:text-6xl"><span className="mk-bonus-title">МК Бонус</span></h1>
           <p className="mt-3 text-lg md:text-xl" style={{ color: "var(--mk-muted)" }}>Система лояльности клиентов</p>
           <p className="mt-6 text-lg leading-relaxed" style={{ color: "var(--mk-muted)" }}>
             Мы встроили программу прямо в сервис: она работает на вашей кассе, помогает удерживать и возвращать клиентов.
