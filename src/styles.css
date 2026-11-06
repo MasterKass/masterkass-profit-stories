@@ -834,3 +834,5 @@ a.mk-tariff-cta { text-decoration: none; }
 /* Карточка лояльности: тонкая окантовка фирменным спектром */
 .mk-loyalty-card { position: relative; }
 .mk-loyalty-card::before { content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1.5px; background: var(--welcome-spectrum); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; }
+/* Важные слова в описаниях: жирные, фирменным спектром (притемнённым для читаемости) */
+.mk-hl { font-weight: 600; background: linear-gradient(90deg, oklch(0.62 0.17 50), oklch(0.66 0.16 110), oklch(0.6 0.15 160), oklch(0.58 0.12 210)); -webkit-background-clip: text; background-clip: text; color: transparent; }
