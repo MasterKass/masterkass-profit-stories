@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import { PrivacyLink } from "@/components/privacy-dialog";
 import { Check, ArrowUpRight } from "lucide-react";
 import { useServerFn } from "@tanstack/react-start";
+import { useNavigate } from "@tanstack/react-router";
+import { TRIAL_KEY } from "@/lib/onboarding";
 import { validateRequest, type RequestErrors } from "@/lib/request";
 import { submitServiceRequest } from "@/lib/request.functions";
-import { FREE_TEST_NOTE } from "@/lib/tariffs";
 
 /** Тёмная плашка заявки на сервис: только телефон и почта. */
 export function RequestForm() {
@@ -16,6 +17,7 @@ export function RequestForm() {
   const [sending, setSending] = useState(false);
   const [failed, setFailed] = useState(false);
   const submit = useServerFn(submitServiceRequest);
+  const navigate = useNavigate();
 
   // Кружок возврата со страницы политики ведёт сюда. Страница ещё догружается
   // (кадры комикса, печатающийся текст помощника) и плашка «уезжает» вниз,
@@ -53,8 +55,12 @@ export function RequestForm() {
     setFailed(false);
     setSending(true);
     try {
-      const res = await submit({ data: { phone, email, company: honeypot } });
-      if (res.ok) setSent(true);
+      const res = await submit({ data: { phone, email, company: honeypot, source: "Присоединиться к сервису" } });
+      if (res.ok) {
+        sessionStorage.setItem(TRIAL_KEY, JSON.stringify({ dealId: res.dealId, email: result.value.email }));
+        setSent(true);
+        navigate({ to: "/onboarding", search: { tariff: undefined, ref: undefined } });
+      }
       else setFailed(true);
     } catch {
       setFailed(true);
@@ -67,17 +73,17 @@ export function RequestForm() {
     <section className="mk-lead" id="request" aria-labelledby="request-title">
       <div className="mk-lead-grid">
         <header className="max-w-md">
-          <h2 id="request-title" className="mk-lead-title">Подать заявку на сервис</h2>
-          <p className="mk-lead-note">{FREE_TEST_NOTE}.</p>
+          <h2 id="request-title" className="mk-lead-title">Начните бесплатный ознакомительный период МастерКасс</h2>
+          <p className="mk-lead-note">Закрепим личный кабинет за вашим номером и поможем настроить кассу. Карта не нужна.</p>
         </header>
 
         {sent ? (
           <div className="mk-lead-done" role="status">
             <span className="mk-lead-done-icon" aria-hidden="true"><Check className="h-5 w-5" /></span>
             <div>
-              <p className="mk-lead-done-title">Заявка принята</p>
+              <p className="mk-lead-done-title">Контакты сохранены</p>
               <p className="mk-lead-done-text">
-                Спасибо! Напишем или позвоним в рабочее время и расскажем, как подключить сервис.
+                Переходим к выбору тарифа…
               </p>
             </div>
           </div>
@@ -128,16 +134,16 @@ export function RequestForm() {
 
             <div className="mk-lead-actions">
               <button type="submit" className="mk-lead-btn" disabled={sending}>
-                {sending ? "Отправляем…" : "Отправить заявку"}
+                {sending ? "Сохраняем…" : "Далее: выбрать тариф"}
                 <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
               </button>
               {failed && (
                 <span className="mk-field-error" role="alert">
-                  Не получилось отправить заявку. Попробуйте ещё раз через минуту.
+                  Не получилось сохранить контакты. Попробуйте ещё раз через минуту.
                 </span>
               )}
               <p className="mk-lead-privacy">
-                Отправляя заявку, соглашаетесь на обработку персональных данных согласно{" "}
+                Продолжая, соглашаетесь на обработку персональных данных согласно{" "}
                 <PrivacyLink />.
               </p>
             </div>

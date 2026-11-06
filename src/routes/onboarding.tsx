@@ -1,18 +1,14 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Check } from "lucide-react";
+import { useServerFn } from "@tanstack/react-start";
 import { BackHome } from "@/components/back-home";
 import { BrandMark } from "@/components/brand-mark";
-import {
-  ONBOARDING_STEPS,
-  REFERRAL_BONUS_UNITS,
-  findTariff,
-  firstChargeDate,
-  isValidCard,
-  isValidEmail,
-  isValidPhone,
-  startingUnits,
-} from "@/lib/onboarding";
+import { PrivacyLink } from "@/components/privacy-dialog";
+import { ONBOARDING_STEPS, REFERRAL_BONUS_UNITS, TRIAL_KEY, findTariff, firstChargeDate, startingUnits } from "@/lib/onboarding";
+import { SERVICE_TARIFFS } from "@/lib/tariffs";
+import { validateRequest, type RequestErrors } from "@/lib/request";
+import { submitServiceRequest, updateTrialDeal } from "@/lib/request.functions";
 
 type Search = { tariff?: string | undefined; ref?: string | undefined };
 
@@ -23,10 +19,10 @@ export const Route = createFileRoute("/onboarding")({
   }),
   head: () => ({
     meta: [
-      { title: "Подключение тарифа · Мастер Касс" },
-      { name: "description", content: "Подключите тариф Мастер Касс самостоятельно: привязка карты, касса Эвотор и почта для утреннего дайджеста. Первый месяц бесплатно." },
-      { property: "og:title", content: "Подключение тарифа · Мастер Касс" },
-      { property: "og:description", content: "Три шага до первого утреннего дайджеста. Первый месяц бесплатно." },
+      { title: "Подключение · Мастер Касс" },
+      { name: "description", content: "Начните бесплатный период Мастер Касс: телефон и почта, выбор тарифа и подключение кассы Эвотор. Без привязки карты." },
+      { property: "og:title", content: "Подключение · Мастер Касс" },
+      { property: "og:description", content: "Бесплатный ознакомительный период без привязки карты." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
@@ -35,45 +31,64 @@ export const Route = createFileRoute("/onboarding")({
 });
 
 const fmt = (d: Date) => d.toLocaleDateString("ru-RU", { day: "numeric", month: "long", year: "numeric" }).replace(/ г\.$/, "");
+type Trial = { dealId: number; email: string };
 
 function Onboarding() {
   const search = Route.useSearch();
-  const tariff = findTariff(search.tariff);
+  const [tone, setTone] = useState<string | undefined>(search.tariff);
+  const tariff = findTariff(tone);
   const [ref, setRef] = useState<string | null>(null);
   const [step, setStep] = useState(0);
-  const [card, setCard] = useState({ number: "", exp: "", cvc: "" });
-  const [cardErr, setCardErr] = useState("");
+  const [trial, setTrial] = useState<Trial | null>(null);
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [errors, setErrors] = useState<RequestErrors>({});
+  const [sending, setSending] = useState(false);
+  const [failed, setFailed] = useState(false);
   const [cash, setCash] = useState<"idle" | "linking" | "ok">("idle");
   const [manual, setManual] = useState(false);
   const [token, setToken] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [emailErr, setEmailErr] = useState("");
-  const [chargeDate, setChargeDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const submit = useServerFn(submitServiceRequest);
+  const update = useServerFn(updateTrialDeal);
 
   useEffect(() => {
     if (search.ref) localStorage.setItem("mk-ref", search.ref);
     setRef(search.ref ?? localStorage.getItem("mk-ref"));
-    setChargeDate(fmt(firstChargeDate(new Date())));
-  }, [search.ref]);
+    setEndDate(fmt(firstChargeDate(new Date())));
+    // Пришли из формы на странице сервиса: контакты уже есть, сделка создана.
+    const saved = sessionStorage.getItem(TRIAL_KEY);
+    if (saved) {
+      try {
+        const t = JSON.parse(saved) as Trial;
+        setTrial(t);
+        setStep(search.tariff ? 2 : 1);
+      } catch { /* пусто */ }
+    }
+  }, [search.ref, search.tariff]);
 
-  const bindCard = (e: React.FormEvent) => {
+  const move = (stage: "tariff" | "cash" | "started", t?: string) => {
+    if (trial?.dealId) update({ data: { dealId: trial.dealId, stage, tariff: t ? findTariff(t).name : undefined } }).catch(() => {});
+  };
+
+  const sendContacts = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!isValidCard(card.number, card.exp, card.cvc)) return setCardErr("Проверьте номер карты, срок и CVC");
-    setCardErr("");
-    setStep(1);
+    const r = validateRequest({ phone, email });
+    if (!r.ok) return setErrors(r.errors);
+    setErrors({}); setFailed(false); setSending(true);
+    try {
+      const res = await submit({ data: { phone, email, tariff: tone ? findTariff(tone).name : undefined, source: tone ? "Карточка тарифа" : "Подключение с сайта", ref: ref ?? undefined } });
+      if (!res.ok) return setFailed(true);
+      const t = { dealId: res.dealId, email: r.value.email };
+      setTrial(t);
+      sessionStorage.setItem(TRIAL_KEY, JSON.stringify(t));
+      setStep(tone ? 2 : 1);
+    } catch { setFailed(true); } finally { setSending(false); }
   };
-  const linkCash = () => {
-    setCash("linking");
-    setTimeout(() => setCash("ok"), 1400);
-  };
-  const saveEmail = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!isValidPhone(phone)) return setEmailErr("Укажите телефон директора в формате +7 900 000-00-00");
-    if (!isValidEmail(email)) return setEmailErr("Укажите почту в формате name@company.ru");
-    setEmailErr("");
-    setStep(3);
-  };
+
+  const pickTariff = (t: string) => { setTone(t); move("tariff", t); setStep(2); };
+  const linkCash = () => { setCash("linking"); setTimeout(() => setCash("ok"), 1400); };
+  const finish = () => { move("started", tone); sessionStorage.removeItem(TRIAL_KEY); setStep(3); };
 
   return (
     <main className="mk-page mk-onb min-h-screen">
@@ -87,39 +102,56 @@ function Onboarding() {
           ))}
         </ol>
 
-        <div className={`mk-card mk-tariff mk-tariff-${tariff.tone} mk-onb-tariff`}>
-          <div>
-            <h1 className="text-xl font-semibold">Тариф «{tariff.name}»</h1>
-            <p className="mt-1 text-sm">{tariff.price} ₽/мес · первые 30 дней 0 ₽</p>
+        {tone && step !== 1 && (
+          <div className={`mk-card mk-tariff mk-tariff-${tariff.tone} mk-onb-tariff`}>
+            <div>
+              <h1 className="text-xl font-semibold">Тариф «{tariff.name}»: бесплатный ознакомительный период</h1>
+              <p className="mt-1 text-sm">Далее {tariff.price} ₽/мес, только после вашего решения</p>
+            </div>
+            {ref && <p className="mk-onb-bonus">+{REFERRAL_BONUS_UNITS} AI-юнитов по приглашению партнёра</p>}
           </div>
-          {ref && <p className="mk-onb-bonus">+{REFERRAL_BONUS_UNITS} AI-юнитов по приглашению партнёра</p>}
-        </div>
+        )}
 
         {step === 0 && (
-          <form className="mk-card mk-onb-card" onSubmit={bindCard} noValidate>
-            <h2>Привяжите карту</h2>
-            <p className="mk-onb-muted">Бесплатный месяц начнётся сразу после привязки. Сейчас спишем 0 ₽.</p>
-            <label>Номер карты
-              <input inputMode="numeric" autoComplete="cc-number" placeholder="0000 0000 0000 0000" value={card.number}
-                onChange={(e) => setCard({ ...card, number: e.target.value.replace(/\D/g, "").slice(0, 16).replace(/(\d{4})(?=\d)/g, "$1 ") })} />
+          <form className="mk-card mk-onb-card" onSubmit={sendContacts} noValidate>
+            <h2>{tone ? "Привяжем кабинет к вашему номеру" : "Начните бесплатный ознакомительный период МастерКасс"}</h2>
+            <p className="mk-onb-muted">
+              {tone ? "Чтобы вы могли управлять кассой и получать дайджест. Карта не нужна." : "Закрепим личный кабинет за вашим номером и поможем настроить кассу. Карта не нужна."}
+            </p>
+            <label>Телефон
+              <input type="tel" autoComplete="tel" placeholder="+7 904 123-45-67" value={phone} onChange={(e) => setPhone(e.target.value)} />
             </label>
-            <div className="grid grid-cols-2 gap-3">
-              <label>Срок
-                <input inputMode="numeric" autoComplete="cc-exp" placeholder="ММ/ГГ" value={card.exp}
-                  onChange={(e) => { const v = e.target.value.replace(/\D/g, "").slice(0, 4); setCard({ ...card, exp: v.length > 2 ? `${v.slice(0, 2)}/${v.slice(2)}` : v }); }} />
-              </label>
-              <label>CVC
-                <input inputMode="numeric" autoComplete="cc-csc" placeholder="000" type="password" value={card.cvc}
-                  onChange={(e) => setCard({ ...card, cvc: e.target.value.replace(/\D/g, "").slice(0, 3) })} />
-              </label>
-            </div>
-            {cardErr && <p className="mk-onb-err">{cardErr}</p>}
-            <button className="mk-onb-btn" type="submit">Привязать карту</button>
-            <p className="mk-onb-muted text-xs">Первое списание {tariff.price} ₽ состоится {chargeDate}. Отключить подписку можно в любой момент в кабинете.</p>
+            {errors.phone && <p className="mk-onb-err">{errors.phone}</p>}
+            <label>Почта для утреннего дайджеста
+              <input type="email" autoComplete="email" placeholder="name@company.ru" value={email} onChange={(e) => setEmail(e.target.value)} />
+            </label>
+            {errors.email && <p className="mk-onb-err">{errors.email}</p>}
+            {failed && <p className="mk-onb-err">Не получилось сохранить. Попробуйте ещё раз через минуту.</p>}
+            <button className="mk-onb-btn" type="submit" disabled={sending}>
+              {sending ? "Сохраняем…" : tone ? "Начать бесплатный период →" : "Далее: выбрать тариф →"}
+            </button>
+            <p className="mk-onb-muted text-xs">Продолжая, соглашаетесь на обработку персональных данных согласно <PrivacyLink />.</p>
           </form>
         )}
 
         {step === 1 && (
+          <div className="mk-card mk-onb-card">
+            <h2>Выберите тариф</h2>
+            <p className="mk-onb-muted">Все функции открыты на время бесплатного периода. Тариф можно сменить в кабинете.</p>
+            <div className="mt-2 space-y-3">
+              {SERVICE_TARIFFS.map((t) => (
+                <button key={t.tone} type="button" onClick={() => pickTariff(t.tone)} className={`mk-card mk-tariff mk-tariff-${t.tone} mk-onb-tariff w-full text-left`}>
+                  <div>
+                    <b className="text-lg">«{t.name}»</b>
+                    <p className="mt-1 text-sm">{t.price} ₽/мес после бесплатного периода</p>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {step === 2 && (
           <div className="mk-card mk-onb-card">
             <h2>Подключите кассу Эвотор</h2>
             <p className="mk-onb-muted">Установите приложение «Мастер Касс» в Эвотор.Маркете, и мы получим доступ без логинов и паролей.</p>
@@ -130,7 +162,7 @@ function Onboarding() {
             {cash !== "ok" ? (
               <button className="mk-onb-btn" onClick={linkCash} disabled={cash === "linking"}>Подключить через Эвотор.Маркет</button>
             ) : (
-              <button className="mk-onb-btn" onClick={() => setStep(2)}>Продолжить</button>
+              <button className="mk-onb-btn" onClick={() => { move("cash", tone); finish(); }}>Начать бесплатный период</button>
             )}
             <button className="mk-onb-link" onClick={() => setManual(!manual)}>У меня другой ОФД или API-токен</button>
             {manual && (
@@ -138,31 +170,17 @@ function Onboarding() {
                 <label>API-токен
                   <input value={token} onChange={(e) => setToken(e.target.value)} placeholder="Вставьте ключ из кабинета ОФД" />
                 </label>
-                <button className="mk-onb-btn" disabled={token.trim().length < 8} onClick={() => setStep(2)}>Сохранить токен</button>
+                <button className="mk-onb-btn" disabled={token.trim().length < 8} onClick={() => { move("cash", tone); finish(); }}>Сохранить токен</button>
               </div>
             )}
+            <button className="mk-onb-link" onClick={finish}>Подключу кассу позже</button>
           </div>
-        )}
-
-        {step === 2 && (
-          <form className="mk-card mk-onb-card" onSubmit={saveEmail} noValidate>
-            <h2>Контакты директора</h2>
-            <p className="mk-onb-muted">По этому номеру вы будете входить в кабинет как директор. Доступы сотрудникам выдадите сами в кабинете.</p>
-            <label>Телефон директора
-              <input type="tel" autoComplete="tel" placeholder="+7 900 000-00-00" value={phone} onChange={(e) => setPhone(e.target.value)} />
-            </label>
-            <label>Почта для утреннего дайджеста
-              <input type="email" autoComplete="email" placeholder="name@company.ru" value={email} onChange={(e) => setEmail(e.target.value)} />
-            </label>
-            {emailErr && <p className="mk-onb-err">{emailErr}</p>}
-            <button className="mk-onb-btn" type="submit">Сохранить</button>
-          </form>
         )}
 
         {step === 3 && (
           <div className="mk-card mk-onb-card">
             <h2>Всё готово</h2>
-            <p className="mk-onb-muted">Бесплатный месяц активен до {chargeDate}. Первый дайджест придёт на {email} завтра утром.</p>
+            <p className="mk-onb-muted">Бесплатный период активен до {endDate}. Первый дайджест придёт на {trial?.email ?? email} завтра утром. Привязать карту можно позже в кабинете.</p>
             <div className="mk-onb-balance">
               <b>{startingUnits(tariff.tone, !!ref).toLocaleString("ru-RU")}</b>
               <span>AI-юнитов на балансе{ref ? ` (${REFERRAL_BONUS_UNITS} от партнёра + ${tariff.units.toLocaleString("ru-RU")} по тарифу)` : ""}</span>
@@ -170,7 +188,7 @@ function Onboarding() {
             <Link to="/login" className="mk-onb-btn">Перейти в кабинет</Link>
           </div>
         )}
-        <p className="mk-onb-muted mt-6 text-center text-xs">Демо-режим: карта и данные кассы никуда не отправляются.</p>
+        <p className="mk-onb-muted mt-6 text-center text-xs">Подключение кассы пока работает в демо-режиме.</p>
       </div>
     </main>
   );
