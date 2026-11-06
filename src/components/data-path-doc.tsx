@@ -206,7 +206,7 @@ const agentSections: { n: string; items: string[] }[] = [
   ]},
 ];
 
-export const LOYALTY_DOC_NAME = "ТЗ: система лояльности «МастерКасс Бонус»";
+export const LOYALTY_DOC_NAME = "ТЗ: система лояльности «МК Бонус»";
 
 const loyaltySections: { n: string; items: string[] }[] = [
   { n: "1. Цель", items: [
