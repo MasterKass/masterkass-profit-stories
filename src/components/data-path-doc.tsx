@@ -55,7 +55,7 @@ const sections: { n: string; items: string[] }[] = [
   },
 ];
 
-type Doc = { title: string; meta: string; sections: { n: string; items: string[] }[] };
+type Doc = { title: string; meta: string; file?: string; sections: { n: string; items: string[] }[] };
 
 export const OFD_DOC_NAME = "Партнёрский API ОФД и изоляция клиентов";
 
@@ -344,8 +344,8 @@ const accountingSections: { n: string; items: string[] }[] = [
 
 export const OWNER_DOCS: Record<string, Doc> = {
   [ACCOUNTING_DOC_NAME]: { title: ACCOUNTING_DOC_NAME, meta: "Архитектурное решение «Мастер Касс». Версия 1.0, 6 ноября 2026.", sections: accountingSections },
-  [LOYALTY_DOC_NAME]: { title: LOYALTY_DOC_NAME, meta: "Техническое задание для Дениса. Версия 1.0, 6 ноября 2026. Файл для скачивания: /downloads/tz-loyalty-masterkass.docx", sections: loyaltySections },
-  [AGENT_DOC_NAME]: { title: AGENT_DOC_NAME, meta: "Техническое задание для Дениса. Версия 1.0, 6 ноября 2026. Файл для скачивания: /downloads/tz-agent-masterkass.docx", sections: agentSections },
+  [LOYALTY_DOC_NAME]: { title: LOYALTY_DOC_NAME, meta: "Техническое задание для Дениса. Версия 1.0, 6 ноября 2026.", file: "/downloads/tz-loyalty-masterkass.docx", sections: loyaltySections },
+  [AGENT_DOC_NAME]: { title: AGENT_DOC_NAME, meta: "Техническое задание для Дениса. Версия 1.0, 6 ноября 2026.", file: "/downloads/tz-agent-masterkass.docx", sections: agentSections },
   [FN_DOC_NAME]: { title: FN_DOC_NAME, meta: "Сервисный регламент «Мастер Касс». Версия 1.0, 5 ноября 2026.", sections: fnSections },
   [EVOTOR_DOC_NAME]: { title: EVOTOR_DOC_NAME, meta: "Отчёт о тестовой интеграции «Мастер Касс». Версия 1.0, 5 ноября 2026.", sections: evotorSections },
   [DATA_PATH_DOC_NAME]: { title: DATA_PATH_DOC_NAME, meta: "Регламент сервисного центра «Мастер Касс», Ростов-на-Дону. Версия 1.0, 3 ноября 2026.", sections },
@@ -364,6 +364,13 @@ export function DataPathDoc({ name, onClose }: { name: string | null; onClose: (
           <DialogDescription className="text-left">
             {doc?.meta}
           </DialogDescription>
+          {doc && (
+            doc.file ? (
+              <a href={doc.file} download className="mk-doc-download">Скачать Word</a>
+            ) : (
+              <button type="button" className="mk-doc-download" onClick={() => downloadText(doc)}>Скачать документ</button>
+            )
+          )}
         </DialogHeader>
         <div className="space-y-6">
           {(doc?.sections ?? []).map((s) => (
