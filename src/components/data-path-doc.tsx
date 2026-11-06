@@ -387,8 +387,24 @@ async function buildDocx(doc: Doc): Promise<Blob> {
   return Packer.toBlob(d);
 }
 
-function deliverFile(blob: Blob, filename: string) {
-  const file = new File([blob], filename, { type: blob.type });
+export function FileDownload({ href, label, className }: { href: string; label: string; className: string }) {
+  const [blob, setBlob] = useState<Blob | null>(null);
+  useEffect(() => {
+    let alive = true;
+    fetch(href).then((r) => r.blob()).then((b) => { if (alive) setBlob(b); }).catch(() => {});
+    return () => { alive = false; };
+  }, [href]);
+  const name = href.split("/").pop() || "file";
+  return (
+    <button type="button" className={className} disabled={!blob}
+      onClick={(e) => { e.stopPropagation(); if (blob) deliverFile(blob, name); }}>
+      {blob ? label : "Готовим…"}
+    </button>
+  );
+}
+
+export function deliverFile(blob: Blob, filename: string) {
+  const file = new File([blob], filename, { type: blob.type || "application/octet-stream" });
   const touch = matchMedia("(pointer: coarse)").matches;
   if (touch && navigator.canShare?.({ files: [file] })) {
     navigator.share({ files: [file], title: filename }).catch(() => {});
@@ -425,7 +441,7 @@ export function DataPathDoc({ name, onClose }: { name: string | null; onClose: (
   const onOpenChange = (v: boolean) => { if (!v) onClose(); };
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-h-[85vh] max-w-2xl overflow-y-auto rounded-2xl">
+      <DialogContent className="mk-doc-dialog max-h-[85vh] max-w-2xl overflow-y-auto rounded-2xl">
         <DialogHeader>
           <DialogTitle className="text-left text-2xl tracking-[-0.03em]">{doc?.title}</DialogTitle>
           <DialogDescription className="text-left">
@@ -433,7 +449,7 @@ export function DataPathDoc({ name, onClose }: { name: string | null; onClose: (
           </DialogDescription>
           {doc && (
             doc.file ? (
-              <a href={doc.file} download className="mk-doc-download">Скачать Word</a>
+              <FileDownload href={doc.file} label="Скачать Word" className="mk-doc-download" />
             ) : (
               <GeneratedDownload doc={doc} />
             )
@@ -449,6 +465,7 @@ export function DataPathDoc({ name, onClose }: { name: string | null; onClose: (
             </section>
           ))}
         </div>
+        <button type="button" className="mk-doc-close" onClick={onClose}>Закрыть документ</button>
       </DialogContent>
     </Dialog>
   );

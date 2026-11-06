@@ -3,7 +3,7 @@ import { useEffect, useRef, useState, type FormEvent } from "react";
 import { FileText, Keyboard, Mic, Paperclip, Plus, Send, X } from "lucide-react";
 import { BackHome } from "@/components/back-home";
 import { OwnerBoard } from "@/components/owner-dashboards";
-import { DataPathDoc, ACCOUNTING_DOC_NAME, AGENT_DOC_NAME, LOYALTY_DOC_NAME, DATA_PATH_DOC_NAME, EVOTOR_DOC_NAME, FN_DOC_NAME, OFD_DOC_NAME, OWNER_DOCS } from "@/components/data-path-doc";
+import { DataPathDoc, FileDownload, ACCOUNTING_DOC_NAME, AGENT_DOC_NAME, LOYALTY_DOC_NAME, DATA_PATH_DOC_NAME, EVOTOR_DOC_NAME, FN_DOC_NAME, OFD_DOC_NAME, OWNER_DOCS } from "@/components/data-path-doc";
 import { useServerFn } from "@tanstack/react-start";
 import { createFnReplacementTask, createLinkSilenceTask, getEvotorCabinet, troubleshootCashRegister } from "@/lib/evotor.functions";
 import { linkStatus, linkNeedsTask } from "@/lib/evotor";
@@ -175,7 +175,7 @@ function OwnerPage() {
               <FileText aria-hidden="true" />
               <div><b>{d.name}</b><span>{d.note}</span></div>
               {d.href ? (
-                <a href={d.href} download className="mk-cab-fnbtn" onClick={(e) => e.stopPropagation()}>Скачать</a>
+                <FileDownload href={d.href} label="Скачать" className="mk-cab-fnbtn" />
               ) : (
                 <time>{d.date}</time>
               )}

@@ -804,3 +804,29 @@ a.mk-tariff-cta { text-decoration: none; }
   cursor: pointer;
 }
 .mk-doc-download:hover { opacity: 0.85; }
+.mk-doc-close {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--muted);
+  color: var(--foreground);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.mk-doc-dialog > button.absolute {
+  position: sticky;
+  top: 0;
+  margin-left: auto;
+  grid-row: 1;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--muted);
+  opacity: 1;
+  z-index: 2;
+}
+.mk-doc-dialog > button.absolute svg { width: 20px; height: 20px; }
