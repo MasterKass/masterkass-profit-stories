@@ -1,8 +1,14 @@
-// Мастер подключения тарифа: карта (0 ₽) → касса → почта для дайджеста → готово.
-// Пока демо: карта, Эвотор и почта не отправляются на сервер.
+// Мастер подключения: контакты (сразу сделка в Битрикс24) → тариф → касса → готово. Карта на старте не нужна.
 import { SERVICE_TARIFFS, type ServiceTariff, type TariffTone } from "@/lib/tariffs";
 
-export const ONBOARDING_STEPS = ["Карта", "Касса", "Контакты", "Готово"] as const;
+export const ONBOARDING_STEPS = ["Контакты", "Тариф", "Касса", "Готово"] as const;
+export const TRIAL_STAGES = {
+  contacts: "1. Контакты получены",
+  tariff: "2. Тариф выбран",
+  cash: "3. Касса подключена",
+  started: "4. Бесплатный период активен",
+} as const;
+export const TRIAL_KEY = "mk-trial";
 export const REFERRAL_BONUS_UNITS = 300;
 export const TRIAL_DAYS = 30;
 
