@@ -24,10 +24,11 @@ export const Route = createFileRoute("/owner")({
   component: OwnerPage,
 });
 
-type Doc = { name: string; date: string; note: string };
+type Doc = { name: string; date: string; note: string; href?: string };
 
 const SECTIONS: Record<string, Doc[]> = {
   Маркетинг: [
+    { name: "Логотип МастерКасс (иконки).zip", date: "6 ноя", note: "Вектор SVG, PNG до 2048 px, иконки для кассы Android и Evotor Market, favicon", href: "/downloads/masterkass-logo.zip" },
     { name: "Кейс кофейни.pdf", date: "28 окт", note: "История владельца: от одной точки до шести" },
     { name: "План рилсов на ноябрь.docx", date: "30 окт", note: "Зоопарк программ, будни кассира" },
   ],
@@ -173,7 +174,11 @@ function OwnerPage() {
             >
               <FileText aria-hidden="true" />
               <div><b>{d.name}</b><span>{d.note}</span></div>
-              <time>{d.date}</time>
+              {d.href ? (
+                <a href={d.href} download className="mk-cab-fnbtn" onClick={(e) => e.stopPropagation()}>Скачать</a>
+              ) : (
+                <time>{d.date}</time>
+              )}
             </div>
           ))}
           <button type="button" className="mk-own-upload" onClick={() => fileRef.current?.click()}>
