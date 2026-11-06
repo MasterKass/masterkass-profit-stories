@@ -837,4 +837,4 @@ a.mk-tariff-cta { text-decoration: none; }
 /* Важные слова в описаниях: жирные, фирменным спектром (притемнённым для читаемости) */
 .mk-hl { font-weight: 600; background: linear-gradient(90deg, oklch(0.62 0.17 50), oklch(0.66 0.16 110), oklch(0.6 0.15 160), oklch(0.58 0.12 210)); -webkit-background-clip: text; background-clip: text; color: transparent; }
 /* Название «МК Бонус»: спектр с притемнёнными светлыми оттенками и лёгкой тенью */
-.mk-bonus-title { background: linear-gradient(90deg, oklch(0.66 0.18 50), oklch(0.76 0.17 90), oklch(0.7 0.18 140), oklch(0.66 0.13 205)); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 1px 1px oklch(0.3 0.02 260 / 0.18)); }
+.mk-bonus-title { background: var(--welcome-spectrum); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 1px 1px oklch(0.3 0.02 260 / 0.18)); }
