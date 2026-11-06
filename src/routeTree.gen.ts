@@ -16,6 +16,7 @@ import { Route as CabinetRouteImport } from './routes/cabinet'
 import { Route as CashierRouteImport } from './routes/cashier'
 import { Route as DigestRouteImport } from './routes/digest'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as LoyaltyRouteImport } from './routes/loyalty'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as OwnerRouteImport } from './routes/owner'
 import { Route as PartnerRouteImport } from './routes/partner'
@@ -58,6 +59,11 @@ const DigestRoute = DigestRouteImport.update({
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoyaltyRoute = LoyaltyRouteImport.update({
+  id: '/loyalty',
+  path: '/loyalty',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OnboardingRoute = OnboardingRouteImport.update({
@@ -109,6 +115,7 @@ export interface FileRoutesByFullPath {
   '/cashier': typeof CashierRoute
   '/digest': typeof DigestRoute
   '/login': typeof LoginRoute
+  '/loyalty': typeof LoyaltyRoute
   '/onboarding': typeof OnboardingRoute
   '/owner': typeof OwnerRoute
   '/partner': typeof PartnerRoute
@@ -126,6 +133,7 @@ export interface FileRoutesByTo {
   '/cashier': typeof CashierRoute
   '/digest': typeof DigestRoute
   '/login': typeof LoginRoute
+  '/loyalty': typeof LoyaltyRoute
   '/onboarding': typeof OnboardingRoute
   '/owner': typeof OwnerRoute
   '/partner': typeof PartnerRoute
@@ -144,6 +152,7 @@ export interface FileRoutesById {
   '/cashier': typeof CashierRoute
   '/digest': typeof DigestRoute
   '/login': typeof LoginRoute
+  '/loyalty': typeof LoyaltyRoute
   '/onboarding': typeof OnboardingRoute
   '/owner': typeof OwnerRoute
   '/partner': typeof PartnerRoute
@@ -163,6 +172,7 @@ export interface FileRouteTypes {
     | '/cashier'
     | '/digest'
     | '/login'
+    | '/loyalty'
     | '/onboarding'
     | '/owner'
     | '/partner'
@@ -180,6 +190,7 @@ export interface FileRouteTypes {
     | '/cashier'
     | '/digest'
     | '/login'
+    | '/loyalty'
     | '/onboarding'
     | '/owner'
     | '/partner'
@@ -197,6 +208,7 @@ export interface FileRouteTypes {
     | '/cashier'
     | '/digest'
     | '/login'
+    | '/loyalty'
     | '/onboarding'
     | '/owner'
     | '/partner'
@@ -215,6 +227,7 @@ export interface RootRouteChildren {
   CashierRoute: typeof CashierRoute
   DigestRoute: typeof DigestRoute
   LoginRoute: typeof LoginRoute
+  LoyaltyRoute: typeof LoyaltyRoute
   OnboardingRoute: typeof OnboardingRoute
   OwnerRoute: typeof OwnerRoute
   PartnerRoute: typeof PartnerRoute
@@ -274,6 +287,13 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/loyalty': {
+      id: '/loyalty'
+      path: '/loyalty'
+      fullPath: '/loyalty'
+      preLoaderRoute: typeof LoyaltyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/onboarding': {
@@ -343,6 +363,7 @@ const rootRouteChildren: RootRouteChildren = {
   CashierRoute: CashierRoute,
   DigestRoute: DigestRoute,
   LoginRoute: LoginRoute,
+  LoyaltyRoute: LoyaltyRoute,
   OnboardingRoute: OnboardingRoute,
   OwnerRoute: OwnerRoute,
   PartnerRoute: PartnerRoute,
