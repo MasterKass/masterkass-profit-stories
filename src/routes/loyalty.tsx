@@ -53,7 +53,7 @@ function LoyaltyPage() {
       <BackHome showLogin />
       <main className="mx-auto max-w-5xl px-5 pb-20 pt-10">
         <section className="mt-12 max-w-3xl">
-          <h1 className="text-[2.5rem] font-semibold leading-[1.05] tracking-[-0.035em] md:text-6xl">Система лояльности «МастерКасс Бонус»</h1>
+          <h1 className="text-[2.5rem] font-semibold leading-[1.05] tracking-[-0.035em] md:text-6xl">Система лояльности «МК Бонус»</h1>
           <p className="mt-6 text-lg leading-relaxed" style={{ color: "var(--mk-muted)" }}>
             Большинство систем лояльности требуют отдельной платы, сложной настройки и оплаты каждой SMS. Мы встроили программу прямо в сервис: она работает на вашей кассе, не тормозит очередь и помогает возвращать гостей.
           </p>

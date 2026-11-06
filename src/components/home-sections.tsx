@@ -458,7 +458,8 @@ export function AskAi({ title = "Задайте вопрос нашему ИИ �
 
 /* 12. Подвал — карточка с разделами (часть слов ведёт на готовые страницы) */
 /** Слова подвала, у которых уже есть адрес: «Тарифы» открывают блок тарифов на странице сервиса. */
-const FOOTER_ROUTES: Record<string, { to: "/service" | "/partners"; hash?: string }> = {
+const FOOTER_ROUTES: Record<string, { to: "/service" | "/partners" | "/loyalty"; hash?: string }> = {
+  "Программа лояльности": { to: "/loyalty" },
   "Тарифы": { to: "/service", hash: "tariffs" },
   "Партнёрам": { to: "/partners" },
 };
