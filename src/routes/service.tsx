@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { SiteFooter, AskAi } from "@/components/home-sections";
+import { SiteFooter, AskAi, useInView } from "@/components/home-sections";
 import { DayComic } from "@/components/day-comic";
 import { BackHome } from "@/components/back-home";
 import { RequestForm } from "@/components/request-form";
@@ -39,6 +39,23 @@ const pillars = [
 ];
 
 const tariffs = SERVICE_TARIFFS;
+
+function LoyaltyCard() {
+  const [ref, on] = useInView<HTMLSpanElement>();
+  return (
+    <div className="mk-card mk-pillar-wide mk-loyalty-card">
+      <h2 className="text-2xl font-semibold tracking-[-0.03em] md:text-3xl">
+        <span ref={ref} className={`mk-bolt${on ? " is-on" : ""}`}>Окупи затраты на автоматизацию за счёт встроенной системы лояльности</span>
+      </h2>
+      <div>
+        <p className="mt-3 text-[15px] leading-relaxed" style={{ color: "var(--mk-muted)" }}>
+          Электронные карты в Apple Wallet и Google Wallet, бесплатные push-уведомления, начисление прямо на кассе Эвотор и ИИ-помощник, который подбирает механику под ваши чеки. Повторные продажи перекрывают стоимость обслуживания.
+        </p>
+        <Link to="/loyalty" className="mk-outline mt-6">Подробнее о лояльности</Link>
+      </div>
+    </div>
+  );
+}
 
 function ServicePage() {
   const topups = TOPUP_PACKAGES.map((p) => `${unitsLabel(p.units)} за ${p.price} ₽`).join(", ");
@@ -111,15 +128,7 @@ function ServicePage() {
         </section>
 
         <section className="mt-24">
-          <div className="mk-card mk-pillar-wide">
-            <div>
-              <span className="text-xs font-medium tracking-widest" style={{ color: "var(--mk-muted)" }}>Лояльность</span>
-              <h2 className="mt-6 text-2xl font-semibold tracking-[-0.03em]">Лояльность, которая окупает сервис</h2>
-            </div>
-            <p className="mt-3 text-[15px] leading-relaxed" style={{ color: "var(--mk-muted)" }}>
-              Помогаем настроить бонусы, проверяем гипотезы и анализируем возврат гостей. Повторные продажи перекрывают стоимость обслуживания.
-            </p>
-          </div>
+          <LoyaltyCard />
         </section>
 
 

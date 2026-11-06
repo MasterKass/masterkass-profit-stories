@@ -19,7 +19,7 @@ function OutlineButton({ children, onClick }: { children: React.ReactNode; onCli
   );
 }
 
-function useInView<T extends HTMLElement>(opts: IntersectionObserverInit = { threshold: 0.3 }) {
+export function useInView<T extends HTMLElement>(opts: IntersectionObserverInit = { threshold: 0.3 }) {
   const ref = useRef<T>(null);
   const [inView, setInView] = useState(false);
   useEffect(() => {
