@@ -8,8 +8,6 @@ import boutique from "@/assets/team-boutique.jpg";
 import salon from "@/assets/team-salon.jpg";
 import { BrandMark } from "@/components/brand-mark";
 
-const go = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-
 export function useInView<T extends HTMLElement>(opts: IntersectionObserverInit = { threshold: 0.3 }) {
   const ref = useRef<T>(null);
   const [inView, setInView] = useState(false);
