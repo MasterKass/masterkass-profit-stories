@@ -8,17 +8,6 @@ import boutique from "@/assets/team-boutique.jpg";
 import salon from "@/assets/team-salon.jpg";
 import { BrandMark } from "@/components/brand-mark";
 
-const go = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-
-function OutlineButton({ children, onClick }: { children: React.ReactNode; onClick?: () => void }) {
-  return (
-    <button type="button" onClick={onClick} className="mk-outline">
-      {children}
-      <ArrowUpRight className="h-4 w-4" />
-    </button>
-  );
-}
-
 export function useInView<T extends HTMLElement>(opts: IntersectionObserverInit = { threshold: 0.3 }) {
   const ref = useRef<T>(null);
   const [inView, setInView] = useState(false);
@@ -197,7 +186,12 @@ export function JoinCta() {
       <section id="join" className="mk-section mk-section-airy text-center">
         <h2 className="mk-h2 mx-auto max-w-4xl">Присоединяйтесь к сервису</h2>
         <p className="mx-auto mt-5 max-w-xl text-lg text-[var(--mk-muted)] md:text-xl">Переведите кассу на надёжное сопровождение</p>
-        <div className="mt-10"><OutlineButton onClick={() => go("ask")}>Подать заявку</OutlineButton></div>
+        <div className="mt-10">
+          <Link to="/onboarding" search={{ tariff: undefined, ref: undefined }} className="mk-outline">
+            Подать заявку
+            <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+          </Link>
+        </div>
       </section>
     </div>
   );
