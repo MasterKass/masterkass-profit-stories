@@ -22,7 +22,7 @@ export const Route = createFileRoute("/onboarding")({
       { title: "Подключение · Мастер Касс" },
       { name: "description", content: "Начните бесплатный период Мастер Касс: телефон и почта, выбор тарифа и подключение кассы Эвотор. Без привязки карты." },
       { property: "og:title", content: "Подключение · Мастер Касс" },
-      { property: "og:description", content: "Бесплатный ознакомительный период без привязки карты." },
+      { property: "og:description", content: "Бесплатный период без привязки карты." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
@@ -105,7 +105,7 @@ function Onboarding() {
         {tone && step !== 1 && (
           <div className={`mk-card mk-tariff mk-tariff-${tariff.tone} mk-onb-tariff`}>
             <div>
-              <h1 className="text-xl font-semibold">Тариф «{tariff.name}»: бесплатный ознакомительный период</h1>
+              <h1 className="text-xl font-semibold">Тариф «{tariff.name}»: бесплатный период</h1>
               <p className="mt-1 text-sm">Далее {tariff.price} ₽/мес, только после вашего решения</p>
             </div>
             {ref && <p className="mk-onb-bonus">+{REFERRAL_BONUS_UNITS} AI-юнитов по приглашению партнёра</p>}
@@ -114,7 +114,7 @@ function Onboarding() {
 
         {step === 0 && (
           <form className="mk-card mk-onb-card" onSubmit={sendContacts} noValidate>
-            <h2>{tone ? "Привяжем кабинет к вашему номеру" : "Начните бесплатный ознакомительный период МастерКасс"}</h2>
+            <h2>{tone ? "Привяжем кабинет к вашему номеру" : "Начните бесплатный период МастерКасс"}</h2>
             <p className="mk-onb-muted">
               {tone ? "Чтобы вы могли управлять кассой и получать дайджест. Карта не нужна." : "Закрепим личный кабинет за вашим номером и поможем настроить кассу. Карта не нужна."}
             </p>

@@ -73,7 +73,7 @@ export function RequestForm() {
     <section className="mk-lead" id="request" aria-labelledby="request-title">
       <div className="mk-lead-grid">
         <header className="max-w-md">
-          <h2 id="request-title" className="mk-lead-title">Начните бесплатный ознакомительный период МастерКасс</h2>
+          <h2 id="request-title" className="mk-lead-title">Начните бесплатный период МастерКасс</h2>
           <p className="mk-lead-note">Закрепим личный кабинет за вашим номером и поможем настроить кассу. Карта не нужна.</p>
         </header>
 
