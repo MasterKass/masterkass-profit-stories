@@ -10,15 +10,6 @@ import { BrandMark } from "@/components/brand-mark";
 
 const go = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 
-function OutlineButton({ children, onClick }: { children: React.ReactNode; onClick?: () => void }) {
-  return (
-    <button type="button" onClick={onClick} className="mk-outline">
-      {children}
-      <ArrowUpRight className="h-4 w-4" />
-    </button>
-  );
-}
-
 export function useInView<T extends HTMLElement>(opts: IntersectionObserverInit = { threshold: 0.3 }) {
   const ref = useRef<T>(null);
   const [inView, setInView] = useState(false);
