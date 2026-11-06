@@ -8,6 +8,13 @@ export const TRIAL_STAGES = {
   cash: "3. Касса подключена",
   started: "4. Бесплатный период активен",
 } as const;
+/** Колонки воронки Битрикс24 (системные коды стадий) для каждого шага подключения */
+export const TRIAL_STAGE_IDS = {
+  contacts: "NEW",
+  tariff: "PREPARATION",
+  cash: "PREPAYMENT_INVOICE",
+  started: "EXECUTING",
+} as const;
 export const TRIAL_KEY = "mk-trial";
 export const REFERRAL_BONUS_UNITS = 300;
 export const TRIAL_DAYS = 30;

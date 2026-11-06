@@ -1,7 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { requestSchema } from "./request";
 import { z } from "zod";
-import { TRIAL_STAGES } from "./onboarding";
+import { TRIAL_STAGES, TRIAL_STAGE_IDS } from "./onboarding";
 
 const inputSchema = requestSchema.extend({
   company: z.string().max(200).optional(),
@@ -47,6 +47,7 @@ export const submitServiceRequest = createServerFn({ method: "POST" })
       fields: {
         TITLE: `Подключение с сайта: ${stage}${data.tariff ? ` · тариф ${data.tariff}` : ""}`,
         CONTACT_ID: contact.result,
+        STAGE_ID: data.tariff ? TRIAL_STAGE_IDS.tariff : TRIAL_STAGE_IDS.contacts,
         SOURCE_ID: "WEB",
         SOURCE_DESCRIPTION: data.source ?? "Сайт",
         COMMENTS: [
@@ -75,7 +76,7 @@ export const updateTrialDeal = createServerFn({ method: "POST" })
     const stage = TRIAL_STAGES[data.stage];
     const r = await bx("crm.deal.update", {
       id: data.dealId,
-      fields: { TITLE: `Подключение с сайта: ${stage}${data.tariff ? ` · тариф ${data.tariff}` : ""}` },
+      fields: { STAGE_ID: TRIAL_STAGE_IDS[data.stage], TITLE: `Подключение с сайта: ${stage}${data.tariff ? ` · тариф ${data.tariff}` : ""}` },
     });
     if (r.ok) await bx("crm.timeline.comment.add", { fields: { ENTITY_ID: data.dealId, ENTITY_TYPE: "deal", COMMENT: `Этап: ${stage}${data.tariff ? `, тариф ${data.tariff}` : ""}` } });
     return { ok: r.ok };
