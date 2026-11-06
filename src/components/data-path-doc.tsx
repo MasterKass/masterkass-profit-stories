@@ -159,7 +159,54 @@ const fnSections: { n: string; items: string[] }[] = [
   ]},
 ];
 
+export const AGENT_DOC_NAME = "ТЗ: агент телеметрии «МастерКасс» для касс Эвотор";
+
+const agentSections: { n: string; items: string[] }[] = [
+  { n: "1. Цель", items: [
+    "Фоновое Android-приложение (APK) с простым экраном для кассира, ставится на Эвотор 5, 7.2, 7.3, 10, Power через кабинет разработчика в закрытом тестовом режиме.",
+    "Собирает память, список приложений, зависания и последний чек и передаёт на сервер «МастерКасс» по HTTPS.",
+  ]},
+  { n: "2. Стек", items: [
+    "Kotlin (или Java), Android Studio, minSdkVersion 22, targetSdkVersion 26-27.",
+    "Библиотеки: Evotor Integration SDK, Room (журнал событий), WorkManager (фоновая отправка), OkHttp или Retrofit.",
+  ]},
+  { n: "3. Модуль А: память", items: [
+    "StatFs по каталогу данных: общий и свободный объём, процент свободного места.",
+    "Статусы: NORMAL - свободно больше 15%; WARNING - меньше 15% или меньше 1 ГБ; CRITICAL - меньше 5% или меньше 300 МБ.",
+  ]},
+  { n: "4. Модуль Б: аудит приложений", items: [
+    "Список пакетов через PackageManager, размер через getPackageSizeInfo (Android 7-8) или StorageStatsManager.",
+    "Дата последнего запуска через UsageStatsManager, нужно ручное разрешение PACKAGE_USAGE_STATS; без него передаём только размеры.",
+  ]},
+  { n: "5. Модуль В: зависания и «чёрный ящик» чека", items: [
+    "BroadcastReceiver на события POSITION_ADDED, POSITION_EDITED, POSITION_REMOVED; последние 50 записей в Room.",
+    "Снимок текущего чека через ReceiptApi.getReceipt; если касса полностью зависла, остаётся журнал событий.",
+    "Каждые 30 секунд ActivityManager.getProcessesInErrorState: при ошибке ru.evotor.pos или ru.evotor.drivers.kkm отправляется аварийный пакет.",
+  ]},
+  { n: "6. Модуль Г: экран на кассе", items: [
+    "Плитка с иконкой и названием «МастерКасс».",
+    "Статус «Защита активна · Терминал под присмотром инженера», шкала памяти, кнопка «Связаться с поддержкой».",
+    "При первом запуске: кнопка перехода в настройки для доступа к статистике использования.",
+  ]},
+  { n: "7. Обмен с сервером", items: [
+    "POST https://[домен]/api/public/telemetry, раз в 15-30 минут: terminalUuid, deviceModel, appVersion, timestamp, storage {totalBytes, availableBytes, status}, apps [{packageName, appName, sizeBytes, lastUsedDaysAgo}].",
+    "Аварийный пакет: terminalUuid, eventType = ANR_DETECTED, timestamp, failingProcess, lastReceiptSnapshot {uuid, totalSum, itemsCount, lastAction, lastItemName}.",
+    "Ключ доступа к серверу передаётся в заголовке и хранится только в приложении, не в коде открытого репозитория.",
+  ]},
+  { n: "8. Сборка и установка", items: [
+    "Подписанный release.apk загружается во вкладку «APK» кабинета разработчика Эвотор.",
+    "Разрешения: INTERNET, ACCESS_NETWORK_STATE, PACKAGE_USAGE_STATS (ручное подтверждение).",
+    "Телефон владельца кассы добавляется в «Тестировщики»; в общий каталог приложение не публикуется.",
+  ]},
+  { n: "9. Результат этапа", items: [
+    "На тестовой кассе стоит иконка «МастерКасс».",
+    "Приложение работает в фоне и не нагружает кассу.",
+    "Сервер получает реальные цифры памяти и список приложений с этой кассы.",
+  ]},
+];
+
 export const OWNER_DOCS: Record<string, Doc> = {
+  [AGENT_DOC_NAME]: { title: AGENT_DOC_NAME, meta: "Техническое задание для Дениса. Версия 1.0, 6 ноября 2026. Файл для скачивания: /downloads/tz-agent-masterkass.docx", sections: agentSections },
   [FN_DOC_NAME]: { title: FN_DOC_NAME, meta: "Сервисный регламент «Мастер Касс». Версия 1.0, 5 ноября 2026.", sections: fnSections },
   [EVOTOR_DOC_NAME]: { title: EVOTOR_DOC_NAME, meta: "Отчёт о тестовой интеграции «Мастер Касс». Версия 1.0, 5 ноября 2026.", sections: evotorSections },
   [DATA_PATH_DOC_NAME]: { title: DATA_PATH_DOC_NAME, meta: "Регламент сервисного центра «Мастер Касс», Ростов-на-Дону. Версия 1.0, 3 ноября 2026.", sections },
