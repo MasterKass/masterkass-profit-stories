@@ -1,39 +1,82 @@
 import { createServerFn } from "@tanstack/react-start";
 import { requestSchema } from "./request";
 import { z } from "zod";
+import { TRIAL_STAGES } from "./onboarding";
 
-const inputSchema = requestSchema.extend({ company: z.string().max(200).optional() });
+const inputSchema = requestSchema.extend({
+  company: z.string().max(200).optional(),
+  tariff: z.string().max(40).optional(),
+  source: z.string().max(80).optional(),
+  ref: z.string().max(80).optional(),
+});
 
-/** Создаёт лид в Битрикс24 из заявки на сервис. Ключ вебхука хранится только на сервере. */
+async function bx(method: string, body: unknown) {
+  const base = process.env["BITRIX24_WEBHOOK_URL"];
+  if (!base) return { ok: false as const, error: "not_configured" };
+  const res = await fetch(base.replace(/\/?$/, "/") + method + ".json", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+  const json = (await res.json().catch(() => null)) as { result?: unknown; error?: string } | null;
+  if (!res.ok || !json?.result) {
+    console.error("Bitrix24 error", method, res.status, json?.error);
+    return { ok: false as const, error: "crm_error" };
+  }
+  return { ok: true as const, result: json.result };
+}
+
+/** Первый шаг подключения: контакт + сделка в Битрикс24. Ключ вебхука только на сервере. */
 export const submitServiceRequest = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) => inputSchema.parse(data))
   .handler(async ({ data }) => {
-    // Ловушка для ботов: делаем вид, что всё прошло успешно.
-    if (data.company && data.company.trim()) return { ok: true as const };
+    if (data.company && data.company.trim()) return { ok: true as const, dealId: 0 };
 
-    const base = process.env["BITRIX24_WEBHOOK_URL"];
-    if (!base) return { ok: false as const, error: "not_configured" };
-
-    const url = base.replace(/\/?$/, "/") + "crm.lead.add.json";
-    const res = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        fields: {
-          TITLE: "Заявка на сервис с сайта МастерКасс",
-          SOURCE_ID: "WEB",
-          SOURCE_DESCRIPTION: "Форма «Подать заявку на сервис»",
-          PHONE: [{ VALUE: data.phone, VALUE_TYPE: "WORK" }],
-          EMAIL: [{ VALUE: data.email, VALUE_TYPE: "WORK" }],
-          COMMENTS: "Клиент хочет протестировать сервис бесплатно 1 месяц.",
-        },
-        params: { REGISTER_SONET_EVENT: "Y" },
-      }),
+    const contact = await bx("crm.contact.add", {
+      fields: {
+        NAME: "Клиент с сайта",
+        SOURCE_ID: "WEB",
+        PHONE: [{ VALUE: data.phone, VALUE_TYPE: "WORK" }],
+        EMAIL: [{ VALUE: data.email, VALUE_TYPE: "WORK" }],
+      },
     });
-    const json = (await res.json().catch(() => null)) as { result?: number; error?: string } | null;
-    if (!res.ok || !json?.result) {
-      console.error("Bitrix24 lead error", res.status, json?.error);
-      return { ok: false as const, error: "crm_error" };
-    }
-    return { ok: true as const };
+    if (!contact.ok) return { ok: false as const, error: contact.error };
+
+    const stage = data.tariff ? TRIAL_STAGES.tariff : TRIAL_STAGES.contacts;
+    const deal = await bx("crm.deal.add", {
+      fields: {
+        TITLE: `Подключение с сайта: ${stage}${data.tariff ? ` · тариф ${data.tariff}` : ""}`,
+        CONTACT_ID: contact.result,
+        SOURCE_ID: "WEB",
+        SOURCE_DESCRIPTION: data.source ?? "Сайт",
+        COMMENTS: [
+          `Этап: ${stage}`,
+          data.tariff ? `Тариф: ${data.tariff}` : "Тариф ещё не выбран",
+          data.ref ? `Партнёр: ${data.ref}` : "",
+          `Телефон: ${data.phone}, почта: ${data.email}`,
+        ].filter(Boolean).join("\n"),
+      },
+      params: { REGISTER_SONET_EVENT: "Y" },
+    });
+    if (!deal.ok) return { ok: false as const, error: deal.error };
+    return { ok: true as const, dealId: Number(deal.result) };
+  });
+
+/** Двигает ту же сделку по этапам подключения. */
+export const updateTrialDeal = createServerFn({ method: "POST" })
+  .inputValidator((data: unknown) =>
+    z.object({
+      dealId: z.number().int().positive(),
+      stage: z.enum(["tariff", "cash", "started"]),
+      tariff: z.string().max(40).optional(),
+    }).parse(data),
+  )
+  .handler(async ({ data }) => {
+    const stage = TRIAL_STAGES[data.stage];
+    const r = await bx("crm.deal.update", {
+      id: data.dealId,
+      fields: { TITLE: `Подключение с сайта: ${stage}${data.tariff ? ` · тариф ${data.tariff}` : ""}` },
+    });
+    if (r.ok) await bx("crm.timeline.comment.add", { fields: { ENTITY_ID: data.dealId, ENTITY_TYPE: "deal", COMMENT: `Этап: ${stage}${data.tariff ? `, тариф ${data.tariff}` : ""}` } });
+    return { ok: r.ok };
   });
