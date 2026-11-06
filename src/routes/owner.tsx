@@ -175,7 +175,7 @@ function OwnerPage() {
               <FileText aria-hidden="true" />
               <div><b>{d.name}</b><span>{d.note}</span></div>
               {d.href ? (
-                <a href={d.href} download className="mk-cab-fnbtn" onClick={(e) => e.stopPropagation()}>Скачать</a>
+                <FileDownload href={d.href} label="Скачать" className="mk-cab-fnbtn" />
               ) : (
                 <time>{d.date}</time>
               )}
