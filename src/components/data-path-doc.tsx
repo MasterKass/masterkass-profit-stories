@@ -55,7 +55,7 @@ const sections: { n: string; items: string[] }[] = [
   },
 ];
 
-type Doc = { title: string; meta: string; sections: { n: string; items: string[] }[] };
+type Doc = { title: string; meta: string; file?: string; sections: { n: string; items: string[] }[] };
 
 export const OFD_DOC_NAME = "Партнёрский API ОФД и изоляция клиентов";
 
@@ -344,13 +344,33 @@ const accountingSections: { n: string; items: string[] }[] = [
 
 export const OWNER_DOCS: Record<string, Doc> = {
   [ACCOUNTING_DOC_NAME]: { title: ACCOUNTING_DOC_NAME, meta: "Архитектурное решение «Мастер Касс». Версия 1.0, 6 ноября 2026.", sections: accountingSections },
-  [LOYALTY_DOC_NAME]: { title: LOYALTY_DOC_NAME, meta: "Техническое задание для Дениса. Версия 1.0, 6 ноября 2026. Файл для скачивания: /downloads/tz-loyalty-masterkass.docx", sections: loyaltySections },
-  [AGENT_DOC_NAME]: { title: AGENT_DOC_NAME, meta: "Техническое задание для Дениса. Версия 1.0, 6 ноября 2026. Файл для скачивания: /downloads/tz-agent-masterkass.docx", sections: agentSections },
+  [LOYALTY_DOC_NAME]: { title: LOYALTY_DOC_NAME, meta: "Техническое задание для Дениса. Версия 1.0, 6 ноября 2026.", file: "/downloads/tz-loyalty-masterkass.docx", sections: loyaltySections },
+  [AGENT_DOC_NAME]: { title: AGENT_DOC_NAME, meta: "Техническое задание для Дениса. Версия 1.0, 6 ноября 2026.", file: "/downloads/tz-agent-masterkass.docx", sections: agentSections },
   [FN_DOC_NAME]: { title: FN_DOC_NAME, meta: "Сервисный регламент «Мастер Касс». Версия 1.0, 5 ноября 2026.", sections: fnSections },
   [EVOTOR_DOC_NAME]: { title: EVOTOR_DOC_NAME, meta: "Отчёт о тестовой интеграции «Мастер Касс». Версия 1.0, 5 ноября 2026.", sections: evotorSections },
   [DATA_PATH_DOC_NAME]: { title: DATA_PATH_DOC_NAME, meta: "Регламент сервисного центра «Мастер Касс», Ростов-на-Дону. Версия 1.0, 3 ноября 2026.", sections },
   [OFD_DOC_NAME]: { title: OFD_DOC_NAME, meta: "Архитектурное решение «Мастер Касс». Версия 1.0, 5 ноября 2026.", sections: ofdSections },
 };
+
+function esc(s: string) {
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+function downloadText(doc: Doc) {
+  const body = doc.sections
+    .map((s) => `<h2>${esc(s.n)}</h2><ul>${s.items.map((i) => `<li>${esc(i)}</li>`).join("")}</ul>`)
+    .join("");
+  const html = `<html><head><meta charset="utf-8"><title>${esc(doc.title)}</title></head><body style="font-family:Arial,sans-serif"><h1>${esc(doc.title)}</h1><p><i>${esc(doc.meta)}</i></p>${body}</body></html>`;
+  const blob = new Blob(["\ufeff", html], { type: "application/msword" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `${doc.title.replace(/[\\/:*?"<>|«»]/g, "").slice(0, 80)}.doc`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 30_000);
+}
 
 export function DataPathDoc({ name, onClose }: { name: string | null; onClose: () => void }) {
   const doc = name ? OWNER_DOCS[name] : undefined;
@@ -364,6 +384,13 @@ export function DataPathDoc({ name, onClose }: { name: string | null; onClose: (
           <DialogDescription className="text-left">
             {doc?.meta}
           </DialogDescription>
+          {doc && (
+            doc.file ? (
+              <a href={doc.file} download className="mk-doc-download">Скачать Word</a>
+            ) : (
+              <button type="button" className="mk-doc-download" onClick={() => downloadText(doc)}>Скачать документ</button>
+            )
+          )}
         </DialogHeader>
         <div className="space-y-6">
           {(doc?.sections ?? []).map((s) => (
