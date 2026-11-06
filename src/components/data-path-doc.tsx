@@ -441,7 +441,7 @@ export function DataPathDoc({ name, onClose }: { name: string | null; onClose: (
   const onOpenChange = (v: boolean) => { if (!v) onClose(); };
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-h-[85vh] max-w-2xl overflow-y-auto rounded-2xl">
+      <DialogContent className="mk-doc-dialog max-h-[85vh] max-w-2xl overflow-y-auto rounded-2xl">
         <DialogHeader>
           <DialogTitle className="text-left text-2xl tracking-[-0.03em]">{doc?.title}</DialogTitle>
           <DialogDescription className="text-left">
