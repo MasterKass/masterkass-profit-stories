@@ -75,7 +75,7 @@ function Engineer() {
       .some((v) => v.toLowerCase().replace(/[\s()+-]/g, "").includes(s)));
   }, [q]);
 
-  const k = KASSY.find((x) => x.id === sel) ?? KASSY[0];
+  const k = KASSY.find((x) => x.id === sel) ?? KASSY[0]!;
   const hist = [...(extra[k.id] ?? []), ...k.history];
 
   return (
