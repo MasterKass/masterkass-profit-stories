@@ -858,3 +858,6 @@ a.mk-tariff-cta { text-decoration: none; }
 .mk-eng-form input { flex: 1; min-width: 0; padding: .6rem .8rem; border-radius: 10px; border: 1px solid color-mix(in oklab, var(--mk-muted) 30%, transparent); background: var(--mk-surface); font-size: 14px; }
 .mk-eng-form button { padding: .6rem .9rem; border-radius: 10px; background: var(--mk-fg); color: var(--mk-surface); font-size: 14px; font-weight: 600; }
 .mk-eng-form button:disabled { opacity: .4; }
+.mk-eng-diag-btn { display: inline-flex; align-items: center; gap: .5rem; margin: .8rem 0; padding: .7rem 1rem; border-radius: 12px; background: var(--mk-fg); color: var(--mk-surface); font-size: 15px; font-weight: 600; }
+.mk-eng-diag-btn:disabled { opacity: .6; }
+.mk-eng-diag-none { padding: .8rem; border-radius: 12px; margin-bottom: .6rem; font-size: 14px; background: color-mix(in oklab, oklch(0.63 0.22 27) 14%, var(--mk-surface)); }

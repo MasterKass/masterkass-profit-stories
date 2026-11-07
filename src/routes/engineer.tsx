@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { AlertTriangle, BookOpen, Check, Cpu, History, Phone, Search, Wrench } from "lucide-react";
+import { Activity, RefreshCw, AlertTriangle, BookOpen, Check, Cpu, History, Phone, Search, Wrench } from "lucide-react";
 import { BackHome } from "@/components/back-home";
 
 export const Route = createFileRoute("/engineer")({
@@ -58,6 +58,26 @@ const ERRORS = [
   { code: "ФН переполнен", fix: "Отправить чеки в ОФД, затем плановая замена ФН с закрытием архива." },
 ];
 
+type Diag = { label: string; value: string; note: string; tone: Link };
+const DIAG: Record<string, Diag[]> = {
+  "1": [
+    { label: "Батарея", value: "86%", note: "заряжается от сети", tone: "ok" },
+    { label: "Бумага", value: "Есть", note: "крышка закрыта", tone: "ok" },
+    { label: "Связь", value: "Wi-Fi −58 дБм", note: "ОФД отвечает за 180 мс", tone: "ok" },
+    { label: "ФН", value: "Исправен", note: "0 неотправленных, смена 5 ч", tone: "ok" },
+    { label: "Память", value: "41% свободно", note: "3,2 ГБ", tone: "ok" },
+    { label: "Часы", value: "Точно", note: "расхождение 2 сек", tone: "ok" },
+  ],
+  "2": [
+    { label: "Батарея", value: "14%", note: "нет зарядки, проверьте провод", tone: "bad" },
+    { label: "Бумага", value: "Заканчивается", note: "крышка закрыта", tone: "warn" },
+    { label: "Связь", value: "SIM −89 дБм", note: "ОФД отвечает за 1 900 мс", tone: "warn" },
+    { label: "ФН", value: "3 неотправленных", note: "самый старый с 15:40, смена 9 ч", tone: "warn" },
+    { label: "Память", value: "4% свободно", note: "0,3 ГБ, касса может зависать", tone: "bad" },
+    { label: "Часы", value: "Отстают", note: "на 3 мин 12 сек", tone: "warn" },
+  ],
+};
+
 const LINK_TEXT: Record<Link, string> = { ok: "На связи", warn: "Давно не было чеков", bad: "Нет связи" };
 
 function fnTone(d: number) { return d < 30 ? "bad" : d <= 60 ? "warn" : "ok"; }
@@ -75,7 +95,21 @@ function Engineer() {
       .some((v) => v.toLowerCase().replace(/[\s()+-]/g, "").includes(s)));
   }, [q]);
 
+  const [diagBusy, setDiagBusy] = useState(false);
+  const [diagFor, setDiagFor] = useState<string | null>(null);
+  const [diagAt, setDiagAt] = useState("");
+
   const k = KASSY.find((x) => x.id === sel) ?? KASSY[0]!;
+
+  function runDiag() {
+    setDiagBusy(true);
+    const id = k.id;
+    setTimeout(() => {
+      setDiagFor(id);
+      setDiagAt(new Date().toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" }));
+      setDiagBusy(false);
+    }, id === "3" ? 2500 : 1400);
+  }
   const hist = [...(extra[k.id] ?? []), ...k.history];
 
   return (
@@ -125,6 +159,30 @@ function Engineer() {
               <li key={a}><span className="mk-acc-name">{a}</span><b className="mk-acc-date">{b}</b></li>
             ))}
           </ul>
+        </section>
+
+        <section className="mk-card mk-acc-block" aria-label="Диагностика железа">
+          <p className="mk-cab-kicker"><Activity size={14} aria-hidden="true" />Диагностика железа</p>
+          <p className="mk-cab-muted">Живой опрос кассы в момент обращения: батарея, бумага, связь, ФН и память.</p>
+          <button type="button" className="mk-eng-diag-btn" disabled={diagBusy} onClick={runDiag}>
+            <RefreshCw size={16} aria-hidden="true" className={diagBusy ? "animate-spin" : ""} />
+            {diagBusy ? "Опрос кассы…" : "Диагностировать кассу"}
+          </button>
+          {diagFor === k.id && diagAt && !diagBusy && (
+            k.link === "bad" ? (
+              <p className="mk-eng-diag-none">Касса не ответила за 20 секунд. Скорее всего, нет интернета или касса выключена. Позвоните клиенту.</p>
+            ) : (
+              <>
+                <p className="mk-cab-muted">Обновлено только что, {diagAt}</p>
+                <div className="mk-eng-grid">
+                  {DIAG[k.id]!.map((d) => (
+                    <div key={d.label} className="mk-eng-tile" data-tone={d.tone}><small>{d.label}</small><b>{d.value}</b><span>{d.note}</span></div>
+                  ))}
+                </div>
+              </>
+            )
+          )}
+          <p className="mk-cab-muted" style={{ fontSize: 12 }}>Демо: реальный опрос заработает после установки приложения «МастерКасс» на кассу.</p>
         </section>
 
         <section className="mk-card mk-acc-block" aria-label="Предупреждения">
