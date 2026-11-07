@@ -840,7 +840,7 @@ a.mk-tariff-cta { text-decoration: none; }
 .mk-bonus-title { background: var(--welcome-spectrum); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 1px 1px oklch(0.3 0.02 260 / 0.18)); }
 
 /* Кабинет мастера */
-.mk-eng-search { display: flex; align-items: center; gap: .6rem; padding: .7rem .9rem; border-radius: 12px; border: 1px solid var(--mk-line, color-mix(in oklab, var(--mk-muted) 30%, transparent)); background: var(--mk-surface); margin-bottom: .75rem; }
+.mk-eng-search { display: flex; align-items: center; gap: .6rem; padding: .7rem .9rem; border-radius: 12px; border: 1px solid var(--mk-border); background: var(--mk-surface); margin-bottom: .75rem; }
 .mk-eng-search input { flex: 1; min-width: 0; background: transparent; outline: none; font-size: 15px; }
 .mk-eng-row { display: flex; align-items: center; gap: .7rem; width: 100%; text-align: left; padding: .25rem 0; border-radius: 10px; }
 .mk-eng-row[data-active="true"] .mk-acc-name { font-weight: 600; }
@@ -856,5 +856,5 @@ a.mk-tariff-cta { text-decoration: none; }
 .mk-eng-tile b { font-size: 17px; }
 .mk-eng-form { display: flex; gap: .5rem; margin-bottom: .75rem; }
 .mk-eng-form input { flex: 1; min-width: 0; padding: .6rem .8rem; border-radius: 10px; border: 1px solid color-mix(in oklab, var(--mk-muted) 30%, transparent); background: var(--mk-surface); font-size: 14px; }
-.mk-eng-form button { padding: .6rem .9rem; border-radius: 10px; background: var(--mk-ink, currentColor); color: var(--mk-surface); font-size: 14px; font-weight: 600; }
+.mk-eng-form button { padding: .6rem .9rem; border-radius: 10px; background: var(--mk-fg); color: var(--mk-surface); font-size: 14px; font-weight: 600; }
 .mk-eng-form button:disabled { opacity: .4; }
