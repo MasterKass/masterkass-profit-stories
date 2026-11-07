@@ -70,7 +70,7 @@ function LoginPage() {
     if (!n) return;
     const r = verifyCode(n, code);
     if (r.ok) {
-      const to = r.role === "cashier" ? "/cashier" : r.role === "owner" ? "/owner" : r.role === "partner" ? "/partner" : r.role === "accountant" ? "/accountant" : r.role === "administrator" ? "/administrator" : "/cabinet";
+      const to = r.role === "cashier" ? "/cashier" : r.role === "owner" ? "/owner" : r.role === "partner" ? "/partner" : r.role === "accountant" ? "/accountant" : r.role === "administrator" ? "/administrator" : r.role === "engineer" ? "/engineer" : "/cabinet";
       navigate({ to });
     } else {
       setCodeError(r.error);

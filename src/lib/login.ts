@@ -1,6 +1,6 @@
 /** Вход по номеру телефона и SMS-коду. Пока работает демонстрационный режим без настоящего SMS-шлюза. */
 
-export type Role = "director" | "administrator" | "accountant" | "cashier" | "owner" | "partner";
+export type Role = "director" | "administrator" | "accountant" | "cashier" | "owner" | "partner" | "engineer";
 
 export const ROLE_LABELS: Record<Role, string> = {
   director: "Директор",
@@ -9,6 +9,7 @@ export const ROLE_LABELS: Record<Role, string> = {
   cashier: "Кассир",
   owner: "Хозяин",
   partner: "Партнёр",
+  engineer: "Мастер",
 };
 
 export const ROLE_ACCESS: Record<Role, string[]> = {
@@ -18,6 +19,7 @@ export const ROLE_ACCESS: Record<Role, string[]> = {
   cashier: ["ИИ-наставник", "Вызов инженера", "Обучение"],
   owner: ["Финансы компании", "Клиенты", "Команда", "База знаний", "Стратегический ИИ"],
   partner: ["Ссылка и QR-код", "Приглашённые клиенты", "Вознаграждения", "Вывод на карту", "Договор и документы"],
+  engineer: ["Поиск кассы", "Технический паспорт", "Ресурс ФН и связь", "Журнал выездов"],
 };
 
 /** Демонстрационные номера: каждый открывает свою роль. Показываются на экране входа. */
@@ -27,6 +29,7 @@ export const DEMO_ACCOUNTS: { phone: string; role: Role }[] = [
   { phone: "+79000000003", role: "accountant" },
   { phone: "+79000000004", role: "cashier" },
   { phone: "+79000000005", role: "partner" },
+  { phone: "+79000000006", role: "engineer" },
 ];
 
 /** Скрытый доступ владельца: ровно эти два номера. Нигде на экране не показываются. */
