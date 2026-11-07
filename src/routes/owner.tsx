@@ -28,6 +28,7 @@ type Doc = { name: string; date: string; note: string; href?: string };
 
 const SECTIONS: Record<string, Doc[]> = {
   Маркетинг: [
+    { name: "Фирменный стиль интерфейса.docx", date: "7 ноя", note: "Цвета, спектр, шрифт Inter, скругления, кнопки, формы, правила для касс Эвотор", href: "/downloads/stil-interfeysa-masterkass.docx" },
     { name: "Логотип МастерКасс (иконки).zip", date: "6 ноя", note: "Вектор SVG, PNG до 2048 px, иконки для кассы Android и Evotor Market, favicon", href: "/downloads/masterkass-logo.zip" },
     { name: "Кейс кофейни.pdf", date: "28 окт", note: "История владельца: от одной точки до шести" },
     { name: "План рилсов на ноябрь.docx", date: "30 окт", note: "Зоопарк программ, будни кассира" },
