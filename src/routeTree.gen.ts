@@ -24,6 +24,7 @@ import { Route as PartnerRouteImport } from './routes/partner'
 import { Route as PartnersRouteImport } from './routes/partners'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as ServiceRouteImport } from './routes/service'
+import { Route as StoriesRouteImport } from './routes/stories'
 import { Route as SupportRouteImport } from './routes/support'
 import { Route as ApiPublicCronLinkCheckRouteImport } from './routes/api/public/cron/link-check'
 
@@ -102,6 +103,11 @@ const ServiceRoute = ServiceRouteImport.update({
   path: '/service',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StoriesRoute = StoriesRouteImport.update({
+  id: '/stories',
+  path: '/stories',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SupportRoute = SupportRouteImport.update({
   id: '/support',
   path: '/support',
@@ -129,6 +135,7 @@ export interface FileRoutesByFullPath {
   '/partners': typeof PartnersRoute
   '/privacy': typeof PrivacyRoute
   '/service': typeof ServiceRoute
+  '/stories': typeof StoriesRoute
   '/support': typeof SupportRoute
   '/api/public/cron/link-check': typeof ApiPublicCronLinkCheckRoute
 }
@@ -148,6 +155,7 @@ export interface FileRoutesByTo {
   '/partners': typeof PartnersRoute
   '/privacy': typeof PrivacyRoute
   '/service': typeof ServiceRoute
+  '/stories': typeof StoriesRoute
   '/support': typeof SupportRoute
   '/api/public/cron/link-check': typeof ApiPublicCronLinkCheckRoute
 }
@@ -168,6 +176,7 @@ export interface FileRoutesById {
   '/partners': typeof PartnersRoute
   '/privacy': typeof PrivacyRoute
   '/service': typeof ServiceRoute
+  '/stories': typeof StoriesRoute
   '/support': typeof SupportRoute
   '/api/public/cron/link-check': typeof ApiPublicCronLinkCheckRoute
 }
@@ -189,6 +198,7 @@ export interface FileRouteTypes {
     | '/partners'
     | '/privacy'
     | '/service'
+    | '/stories'
     | '/support'
     | '/api/public/cron/link-check'
   fileRoutesByTo: FileRoutesByTo
@@ -208,6 +218,7 @@ export interface FileRouteTypes {
     | '/partners'
     | '/privacy'
     | '/service'
+    | '/stories'
     | '/support'
     | '/api/public/cron/link-check'
   id:
@@ -227,6 +238,7 @@ export interface FileRouteTypes {
     | '/partners'
     | '/privacy'
     | '/service'
+    | '/stories'
     | '/support'
     | '/api/public/cron/link-check'
   fileRoutesById: FileRoutesById
@@ -247,6 +259,7 @@ export interface RootRouteChildren {
   PartnersRoute: typeof PartnersRoute
   PrivacyRoute: typeof PrivacyRoute
   ServiceRoute: typeof ServiceRoute
+  StoriesRoute: typeof StoriesRoute
   SupportRoute: typeof SupportRoute
   ApiPublicCronLinkCheckRoute: typeof ApiPublicCronLinkCheckRoute
 }
@@ -358,6 +371,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServiceRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/stories': {
+      id: '/stories'
+      path: '/stories'
+      fullPath: '/stories'
+      preLoaderRoute: typeof StoriesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/support': {
       id: '/support'
       path: '/support'
@@ -391,6 +411,7 @@ const rootRouteChildren: RootRouteChildren = {
   PartnersRoute: PartnersRoute,
   PrivacyRoute: PrivacyRoute,
   ServiceRoute: ServiceRoute,
+  StoriesRoute: StoriesRoute,
   SupportRoute: SupportRoute,
   ApiPublicCronLinkCheckRoute: ApiPublicCronLinkCheckRoute,
 }

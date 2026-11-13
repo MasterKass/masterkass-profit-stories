@@ -289,7 +289,7 @@ export function ClientStories() {
         </StoriesGroup>
         <div className="py-10">
           <h2 className="mk-h2">Наши клиенты</h2>
-          <div className="mt-8"><button type="button" title="Раздел в разработке" className="mk-tile-btn">Смотреть истории</button></div>
+          <div className="mt-8"><Link to="/stories" className="mk-tile-btn">Смотреть истории</Link></div>
         </div>
         <StoriesGroup>
           <Mid items={bottom.slice(0, 2)} offset={1} start={0} />
@@ -452,10 +452,11 @@ export function AskAi({ title = "Задайте вопрос нашему ИИ �
 
 /* 12. Подвал — карточка с разделами (часть слов ведёт на готовые страницы) */
 /** Слова подвала, у которых уже есть адрес: «Тарифы» открывают блок тарифов на странице сервиса. */
-const FOOTER_ROUTES: Record<string, { to: "/service" | "/partners" | "/loyalty"; hash?: string }> = {
+const FOOTER_ROUTES: Record<string, { to: "/service" | "/partners" | "/loyalty" | "/stories"; hash?: string }> = {
   "Программа лояльности": { to: "/loyalty" },
   "Тарифы": { to: "/service", hash: "tariffs" },
   "Партнёрам": { to: "/partners" },
+  "Истории клиентов": { to: "/stories" },
 };
 
 const FOOTER_COLUMNS: { title: string; links: string[] }[] = [
