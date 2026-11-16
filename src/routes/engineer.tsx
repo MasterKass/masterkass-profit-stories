@@ -3,6 +3,7 @@ import { useMemo, useState } from "react";
 import { Activity, RefreshCw, AlertTriangle, BookOpen, Check, Cpu, History, Phone, Search, Wrench } from "lucide-react";
 import { BackHome } from "@/components/back-home";
 import { ReregPanel, type RegCase } from "@/components/rereg-panel";
+import { OfdWatchPanel } from "@/components/ofd-watch-panel";
 import { QuarantinePanel } from "@/components/quarantine-panel";
 import { quarantineSummary, type QuarantineCheck } from "@/lib/quarantine";
 
@@ -70,6 +71,13 @@ const QUAR: Record<string, QuarantineCheck[]> = {
     { doc: "153", at: hAgo(2), sum: 640, reason: "regFlags", tag: "1207" },
   ],
   "3": [{ doc: "902", at: hAgo(30), sum: 1250, reason: "time" }],
+};
+
+const dIn = (n: number) => new Date(NOW.getTime() + n * 86_400_000);
+const OFDW: Record<string, { unsent: number; oldest: Date | null; until: Date }> = {
+  "1": { unsent: 0, oldest: null, until: dIn(116) },
+  "2": { unsent: 3, oldest: hAgo(9), until: dIn(4) },
+  "3": { unsent: 14, oldest: hAgo(6 * 24), until: dIn(50) },
 };
 
 const ERRORS = [
@@ -197,6 +205,8 @@ function Engineer() {
         </section>
 
         <ReregPanel c={REG[k.id]} now={NOW} />
+
+        <OfdWatchPanel {...OFDW[k.id]!} now={NOW} />
 
         <QuarantinePanel checks={QUAR[k.id] ?? []} serial={k.serial} client={k.client} now={NOW} />
 
