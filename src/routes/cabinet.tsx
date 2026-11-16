@@ -237,7 +237,7 @@ function OfdAlerts() {
     <>
       {q.count > 0 && (
         <li data-tone="bad">
-          Налоговая отправила в карантин чеков: {q.count} ({q.reasons.map((r) => QUARANTINE_INFO[r].title.split(":")[0].toLowerCase()).join(", ")}). Мастер уже разбирается{q.needCall ? " и позвонит вам" : ""}.
+          Налоговая отправила в карантин чеков: {q.count} ({q.reasons.map((r) => QUARANTINE_INFO[r].title.split(":")[0]!.toLowerCase()).join(", ")}). Мастер уже разбирается{q.needCall ? " и позвонит вам" : ""}.
         </li>
       )}
       {DEMO_UNSENT.count > 0 && (
