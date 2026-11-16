@@ -79,8 +79,8 @@ function Cabinet() {
           <div className="flex items-center gap-3">
             <BrandMark />
             <div>
-              <p className="mk-cab-org">Кофейня «Утро»</p>
-              <p className="mk-cab-muted">Директор · демо-данные</p>
+              <p className="mk-cab-org">{live?.ok ? live.store : "Кофейня «Утро»"}</p>
+              <p className="mk-cab-muted">{live?.ok ? `Директор${live.address ? ` · ${live.address}` : ""}` : "Директор · демо-данные"}</p>
             </div>
           </div>
           <span className="mk-cab-units"><Sparkles size={14} aria-hidden="true" />1 300 AI-юнитов</span>
@@ -98,24 +98,6 @@ function Cabinet() {
               <div><dt>Чеков</dt><dd>{live.summary.receipts}</dd></div>
               <div><dt>Средний чек</dt><dd>{rub(live.summary.avgCheck)}</dd></div>
               <div><dt>Наличные / карта</dt><dd>{rub(live.summary.cash)} / {rub(live.summary.card)}</dd></div>
-            </dl>
-            <dl className="mk-cab-rows">
-              {live.devices.map((d) => (
-                <div key={d.serial}><dt>{d.name}</dt><dd>{d.model} · зав. № {d.serial}</dd></div>
-              ))}
-              <div><dt>Смена</dt><dd>{live.summary.sessionOpen ? "открыта" : "закрыта"}</dd></div>
-              {live.summary.fnSerial && <div><dt>Фискальный накопитель</dt><dd>№ {live.summary.fnSerial}</dd></div>}
-              {live.fn && (
-                <div>
-                  <dt>Срок ФН (оценка)</dt>
-                  <dd>
-                    {live.fn.daysLeft > 0 ? `осталось ${live.fn.daysLeft} дн., до ${fmtDate(live.fn.until)}` : `истёк ${fmtDate(live.fn.until)}`}
-                    <br /><span className="mk-cab-muted">ФН на {live.fn.months} мес., в работе с {fmtDate(live.fn.since)}</span>
-                  </dd>
-                </div>
-              )}
-              {live.summary.lastEventAt && <div><dt>Последнее событие</dt><dd>{new Date(live.summary.lastEventAt).toLocaleString("ru-RU", { timeZone: "Europe/Moscow" })}</dd></div>}
-              {link && <div><dt>Связь с кассой</dt><dd><span className="mk-link-dot" data-level={link.level} aria-hidden="true" />{link.label}</dd></div>}
             </dl>
           </section>
         ) : (
@@ -175,13 +157,30 @@ function Cabinet() {
                   <span className="mk-cab-ico"><Icon size={18} aria-hidden="true" /></span>
                   <span className="flex-1 text-left">
                     <span className="mk-cab-title">{s.title}</span>
-                    <span className="mk-cab-muted">{s.summary}</span>
+                    <span className="mk-cab-muted">{s.id === "equipment" && live?.ok ? `${live.devices[0]?.model ?? "Эвотор"}${link ? ` · ${link.label}` : ""}` : s.summary}</span>
                   </span>
                   <ChevronDown size={18} className="mk-cab-chev" data-open={isOpen} aria-hidden="true" />
                 </button>
                 {isOpen && (
                   <dl className="mk-cab-rows">
-                    {s.rows.map(([k, v]) => <div key={k}><dt>{k}</dt><dd>{v}</dd></div>)}
+                    {s.id === "equipment" && live?.ok && (<>
+              {live.devices.map((d) => (
+                <div key={d.serial}><dt>{d.name}</dt><dd>{d.model} · зав. № {d.serial}</dd></div>
+              ))}
+              {live.summary.fnSerial && <div><dt>Фискальный накопитель</dt><dd>№ {live.summary.fnSerial}</dd></div>}
+              {live.fn && (
+                <div>
+                  <dt>Срок ФН (оценка)</dt>
+                  <dd>
+                    {live.fn.daysLeft > 0 ? `осталось ${live.fn.daysLeft} дн., до ${fmtDate(live.fn.until)}` : `истёк ${fmtDate(live.fn.until)}`}
+                    <br /><span className="mk-cab-muted">ФН на {live.fn.months} мес., в работе с {fmtDate(live.fn.since)}</span>
+                  </dd>
+                </div>
+              )}
+              {live.summary.lastEventAt && <div><dt>Последнее событие</dt><dd>{new Date(live.summary.lastEventAt).toLocaleString("ru-RU", { timeZone: "Europe/Moscow" })}</dd></div>}
+              {link && <div><dt>Связь с кассой</dt><dd><span className="mk-link-dot" data-level={link.level} aria-hidden="true" />{link.label}</dd></div>}
+                    </>)}
+                    {s.rows.filter(([k]) => !(s.id === "equipment" && live?.ok && (k === "Касса №1" || k === "Фискальный накопитель"))).map(([k, v]) => <div key={k}><dt>{k}</dt><dd>{v}</dd></div>)}
                   </dl>
                 )}
               </section>

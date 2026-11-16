@@ -46,7 +46,7 @@ export async function loadCabinet() {
       fetch(`${API}/devices`, { headers }),
     ]);
     if (!storesRes.ok || !devicesRes.ok) throw new Error(`evotor ${storesRes.status}/${devicesRes.status}`);
-    const stores = (await storesRes.json()).items as { id: string; name: string }[];
+    const stores = (await storesRes.json()).items as { id: string; name: string; address?: string }[];
     const devices = (await devicesRes.json()).items as { id: string; name: string; serial_number: string; model: string }[];
     const store = stores[0];
     const docs: EvotorDoc[] = [];
@@ -73,6 +73,7 @@ export async function loadCabinet() {
       ok: true as const,
       fn: fnLife(summary.fnSerial, firstUse),
       store: store?.name ?? "Магазин",
+      address: store?.address ?? null,
       devices: devices.map((d) => ({ name: d.name, serial: d.serial_number, model: `Эвотор ${d.model}` })),
       summary,
       events,
