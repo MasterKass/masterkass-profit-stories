@@ -157,7 +157,7 @@ function Cabinet() {
                   <span className="mk-cab-ico"><Icon size={18} aria-hidden="true" /></span>
                   <span className="flex-1 text-left">
                     <span className="mk-cab-title">{s.title}</span>
-                    <span className="mk-cab-muted">{s.summary}</span>
+                    <span className="mk-cab-muted">{s.id === "equipment" && live?.ok ? `${live.devices[0]?.model ?? "Эвотор"}${link ? ` · ${link.label}` : ""}` : s.summary}</span>
                   </span>
                   <ChevronDown size={18} className="mk-cab-chev" data-open={isOpen} aria-hidden="true" />
                 </button>
