@@ -8,6 +8,8 @@ import { BrandMark } from "@/components/brand-mark";
 import { useQuery } from "@tanstack/react-query";
 import { getEvotorCabinet } from "@/lib/evotor.functions";
 import { fnNeedsAlert, linkStatus } from "@/lib/evotor";
+import { quarantineSummary, QUARANTINE_INFO, type QuarantineCheck } from "@/lib/quarantine";
+import { unsentState, ofdSubState, OFD_PACKS } from "@/lib/ofd-watch";
 
 const rub = (n: number) => `${n.toLocaleString("ru-RU", { maximumFractionDigits: 2 })} ₽`;
 const fmtDay = (d: string) => new Date(`${d}T12:00:00Z`).toLocaleDateString("ru-RU", { day: "numeric", month: "long" });
@@ -48,7 +50,7 @@ const SECTIONS: Section[] = [
     ["Анна К. · кассир", "на смене с 08:00"], ["Ирина П. · бухгалтер", "была в сети вчера"], ["Свободно мест", "1 из 3"],
   ] },
   { id: "equipment", title: "Оборудование", icon: MonitorSmartphone, summary: "Эвотор 7.2 · связь отличная", rows: [
-    ["Касса №1", "Эвотор 7.2 · в сети"], ["Фискальный накопитель", "действует ещё 45 дней"], ["Износ кассы", "38% · замена через фонд"],
+    ["Касса №1", "Эвотор 7.2 · в сети"], ["Подписка ОФД", "до 20 ноября · продление 3 500 ₽ / 9 000 ₽"], ["Чеки в налоговую", "3 не отправлены · 2 в карантине"], ["Фискальный накопитель", "действует ещё 45 дней"], ["Износ кассы", "38% · замена через фонд"],
   ] },
   { id: "news", title: "Новости госрегулирования", icon: Landmark, summary: "Разрешительный режим: касса обновлена", rows: [
     ["Маркировка молочной продукции", "проверено, ошибок нет"], ["Разрешительный режим", "касса готова"], ["Новые форматы ФФД", "обновление не требуется"],
@@ -137,6 +139,7 @@ function Cabinet() {
                 Касса не передаёт данные {Math.floor(link.hours / 24)} дн. Проверьте интернет на точке: если чеки не уходят в ОФД 30 дней, касса заблокируется.
               </li>
             )}
+            <OfdAlerts />
             <li data-tone="warn">ЭДО: накладная «Кофе-Опт» на 24 500 ₽ ждёт подписи</li>
             <li data-tone="warn">Сироп ваниль заканчивается: остался 1 шт</li>
             <li data-tone="ok">Маркировка проверена, ошибок нет</li>
@@ -212,6 +215,42 @@ function FnAlert({ fn }: { fn: Fn }) {
           </button>
         </li>
       )}
+    </>
+  );
+}
+
+// Демо-данные кассы директора (те же правила, что в кабинете мастера). Реальные придут из «Платформы ОФД».
+const DEMO_NOW = new Date();
+const hAgo = (h: number) => new Date(DEMO_NOW.getTime() - h * 3_600_000);
+const DEMO_QUAR: QuarantineCheck[] = [
+  { doc: "1184", at: hAgo(20), sum: 890, reason: "marking" },
+  { doc: "1191", at: hAgo(6), sum: 420, reason: "marking" },
+];
+const DEMO_UNSENT = { count: 3, oldest: hAgo(9) };
+const DEMO_OFD_UNTIL = new Date(DEMO_NOW.getTime() + 4 * 86_400_000);
+
+function OfdAlerts() {
+  const q = quarantineSummary(DEMO_QUAR, DEMO_NOW);
+  const u = unsentState(DEMO_UNSENT.count, DEMO_UNSENT.oldest, DEMO_NOW);
+  const sub = ofdSubState(DEMO_OFD_UNTIL, DEMO_NOW);
+  return (
+    <>
+      {q.count > 0 && (
+        <li data-tone="bad">
+          Налоговая отправила в карантин чеков: {q.count} ({q.reasons.map((r) => QUARANTINE_INFO[r].title.split(":")[0].toLowerCase()).join(", ")}). Мастер уже разбирается{q.needCall ? " и позвонит вам" : ""}.
+        </li>
+      )}
+      {DEMO_UNSENT.count > 0 && (
+        <li data-tone={u.tone === "ok" ? undefined : u.tone}>
+          Не отправлено в ОФД чеков: {DEMO_UNSENT.count}. До блокировки накопителя {u.daysToBlock} дн. — проверьте интернет на точке.
+        </li>
+      )}
+      {sub.offerRenewal && (
+        <li data-tone={sub.tone}>
+          {sub.daysLeft > 0 ? `Подписка ОФД заканчивается через ${sub.daysLeft} дн.` : "Подписка ОФД закончилась."} Продление: {OFD_PACKS.map((p) => `${p.months} мес. — ${p.price.toLocaleString("ru-RU")} ₽`).join(", ")}.
+        </li>
+      )}
+      {q.count === 0 && DEMO_UNSENT.count === 0 && !sub.offerRenewal && <li data-tone="ok">Чеки уходят в налоговую штатно</li>}
     </>
   );
 }
