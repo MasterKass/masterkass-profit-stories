@@ -4,7 +4,7 @@ import { FileText, Keyboard, Mic, Paperclip, Plus, Send, X } from "lucide-react"
 import { BackHome } from "@/components/back-home";
 import { OwnerBoard } from "@/components/owner-dashboards";
 import { BreakevenPanel } from "@/components/breakeven-panel";
-import { DataPathDoc, FileDownload, ACCOUNTING_DOC_NAME, AGENT_DOC_NAME, DIAG_DOC_NAME, LOYALTY_DOC_NAME, DATA_PATH_DOC_NAME, EVOTOR_DOC_NAME, FN_DOC_NAME, OFD_DOC_NAME, OWNER_DOCS } from "@/components/data-path-doc";
+import { DataPathDoc, FileDownload, ACCOUNTING_DOC_NAME, REREG_DOC_NAME, AGENT_DOC_NAME, DIAG_DOC_NAME, LOYALTY_DOC_NAME, DATA_PATH_DOC_NAME, EVOTOR_DOC_NAME, FN_DOC_NAME, OFD_DOC_NAME, OWNER_DOCS } from "@/components/data-path-doc";
 import { useServerFn } from "@tanstack/react-start";
 import { createFnReplacementTask, createLinkSilenceTask, getEvotorCabinet, troubleshootCashRegister } from "@/lib/evotor.functions";
 import { linkStatus, linkNeedsTask } from "@/lib/evotor";
@@ -39,6 +39,7 @@ const SECTIONS: Record<string, Doc[]> = {
     { name: "Фонд «Новая касса».pdf", date: "20 окт", note: "Модель накопления 750 ₽ в месяц" },
   ],
   Интеграции: [
+    { name: REREG_DOC_NAME, date: "16 ноя", note: "48 часов контроля после замены ФН, отказ ФНС, ФИАС, реквизиты и коды" },
     { name: ACCOUNTING_DOC_NAME, date: "6 ноя", note: "1С, «Управление ассортиментом» и «МойСклад»: только чтение, какие данные берём" },
     { name: FN_DOC_NAME, date: "5 ноя", note: "Предупреждение за 30 дней, дайджест директора и задача в Битрикс24" },
     { name: EVOTOR_DOC_NAME, date: "5 ноя", note: "Тестовое приложение, токен клиента, ограничения Маркета и шаги" },
