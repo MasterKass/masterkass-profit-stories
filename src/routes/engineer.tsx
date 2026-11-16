@@ -4,6 +4,7 @@ import { Activity, RefreshCw, AlertTriangle, BookOpen, Check, Cpu, History, Phon
 import { BackHome } from "@/components/back-home";
 import { ReregPanel, type RegCase } from "@/components/rereg-panel";
 import { OfdWatchPanel } from "@/components/ofd-watch-panel";
+import { RefusalAiPanel } from "@/components/refusal-ai-panel";
 import { QuarantinePanel } from "@/components/quarantine-panel";
 import { quarantineSummary, type QuarantineCheck } from "@/lib/quarantine";
 
@@ -209,6 +210,8 @@ function Engineer() {
         <OfdWatchPanel {...OFDW[k.id]!} now={NOW} />
 
         <QuarantinePanel checks={QUAR[k.id] ?? []} serial={k.serial} client={k.client} now={NOW} />
+
+        <RefusalAiPanel context={`${k.client}, ${k.model}, адрес ${k.address}, ОФД ${k.ofd}, прошивка ${k.firmware}`} />
 
         <section className="mk-card mk-acc-block" aria-label="Диагностика железа">
           <p className="mk-cab-kicker"><Activity size={14} aria-hidden="true" />Диагностика железа</p>
