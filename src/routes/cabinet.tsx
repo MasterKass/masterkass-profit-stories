@@ -167,6 +167,7 @@ function Cabinet() {
               {live.devices.map((d) => (
                 <div key={d.serial}><dt>{d.name}</dt><dd>{d.model} · зав. № {d.serial}</dd></div>
               ))}
+              <div><dt>Смена</dt><dd>{live.summary.sessionOpen ? "открыта" : "закрыта"}</dd></div>
               {live.summary.fnSerial && <div><dt>Фискальный накопитель</dt><dd>№ {live.summary.fnSerial}</dd></div>}
               {live.fn && (
                 <div>
