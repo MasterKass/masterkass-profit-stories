@@ -180,7 +180,7 @@ function Cabinet() {
               {live.summary.lastEventAt && <div><dt>Последнее событие</dt><dd>{new Date(live.summary.lastEventAt).toLocaleString("ru-RU", { timeZone: "Europe/Moscow" })}</dd></div>}
               {link && <div><dt>Связь с кассой</dt><dd><span className="mk-link-dot" data-level={link.level} aria-hidden="true" />{link.label}</dd></div>}
                     </>)}
-                    {s.rows.map(([k, v]) => <div key={k}><dt>{k}</dt><dd>{v}</dd></div>)}
+                    {s.rows.filter(([k]) => !(s.id === "equipment" && live?.ok && (k === "Касса №1" || k === "Фискальный накопитель"))).map(([k, v]) => <div key={k}><dt>{k}</dt><dd>{v}</dd></div>)}
                   </dl>
                 )}
               </section>
