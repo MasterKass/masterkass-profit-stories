@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { Activity, RefreshCw, AlertTriangle, BookOpen, Check, Cpu, History, Phone, Search, Wrench } from "lucide-react";
 import { BackHome } from "@/components/back-home";
+import { ReregPanel, type RegCase } from "@/components/rereg-panel";
 
 export const Route = createFileRoute("/engineer")({
   head: () => ({
@@ -51,6 +52,14 @@ const KASSY: Kassa[] = [
     history: [{ date: "20 окт", who: "Сергей В.", what: "Чистка печатающей головки" }],
   },
 ];
+
+const NOW = new Date();
+const hAgo = (n: number) => new Date(NOW.getTime() - n * 3_600_000);
+const RESCUE = (serial: string, rnm: string, fn: string) => ({ serial, rnm, closeDoc: "1842", closeSign: "3150219876", regDoc: "1843", regSign: "0427761530", newFn: fn });
+const REG: Record<string, RegCase> = {
+  "1": { replacedAt: hAgo(14), fias: { found: true, houseNumber: "45" }, checks: [{ at: hAgo(13), answer: "reregistered" }, { at: hAgo(1), answer: "reregistered" }], rescue: RESCUE("00307301234567", "0006543210012345", "7281440500123456") },
+  "3": { replacedAt: hAgo(40), fias: { found: true, houseNumber: "" }, checks: [{ at: hAgo(39), answer: "reregistered" }, { at: hAgo(18), answer: "refused", reason: "адрес установки не найден в ФИАС" }], rescue: RESCUE("00305505554433", "0006543210099999", "7281440500777888") },
+};
 
 const ERRORS = [
   { code: "Ошибка 3924", fix: "Нет связи с ОФД: проверить интернет, дату и время, настройки ОФД в разделе «Настройки → ОФД»." },
@@ -160,6 +169,8 @@ function Engineer() {
             ))}
           </ul>
         </section>
+
+        <ReregPanel c={REG[k.id]} now={NOW} />
 
         <section className="mk-card mk-acc-block" aria-label="Диагностика железа">
           <p className="mk-cab-kicker"><Activity size={14} aria-hidden="true" />Диагностика железа</p>
