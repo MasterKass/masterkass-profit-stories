@@ -33,7 +33,7 @@ export function RefusalAiPanel({ context }: { context: string }) {
   async function run() {
     setBusy(true); setErr(""); setRes(null);
     try {
-      const r = await analyze({ data: { code, text, image, context } });
+      const r = await analyze({ data: { code, text, context, ...(image ? { image } : {}) } });
       if (r.ok) setRes(r.diagnosis); else setErr(r.error);
     } catch { setErr("Помощник сейчас недоступен. Попробуйте позже."); }
     finally { setBusy(false); }
