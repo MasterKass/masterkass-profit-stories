@@ -861,3 +861,6 @@ a.mk-tariff-cta { text-decoration: none; }
 .mk-eng-diag-btn { display: inline-flex; align-items: center; gap: .5rem; margin: .8rem 0; padding: .7rem 1rem; border-radius: 12px; background: var(--mk-fg); color: var(--mk-surface); font-size: 15px; font-weight: 600; }
 .mk-eng-diag-btn:disabled { opacity: .6; }
 .mk-eng-diag-none { padding: .8rem; border-radius: 12px; margin-bottom: .6rem; font-size: 14px; background: color-mix(in oklab, oklch(0.63 0.22 27) 14%, var(--mk-surface)); }
+
+.mk-rr-bar { margin-top: 8px; height: 6px; border-radius: 999px; background: color-mix(in oklab, currentColor 15%, transparent); overflow: hidden; }
+.mk-rr-bar > i { display: block; height: 100%; background: currentColor; border-radius: inherit; }
