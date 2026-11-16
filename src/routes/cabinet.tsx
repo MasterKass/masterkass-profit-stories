@@ -10,6 +10,7 @@ import { getEvotorCabinet } from "@/lib/evotor.functions";
 import { fnNeedsAlert, linkStatus } from "@/lib/evotor";
 import { quarantineSummary, QUARANTINE_INFO, type QuarantineCheck } from "@/lib/quarantine";
 import { unsentState, ofdSubState, OFD_PACKS } from "@/lib/ofd-watch";
+import { reconcileShift, revenue, type ShiftCheck } from "@/lib/reconciliation";
 
 const rub = (n: number) => `${n.toLocaleString("ru-RU", { maximumFractionDigits: 2 })} ₽`;
 const fmtDay = (d: string) => new Date(`${d}T12:00:00Z`).toLocaleDateString("ru-RU", { day: "numeric", month: "long" });
@@ -50,7 +51,7 @@ const SECTIONS: Section[] = [
     ["Анна К. · кассир", "на смене с 08:00"], ["Ирина П. · бухгалтер", "была в сети вчера"], ["Свободно мест", "1 из 3"],
   ] },
   { id: "equipment", title: "Оборудование", icon: MonitorSmartphone, summary: "Эвотор 7.2 · связь отличная", rows: [
-    ["Касса №1", "Эвотор 7.2 · в сети"], ["Подписка ОФД", "до 20 ноября · продление 3 500 ₽ / 9 000 ₽"], ["Чеки в налоговую", "3 не отправлены · 2 в карантине"], ["Фискальный накопитель", "действует ещё 45 дней"], ["Износ кассы", "38% · замена через фонд"],
+    ["Касса №1", "Эвотор 7.2 · в сети"], ["Подписка ОФД", "до 20 ноября · продление 3 500 ₽ / 9 000 ₽"], ["Чеки в налоговую", "3 не отправлены · 2 в карантине"], ["Сверка с ОФД", "смена №12: расхождение 1 200 ₽, 1 чек не дошёл"], ["Фискальный накопитель", "действует ещё 45 дней"], ["Износ кассы", "38% · замена через фонд"],
   ] },
   { id: "news", title: "Новости госрегулирования", icon: Landmark, summary: "Разрешительный режим: касса обновлена", rows: [
     ["Маркировка молочной продукции", "проверено, ошибок нет"], ["Разрешительный режим", "касса готова"], ["Новые форматы ФФД", "обновление не требуется"],
@@ -229,12 +230,40 @@ const DEMO_QUAR: QuarantineCheck[] = [
 const DEMO_UNSENT = { count: 3, oldest: hAgo(9) };
 const DEMO_OFD_UNTIL = new Date(DEMO_NOW.getTime() + 4 * 86_400_000);
 
+const DEMO_SHIFT: ShiftCheck = {
+  register: { shift: 12, sales: 8375.9, refunds: 0, cash: 2000, card: 6375.9, checks: 17 },
+  ofd: { shift: 12, sales: 7175.9, refunds: 0, cash: 2000, card: 5175.9, checks: 16 },
+  openedAt: hAgo(14), closedAt: hAgo(2),
+};
+
+function ReconAlert() {
+  const [demoOk, setDemoOk] = useState(false);
+  const shift = demoOk ? { ...DEMO_SHIFT, ofd: DEMO_SHIFT.register } : DEMO_SHIFT;
+  const r = reconcileShift(shift, DEMO_NOW);
+  const rub2 = (n: number) => `${n.toLocaleString("ru-RU", { maximumFractionDigits: 2 })} ₽`;
+  return (
+    <>
+      <li data-tone={r.tone === "ok" ? "ok" : r.tone}>
+        {r.tone === "ok"
+          ? `Сверка с ОФД пройдена: смена №${shift.register.shift}, выручка ${rub2(revenue(shift.register))} совпадает.`
+          : <>Сверка смены №{shift.register.shift} с ОФД: {r.issues.map((i) => i.text).join(" ")} Мастер проверит, что чеки дошли.</>}
+      </li>
+      <li>
+        <button type="button" className="mk-cab-fnbtn" onClick={() => setDemoOk((v) => !v)}>
+          {demoOk ? "Показать пример с расхождением" : "Показать, как выглядит пройденная сверка"}
+        </button>
+      </li>
+    </>
+  );
+}
+
 function OfdAlerts() {
   const q = quarantineSummary(DEMO_QUAR, DEMO_NOW);
   const u = unsentState(DEMO_UNSENT.count, DEMO_UNSENT.oldest, DEMO_NOW);
   const sub = ofdSubState(DEMO_OFD_UNTIL, DEMO_NOW);
   return (
     <>
+      <ReconAlert />
       {q.count > 0 && (
         <li data-tone="bad">
           Налоговая отправила в карантин чеков: {q.count} ({q.reasons.map((r) => QUARANTINE_INFO[r].title.split(":")[0]!.toLowerCase()).join(", ")}). Мастер уже разбирается{q.needCall ? " и позвонит вам" : ""}.
