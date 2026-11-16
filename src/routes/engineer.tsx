@@ -4,6 +4,7 @@ import { Activity, RefreshCw, AlertTriangle, BookOpen, Check, Cpu, History, Phon
 import { BackHome } from "@/components/back-home";
 import { ReregPanel, type RegCase } from "@/components/rereg-panel";
 import { OfdWatchPanel } from "@/components/ofd-watch-panel";
+import type { ShiftCheck } from "@/lib/reconciliation";
 import { RefusalAiPanel } from "@/components/refusal-ai-panel";
 import { QuarantinePanel } from "@/components/quarantine-panel";
 import { quarantineSummary, type QuarantineCheck } from "@/lib/quarantine";
@@ -75,10 +76,11 @@ const QUAR: Record<string, QuarantineCheck[]> = {
 };
 
 const dIn = (n: number) => new Date(NOW.getTime() + n * 86_400_000);
-const OFDW: Record<string, { unsent: number; oldest: Date | null; until: Date }> = {
-  "1": { unsent: 0, oldest: null, until: dIn(116) },
-  "2": { unsent: 3, oldest: hAgo(9), until: dIn(4) },
-  "3": { unsent: 14, oldest: hAgo(6 * 24), until: dIn(50) },
+const SD = { shift: 12, sales: 8375.9, refunds: 0, cash: 2000, card: 6375.9, checks: 17 };
+const OFDW: Record<string, { unsent: number; oldest: Date | null; until: Date; shift: ShiftCheck }> = {
+  "1": { unsent: 0, oldest: null, until: dIn(116), shift: { register: SD, ofd: SD, openedAt: hAgo(14), closedAt: hAgo(2) } },
+  "2": { unsent: 3, oldest: hAgo(9), until: dIn(4), shift: { register: SD, ofd: { ...SD, sales: 7175.9, card: 5175.9, checks: 16 }, openedAt: hAgo(14), closedAt: hAgo(2) } },
+  "3": { unsent: 14, oldest: hAgo(6 * 24), until: dIn(50), shift: { register: { ...SD, shift: 40 }, ofd: null, openedAt: hAgo(30), closedAt: null } },
 };
 
 const ERRORS = [

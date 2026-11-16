@@ -1,11 +1,13 @@
-import { Send, CalendarClock } from "lucide-react";
+import { Send, CalendarClock, Scale } from "lucide-react";
+import { reconcileShift, type ShiftCheck } from "@/lib/reconciliation";
 import { unsentState, ofdSubState, OFD_PACKS } from "@/lib/ofd-watch";
 
 const TONE = { ok: "Норма", warn: "Внимание", bad: "Срочно" };
 
-export function OfdWatchPanel({ unsent, oldest, until, now }: { unsent: number; oldest: Date | null; until: Date; now: Date }) {
+export function OfdWatchPanel({ unsent, oldest, until, now, shift }: { unsent: number; oldest: Date | null; until: Date; now: Date; shift?: ShiftCheck }) {
   const u = unsentState(unsent, oldest, now);
   const s = ofdSubState(until, now);
+  const rc = shift ? reconcileShift(shift, now) : null;
   return (
     <section className="mk-card mk-acc-block" aria-label="Связь с ОФД">
       <p className="mk-cab-kicker"><Send size={14} aria-hidden="true" />Неотправленные чеки · {TONE[u.tone]}</p>
@@ -21,6 +23,11 @@ export function OfdWatchPanel({ unsent, oldest, until, now }: { unsent: number; 
           ))}
         </ul>
       )}
+      {rc && shift && (<>
+        <p className="mk-cab-kicker" style={{ marginTop: 16 }}><Scale size={14} aria-hidden="true" />Сверка смены №{shift.register.shift} с ОФД · {TONE[rc.tone]}</p>
+        {rc.issues.length ? <ul className="mk-acc-list">{rc.issues.map((i) => <li key={i.kind}><span className="mk-acc-name">{i.text}</span></li>)}</ul>
+          : <p className="mk-cab-muted">Выручка, число чеков и оплаты совпадают.</p>}
+      </>)}
     </section>
   );
 }
