@@ -635,6 +635,7 @@ a.mk-tariff-cta { text-decoration: none; }
 .mk-cab-attn li { position: relative; padding-left: 1.1rem; font-size: 14.5px; line-height: 1.5; margin-top: .35rem; }
 .mk-cab-attn li::before { content: ""; position: absolute; left: 0; top: .55em; width: 8px; height: 8px; border-radius: 3px; background: oklch(0.75 0.17 60); }
 .mk-cab-attn li[data-tone="ok"]::before { background: oklch(0.72 0.17 145); }
+.mk-cab-attn li[data-tone="bad"]::before { background: oklch(0.63 0.22 27); }
 .mk-cab-ask { display: flex; align-items: center; gap: 8px; width: 100%; margin-top: .75rem; padding: .9rem 1rem; border-radius: 12px; background: var(--mk-fg); color: var(--mk-surface); font-size: 14px; font-weight: 500; text-align: left; }
 .mk-cab-dl { background: var(--mk-surface); color: var(--mk-fg); border: 1px solid color-mix(in oklab, var(--mk-fg) 18%, transparent); }
 .mk-dv { position: fixed; inset: 0; z-index: 100; display: flex; flex-direction: column; background: color-mix(in oklab, var(--mk-fg) 88%, transparent); }
