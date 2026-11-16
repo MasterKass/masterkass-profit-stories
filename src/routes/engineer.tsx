@@ -3,6 +3,8 @@ import { useMemo, useState } from "react";
 import { Activity, RefreshCw, AlertTriangle, BookOpen, Check, Cpu, History, Phone, Search, Wrench } from "lucide-react";
 import { BackHome } from "@/components/back-home";
 import { ReregPanel, type RegCase } from "@/components/rereg-panel";
+import { QuarantinePanel } from "@/components/quarantine-panel";
+import { quarantineSummary, type QuarantineCheck } from "@/lib/quarantine";
 
 export const Route = createFileRoute("/engineer")({
   head: () => ({
@@ -61,6 +63,15 @@ const REG: Record<string, RegCase> = {
   "3": { replacedAt: hAgo(40), fias: { found: true, houseNumber: "" }, checks: [{ at: hAgo(39), answer: "reregistered" }, { at: hAgo(18), answer: "refused", reason: "адрес установки не найден в ФИАС" }], rescue: RESCUE("00305505554433", "0006543210099999", "7281440500777888") },
 };
 
+const QUAR: Record<string, QuarantineCheck[]> = {
+  "2": [
+    { doc: "148", at: hAgo(5), sum: 389, reason: "marking", tag: "2106" },
+    { doc: "151", at: hAgo(3), sum: 214, reason: "marking", tag: "2106" },
+    { doc: "153", at: hAgo(2), sum: 640, reason: "regFlags", tag: "1207" },
+  ],
+  "3": [{ doc: "902", at: hAgo(30), sum: 1250, reason: "time" }],
+};
+
 const ERRORS = [
   { code: "Ошибка 3924", fix: "Нет связи с ОФД: проверить интернет, дату и время, настройки ОФД в разделе «Настройки → ОФД»." },
   { code: "Касса заблокирована по дате", fix: "Сверить дату в ФН и в системе, закрыть смену, перезагрузить кассу." },
@@ -108,6 +119,7 @@ function Engineer() {
   const [diagFor, setDiagFor] = useState<string | null>(null);
   const [diagAt, setDiagAt] = useState("");
 
+  const quarKassy = KASSY.filter((x) => quarantineSummary(QUAR[x.id] ?? [], NOW).count > 0);
   const k = KASSY.find((x) => x.id === sel) ?? KASSY[0]!;
 
   function runDiag() {
@@ -132,6 +144,20 @@ function Engineer() {
           </div>
           <span className="mk-csh-status"><Wrench size={14} aria-hidden="true" />На смене</span>
         </header>
+
+        {quarKassy.length > 0 && (
+          <section className="mk-card mk-acc-block" aria-label="Сигнал карантина">
+            <p className="mk-cab-kicker"><AlertTriangle size={14} aria-hidden="true" />Касс с чеками в карантине: {quarKassy.length}</p>
+            <ul className="mk-acc-list">
+              {quarKassy.map((x) => (
+                <li key={x.id}><button type="button" className="mk-eng-row" data-active={x.id === k.id} onClick={() => setSel(x.id)}>
+                  <span className="mk-eng-dot" data-tone="bad" aria-hidden="true" />
+                  <span className="mk-acc-name">{x.client}<small>{quarantineSummary(QUAR[x.id]!, NOW).count} в карантине — открыть</small></span>
+                </button></li>
+              ))}
+            </ul>
+          </section>
+        )}
 
         <section className="mk-card mk-acc-block" aria-label="Поиск кассы">
           <label className="mk-eng-search">
@@ -171,6 +197,8 @@ function Engineer() {
         </section>
 
         <ReregPanel c={REG[k.id]} now={NOW} />
+
+        <QuarantinePanel checks={QUAR[k.id] ?? []} serial={k.serial} client={k.client} now={NOW} />
 
         <section className="mk-card mk-acc-block" aria-label="Диагностика железа">
           <p className="mk-cab-kicker"><Activity size={14} aria-hidden="true" />Диагностика железа</p>
