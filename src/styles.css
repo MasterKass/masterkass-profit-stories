@@ -956,3 +956,11 @@ a.mk-tariff-cta { text-decoration: none; }
 .mk-pulse-tick { flex-basis: 8.5rem; }
 .mk-pulse-tick-label { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 .mk-pulse-item[data-now] { box-shadow: none; }
+
+.mk-pulse-track-wrap { margin-top: 2.5rem; }
+.mk-pulse-grid { margin-top: 3.5rem; }
+.mk-pulse-more summary { list-style: none; display: inline-flex; align-items: center; justify-content: center; width: 1.9rem; height: 1.9rem; border: 1px solid var(--mk-border); border-radius: 999px; color: var(--mk-muted); }
+.mk-pulse-more summary::-webkit-details-marker { display: none; }
+.mk-pulse-more summary::before { content: "+"; font-size: 1.1rem; line-height: 1; }
+.mk-pulse-more[open] summary::before { content: "−"; }
+.mk-pulse-more summary:hover { color: var(--mk-fg); border-color: var(--mk-fg); }
