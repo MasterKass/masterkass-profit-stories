@@ -23,6 +23,7 @@ import { Route as OwnerRouteImport } from './routes/owner'
 import { Route as PartnerRouteImport } from './routes/partner'
 import { Route as PartnersRouteImport } from './routes/partners'
 import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as PulseRouteImport } from './routes/pulse'
 import { Route as ServiceRouteImport } from './routes/service'
 import { Route as StoriesRouteImport } from './routes/stories'
 import { Route as SupportRouteImport } from './routes/support'
@@ -98,6 +99,11 @@ const PrivacyRoute = PrivacyRouteImport.update({
   path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PulseRoute = PulseRouteImport.update({
+  id: '/pulse',
+  path: '/pulse',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ServiceRoute = ServiceRouteImport.update({
   id: '/service',
   path: '/service',
@@ -134,6 +140,7 @@ export interface FileRoutesByFullPath {
   '/partner': typeof PartnerRoute
   '/partners': typeof PartnersRoute
   '/privacy': typeof PrivacyRoute
+  '/pulse': typeof PulseRoute
   '/service': typeof ServiceRoute
   '/stories': typeof StoriesRoute
   '/support': typeof SupportRoute
@@ -154,6 +161,7 @@ export interface FileRoutesByTo {
   '/partner': typeof PartnerRoute
   '/partners': typeof PartnersRoute
   '/privacy': typeof PrivacyRoute
+  '/pulse': typeof PulseRoute
   '/service': typeof ServiceRoute
   '/stories': typeof StoriesRoute
   '/support': typeof SupportRoute
@@ -175,6 +183,7 @@ export interface FileRoutesById {
   '/partner': typeof PartnerRoute
   '/partners': typeof PartnersRoute
   '/privacy': typeof PrivacyRoute
+  '/pulse': typeof PulseRoute
   '/service': typeof ServiceRoute
   '/stories': typeof StoriesRoute
   '/support': typeof SupportRoute
@@ -197,6 +206,7 @@ export interface FileRouteTypes {
     | '/partner'
     | '/partners'
     | '/privacy'
+    | '/pulse'
     | '/service'
     | '/stories'
     | '/support'
@@ -217,6 +227,7 @@ export interface FileRouteTypes {
     | '/partner'
     | '/partners'
     | '/privacy'
+    | '/pulse'
     | '/service'
     | '/stories'
     | '/support'
@@ -237,6 +248,7 @@ export interface FileRouteTypes {
     | '/partner'
     | '/partners'
     | '/privacy'
+    | '/pulse'
     | '/service'
     | '/stories'
     | '/support'
@@ -258,6 +270,7 @@ export interface RootRouteChildren {
   PartnerRoute: typeof PartnerRoute
   PartnersRoute: typeof PartnersRoute
   PrivacyRoute: typeof PrivacyRoute
+  PulseRoute: typeof PulseRoute
   ServiceRoute: typeof ServiceRoute
   StoriesRoute: typeof StoriesRoute
   SupportRoute: typeof SupportRoute
@@ -364,6 +377,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/pulse': {
+      id: '/pulse'
+      path: '/pulse'
+      fullPath: '/pulse'
+      preLoaderRoute: typeof PulseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/service': {
       id: '/service'
       path: '/service'
@@ -410,6 +430,7 @@ const rootRouteChildren: RootRouteChildren = {
   PartnerRoute: PartnerRoute,
   PartnersRoute: PartnersRoute,
   PrivacyRoute: PrivacyRoute,
+  PulseRoute: PulseRoute,
   ServiceRoute: ServiceRoute,
   StoriesRoute: StoriesRoute,
   SupportRoute: SupportRoute,
