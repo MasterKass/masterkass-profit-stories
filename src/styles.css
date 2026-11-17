@@ -924,7 +924,6 @@ a.mk-tariff-cta { text-decoration: none; }
   height: 3px;
   pointer-events: none;
   background: linear-gradient(90deg, transparent 36%, var(--pulse-flash-amber) 41%, var(--pulse-flash-yellow) 45%, var(--pulse-flash-lime) 49%, var(--pulse-flash-cyan) 53%, transparent 58%) 100% 0 / 300% 100% no-repeat;
-  filter: drop-shadow(0 0 3px var(--pulse-flash-yellow)) drop-shadow(0 0 7px var(--pulse-flash-cyan));
   animation: mk-pulse-bolt 1.15s .3s cubic-bezier(.55, 0, .2, 1) both;
 }
 .mk-pulse-tick-dot { z-index: 2; }
