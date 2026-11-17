@@ -932,3 +932,22 @@ a.mk-tariff-cta { text-decoration: none; }
   to { background-position: 0% 0; }
 }
 @media (prefers-reduced-motion: reduce) { .mk-pulse-bolt { display: none; } }
+
+/* Пульс: строгая версия — монохром, акцент только у «сейчас» */
+.mk-pulse-item, .mk-pulse-tick { --pc: var(--mk-muted); }
+.mk-pulse-item[data-now], .mk-pulse-tick[data-now] { --pc: oklch(0.86 0.18 135); }
+.mk-pulse-item { border-top: 0; }
+.mk-pulse-tick { flex-basis: 4.5rem; }
+.mk-pulse-archive { margin-top: 2rem; }
+.mk-pulse-archive > summary { cursor: pointer; font-size: .95rem; color: var(--mk-muted); }
+.mk-pulse-archive > summary:hover { color: var(--mk-fg); }
+.mk-pulse-sub { margin-top: 4rem; padding-top: 2.5rem; border-top: 1px solid var(--mk-border); max-width: 40rem; }
+.mk-pulse-sub h2 { font-size: clamp(1.6rem, 4vw, 2.2rem); font-weight: 600; letter-spacing: -.03em; }
+.mk-pulse-sub > p { margin-top: .5rem; color: var(--mk-muted); }
+.mk-pulse-sub form { display: grid; gap: .75rem; margin-top: 1.5rem; }
+@media (min-width: 768px) { .mk-pulse-sub form { grid-template-columns: 1fr 1fr auto; } }
+.mk-pulse-sub input { width: 100%; background: transparent; border: 1px solid var(--mk-border); border-radius: 999px; padding: .75rem 1.1rem; color: var(--mk-fg); outline: none; }
+.mk-pulse-sub input:focus-visible { border-color: var(--mk-fg); }
+.mk-pulse-sub button { border-radius: 999px; padding: .75rem 1.4rem; font-weight: 600; background: var(--mk-fg); color: var(--mk-bg); }
+.mk-pulse-sub-err { grid-column: 1 / -1; font-size: .875rem; color: oklch(0.75 0.17 30); }
+.mk-pulse-sub-done { margin-top: 1.5rem; color: oklch(0.86 0.18 135); }
