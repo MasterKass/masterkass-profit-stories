@@ -42,7 +42,7 @@ function PulsePage() {
     <div className="mk-page mk-dark-page min-h-screen">
       <BackHome showLogin />
       <main className="mx-auto max-w-4xl px-5 pb-20 pt-10">
-        <section className="mt-12 max-w-3xl">
+        <section className="mt-20 max-w-3xl md:mt-24">
           <h1 className="text-2xl font-semibold leading-[1.1] tracking-[-0.03em] md:text-4xl"><span className="mk-bonus-title">Пульс Гос.регулирования</span></h1>
         </section>
         <div className="mk-pulse-track-wrap"><span className="mk-pulse-bolt" aria-hidden="true" /><div ref={track} className="mk-pulse-track" role="list" aria-label="Шкала времени">
