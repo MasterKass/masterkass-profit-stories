@@ -22,7 +22,9 @@ export const Route = createFileRoute("/pulse")({
 function PulsePage() {
   const [topic, setTopic] = useState<PulseTopic | "all">("all");
   const track = useRef<HTMLDivElement>(null);
-  useEffect(() => { const t = track.current; if (t) t.scrollLeft = t.scrollWidth; }, []);
+  useEffect(() => { const t = track.current; if (t) t.scrollLeft = t.scrollWidth;
+    const open = () => { const el = document.querySelector(location.hash || "#none"); const d = el?.closest("details.mk-pulse-archive") as HTMLDetailsElement | null; if (d) { d.open = true; el!.scrollIntoView(); } };
+    open(); window.addEventListener("hashchange", open); return () => window.removeEventListener("hashchange", open); }, []);
   const all = [...PULSE_EVENTS].reverse().filter((e) => topic === "all" || e.topic === topic);
   const fresh = all.filter((e) => e.year >= 2025);
   const archive = all.filter((e) => e.year < 2025);
