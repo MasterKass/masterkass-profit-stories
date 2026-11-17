@@ -43,14 +43,14 @@ function PulsePage() {
       <BackHome showLogin />
       <main className="mx-auto max-w-4xl px-5 pb-20 pt-10">
         <section className="mt-12 max-w-3xl">
-          <h1 className="text-[2.5rem] font-semibold leading-[1.05] tracking-[-0.035em] md:text-6xl"><span className="mk-bonus-title">Пульс Гос.регулирования</span></h1>
+          <h1 className="text-2xl font-semibold leading-[1.1] tracking-[-0.03em] md:text-4xl"><span className="mk-bonus-title">Пульс Гос.регулирования</span></h1>
         </section>
         <div className="mk-pulse-track-wrap"><span className="mk-pulse-bolt" aria-hidden="true" /><div ref={track} className="mk-pulse-track" role="list" aria-label="Шкала времени">
           {PULSE_EVENTS.map((e, i) => (
             <a key={e.title} role="listitem" href={`#ev-${i}`} className="mk-pulse-tick" data-topic={e.topic} data-now={e.now ? "" : undefined} title={e.title}>
               {(i === 0 || PULSE_EVENTS[i - 1]?.year !== e.year) && <span className="mk-pulse-tick-year">{e.year}</span>}
               <span className="mk-pulse-tick-dot" aria-hidden="true" />
-              
+              <span className="mk-pulse-tick-label">{e.title}</span>
             </a>
           ))}
         </div></div>
