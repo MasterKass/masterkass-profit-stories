@@ -137,7 +137,7 @@ function Onboarding() {
         {step === 1 && (
           <div className="mk-card mk-onb-card">
             <h2>Выберите тариф</h2>
-            <p className="mk-onb-muted">Все функции открыты на время бесплатного периода. Тариф можно сменить в кабинете.</p>
+            <p className="mk-onb-muted">Все функции открыты на 30 дней бесплатно. Тариф можно сменить в кабинете.</p>
             <div className="mt-2 space-y-3">
               {SERVICE_TARIFFS.map((t) => (
                 <button key={t.tone} type="button" onClick={() => pickTariff(t.tone)} className={`mk-card mk-tariff mk-tariff-${t.tone} mk-onb-tariff w-full text-left`}>
