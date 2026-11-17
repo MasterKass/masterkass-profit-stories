@@ -964,3 +964,6 @@ a.mk-tariff-cta { text-decoration: none; }
 .mk-pulse-more summary::before { content: "+"; font-size: 1.1rem; line-height: 1; }
 .mk-pulse-more[open] summary::before { content: "−"; }
 .mk-pulse-more summary:hover { color: var(--mk-fg); border-color: var(--mk-fg); }
+.mk-pulse-more summary { border: 0; width: auto; height: auto; }
+.mk-pulse-more summary::before { content: "›"; font-size: 1.6rem; transition: transform .2s; }
+.mk-pulse-more[open] summary::before { content: "›"; transform: rotate(90deg); }
