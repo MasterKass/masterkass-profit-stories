@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { SiteFooter } from "@/components/home-sections";
 import { BackHome } from "@/components/back-home";
 import { PULSE_EVENTS, PULSE_TOPICS, type PulseTopic } from "@/lib/pulse";
@@ -20,6 +20,8 @@ export const Route = createFileRoute("/pulse")({
 
 function PulsePage() {
   const [topic, setTopic] = useState<PulseTopic | "all">("all");
+  const track = useRef<HTMLDivElement>(null);
+  useEffect(() => { const t = track.current; if (t) t.scrollLeft = t.scrollWidth; }, []);
   const list = [...PULSE_EVENTS].reverse().filter((e) => topic === "all" || e.topic === topic);
   return (
     <div className="mk-page mk-dark-page min-h-screen">
@@ -31,7 +33,7 @@ function PulsePage() {
             Законы, маркировка, требования к кассам понятным языком.
           </p>
         </section>
-        <div className="mk-pulse-track" role="list" aria-label="Шкала времени">
+        <div className="mk-pulse-track-wrap"><span className="mk-pulse-bolt" aria-hidden="true" /><div ref={track} className="mk-pulse-track" role="list" aria-label="Шкала времени">
           {PULSE_EVENTS.map((e, i) => (
             <a key={e.title} role="listitem" href={`#ev-${i}`} className="mk-pulse-tick" data-topic={e.topic} data-now={e.now ? "" : undefined} title={e.title}>
               {(i === 0 || PULSE_EVENTS[i - 1]?.year !== e.year) && <span className="mk-pulse-tick-year">{e.year}</span>}
@@ -39,8 +41,7 @@ function PulsePage() {
               <span className="mk-pulse-tick-label">{e.title}</span>
             </a>
           ))}
-        </div>
-        <p className="mt-3 text-sm" style={{ color: "var(--mk-muted)" }}>{PULSE_EVENTS.length} изменений за 10 лет. Листайте шкалу и нажимайте на событие.</p>
+        </div></div>
         <div className="mk-pulse-filters" role="group" aria-label="Темы">
           <button type="button" aria-pressed={topic === "all"} onClick={() => setTopic("all")}>Все</button>
           {(Object.keys(PULSE_TOPICS) as PulseTopic[]).map((t) => (
