@@ -29,9 +29,6 @@ function PulsePage() {
       <main className="mx-auto max-w-4xl px-5 pb-20 pt-10">
         <section className="mt-12 max-w-3xl">
           <h1 className="text-[2.5rem] font-semibold leading-[1.05] tracking-[-0.035em] md:text-6xl"><span className="mk-bonus-title">Пульс Гос.регулирования</span></h1>
-          <p className="mt-4 text-lg leading-relaxed" style={{ color: "var(--mk-muted)" }}>
-            Законы, маркировка, требования к кассам понятным языком.
-          </p>
         </section>
         <div className="mk-pulse-track-wrap"><span className="mk-pulse-bolt" aria-hidden="true" /><div ref={track} className="mk-pulse-track" role="list" aria-label="Шкала времени">
           {PULSE_EVENTS.map((e, i) => (
