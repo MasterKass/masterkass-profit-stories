@@ -967,3 +967,7 @@ a.mk-tariff-cta { text-decoration: none; }
 .mk-pulse-more summary { border: 0; width: auto; height: auto; }
 .mk-pulse-more summary::before { content: "›"; font-size: 1.6rem; transition: transform .2s; }
 .mk-pulse-more[open] summary::before { content: "›"; transform: rotate(90deg); }
+
+.mk-pulse-more summary::before, .mk-pulse-more[open] summary::before { content: none; }
+.mk-pulse-more summary svg { width: 1.25rem; height: 1.25rem; transition: transform .2s; }
+.mk-pulse-more[open] summary svg { transform: rotate(90deg); }

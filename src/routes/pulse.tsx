@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef } from "react";
+import { ChevronRight } from "lucide-react";
 import { SiteFooter } from "@/components/home-sections";
 import { BackHome } from "@/components/back-home";
 import { PulseSubscribe } from "@/components/pulse-subscribe";
@@ -34,7 +35,7 @@ function PulsePage() {
       <p>{e.text}</p>
       <p className="mk-pulse-kassa"><b>На кассе:</b> {e.kassa}</p>
       {e.risk && <p className="mk-pulse-kassa"><b>Риски:</b> {e.risk}</p>}
-      {!!e.more?.length && <details className="mk-pulse-more"><summary aria-label="Подробнее" title="Подробнее" />{e.more.map((m) => <p key={m}>{m}</p>)}</details>}
+      {!!e.more?.length && <details className="mk-pulse-more"><summary aria-label="Подробнее" title="Подробнее"><ChevronRight aria-hidden="true" /></summary>{e.more.map((m) => <p key={m}>{m}</p>)}</details>}
     </article>
   );
   return (
