@@ -114,6 +114,8 @@ export function QuickActions() {
             <span className="mk-tile-title">{x.t}</span>
             {x.t === "Как устроен сервис" ? (
               <Link to="/service" className="mk-tile-btn">{x.b}</Link>
+            ) : x.t === "Законы и маркировка" ? (
+              <Link to="/pulse" className="mk-tile-btn">{x.b}</Link>
             ) : (
               <button type="button" title="Раздел в разработке" className="mk-tile-btn">{x.b}</button>
             )}
@@ -452,11 +454,12 @@ export function AskAi({ title = "Задайте вопрос нашему ИИ �
 
 /* 12. Подвал — карточка с разделами (часть слов ведёт на готовые страницы) */
 /** Слова подвала, у которых уже есть адрес: «Тарифы» открывают блок тарифов на странице сервиса. */
-const FOOTER_ROUTES: Record<string, { to: "/service" | "/partners" | "/loyalty" | "/stories"; hash?: string }> = {
+const FOOTER_ROUTES: Record<string, { to: "/service" | "/partners" | "/loyalty" | "/stories" | "/pulse"; hash?: string }> = {
   "Программа лояльности": { to: "/loyalty" },
   "Тарифы": { to: "/service", hash: "tariffs" },
   "Партнёрам": { to: "/partners" },
   "Истории клиентов": { to: "/stories" },
+  "54-ФЗ": { to: "/pulse" },
 };
 
 const FOOTER_COLUMNS: { title: string; links: string[] }[] = [
