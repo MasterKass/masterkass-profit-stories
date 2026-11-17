@@ -21,7 +21,6 @@ export const Route = createFileRoute("/pulse")({
 function PulsePage() {
   const [topic, setTopic] = useState<PulseTopic | "all">("all");
   const list = [...PULSE_EVENTS].reverse().filter((e) => topic === "all" || e.topic === topic);
-  let lastYear = 0;
   return (
     <div className="mk-page mk-dark-page min-h-screen">
       <BackHome showLogin />
@@ -32,29 +31,38 @@ function PulsePage() {
             Законы, маркировка и требования к кассам понятным языком. Сверху — свежее, внизу — с чего всё начиналось.
           </p>
         </section>
+        <div className="mk-pulse-track" role="list" aria-label="Шкала времени">
+          {PULSE_EVENTS.map((e, i) => (
+            <a key={e.title} role="listitem" href={`#ev-${i}`} className="mk-pulse-tick" data-topic={e.topic} data-now={e.now ? "" : undefined} title={e.title}>
+              {(i === 0 || PULSE_EVENTS[i - 1].year !== e.year) && <span className="mk-pulse-tick-year">{e.year}</span>}
+              <span className="mk-pulse-tick-dot" aria-hidden="true" />
+              <span className="mk-pulse-tick-label">{e.title}</span>
+            </a>
+          ))}
+        </div>
+        <p className="mt-3 text-sm" style={{ color: "var(--mk-muted)" }}>{PULSE_EVENTS.length} изменений за 10 лет. Листайте шкалу и нажимайте на событие.</p>
         <div className="mk-pulse-filters" role="group" aria-label="Темы">
           <button type="button" aria-pressed={topic === "all"} onClick={() => setTopic("all")}>Все</button>
           {(Object.keys(PULSE_TOPICS) as PulseTopic[]).map((t) => (
             <button key={t} type="button" data-topic={t} aria-pressed={topic === t} onClick={() => setTopic(t)}>{PULSE_TOPICS[t]}</button>
           ))}
         </div>
-        <ol className="mk-pulse-line">
-          {list.map((e) => {
-            const showYear = e.year !== lastYear; lastYear = e.year;
-            return (
-              <li key={e.title}>
-                {showYear && <div className="mk-pulse-year">{e.year}</div>}
-                <article className="mk-pulse-item" data-topic={e.topic} data-now={e.now ? "" : undefined}>
-                  <span className="mk-pulse-dot" aria-hidden="true" />
-                  <div className="mk-pulse-meta"><span>{e.date}</span><span className="mk-pulse-tag">{PULSE_TOPICS[e.topic]}</span>{e.now && <span className="mk-pulse-live">Действует сейчас</span>}</div>
-                  <h2>{e.title}</h2>
-                  <p>{e.text}</p>
-                  <p className="mk-pulse-kassa"><b>На кассе:</b> {e.kassa}</p>
-                </article>
-              </li>
-            );
-          })}
-        </ol>
+        <div className="mk-pulse-grid">
+          {list.map((e) => (
+            <article key={e.title} id={`ev-${PULSE_EVENTS.indexOf(e)}`} className="mk-pulse-item" data-topic={e.topic} data-now={e.now ? "" : undefined}>
+              <div className="mk-pulse-meta"><span>{e.date}</span><span className="mk-pulse-tag">{PULSE_TOPICS[e.topic]}</span>{e.now && <span className="mk-pulse-live">Действует сейчас</span>}</div>
+              <h2>{e.title}</h2>
+              <p>{e.text}</p>
+              <details className="mk-pulse-more">
+                <summary>Читать разбор</summary>
+                {e.more?.map((m) => <p key={m}>{m}</p>)}
+                <p className="mk-pulse-kassa"><b>На кассе:</b> {e.kassa}</p>
+                {e.risk && <p className="mk-pulse-kassa"><b>Риски:</b> {e.risk}</p>}
+                <p className="mk-pulse-kassa"><b>Мастер Касс:</b> следит за сроками, обновляет кассу и предупреждает в дайджесте заранее.</p>
+              </details>
+            </article>
+          ))}
+        </div>
         <p className="mt-10 text-sm" style={{ color: "var(--mk-muted)" }}>Клиенты Мастер Касс получают новости по своим темам в утренний дайджест.</p>
       </main>
       <div className="px-4 pb-6"><SiteFooter /></div>
