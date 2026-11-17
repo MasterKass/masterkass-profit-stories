@@ -7,9 +7,9 @@ import { PULSE_EVENTS, PULSE_TOPICS, type PulseTopic } from "@/lib/pulse";
 export const Route = createFileRoute("/pulse")({
   head: () => ({
     meta: [
-      { title: "Пульс регулирования · Мастер Касс" },
+      { title: "Пульс Гос.регулирования · Мастер Касс" },
       { name: "description", content: "Хроника законов о кассах, маркировке, ЕГАИС, Меркурии, НДС и ЭЦП с 2016 года понятным языком." },
-      { property: "og:title", content: "Пульс регулирования · Мастер Касс" },
+      { property: "og:title", content: "Пульс Гос.регулирования · Мастер Касс" },
       { property: "og:description", content: "Что менялось для касс и бизнеса — от 54-ФЗ до разрешительного режима." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -26,9 +26,9 @@ function PulsePage() {
       <BackHome showLogin />
       <main className="mx-auto max-w-4xl px-5 pb-20 pt-10">
         <section className="mt-12 max-w-3xl">
-          <h1 className="text-[2.5rem] font-semibold leading-[1.05] tracking-[-0.035em] md:text-6xl"><span className="mk-bonus-title">Пульс регулирования</span></h1>
+          <h1 className="text-[2.5rem] font-semibold leading-[1.05] tracking-[-0.035em] md:text-6xl"><span className="mk-bonus-title">Пульс Гос.регулирования</span></h1>
           <p className="mt-4 text-lg leading-relaxed" style={{ color: "var(--mk-muted)" }}>
-            Законы, маркировка и требования к кассам понятным языком. Сверху — свежее, внизу — с чего всё начиналось.
+            Законы, маркировка, требования к кассам понятным языком.
           </p>
         </section>
         <div className="mk-pulse-track" role="list" aria-label="Шкала времени">
@@ -58,14 +58,13 @@ function PulsePage() {
                 {e.more?.map((m) => <p key={m}>{m}</p>)}
                 <p className="mk-pulse-kassa"><b>На кассе:</b> {e.kassa}</p>
                 {e.risk && <p className="mk-pulse-kassa"><b>Риски:</b> {e.risk}</p>}
-                <p className="mk-pulse-kassa"><b>Мастер Касс:</b> следит за сроками, обновляет кассу и предупреждает в дайджесте заранее.</p>
               </details>
             </article>
           ))}
         </div>
         <p className="mt-10 text-sm" style={{ color: "var(--mk-muted)" }}>Клиенты Мастер Касс получают новости по своим темам в утренний дайджест.</p>
       </main>
-      <div className="px-4 pb-6"><SiteFooter /></div>
+      <div className="mk-pulse-footer px-4 pb-6"><SiteFooter /></div>
     </div>
   );
 }

@@ -902,3 +902,6 @@ a.mk-tariff-cta { text-decoration: none; }
 @media (min-width: 768px) { .mk-pulse-grid { grid-template-columns: 1fr 1fr; align-items: start; } }
 .mk-pulse-item { scroll-margin-top: 2rem; border-top: 3px solid var(--pc); }
 .mk-pulse-more summary { margin-top: .8rem; cursor: pointer; font-size: .9rem; font-weight: 600; color: var(--pc); }
+
+.mk-pulse-footer .mk-footer { background: var(--mk-bg); color: var(--mk-fg); border: 1px solid var(--mk-border); }
+.mk-pulse-footer .mk-footer a, .mk-pulse-footer .mk-footer p { color: var(--mk-muted); }
