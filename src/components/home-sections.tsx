@@ -102,9 +102,9 @@ export function AiReveal() {
 /* 4. Три карточки действий: заголовок вверху, кнопка внизу */
 export function QuickActions() {
   const items = [
-    { t: "Кассы и оборудование", b: "Посмотреть каталог" },
-    { t: "Как устроен сервис", b: "Исследовать" },
-    { t: "Законы и маркировка", b: "Следить за изменениями" },
+    { t: "Кассы и оборудование", b: "Посмотреть каталог", to: "" },
+    { t: "Как устроен сервис", b: "Исследовать", to: "/service" },
+    { t: "Пульс Гос.регулирования", b: "Следить за изменениями", to: "/pulse" },
   ];
   return (
     <section id="services" className="mk-section pt-0">
@@ -112,10 +112,8 @@ export function QuickActions() {
         {items.map((x) => (
           <div key={x.t} className="mk-tile">
             <span className="mk-tile-title">{x.t}</span>
-            {x.t === "Как устроен сервис" ? (
-              <Link to="/service" className="mk-tile-btn">{x.b}</Link>
-            ) : x.t === "Законы и маркировка" ? (
-              <Link to="/pulse" className="mk-tile-btn">{x.b}</Link>
+            {x.to ? (
+              <Link to={x.to} className="mk-tile-btn">{x.b}</Link>
             ) : (
               <button type="button" title="Раздел в разработке" className="mk-tile-btn">{x.b}</button>
             )}
@@ -465,7 +463,7 @@ const FOOTER_ROUTES: Record<string, { to: "/service" | "/partners" | "/loyalty" 
 const FOOTER_COLUMNS: { title: string; links: string[] }[] = [
   { title: "Сервис", links: ["Как устроен сервис", "AI-сотрудник 24/7", "Тарифы", "Фонд амортизации", "Вопросы о сервисе", "Поддержка"] },
   { title: "Оборудование", links: ["Кассы и оборудование", "Кассы Эвотор", "Кассы Касатка", "Замена фискального накопителя", "Диагностика сбоев"] },
-  { title: "Законы и маркировка", links: ["Честный Знак", "ЕГАИС", "Меркурий", "ЭДО и ЭЦП", "54-ФЗ"] },
+  { title: "Пульс Гос.регулирования", links: ["54-ФЗ", "Честный Знак", "ЕГАИС", "Меркурий", "ЭДО и ЭЦП"] },
   { title: "Решения", links: ["Онлайн-касса в Ростове-на-Дону", "Касса для кофейни", "Подключение маркировки", "Программа лояльности", "Обучение кассиров", "Кассы на юге России"] },
   { title: "Компания", links: ["Наши клиенты", "Истории клиентов", "Партнёрам", "Контакты"] },
 ];
