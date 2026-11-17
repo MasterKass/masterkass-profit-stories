@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { SiteFooter } from "@/components/home-sections";
 import { BackHome } from "@/components/back-home";
 import { PulseSubscribe } from "@/components/pulse-subscribe";
-import { PULSE_EVENTS, PULSE_TOPICS, type PulseTopic } from "@/lib/pulse";
+import { PULSE_EVENTS, PULSE_TOPICS } from "@/lib/pulse";
 
 export const Route = createFileRoute("/pulse")({
   head: () => ({
@@ -20,12 +20,11 @@ export const Route = createFileRoute("/pulse")({
 });
 
 function PulsePage() {
-  const [topic, setTopic] = useState<PulseTopic | "all">("all");
-  const track = useRef<HTMLDivElement>(null);
+    const track = useRef<HTMLDivElement>(null);
   useEffect(() => { const t = track.current; if (t) t.scrollLeft = t.scrollWidth;
     const open = () => { const el = document.querySelector(location.hash || "#none"); const d = el?.closest("details.mk-pulse-archive") as HTMLDetailsElement | null; if (d) { d.open = true; el!.scrollIntoView(); } };
     open(); window.addEventListener("hashchange", open); return () => window.removeEventListener("hashchange", open); }, []);
-  const all = [...PULSE_EVENTS].reverse().filter((e) => topic === "all" || e.topic === topic);
+  const all = [...PULSE_EVENTS].reverse();
   const fresh = all.filter((e) => e.year >= 2025);
   const archive = all.filter((e) => e.year < 2025);
   const card = (e: (typeof PULSE_EVENTS)[number]) => (
@@ -54,12 +53,6 @@ function PulsePage() {
             </a>
           ))}
         </div></div>
-        <div className="mk-pulse-filters" role="group" aria-label="Темы">
-          <button type="button" aria-pressed={topic === "all"} onClick={() => setTopic("all")}>Все</button>
-          {(Object.keys(PULSE_TOPICS) as PulseTopic[]).map((t) => (
-            <button key={t} type="button" aria-pressed={topic === t} onClick={() => setTopic(t)}>{PULSE_TOPICS[t]}</button>
-          ))}
-        </div>
         <div className="mk-pulse-grid">{fresh.map(card)}</div>
         {archive.length > 0 && (
           <details className="mk-pulse-archive">
