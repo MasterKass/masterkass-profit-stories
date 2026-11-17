@@ -7,6 +7,7 @@ import bakery from "@/assets/team-bakery.jpg";
 import boutique from "@/assets/team-boutique.jpg";
 import salon from "@/assets/team-salon.jpg";
 import { BrandMark } from "@/components/brand-mark";
+import { pulseFooterRoute } from "@/lib/pulse";
 
 export function useInView<T extends HTMLElement>(opts: IntersectionObserverInit = { threshold: 0.3 }) {
   const ref = useRef<T>(null);
@@ -451,13 +452,13 @@ export function AskAi({ title = "Задайте вопрос нашему ИИ �
 }
 
 /* 12. Подвал — карточка с разделами (часть слов ведёт на готовые страницы) */
-/** Слова подвала, у которых уже есть адрес: «Тарифы» открывают блок тарифов на странице сервиса. */
+/** Слова подвала, у которых уже есть адрес: «Тарифы» открывают блок тарифов на странице сервиса.
+ *  Темы госрегулирования берутся из PULSE_FOOTER_LINKS в src/lib/pulse.ts. */
 const FOOTER_ROUTES: Record<string, { to: "/service" | "/partners" | "/loyalty" | "/stories" | "/pulse"; hash?: string }> = {
   "Программа лояльности": { to: "/loyalty" },
   "Тарифы": { to: "/service", hash: "tariffs" },
   "Партнёрам": { to: "/partners" },
   "Истории клиентов": { to: "/stories" },
-  "54-ФЗ": { to: "/pulse" },
 };
 
 const FOOTER_COLUMNS: { title: string; links: string[] }[] = [
@@ -482,7 +483,7 @@ export function SiteFooter() {
               <div className="mk-footer-title">{col.title}</div>
               <ul className="mt-3 space-y-2">
                 {col.links.map((label) => {
-                  const route = FOOTER_ROUTES[label];
+                  const route = FOOTER_ROUTES[label] ?? pulseFooterRoute(label);
                   return (
                     <li key={label}>
                       {route ? (
