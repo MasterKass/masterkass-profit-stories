@@ -34,7 +34,7 @@ function PulsePage() {
         <div className="mk-pulse-track" role="list" aria-label="Шкала времени">
           {PULSE_EVENTS.map((e, i) => (
             <a key={e.title} role="listitem" href={`#ev-${i}`} className="mk-pulse-tick" data-topic={e.topic} data-now={e.now ? "" : undefined} title={e.title}>
-              {(i === 0 || PULSE_EVENTS[i - 1].year !== e.year) && <span className="mk-pulse-tick-year">{e.year}</span>}
+              {(i === 0 || PULSE_EVENTS[i - 1]?.year !== e.year) && <span className="mk-pulse-tick-year">{e.year}</span>}
               <span className="mk-pulse-tick-dot" aria-hidden="true" />
               <span className="mk-pulse-tick-label">{e.title}</span>
             </a>
