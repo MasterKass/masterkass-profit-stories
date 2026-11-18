@@ -33,7 +33,10 @@ export const DEMO_ACCOUNTS: { phone: string; role: Role }[] = [
 ];
 
 /** Скрытый доступ владельца: ровно эти два номера. Нигде на экране не показываются. */
-export const OWNER_PHONES: string[] = ["+79000000007", "+79000000008"];
+export const OWNER_PHONES: string[] = ["+79034021777", "+79064525200"];
+
+/** Демо-вход в «Хозяин» с кодом 1234, без отправки SMS. */
+export const DEMO_OWNER_PHONE = "+79000000007";
 
 export const DEMO_CODE = "1234";
 export const CODE_LENGTH = 4;
@@ -61,7 +64,7 @@ export function formatPhone(input: string): string {
 }
 
 export function roleForPhone(phone: string): Role | null {
-  if (OWNER_PHONES.includes(phone)) return "owner";
+  if (OWNER_PHONES.includes(phone) || phone === DEMO_OWNER_PHONE) return "owner";
   return DEMO_ACCOUNTS.find((a) => a.phone === phone)?.role ?? null;
 }
 

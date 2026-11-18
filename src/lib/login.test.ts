@@ -4,6 +4,7 @@ import {
   DEMO_ACCOUNTS,
   DEMO_CODE,
   OWNER_PHONES,
+  DEMO_OWNER_PHONE,
   RESEND_SECONDS,
   formatPhone,
   normalizePhone,
@@ -38,7 +39,9 @@ describe("вход по SMS", () => {
   it("хозяин скрыт: открывается ровно двумя номерами", () => {
     expect(OWNER_PHONES).toHaveLength(2);
     expect(roleForPhone("+79000000007")).toBe("owner");
-    expect(roleForPhone("+79000000008")).toBe("owner");
+    expect(roleForPhone("+79034021777")).toBe("owner");
+    expect(roleForPhone("+79064525200")).toBe("owner");
+    expect(DEMO_OWNER_PHONE).toBe("+79000000007");
     expect(verifyCode("+79000000007", "1234")).toEqual({ ok: true, role: "owner" });
     expect(DEMO_ACCOUNTS.some((a) => OWNER_PHONES.includes(a.phone))).toBe(false);
   });

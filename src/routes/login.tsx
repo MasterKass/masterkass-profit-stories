@@ -6,7 +6,7 @@ import {
   CODE_LENGTH,
   DEMO_ACCOUNTS,
   DEMO_CODE,
-  OWNER_PHONES,
+  DEMO_OWNER_PHONE,
   RESEND_SECONDS,
   ROLE_ACCESS,
   ROLE_LABELS,
@@ -194,9 +194,9 @@ function LoginPage() {
                   <span>{formatPhone(a.phone)}</span>
                 </button>
               ))}
-              <button type="button" className="mk-login-demo-owner" onClick={() => sendCode(OWNER_PHONES[0]!)}>
+              <button type="button" className="mk-login-demo-owner" onClick={() => sendCode(DEMO_OWNER_PHONE)}>
                 <b>Хозяин</b>
-                <span>{formatPhone(OWNER_PHONES[0]!)}</span>
+                <span>{formatPhone(DEMO_OWNER_PHONE)}</span>
               </button>
             </div>
           </aside>
