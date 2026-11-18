@@ -116,8 +116,8 @@ function Cabinet() {
         <button type="button" className="mk-cab-ask"><Mic size={16} aria-hidden="true" />Спросить AI: «Сравни выручку этой недели с прошлой»</button>
 
         <section className="mk-card mk-cab-bonus" aria-label="МК Бонус">
-          <p className="mk-cab-kicker">МК Бонус · Система лояльности ваших клиентов</p>
-          <p className="mk-cab-muted">Неделя: 11–17 ноября</p>
+          <p className="mk-cab-kicker">Система лояльности ваших клиентов</p>
+          <p className="mk-cab-muted">11–17 ноября</p>
           <dl className="mk-cab-stats">
             <div><dt>Выручки от гостей с картой</dt><dd>68%</dd></div>
             <div><dt>Новых карт</dt><dd>+14</dd></div>
