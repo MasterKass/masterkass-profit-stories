@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import {
-  ChevronDown, Wallet, HeartHandshake, FileSignature, Package, Users, MonitorSmartphone, Landmark, Mic, Sparkles, FileText, Download, X, Settings2, ShieldCheck,
+  ChevronDown, Wallet, HeartHandshake, FileSignature, Package, Users, MonitorSmartphone, Landmark, Mic, Sparkles,  Settings2, ShieldCheck,
 } from "lucide-react";
 import { LoyaltyAdmin, LoyaltySettings } from "@/components/loyalty-admin";
 import { CareHistory } from "@/components/care-history";
@@ -63,17 +63,10 @@ const SECTIONS: Section[] = [
 
 function Cabinet() {
   const [open, setOpen] = useState<string | null>(null);
-  const [digest, setDigest] = useState(false);
   const { data: live, isLoading } = useQuery({ queryKey: ["evotor-cabinet"], queryFn: () => getEvotorCabinet(), staleTime: 60_000 });
   const link = live?.ok ? linkStatus(live.summary.lastEventAt) : null;
-  useEffect(() => {
-    if (!digest) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setDigest(false); };
-    window.addEventListener("keydown", onKey);
-    return () => { document.body.style.overflow = prev; window.removeEventListener("keydown", onKey); };
-  }, [digest]);
+  // Демо: ЭДО и остатки всегда дают предупреждения ниже
+  const attn = true;
   return (
     <main className="mk-page mk-cab min-h-screen">
       <BackHome />
@@ -86,35 +79,41 @@ function Cabinet() {
               <p className="mk-cab-muted">{live?.ok ? `Директор${live.address ? ` · ${live.address}` : ""}` : "Директор · демо-данные"}</p>
             </div>
           </div>
-          <span className="mk-cab-units"><Sparkles size={14} aria-hidden="true" />1 300 AI-юнитов</span>
+          <div className="mk-cab-headr">
+            <span className="mk-cab-units"><Sparkles size={14} aria-hidden="true" />1 300 AI-юнитов</span>
+            <button type="button" className="mk-cab-light" data-level={attn ? "warn" : "ok"} onClick={() => document.getElementById("attn")?.scrollIntoView({ behavior: "smooth", block: "start" })}>
+              <span className="mk-link-dot" data-level={attn ? "warn" : "ok"} aria-hidden="true" />{attn ? "Требует внимания" : "Всё в порядке"}
+            </button>
+          </div>
         </header>
 
         {live?.ok ? (
           <section className="mk-card mk-cab-pulse" aria-label="Касса Эвотор">
-            <p className="mk-cab-kicker">Живые данные кассы · {live.store}</p>
             <p className="mk-cab-big">{rub(live.summary.revenue)}</p>
             <p className="mk-cab-muted">
               {live.summary.day ? `Выручка за ${fmtDay(live.summary.day)}` : "Продаж за 14 дней нет"}
               {live.summary.refunds ? ` · возвратов: ${live.summary.refunds}` : ""}
             </p>
             <dl className="mk-cab-stats">
-              <div><dt>Чеков</dt><dd>{live.summary.receipts}</dd></div>
-              <div><dt>Средний чек</dt><dd>{rub(live.summary.avgCheck)}</dd></div>
-              <div><dt>Наличные / карта</dt><dd>{rub(live.summary.cash)} / {rub(live.summary.card)}</dd></div>
+              <div><dt>Чеков</dt><dd className="mk-cab-num">{live.summary.receipts}</dd></div>
+              <div><dt>Средний чек</dt><dd className="mk-cab-num">{rub(live.summary.avgCheck)}</dd></div>
+              <div><dt>Новых карт лояльности</dt><dd className="mk-cab-num">+14</dd></div>
             </dl>
           </section>
         ) : (
           <section className="mk-card mk-cab-pulse" aria-label="Сегодня на точке">
-            <p className="mk-cab-kicker">{isLoading ? "Загружаем данные кассы…" : "Сегодня на точке · демо"}</p>
+            {isLoading && <p className="mk-cab-kicker">Загружаем данные кассы…</p>}
             <p className="mk-cab-big">48 650 ₽</p>
             <p className="mk-cab-up">{live && !live.ok ? live.error : "+12% к прошлому вторнику"}</p>
             <dl className="mk-cab-stats">
-              <div><dt>Чеков</dt><dd>73</dd></div>
-              <div><dt>Средний чек</dt><dd>665 ₽</dd></div>
-              <div><dt>Смена</dt><dd>Анна К., с 08:00</dd></div>
+              <div><dt>Чеков</dt><dd className="mk-cab-num">73</dd></div>
+              <div><dt>Средний чек</dt><dd className="mk-cab-num">665 ₽</dd></div>
+              <div><dt>Новых карт лояльности</dt><dd className="mk-cab-num">+14</dd></div>
             </dl>
           </section>
         )}
+
+        <button type="button" className="mk-cab-ask"><Mic size={16} aria-hidden="true" />Спросить AI: «Сравни выручку этой недели с прошлой»</button>
 
         <section className="mk-card mk-cab-bonus" aria-label="МК Бонус">
           <p className="mk-cab-kicker">МК Бонус · неделя</p>
@@ -127,7 +126,7 @@ function Cabinet() {
           <p className="mk-cab-muted"><Sparkles size={13} aria-hidden="true" /> 38 гостей не были больше 30 дней — напомнить им можно в «Гости и акции».</p>
         </section>
 
-        <section className="mk-card mk-cab-attn" aria-label="Требует внимания">
+        <section className="mk-card mk-cab-attn" id="attn" aria-label="Требует внимания">
           <p className="mk-cab-kicker">Требует внимания</p>
           <p className="mk-cab-okline"><ShieldCheck size={14} aria-hidden="true" />Касса в сети · маркировка без ошибок</p>
           <ul>
@@ -143,23 +142,6 @@ function Cabinet() {
           </ul>
         </section>
 
-        <button type="button" className="mk-cab-ask"><Mic size={16} aria-hidden="true" />Спросить AI: «Сравни выручку этой недели с прошлой»</button>
-
-        <button type="button" onClick={() => setDigest(true)} className="mk-cab-ask mk-cab-dl">
-          <FileText size={16} aria-hidden="true" />Дайджест за 3 ноября: открыть и скачать
-        </button>
-
-        {digest && (
-          <div className="mk-dv" role="dialog" aria-modal="true" aria-label="Дайджест за 3 ноября">
-            <div className="mk-dv-bar">
-              <button type="button" onClick={() => setDigest(false)} aria-label="Закрыть"><X size={18} aria-hidden="true" />Закрыть</button>
-              <a href="/downloads/digest-utro.pdf" target="_blank" rel="noopener" className="mk-dv-save"><Download size={16} aria-hidden="true" />Скачать PDF</a>
-            </div>
-            <div className="mk-dv-body">
-              <img src="/downloads/digest-utro.png" alt="Утренний дайджест: кофейня «Утро», 3 ноября" />
-            </div>
-          </div>
-        )}
 
         <div className="mk-cab-list">
           {SECTIONS.map((s) => {
