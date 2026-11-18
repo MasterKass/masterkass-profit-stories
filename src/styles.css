@@ -198,6 +198,8 @@ body { font-family: var(--font-sans); }
   background: var(--welcome-background);
 }
 .welcome-header { background: color-mix(in oklch, var(--welcome-background) 62%, transparent); backdrop-filter: blur(20px) saturate(160%); font-family: var(--font-welcome); }
+.welcome-header { padding-top: env(safe-area-inset-top, 0px); isolation: isolate; }
+.welcome-header::before { content: ""; position: absolute; left: 0; right: 0; bottom: 100%; height: 120px; background: inherit; backdrop-filter: blur(20px) saturate(160%); pointer-events: none; z-index: -1; }
 .mk-stories-photo { opacity: 0; filter: blur(14px); transform: scale(0.85); transition: opacity 400ms ease-out, filter 400ms ease-out, transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1); }
 .mk-stories-group.is-in .mk-stories-photo { opacity: 1; filter: blur(0); transform: scale(1); }
 .mk-caret { display: inline-block; width: 2px; height: 1em; margin-left: 2px; vertical-align: -2px; background: var(--mk-fg); animation: mk-blink 1s steps(1) infinite; }
