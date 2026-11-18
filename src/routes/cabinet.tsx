@@ -58,7 +58,7 @@ const SECTIONS: Section[] = [
   { id: "news", title: "Новости госрегулирования", icon: Landmark, summary: "Разрешительный режим: касса обновлена", rows: [
     ["Маркировка молочной продукции", "проверено, ошибок нет"], ["Разрешительный режим", "касса готова"], ["Новые форматы ФФД", "обновление не требуется"],
   ] },
-  { id: "settings", title: "Настройки", icon: Settings2, summary: "Правила баллов, кассы", rows: [] },
+  { id: "settings", title: "МК Бонус Настройки", icon: Settings2, summary: "Правила баллов, кассы", rows: [] },
 ];
 
 function Cabinet() {
@@ -116,7 +116,8 @@ function Cabinet() {
         <button type="button" className="mk-cab-ask"><Mic size={16} aria-hidden="true" />Спросить AI: «Сравни выручку этой недели с прошлой»</button>
 
         <section className="mk-card mk-cab-bonus" aria-label="МК Бонус">
-          <p className="mk-cab-kicker">МК Бонус · неделя</p>
+          <p className="mk-cab-kicker">МК Бонус · Система лояльности ваших клиентов</p>
+          <p className="mk-cab-muted">Неделя: 11–17 ноября</p>
           <dl className="mk-cab-stats">
             <div><dt>Выручки от гостей с картой</dt><dd>68%</dd></div>
             <div><dt>Новых карт</dt><dd>+14</dd></div>
