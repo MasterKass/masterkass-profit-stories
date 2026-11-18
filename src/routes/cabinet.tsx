@@ -1,9 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import {
-  ChevronDown, Wallet, HeartHandshake, FileSignature, Package, Users, MonitorSmartphone, Landmark, Mic, Sparkles, FileText, Download, X,
+  ChevronDown, Wallet, HeartHandshake, FileSignature, Package, Users, MonitorSmartphone, Landmark, Mic, Sparkles, FileText, Download, X, Settings2, ShieldCheck,
 } from "lucide-react";
-import { LoyaltyAdmin } from "@/components/loyalty-admin";
+import { LoyaltyAdmin, LoyaltySettings } from "@/components/loyalty-admin";
+import { CareHistory } from "@/components/care-history";
 import { BackHome } from "@/components/back-home";
 import { BrandMark } from "@/components/brand-mark";
 import { useQuery } from "@tanstack/react-query";
@@ -39,7 +40,7 @@ const SECTIONS: Section[] = [
     ["Выручка за месяц", "1 240 000 ₽"], ["План на месяц", "1 510 000 ₽"], ["Средний чек за неделю", "648 ₽"],
     ["Ближайший платёж", "ОФД, 1 800 ₽ · 12 ноября"], ["Фонд «Новая касса»", "накоплено 4 500 ₽"],
   ] },
-  { id: "loyalty", title: "Маркетинг и лояльность", icon: HeartHandshake, summary: "186 постоянных гостей · +14 карт за неделю", rows: [
+  { id: "loyalty", title: "Гости и акции МК Бонус", icon: HeartHandshake, summary: "База гостей, сегменты, карта в Wallet", rows: [
     ["Постоянные гости", "186"], ["Новые карты за неделю", "14"], ["Списано бонусов", "3 400"], ["Вернулись за 30 дней", "61%"],
   ] },
   { id: "edo", title: "Поставщики и ЭДО", icon: FileSignature, summary: "1 накладная ждёт подписи", rows: [
@@ -57,10 +58,11 @@ const SECTIONS: Section[] = [
   { id: "news", title: "Новости госрегулирования", icon: Landmark, summary: "Разрешительный режим: касса обновлена", rows: [
     ["Маркировка молочной продукции", "проверено, ошибок нет"], ["Разрешительный режим", "касса готова"], ["Новые форматы ФФД", "обновление не требуется"],
   ] },
+  { id: "settings", title: "Настройки", icon: Settings2, summary: "Правила баллов, кассы", rows: [] },
 ];
 
 function Cabinet() {
-  const [open, setOpen] = useState<string | null>("finance");
+  const [open, setOpen] = useState<string | null>(null);
   const [digest, setDigest] = useState(false);
   const { data: live, isLoading } = useQuery({ queryKey: ["evotor-cabinet"], queryFn: () => getEvotorCabinet(), staleTime: 60_000 });
   const link = live?.ok ? linkStatus(live.summary.lastEventAt) : null;
@@ -114,8 +116,20 @@ function Cabinet() {
           </section>
         )}
 
+        <section className="mk-card mk-cab-bonus" aria-label="МК Бонус">
+          <p className="mk-cab-kicker">МК Бонус · неделя</p>
+          <dl className="mk-cab-stats">
+            <div><dt>Выручки от гостей с картой</dt><dd>68%</dd></div>
+            <div><dt>Новых карт</dt><dd>+14</dd></div>
+            <div><dt>Средний чек с картой</dt><dd>890 ₽ <small className="mk-cab-muted">без — 520 ₽</small></dd></div>
+            <div><dt>Списано баллов</dt><dd>3 400</dd></div>
+          </dl>
+          <p className="mk-cab-muted"><Sparkles size={13} aria-hidden="true" /> 38 гостей не были больше 30 дней — напомнить им можно в «Гости и акции».</p>
+        </section>
+
         <section className="mk-card mk-cab-attn" aria-label="Требует внимания">
           <p className="mk-cab-kicker">Требует внимания</p>
+          <p className="mk-cab-okline"><ShieldCheck size={14} aria-hidden="true" />Касса в сети · маркировка без ошибок</p>
           <ul>
             {live?.fn && <FnAlert fn={live.fn} />}
             {link && link.level !== "ok" && (
@@ -126,7 +140,6 @@ function Cabinet() {
             <OfdAlerts />
             <li data-tone="warn">ЭДО: накладная «Кофе-Опт» на 24 500 ₽ ждёт подписи</li>
             <li data-tone="warn">Сироп ваниль заканчивается: остался 1 шт</li>
-            <li data-tone="ok">Маркировка проверена, ошибок нет</li>
           </ul>
         </section>
 
@@ -163,7 +176,8 @@ function Cabinet() {
                   <ChevronDown size={18} className="mk-cab-chev" data-open={isOpen} aria-hidden="true" />
                 </button>
                 {isOpen && s.id === "loyalty" && <LoyaltyAdmin />}
-                {isOpen && s.id !== "loyalty" && (
+                {isOpen && s.id === "settings" && <LoyaltySettings />}
+                {isOpen && s.id !== "loyalty" && s.id !== "settings" && (
                   <dl className="mk-cab-rows">
                     {s.id === "equipment" && live?.ok && (<>
               {live.devices.map((d) => (
@@ -190,6 +204,8 @@ function Cabinet() {
             );
           })}
         </div>
+
+        <CareHistory />
       </div>
     </main>
   );

@@ -1004,3 +1004,17 @@ a.mk-tariff-cta { text-decoration: none; }
 .mk-loy-list em { font-style: normal; font-weight: 600; }
 .mk-loy-ai { margin-top: 1rem; padding: .9rem; border-radius: 12px; background: var(--mk-bubble); font-size: 14px; }
 .mk-loy-card { --mk-tariff-grad: linear-gradient(135deg, oklch(0.89 0.14 108), oklch(0.84 0.19 143), oklch(0.87 0.12 200)); }
+
+/* Кабинет: виджет МК Бонус, спокойный статус, полотно истории */
+.mk-card.mk-cab-bonus { margin-top: .75rem; padding: 1.25rem; }
+.mk-cab-bonus .mk-cab-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.mk-cab-okline { display: flex; align-items: center; gap: .4rem; margin-top: .35rem; font-size: 13.5px; color: oklch(0.5 0.15 145); }
+.mk-card.mk-hist { margin-top: 1.5rem; padding: 1.25rem; }
+.mk-hist ol { margin-top: .75rem; display: flex; flex-direction: column; gap: .75rem; border-left: 1px solid var(--mk-line, oklch(0.88 0 0)); padding-left: .9rem; }
+.mk-hist li { display: flex; gap: .6rem; font-size: 14.5px; line-height: 1.45; }
+.mk-hist li small { display: block; font-size: 12px; opacity: .65; }
+.mk-hist-ico { flex: none; display: grid; place-items: center; width: 28px; height: 28px; border-radius: 9px; margin-left: -1.55rem; background: var(--mk-bg, oklch(0.98 0 0)); border: 1px solid var(--mk-line, oklch(0.88 0 0)); }
+.mk-hist li[data-kind="shield"] .mk-hist-ico { color: oklch(0.55 0.15 145); }
+.mk-hist li[data-kind="bonus"] .mk-hist-ico { color: oklch(0.6 0.17 60); }
+.mk-hist li[data-kind="alert"] .mk-hist-ico { color: oklch(0.6 0.2 27); }
+.mk-hist-more { display: inline-flex; align-items: center; gap: .3rem; margin-top: .9rem; }

@@ -16,36 +16,14 @@ const FIELDS: [keyof LoyaltyRules, string, string][] = [
 ];
 
 export function LoyaltyAdmin() {
-  const [raw, setRaw] = useState<Record<keyof LoyaltyRules, string>>(() => Object.fromEntries(Object.entries(DEFAULT_RULES).map(([k, v]) => [k, String(v)])) as Record<keyof LoyaltyRules, string>);
-  const rules: LoyaltyRules = Object.fromEntries(Object.entries(raw).map(([k, v]) => [k, Number(v) || 0])) as LoyaltyRules;
-  const [saved, setSaved] = useState(true);
+  const rules = DEFAULT_RULES;
   const [seg, setSeg] = useState("Все");
   const [q, setQ] = useState("");
   const [sent, setSent] = useState(false);
   const list = GUESTS.filter((g) => (seg === "Все" || g.seg === seg) && (g.name + g.phone).toLowerCase().includes(q.toLowerCase()));
-  const spend = maxSpend(1000, 640, rules);
   return (
     <div className="mk-loy">
-      <dl className="mk-loy-kpi">
-        <div><dt>Участников</dt><dd>186</dd><span>+14 за неделю</span></div>
-        <div><dt>Чеков с картой</dt><dd>42%</dd><span>от всех покупок</span></div>
-        <div><dt>Средний чек</dt><dd>890 ₽</dd><span>без карты 520 ₽</span></div>
-        <div><dt>Вернулись за 30 дней</dt><dd>61%</dd><span>начислено 9 300 · списано 3 400</span></div>
-      </dl>
-
-      <p className="mk-cab-kicker">Правила программы</p>
-      <div className="mk-loy-rules">
-        {FIELDS.map(([k, label, unit]) => (
-          <label key={k}><span>{label}</span>
-            <span className="mk-loy-in"><input type="text" inputMode="numeric" value={raw[k]} onChange={(e) => { setRaw({ ...raw, [k]: e.target.value.replace(/\D/g, "").replace(/^0+(?=\d)/, "") }); setSaved(false); }} />{unit}</span>
-          </label>
-        ))}
-      </div>
-      <p className="mk-loy-note">Пример: чек 1 000 ₽, на карте 640 баллов — можно списать {spend}, с оплаты {1000 - spend} ₽ начислится {accrual(1000 - spend, rules)}.</p>
-      <button type="button" className="mk-cab-ask" onClick={() => setSaved(true)} disabled={saved}>
-        <Check size={16} aria-hidden="true" />{saved ? "Сохранено · правила на кассе «МастерКасс Агент»" : "Сохранить и отправить на кассу"}
-      </button>
-
+      <p className="mk-loy-note">Правила баллов — в разделе «Настройки».</p>
       <p className="mk-cab-kicker mt-5">Карта гостя в Wallet</p>
       <div className="mk-loy-wallet">
         <div className="mk-loy-card">
@@ -73,6 +51,35 @@ export function LoyaltyAdmin() {
         <p><Sparkles size={14} aria-hidden="true" /> У 38 гостей не было визитов больше 30 дней, у них сгорает 8 400 баллов.</p>
         <button type="button" className="mk-cab-ask" onClick={() => setSent(true)} disabled={sent}>{sent ? "Напоминание отправлено в Wallet (демо)" : "Отправить push-напоминание"}</button>
       </div>
+    </div>
+  );
+}
+
+export function LoyaltySettings() {
+  const [raw, setRaw] = useState<Record<keyof LoyaltyRules, string>>(() => Object.fromEntries(Object.entries(DEFAULT_RULES).map(([k, v]) => [k, String(v)])) as Record<keyof LoyaltyRules, string>);
+  const rules: LoyaltyRules = Object.fromEntries(Object.entries(raw).map(([k, v]) => [k, Number(v) || 0])) as LoyaltyRules;
+  const [saved, setSaved] = useState(true);
+  const spend = maxSpend(1000, 640, rules);
+  return (
+    <div className="mk-loy">
+      <p className="mk-cab-kicker">Правила программы</p>
+      <div className="mk-loy-rules">
+        {FIELDS.map(([k, label, unit]) => (
+          <label key={k}><span>{label}</span>
+            <span className="mk-loy-in"><input type="text" inputMode="numeric" value={raw[k]} onChange={(e) => { setRaw({ ...raw, [k]: e.target.value.replace(/\D/g, "").replace(/^0+(?=\d)/, "") }); setSaved(false); }} />{unit}</span>
+          </label>
+        ))}
+      </div>
+      <p className="mk-loy-note">Пример: чек 1 000 ₽, на карте 640 баллов — можно списать {spend}, с оплаты {1000 - spend} ₽ начислится {accrual(1000 - spend, rules)}.</p>
+      <button type="button" className="mk-cab-ask" onClick={() => setSaved(true)} disabled={saved}>
+        <Check size={16} aria-hidden="true" />{saved ? "Сохранено · правила на кассе «МастерКасс Агент»" : "Сохранить и отправить на кассу"}
+      </button>
+
+      <p className="mk-cab-kicker mt-5">Кассы</p>
+      <ul className="mk-loy-list">
+        <li><span><b>Касса №1 · Эвотор 7.2</b><small>правила получены сегодня, 09:14</small></span><em>активна</em></li>
+      </ul>
+      <p className="mk-loy-note">Новую кассу привязать: откройте «МастерКасс Агент» и введите код 482 913 (демо).</p>
     </div>
   );
 }
