@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import {
   ChevronDown, Wallet, HeartHandshake, FileSignature, Package, Users, MonitorSmartphone, Landmark, Mic, Sparkles, FileText, Download, X,
 } from "lucide-react";
+import { LoyaltyAdmin } from "@/components/loyalty-admin";
 import { BackHome } from "@/components/back-home";
 import { BrandMark } from "@/components/brand-mark";
 import { useQuery } from "@tanstack/react-query";
@@ -161,7 +162,8 @@ function Cabinet() {
                   </span>
                   <ChevronDown size={18} className="mk-cab-chev" data-open={isOpen} aria-hidden="true" />
                 </button>
-                {isOpen && (
+                {isOpen && s.id === "loyalty" && <LoyaltyAdmin />}
+                {isOpen && s.id !== "loyalty" && (
                   <dl className="mk-cab-rows">
                     {s.id === "equipment" && live?.ok && (<>
               {live.devices.map((d) => (

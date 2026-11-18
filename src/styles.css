@@ -972,3 +972,35 @@ a.mk-tariff-cta { text-decoration: none; }
 .mk-pulse-more summary svg { width: 1.25rem; height: 1.25rem; transition: transform .2s; }
 .mk-pulse-more[open] summary svg { transform: rotate(90deg); }
 .mk-pulse-track-wrap { margin-top: 1.7rem; }
+
+/* МК Бонус в кабинете директора */
+.mk-loy { padding: 0 1.1rem 1.1rem; }
+.mk-loy-kpi { display: grid; grid-template-columns: repeat(2, 1fr); gap: .5rem; margin-bottom: 1.2rem; }
+.mk-loy-kpi div { border: 1px solid var(--mk-border); border-radius: 12px; padding: .7rem; }
+.mk-loy-kpi dt, .mk-loy-kpi span { font-size: 12px; color: var(--mk-muted); }
+.mk-loy-kpi dd { font-size: 20px; font-weight: 600; }
+.mk-loy-rules { display: grid; gap: .5rem; }
+.mk-loy-rules label { display: flex; justify-content: space-between; align-items: center; gap: .75rem; font-size: 14px; }
+.mk-loy-in { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--mk-muted); }
+.mk-loy-in input, .mk-loy-search input { background: transparent; border: 1px solid var(--mk-border); border-radius: 8px; padding: .35rem .5rem; color: var(--mk-fg); }
+.mk-loy-in input { width: 4.5rem; text-align: right; }
+.mk-loy-note { font-size: 13px; color: var(--mk-muted); margin-top: .6rem; }
+.mk-cab-ask:disabled { opacity: .65; }
+.mk-loy-wallet { display: grid; gap: .75rem; }
+@media (min-width: 560px) { .mk-loy-wallet { grid-template-columns: 1fr 1fr; } .mk-loy-kpi { grid-template-columns: repeat(4, 1fr); } }
+.mk-loy-card { display: flex; flex-direction: column; gap: 4px; padding: 1rem; border-radius: 14px; background: var(--mk-tariff-grad, var(--mk-surface)); color: oklch(0.2 0.015 260); }
+.mk-loy-card span, .mk-loy-card small { font-size: 12px; }
+.mk-loy-card b { font-size: 24px; }
+.mk-loy-card svg { margin-top: .4rem; }
+.mk-loy-qr { display: flex; flex-direction: column; gap: .4rem; border: 1px dashed var(--mk-border); border-radius: 14px; padding: 1rem; font-size: 13px; color: var(--mk-muted); }
+.mk-loy-segs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: .5rem; }
+.mk-loy-segs button { font-size: 13px; padding: .3rem .75rem; border-radius: 999px; border: 1px solid var(--mk-border); }
+.mk-loy-segs button[data-on="true"] { background: var(--mk-fg); color: var(--mk-surface); }
+.mk-loy-search { display: flex; align-items: center; gap: 6px; color: var(--mk-muted); }
+.mk-loy-search input { flex: 1; }
+.mk-loy-list li { display: flex; justify-content: space-between; align-items: center; padding: .55rem 0; border-top: 1px solid var(--mk-border); }
+.mk-loy-list span { display: flex; flex-direction: column; font-size: 14px; }
+.mk-loy-list small { font-size: 12px; color: var(--mk-muted); }
+.mk-loy-list em { font-style: normal; font-weight: 600; }
+.mk-loy-ai { margin-top: 1rem; padding: .9rem; border-radius: 12px; background: var(--mk-bubble); font-size: 14px; }
+.mk-loy-card { --mk-tariff-grad: linear-gradient(135deg, oklch(0.89 0.14 108), oklch(0.84 0.19 143), oklch(0.87 0.12 200)); }
