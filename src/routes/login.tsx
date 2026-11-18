@@ -12,9 +12,10 @@ import {
   ROLE_LABELS,
   formatPhone,
   normalizePhone,
-  verifyCode,
   type Role,
 } from "@/lib/login";
+import { useServerFn } from "@tanstack/react-start";
+import { requestLoginCode, verifyLoginCode } from "@/lib/sms-login.functions";
 
 export const Route = createFileRoute("/login")({
   head: () => ({
@@ -40,6 +41,10 @@ function LoginPage() {
   const [role, setRole] = useState<Role | null>(null);
   const cells = useRef<(HTMLInputElement | null)[]>([]);
   const navigate = useNavigate();
+  const [token, setToken] = useState("");
+  const [busy, setBusy] = useState(false);
+  const requestFn = useServerFn(requestLoginCode);
+  const verifyFn = useServerFn(verifyLoginCode);
 
   useEffect(() => {
     if (seconds <= 0) return;
@@ -51,13 +56,22 @@ function LoginPage() {
     if (step === "code") cells.current[0]?.focus();
   }, [step]);
 
-  const sendCode = (raw = phone) => {
+  const sendCode = async (raw = phone) => {
     const n = normalizePhone(raw);
     if (!n) {
       setPhoneError("Нужен номер из 10 цифр: например, +7 904 123-45-67");
       return;
     }
     setPhoneError("");
+    setBusy(true);
+    try {
+      const r = await requestFn({ data: { phone: n } });
+      if (!r.ok) { setPhoneError(r.error); setCodeError(r.error); return; }
+      setToken(r.token);
+    } catch {
+      setPhoneError("Не удалось отправить код. Попробуйте позже");
+      return;
+    } finally { setBusy(false); }
     setPhone(formatPhone(n));
     setDigits(Array(CODE_LENGTH).fill(""));
     setCodeError("");
@@ -65,10 +79,10 @@ function LoginPage() {
     setStep("code");
   };
 
-  const check = (code: string) => {
+  const check = async (code: string) => {
     const n = normalizePhone(phone);
     if (!n) return;
-    const r = verifyCode(n, code);
+    const r = await verifyFn({ data: { phone: n, code, token } }).catch(() => ({ ok: false as const, error: "Нет связи с сервером" }));
     if (r.ok) {
       const to = r.role === "cashier" ? "/cashier" : r.role === "owner" ? "/owner" : r.role === "partner" ? "/partner" : r.role === "accountant" ? "/accountant" : r.role === "administrator" ? "/administrator" : r.role === "engineer" ? "/engineer" : "/cabinet";
       navigate({ to });
@@ -117,7 +131,7 @@ function LoginPage() {
                   />
                   {phoneError && <em role="alert">{phoneError}</em>}
                 </label>
-                <button type="submit" className="mk-login-btn">Получить код<ArrowUpRight aria-hidden="true" /></button>
+                <button type="submit" className="mk-login-btn" disabled={busy}>{busy ? "Отправляем…" : "Получить код"}<ArrowUpRight aria-hidden="true" /></button>
               </form>
             </>
           )}
@@ -172,7 +186,7 @@ function LoginPage() {
         {step !== "done" && (
           <aside className="mk-login-demo" aria-label="Демонстрационный вход">
             <p className="mk-login-demo-title">Демонстрационный режим</p>
-            <p className="mk-login-demo-note">Настоящие SMS подключим позже. Выберите роль, код: {DEMO_CODE}.</p>
+            <p className="mk-login-demo-note">Для демо-номеров SMS не отправляется. Выберите роль, код: {DEMO_CODE}.</p>
             <div className="mk-login-demo-grid">
               {DEMO_ACCOUNTS.map((a) => (
                 <button key={a.phone} type="button" onClick={() => sendCode(a.phone)}>
