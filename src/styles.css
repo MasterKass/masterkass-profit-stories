@@ -1018,7 +1018,7 @@ a.mk-tariff-cta { text-decoration: none; }
 .mk-hist li[data-kind="bonus"] .mk-hist-ico { color: oklch(0.6 0.17 60); }
 .mk-hist li[data-kind="alert"] .mk-hist-ico { color: oklch(0.6 0.2 27); }
 .mk-hist-more { display: inline-flex; align-items: center; gap: .3rem; margin-top: .9rem; }
-.mk-cab-headr { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.mk-cab-headr { display: flex; flex: 1 1 auto; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
 .mk-cab-light { display: inline-flex; align-items: center; gap: 6px; padding: .35rem .7rem; border-radius: 999px; border: 1px solid var(--mk-line, currentColor); background: var(--mk-surface); color: var(--mk-fg); font-size: 13px; font-weight: 600; cursor: pointer; }
 .mk-cab-num { white-space: nowrap; font-size: clamp(19px, 5.5vw, 26px) !important; font-weight: 700; letter-spacing: -.02em; line-height: 1.1; }
 #attn { scroll-margin-top: 90px; }
