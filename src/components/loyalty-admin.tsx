@@ -16,7 +16,8 @@ const FIELDS: [keyof LoyaltyRules, string, string][] = [
 ];
 
 export function LoyaltyAdmin() {
-  const [rules, setRules] = useState(DEFAULT_RULES);
+  const [raw, setRaw] = useState<Record<keyof LoyaltyRules, string>>(() => Object.fromEntries(Object.entries(DEFAULT_RULES).map(([k, v]) => [k, String(v)])) as Record<keyof LoyaltyRules, string>);
+  const rules: LoyaltyRules = Object.fromEntries(Object.entries(raw).map(([k, v]) => [k, Number(v) || 0])) as LoyaltyRules;
   const [saved, setSaved] = useState(true);
   const [seg, setSeg] = useState("Все");
   const [q, setQ] = useState("");
@@ -36,7 +37,7 @@ export function LoyaltyAdmin() {
       <div className="mk-loy-rules">
         {FIELDS.map(([k, label, unit]) => (
           <label key={k}><span>{label}</span>
-            <span className="mk-loy-in"><input type="number" min={0} value={rules[k]} onChange={(e) => { setRules({ ...rules, [k]: Number(e.target.value) }); setSaved(false); }} />{unit}</span>
+            <span className="mk-loy-in"><input type="text" inputMode="numeric" value={raw[k]} onChange={(e) => { setRaw({ ...raw, [k]: e.target.value.replace(/\D/g, "").replace(/^0+(?=\d)/, "") }); setSaved(false); }} />{unit}</span>
           </label>
         ))}
       </div>
