@@ -66,8 +66,10 @@ function Cabinet() {
   const [open, setOpen] = useState<string | null>(null);
   const { data: live, isLoading } = useQuery({ queryKey: ["evotor-cabinet"], queryFn: () => getEvotorCabinet(), staleTime: 60_000 });
   const link = live?.ok ? linkStatus(live.summary.lastEventAt) : null;
-  // Демо: ЭДО и остатки всегда дают предупреждения ниже
-  const attn = true;
+  const fnAlert = live?.ok && live.fn ? fnNeedsAlert(live.fn) : false;
+  const linkBad = !!link && link.level !== "ok";
+  // Реальная касса: тревога только по реальным данным. Демо: примеры всегда показывают тревогу.
+  const attn = live?.ok ? fnAlert || linkBad : true;
   return (
     <main className="mk-page mk-cab min-h-screen">
       <BackHome />
@@ -98,7 +100,7 @@ function Cabinet() {
             <dl className="mk-cab-stats">
               <div><dt>Чеков</dt><dd className="mk-cab-num">{live.summary.receipts}</dd></div>
               <div><dt>Средний чек</dt><dd className="mk-cab-num">{rub(live.summary.avgCheck)}</dd></div>
-              <div><dt>Новых карт лояльности</dt><dd className="mk-cab-num">+14</dd></div>
+              <div><dt>Новых карт лояльности</dt><dd className="mk-cab-muted">нет данных</dd></div>
             </dl>
           </section>
         ) : (
@@ -116,6 +118,12 @@ function Cabinet() {
 
         <button type="button" className="mk-cab-ask"><Mic size={16} aria-hidden="true" />Спросить AI: «Сравни выручку этой недели с прошлой»</button>
 
+        {live?.ok ? (
+          <section className="mk-card mk-cab-bonus" aria-label="МК Бонус">
+            <p className="mk-cab-kicker">Система лояльности ваших клиентов</p>
+            <p className="mk-cab-muted">Нет данных: МК Бонус ещё не привязан к этой кассе. Карты и баллы появятся после привязки кассы к кабинету.</p>
+          </section>
+        ) : (
         <section className="mk-card mk-cab-bonus" aria-label="МК Бонус">
           <p className="mk-cab-kicker">Система лояльности ваших клиентов</p>
           <p className="mk-cab-muted">11–17 ноября</p>
@@ -127,10 +135,29 @@ function Cabinet() {
           </dl>
           <p className="mk-cab-muted"><Sparkles size={13} aria-hidden="true" /> 38 гостей не были больше 30 дней — напомнить им можно в «Гости и акции».</p>
         </section>
+        )}
 
         <section className="mk-card mk-cab-attn" id="attn" aria-label="Требует внимания">
           <p className="mk-cab-kicker">Требует внимания</p>
-          <p className="mk-cab-okline"><ShieldCheck size={14} aria-hidden="true" />Касса в сети · маркировка без ошибок</p>
+          {live?.ok ? (
+          <>
+          {!attn && <p className="mk-cab-okline"><ShieldCheck size={14} aria-hidden="true" />Касса на связи · срок ФН в порядке</p>}
+          <ul>
+            {fnAlert && live.fn && <FnAlert fn={live.fn} live />}
+            {linkBad && link && (
+              <li data-tone="warn">
+                Касса не передаёт данные {Math.floor(link.hours / 24)} дн. Проверьте интернет на точке: если чеки не уходят в ОФД 30 дней, касса заблокируется.
+              </li>
+            )}
+            {!live.fn && <li>Срок ФН: нет данных</li>}
+            {!link && <li>Связь с кассой: нет данных</li>}
+            <li>Чеки в ОФД и карантин налоговой: нет данных (ОФД не подключён)</li>
+            <li>ЭДО и накладные поставщиков: нет данных (интеграция не подключена)</li>
+            <li>Остатки товаров: нет данных (интеграция не подключена)</li>
+          </ul>
+          </>
+          ) : (<>
+          <p className="mk-cab-okline"><ShieldCheck size={14} aria-hidden="true" />Демо-данные: примеры уведомлений</p>
           <ul>
             {live?.fn && <FnAlert fn={live.fn} />}
             {link && link.level !== "ok" && (
@@ -142,6 +169,7 @@ function Cabinet() {
             <li data-tone="warn">ЭДО: накладная «Кофе-Опт» на 24 500 ₽ ждёт подписи</li>
             <li data-tone="warn">Сироп ваниль заканчивается: остался 1 шт</li>
           </ul>
+          </>)}
         </section>
 
 
@@ -197,7 +225,7 @@ function Cabinet() {
 
 type Fn = { since: string; until: string; daysLeft: number; months: number };
 
-function FnAlert({ fn }: { fn: Fn }) {
+function FnAlert({ fn, live = false }: { fn: Fn; live?: boolean }) {
   const [preview, setPreview] = useState(false);
   const real = fnNeedsAlert(fn);
   const shown = real || preview;
@@ -211,7 +239,7 @@ function FnAlert({ fn }: { fn: Fn }) {
             : `ФН: срок истёк ${fmtDate(fn.until)}. Менеджер свяжется с вами для срочной замены.`}
         </li>
       )}
-      {!real && (
+      {!real && !live && (
         <li>
           <button type="button" className="mk-cab-fnbtn" onClick={() => setPreview((v) => !v)}>
             {preview ? "Скрыть пример предупреждения о ФН" : "Показать, как выглядит предупреждение за 30 дней до конца ФН"}
