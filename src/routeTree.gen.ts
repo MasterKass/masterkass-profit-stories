@@ -28,6 +28,7 @@ import { Route as ServiceRouteImport } from './routes/service'
 import { Route as StoriesRouteImport } from './routes/stories'
 import { Route as SupportRouteImport } from './routes/support'
 import { Route as ApiPublicCronLinkCheckRouteImport } from './routes/api/public/cron/link-check'
+import { Route as ApiPublicEvotorReceiptsRouteImport } from './routes/api/public/evotor/receipts'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -124,6 +125,11 @@ const ApiPublicCronLinkCheckRoute = ApiPublicCronLinkCheckRouteImport.update({
   path: '/api/public/cron/link-check',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicEvotorReceiptsRoute = ApiPublicEvotorReceiptsRouteImport.update({
+  id: '/api/public/evotor/receipts',
+  path: '/api/public/evotor/receipts',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -145,6 +151,7 @@ export interface FileRoutesByFullPath {
   '/stories': typeof StoriesRoute
   '/support': typeof SupportRoute
   '/api/public/cron/link-check': typeof ApiPublicCronLinkCheckRoute
+  '/api/public/evotor/receipts': typeof ApiPublicEvotorReceiptsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -166,6 +173,7 @@ export interface FileRoutesByTo {
   '/stories': typeof StoriesRoute
   '/support': typeof SupportRoute
   '/api/public/cron/link-check': typeof ApiPublicCronLinkCheckRoute
+  '/api/public/evotor/receipts': typeof ApiPublicEvotorReceiptsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -188,6 +196,7 @@ export interface FileRoutesById {
   '/stories': typeof StoriesRoute
   '/support': typeof SupportRoute
   '/api/public/cron/link-check': typeof ApiPublicCronLinkCheckRoute
+  '/api/public/evotor/receipts': typeof ApiPublicEvotorReceiptsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -211,6 +220,7 @@ export interface FileRouteTypes {
     | '/stories'
     | '/support'
     | '/api/public/cron/link-check'
+    | '/api/public/evotor/receipts'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -232,6 +242,7 @@ export interface FileRouteTypes {
     | '/stories'
     | '/support'
     | '/api/public/cron/link-check'
+    | '/api/public/evotor/receipts'
   id:
     | '__root__'
     | '/'
@@ -253,6 +264,7 @@ export interface FileRouteTypes {
     | '/stories'
     | '/support'
     | '/api/public/cron/link-check'
+    | '/api/public/evotor/receipts'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -275,6 +287,7 @@ export interface RootRouteChildren {
   StoriesRoute: typeof StoriesRoute
   SupportRoute: typeof SupportRoute
   ApiPublicCronLinkCheckRoute: typeof ApiPublicCronLinkCheckRoute
+  ApiPublicEvotorReceiptsRoute: typeof ApiPublicEvotorReceiptsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -412,6 +425,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicCronLinkCheckRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/evotor/receipts': {
+      id: '/api/public/evotor/receipts'
+      path: '/api/public/evotor/receipts'
+      fullPath: '/api/public/evotor/receipts'
+      preLoaderRoute: typeof ApiPublicEvotorReceiptsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -435,6 +455,7 @@ const rootRouteChildren: RootRouteChildren = {
   StoriesRoute: StoriesRoute,
   SupportRoute: SupportRoute,
   ApiPublicCronLinkCheckRoute: ApiPublicCronLinkCheckRoute,
+  ApiPublicEvotorReceiptsRoute: ApiPublicEvotorReceiptsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
