@@ -29,6 +29,7 @@ import { Route as StoriesRouteImport } from './routes/stories'
 import { Route as SupportRouteImport } from './routes/support'
 import { Route as ApiPublicCronLinkCheckRouteImport } from './routes/api/public/cron/link-check'
 import { Route as ApiPublicEvotorReceiptsRouteImport } from './routes/api/public/evotor/receipts'
+import { Route as ApiPublicMkBonusBalanceRouteImport } from './routes/api/public/mk-bonus/balance'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -130,6 +131,11 @@ const ApiPublicEvotorReceiptsRoute = ApiPublicEvotorReceiptsRouteImport.update({
   path: '/api/public/evotor/receipts',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicMkBonusBalanceRoute = ApiPublicMkBonusBalanceRouteImport.update({
+  id: '/api/public/mk-bonus/balance',
+  path: '/api/public/mk-bonus/balance',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -152,6 +158,7 @@ export interface FileRoutesByFullPath {
   '/support': typeof SupportRoute
   '/api/public/cron/link-check': typeof ApiPublicCronLinkCheckRoute
   '/api/public/evotor/receipts': typeof ApiPublicEvotorReceiptsRoute
+  '/api/public/mk-bonus/balance': typeof ApiPublicMkBonusBalanceRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -174,6 +181,7 @@ export interface FileRoutesByTo {
   '/support': typeof SupportRoute
   '/api/public/cron/link-check': typeof ApiPublicCronLinkCheckRoute
   '/api/public/evotor/receipts': typeof ApiPublicEvotorReceiptsRoute
+  '/api/public/mk-bonus/balance': typeof ApiPublicMkBonusBalanceRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -197,6 +205,7 @@ export interface FileRoutesById {
   '/support': typeof SupportRoute
   '/api/public/cron/link-check': typeof ApiPublicCronLinkCheckRoute
   '/api/public/evotor/receipts': typeof ApiPublicEvotorReceiptsRoute
+  '/api/public/mk-bonus/balance': typeof ApiPublicMkBonusBalanceRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -221,6 +230,7 @@ export interface FileRouteTypes {
     | '/support'
     | '/api/public/cron/link-check'
     | '/api/public/evotor/receipts'
+    | '/api/public/mk-bonus/balance'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -243,6 +253,7 @@ export interface FileRouteTypes {
     | '/support'
     | '/api/public/cron/link-check'
     | '/api/public/evotor/receipts'
+    | '/api/public/mk-bonus/balance'
   id:
     | '__root__'
     | '/'
@@ -265,6 +276,7 @@ export interface FileRouteTypes {
     | '/support'
     | '/api/public/cron/link-check'
     | '/api/public/evotor/receipts'
+    | '/api/public/mk-bonus/balance'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -288,6 +300,7 @@ export interface RootRouteChildren {
   SupportRoute: typeof SupportRoute
   ApiPublicCronLinkCheckRoute: typeof ApiPublicCronLinkCheckRoute
   ApiPublicEvotorReceiptsRoute: typeof ApiPublicEvotorReceiptsRoute
+  ApiPublicMkBonusBalanceRoute: typeof ApiPublicMkBonusBalanceRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -432,6 +445,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicEvotorReceiptsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/mk-bonus/balance': {
+      id: '/api/public/mk-bonus/balance'
+      path: '/api/public/mk-bonus/balance'
+      fullPath: '/api/public/mk-bonus/balance'
+      preLoaderRoute: typeof ApiPublicMkBonusBalanceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -456,6 +476,7 @@ const rootRouteChildren: RootRouteChildren = {
   SupportRoute: SupportRoute,
   ApiPublicCronLinkCheckRoute: ApiPublicCronLinkCheckRoute,
   ApiPublicEvotorReceiptsRoute: ApiPublicEvotorReceiptsRoute,
+  ApiPublicMkBonusBalanceRoute: ApiPublicMkBonusBalanceRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
