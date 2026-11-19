@@ -159,12 +159,6 @@ function Cabinet() {
           ) : (<>
           <p className="mk-cab-okline"><ShieldCheck size={14} aria-hidden="true" />Демо-данные: примеры уведомлений</p>
           <ul>
-            {live?.fn && <FnAlert fn={live.fn} />}
-            {link && link.level !== "ok" && (
-              <li data-tone="warn">
-                Касса не передаёт данные {Math.floor(link.hours / 24)} дн. Проверьте интернет на точке: если чеки не уходят в ОФД 30 дней, касса заблокируется.
-              </li>
-            )}
             <OfdAlerts />
             <li data-tone="warn">ЭДО: накладная «Кофе-Опт» на 24 500 ₽ ждёт подписи</li>
             <li data-tone="warn">Сироп ваниль заканчивается: остался 1 шт</li>
