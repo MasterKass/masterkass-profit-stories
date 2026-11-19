@@ -50,6 +50,66 @@ export type Database = {
         }
         Relationships: []
       }
+      mk_devices: {
+        Row: {
+          device_id: string
+          evotor_user_id: string | null
+          model: string | null
+          name: string | null
+          raw: Json | null
+          serial_number: string | null
+          store_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          device_id: string
+          evotor_user_id?: string | null
+          model?: string | null
+          name?: string | null
+          raw?: Json | null
+          serial_number?: string | null
+          store_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          device_id?: string
+          evotor_user_id?: string | null
+          model?: string | null
+          name?: string | null
+          raw?: Json | null
+          serial_number?: string | null
+          store_id?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      mk_evotor_accounts: {
+        Row: {
+          api_token: string | null
+          evotor_user_id: string
+          installed: boolean
+          installed_at: string | null
+          removed_at: string | null
+          updated_at: string
+        }
+        Insert: {
+          api_token?: string | null
+          evotor_user_id: string
+          installed?: boolean
+          installed_at?: string | null
+          removed_at?: string | null
+          updated_at?: string
+        }
+        Update: {
+          api_token?: string | null
+          evotor_user_id?: string
+          installed?: boolean
+          installed_at?: string | null
+          removed_at?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       mk_guests: {
         Row: {
           balance: number
@@ -90,6 +150,17 @@ export type Database = {
           p_points: number
           p_receipt_at: string
           p_receipt_id: string
+          p_store_id: string
+        }
+        Returns: number
+      }
+      mk_redeem_bonus: {
+        Args: {
+          p_amount: number
+          p_evotor_user_id: string
+          p_guest_key: string
+          p_points: number
+          p_request_id: string
           p_store_id: string
         }
         Returns: number

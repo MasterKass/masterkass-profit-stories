@@ -28,8 +28,11 @@ import { Route as ServiceRouteImport } from './routes/service'
 import { Route as StoriesRouteImport } from './routes/stories'
 import { Route as SupportRouteImport } from './routes/support'
 import { Route as ApiPublicCronLinkCheckRouteImport } from './routes/api/public/cron/link-check'
+import { Route as ApiPublicEvotorDevicesRouteImport } from './routes/api/public/evotor/devices'
+import { Route as ApiPublicEvotorEventsRouteImport } from './routes/api/public/evotor/events'
 import { Route as ApiPublicEvotorReceiptsRouteImport } from './routes/api/public/evotor/receipts'
 import { Route as ApiPublicMkBonusBalanceRouteImport } from './routes/api/public/mk-bonus/balance'
+import { Route as ApiPublicMkBonusRedeemRouteImport } from './routes/api/public/mk-bonus/redeem'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -126,6 +129,16 @@ const ApiPublicCronLinkCheckRoute = ApiPublicCronLinkCheckRouteImport.update({
   path: '/api/public/cron/link-check',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicEvotorDevicesRoute = ApiPublicEvotorDevicesRouteImport.update({
+  id: '/api/public/evotor/devices',
+  path: '/api/public/evotor/devices',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicEvotorEventsRoute = ApiPublicEvotorEventsRouteImport.update({
+  id: '/api/public/evotor/events',
+  path: '/api/public/evotor/events',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicEvotorReceiptsRoute = ApiPublicEvotorReceiptsRouteImport.update({
   id: '/api/public/evotor/receipts',
   path: '/api/public/evotor/receipts',
@@ -134,6 +147,11 @@ const ApiPublicEvotorReceiptsRoute = ApiPublicEvotorReceiptsRouteImport.update({
 const ApiPublicMkBonusBalanceRoute = ApiPublicMkBonusBalanceRouteImport.update({
   id: '/api/public/mk-bonus/balance',
   path: '/api/public/mk-bonus/balance',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicMkBonusRedeemRoute = ApiPublicMkBonusRedeemRouteImport.update({
+  id: '/api/public/mk-bonus/redeem',
+  path: '/api/public/mk-bonus/redeem',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -157,8 +175,11 @@ export interface FileRoutesByFullPath {
   '/stories': typeof StoriesRoute
   '/support': typeof SupportRoute
   '/api/public/cron/link-check': typeof ApiPublicCronLinkCheckRoute
+  '/api/public/evotor/devices': typeof ApiPublicEvotorDevicesRoute
+  '/api/public/evotor/events': typeof ApiPublicEvotorEventsRoute
   '/api/public/evotor/receipts': typeof ApiPublicEvotorReceiptsRoute
   '/api/public/mk-bonus/balance': typeof ApiPublicMkBonusBalanceRoute
+  '/api/public/mk-bonus/redeem': typeof ApiPublicMkBonusRedeemRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -180,8 +201,11 @@ export interface FileRoutesByTo {
   '/stories': typeof StoriesRoute
   '/support': typeof SupportRoute
   '/api/public/cron/link-check': typeof ApiPublicCronLinkCheckRoute
+  '/api/public/evotor/devices': typeof ApiPublicEvotorDevicesRoute
+  '/api/public/evotor/events': typeof ApiPublicEvotorEventsRoute
   '/api/public/evotor/receipts': typeof ApiPublicEvotorReceiptsRoute
   '/api/public/mk-bonus/balance': typeof ApiPublicMkBonusBalanceRoute
+  '/api/public/mk-bonus/redeem': typeof ApiPublicMkBonusRedeemRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -204,8 +228,11 @@ export interface FileRoutesById {
   '/stories': typeof StoriesRoute
   '/support': typeof SupportRoute
   '/api/public/cron/link-check': typeof ApiPublicCronLinkCheckRoute
+  '/api/public/evotor/devices': typeof ApiPublicEvotorDevicesRoute
+  '/api/public/evotor/events': typeof ApiPublicEvotorEventsRoute
   '/api/public/evotor/receipts': typeof ApiPublicEvotorReceiptsRoute
   '/api/public/mk-bonus/balance': typeof ApiPublicMkBonusBalanceRoute
+  '/api/public/mk-bonus/redeem': typeof ApiPublicMkBonusRedeemRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -229,8 +256,11 @@ export interface FileRouteTypes {
     | '/stories'
     | '/support'
     | '/api/public/cron/link-check'
+    | '/api/public/evotor/devices'
+    | '/api/public/evotor/events'
     | '/api/public/evotor/receipts'
     | '/api/public/mk-bonus/balance'
+    | '/api/public/mk-bonus/redeem'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -252,8 +282,11 @@ export interface FileRouteTypes {
     | '/stories'
     | '/support'
     | '/api/public/cron/link-check'
+    | '/api/public/evotor/devices'
+    | '/api/public/evotor/events'
     | '/api/public/evotor/receipts'
     | '/api/public/mk-bonus/balance'
+    | '/api/public/mk-bonus/redeem'
   id:
     | '__root__'
     | '/'
@@ -275,8 +308,11 @@ export interface FileRouteTypes {
     | '/stories'
     | '/support'
     | '/api/public/cron/link-check'
+    | '/api/public/evotor/devices'
+    | '/api/public/evotor/events'
     | '/api/public/evotor/receipts'
     | '/api/public/mk-bonus/balance'
+    | '/api/public/mk-bonus/redeem'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -299,8 +335,11 @@ export interface RootRouteChildren {
   StoriesRoute: typeof StoriesRoute
   SupportRoute: typeof SupportRoute
   ApiPublicCronLinkCheckRoute: typeof ApiPublicCronLinkCheckRoute
+  ApiPublicEvotorDevicesRoute: typeof ApiPublicEvotorDevicesRoute
+  ApiPublicEvotorEventsRoute: typeof ApiPublicEvotorEventsRoute
   ApiPublicEvotorReceiptsRoute: typeof ApiPublicEvotorReceiptsRoute
   ApiPublicMkBonusBalanceRoute: typeof ApiPublicMkBonusBalanceRoute
+  ApiPublicMkBonusRedeemRoute: typeof ApiPublicMkBonusRedeemRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -438,6 +477,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicCronLinkCheckRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/evotor/devices': {
+      id: '/api/public/evotor/devices'
+      path: '/api/public/evotor/devices'
+      fullPath: '/api/public/evotor/devices'
+      preLoaderRoute: typeof ApiPublicEvotorDevicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/evotor/events': {
+      id: '/api/public/evotor/events'
+      path: '/api/public/evotor/events'
+      fullPath: '/api/public/evotor/events'
+      preLoaderRoute: typeof ApiPublicEvotorEventsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/evotor/receipts': {
       id: '/api/public/evotor/receipts'
       path: '/api/public/evotor/receipts'
@@ -450,6 +503,13 @@ declare module '@tanstack/react-router' {
       path: '/api/public/mk-bonus/balance'
       fullPath: '/api/public/mk-bonus/balance'
       preLoaderRoute: typeof ApiPublicMkBonusBalanceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/mk-bonus/redeem': {
+      id: '/api/public/mk-bonus/redeem'
+      path: '/api/public/mk-bonus/redeem'
+      fullPath: '/api/public/mk-bonus/redeem'
+      preLoaderRoute: typeof ApiPublicMkBonusRedeemRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -475,8 +535,11 @@ const rootRouteChildren: RootRouteChildren = {
   StoriesRoute: StoriesRoute,
   SupportRoute: SupportRoute,
   ApiPublicCronLinkCheckRoute: ApiPublicCronLinkCheckRoute,
+  ApiPublicEvotorDevicesRoute: ApiPublicEvotorDevicesRoute,
+  ApiPublicEvotorEventsRoute: ApiPublicEvotorEventsRoute,
   ApiPublicEvotorReceiptsRoute: ApiPublicEvotorReceiptsRoute,
   ApiPublicMkBonusBalanceRoute: ApiPublicMkBonusBalanceRoute,
+  ApiPublicMkBonusRedeemRoute: ApiPublicMkBonusRedeemRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

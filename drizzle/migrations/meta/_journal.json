@@ -8,6 +8,13 @@
       "when": 1795078986994,
       "tag": "0000_migration",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1795079218293,
+      "tag": "0001_mk_bonus_install_devices_redeem",
+      "breakpoints": true
     }
   ]
 }
