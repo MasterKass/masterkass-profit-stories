@@ -14,7 +14,7 @@ export const Route = createFileRoute("/api/public/evotor/events")({
         if (!userId) return new Response("Bad request", { status: 400 });
         const now = new Date().toISOString();
         const row: Record<string, unknown> = { evotor_user_id: userId, updated_at: now };
-        if (typeof b?.token === "string") row.api_token = b.token.slice(0, 500);
+        if (typeof b?.token === "string") row["api_token"] = b.token.slice(0, 500);
         if (b?.type === "ApplicationInstalled") Object.assign(row, { installed: true, installed_at: now, removed_at: null });
         if (b?.type === "ApplicationUninstalled") Object.assign(row, { installed: false, removed_at: now, api_token: null });
         const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
