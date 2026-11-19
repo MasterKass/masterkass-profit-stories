@@ -89,6 +89,7 @@ export type Database = {
           evotor_user_id: string
           installed: boolean
           installed_at: string | null
+          redeem_percent: number
           removed_at: string | null
           updated_at: string
         }
@@ -97,6 +98,7 @@ export type Database = {
           evotor_user_id: string
           installed?: boolean
           installed_at?: string | null
+          redeem_percent?: number
           removed_at?: string | null
           updated_at?: string
         }
@@ -105,6 +107,7 @@ export type Database = {
           evotor_user_id?: string
           installed?: boolean
           installed_at?: string | null
+          redeem_percent?: number
           removed_at?: string | null
           updated_at?: string
         }

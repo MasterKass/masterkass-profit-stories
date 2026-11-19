@@ -1,0 +1,1 @@
+ALTER TABLE public.mk_evotor_accounts ADD COLUMN IF NOT EXISTS redeem_percent integer NOT NULL DEFAULT 30 CHECK (redeem_percent BETWEEN 0 AND 100);

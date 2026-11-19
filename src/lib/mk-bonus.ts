@@ -19,3 +19,18 @@ export function checkToken(request: Request): boolean {
   const auth = (request.headers.get("authorization") ?? "").replace(/^Bearer\s+/i, "").trim();
   return !!secret && auth === secret;
 }
+
+/** Доля чека клиента: целое 0–100, иначе стандартная. */
+export function normalizePercent(v: unknown): number {
+  if (v === null || v === undefined || v === "") return REDEEM_LIMIT_PERCENT;
+  const n = Number(v);
+  return Number.isInteger(n) && n >= 0 && n <= 100 ? n : REDEEM_LIMIT_PERCENT;
+}
+
+/** Процент списания конкретного клиента Эвотора (из его кабинета). */
+export async function accountPercent(evotorUserId?: string | null): Promise<number> {
+  if (!evotorUserId) return REDEEM_LIMIT_PERCENT;
+  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+  const { data } = await supabaseAdmin.from("mk_evotor_accounts").select("redeem_percent").eq("evotor_user_id", evotorUserId).maybeSingle();
+  return normalizePercent(data?.redeem_percent);
+}

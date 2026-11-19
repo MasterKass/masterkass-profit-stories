@@ -14,7 +14,7 @@ export const Route = createFileRoute("/api/public/mk-bonus/redeem")({
   server: {
     handlers: {
       POST: async ({ request }) => {
-        const { checkToken, guestKeyFrom, redeemLimit } = await import("@/lib/mk-bonus");
+        const { checkToken, guestKeyFrom, redeemLimit, accountPercent } = await import("@/lib/mk-bonus");
         if (!checkToken(request)) return new Response("Unauthorized", { status: 401 });
         let raw: unknown; try { raw = await request.json(); } catch { return new Response("Bad JSON", { status: 400 }); }
         const p = B.safeParse(raw);
@@ -26,7 +26,7 @@ export const Route = createFileRoute("/api/public/mk-bonus/redeem")({
         if (!g) return Response.json({ ok: false, reason: "not_found" }, { status: 404 });
         const { data: done } = await supabaseAdmin.from("mk_bonus_ops").select("points").eq("receipt_id", `redeem:${p.data.requestId}`).maybeSingle();
         if (done) return Response.json({ ok: true, discount: -done.points, balance: g.balance, repeat: true });
-        const max = redeemLimit(g.balance, p.data.amount);
+        const max = redeemLimit(g.balance, p.data.amount, await accountPercent(p.data.evotorUserId));
         if (p.data.points > max) return Response.json({ ok: false, reason: "over_limit", maxRedeem: max }, { status: 409 });
         const { data, error } = await supabaseAdmin.rpc("mk_redeem_bonus", {
           p_request_id: `redeem:${p.data.requestId}`, p_guest_key: key, p_points: p.data.points, p_amount: p.data.amount,

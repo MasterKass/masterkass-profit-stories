@@ -15,6 +15,13 @@
       "when": 1795079218293,
       "tag": "0001_mk_bonus_install_devices_redeem",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1795080474910,
+      "tag": "0002_mk_bonus_redeem_percent",
+      "breakpoints": true
     }
   ]
 }

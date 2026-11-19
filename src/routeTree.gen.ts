@@ -33,6 +33,7 @@ import { Route as ApiPublicEvotorEventsRouteImport } from './routes/api/public/e
 import { Route as ApiPublicEvotorReceiptsRouteImport } from './routes/api/public/evotor/receipts'
 import { Route as ApiPublicMkBonusBalanceRouteImport } from './routes/api/public/mk-bonus/balance'
 import { Route as ApiPublicMkBonusRedeemRouteImport } from './routes/api/public/mk-bonus/redeem'
+import { Route as ApiPublicMkBonusSettingsRouteImport } from './routes/api/public/mk-bonus/settings'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -154,6 +155,12 @@ const ApiPublicMkBonusRedeemRoute = ApiPublicMkBonusRedeemRouteImport.update({
   path: '/api/public/mk-bonus/redeem',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicMkBonusSettingsRoute =
+  ApiPublicMkBonusSettingsRouteImport.update({
+    id: '/api/public/mk-bonus/settings',
+    path: '/api/public/mk-bonus/settings',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -180,6 +187,7 @@ export interface FileRoutesByFullPath {
   '/api/public/evotor/receipts': typeof ApiPublicEvotorReceiptsRoute
   '/api/public/mk-bonus/balance': typeof ApiPublicMkBonusBalanceRoute
   '/api/public/mk-bonus/redeem': typeof ApiPublicMkBonusRedeemRoute
+  '/api/public/mk-bonus/settings': typeof ApiPublicMkBonusSettingsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -206,6 +214,7 @@ export interface FileRoutesByTo {
   '/api/public/evotor/receipts': typeof ApiPublicEvotorReceiptsRoute
   '/api/public/mk-bonus/balance': typeof ApiPublicMkBonusBalanceRoute
   '/api/public/mk-bonus/redeem': typeof ApiPublicMkBonusRedeemRoute
+  '/api/public/mk-bonus/settings': typeof ApiPublicMkBonusSettingsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -233,6 +242,7 @@ export interface FileRoutesById {
   '/api/public/evotor/receipts': typeof ApiPublicEvotorReceiptsRoute
   '/api/public/mk-bonus/balance': typeof ApiPublicMkBonusBalanceRoute
   '/api/public/mk-bonus/redeem': typeof ApiPublicMkBonusRedeemRoute
+  '/api/public/mk-bonus/settings': typeof ApiPublicMkBonusSettingsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -261,6 +271,7 @@ export interface FileRouteTypes {
     | '/api/public/evotor/receipts'
     | '/api/public/mk-bonus/balance'
     | '/api/public/mk-bonus/redeem'
+    | '/api/public/mk-bonus/settings'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -287,6 +298,7 @@ export interface FileRouteTypes {
     | '/api/public/evotor/receipts'
     | '/api/public/mk-bonus/balance'
     | '/api/public/mk-bonus/redeem'
+    | '/api/public/mk-bonus/settings'
   id:
     | '__root__'
     | '/'
@@ -313,6 +325,7 @@ export interface FileRouteTypes {
     | '/api/public/evotor/receipts'
     | '/api/public/mk-bonus/balance'
     | '/api/public/mk-bonus/redeem'
+    | '/api/public/mk-bonus/settings'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -340,6 +353,7 @@ export interface RootRouteChildren {
   ApiPublicEvotorReceiptsRoute: typeof ApiPublicEvotorReceiptsRoute
   ApiPublicMkBonusBalanceRoute: typeof ApiPublicMkBonusBalanceRoute
   ApiPublicMkBonusRedeemRoute: typeof ApiPublicMkBonusRedeemRoute
+  ApiPublicMkBonusSettingsRoute: typeof ApiPublicMkBonusSettingsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -512,6 +526,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicMkBonusRedeemRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/mk-bonus/settings': {
+      id: '/api/public/mk-bonus/settings'
+      path: '/api/public/mk-bonus/settings'
+      fullPath: '/api/public/mk-bonus/settings'
+      preLoaderRoute: typeof ApiPublicMkBonusSettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -540,6 +561,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiPublicEvotorReceiptsRoute: ApiPublicEvotorReceiptsRoute,
   ApiPublicMkBonusBalanceRoute: ApiPublicMkBonusBalanceRoute,
   ApiPublicMkBonusRedeemRoute: ApiPublicMkBonusRedeemRoute,
+  ApiPublicMkBonusSettingsRoute: ApiPublicMkBonusSettingsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
