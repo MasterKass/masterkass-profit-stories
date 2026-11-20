@@ -20,7 +20,7 @@ export const Route = createFileRoute("/onboarding")({
   head: () => ({
     meta: [
       { title: "Подключение · Мастер Касс" },
-      { name: "description", content: "Начните бесплатный период Мастер Касс: телефон и почта, выбор тарифа и подключение кассы Эвотор. Без привязки карты." },
+      { name: "description", content: "Начните бесплатный период Мастер Касс: телефон и почта, выбор тарифа и подключение кассы Эвотор по персональной ссылке. Без привязки карты." },
       { property: "og:title", content: "Подключение · Мастер Касс" },
       { property: "og:description", content: "Бесплатный период без привязки карты." },
       { property: "og:type", content: "website" },
@@ -45,7 +45,7 @@ function Onboarding() {
   const [errors, setErrors] = useState<RequestErrors>({});
   const [sending, setSending] = useState(false);
   const [failed, setFailed] = useState(false);
-  const [cash, setCash] = useState<"idle" | "linking" | "ok">("idle");
+  const [cash, setCash] = useState<"idle" | "access" | "linking" | "ok">("idle");
   const [manual, setManual] = useState(false);
   const [token, setToken] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -87,7 +87,8 @@ function Onboarding() {
   };
 
   const pickTariff = (t: string) => { setTone(t); move("tariff", t); setStep(2); };
-  const linkCash = () => { setCash("linking"); setTimeout(() => setCash("ok"), 1400); };
+  const openAccess = () => setCash("access");
+  const waitInstall = () => setCash("linking");
   const finish = () => { move("started", tone); sessionStorage.removeItem(TRIAL_KEY); setStep(3); };
 
   return (
@@ -154,16 +155,25 @@ function Onboarding() {
         {step === 2 && (
           <div className="mk-card mk-onb-card">
             <h2>Подключите кассу Эвотор</h2>
-            <p className="mk-onb-muted">Установите приложение «Мастер Касс» в Эвотор.Маркете, и мы получим доступ без логинов и паролей.</p>
-            <div className="mk-onb-cash" data-state={cash}>
+            <p className="mk-onb-muted">Приложение «МастерКасс» закрытое: его нет в общем каталоге Эвотора, оно открывается только клиентам сервиса по номеру владельца кассы.</p>
+            <ol className="mk-onb-muted mt-3 list-decimal space-y-1 pl-5 text-sm">
+              <li>Откроем доступ к приложению для вашего номера.</li>
+              <li>Войдите в личный кабинет Эвотора по персональной ссылке под номером, к которому привязана касса.</li>
+              <li>Нажмите «Установить», отметьте кассу и «Применить». Плитка «МастерКасс» появится на кассе через 1–2 минуты.</li>
+            </ol>
+            <div className="mk-onb-cash" data-state={cash === "ok" ? "ok" : cash === "idle" ? "idle" : "linking"}>
               <BrandMark size={44} />
-              <span>{cash === "idle" ? "Касса не подключена" : cash === "linking" ? "Связываемся с кассой…" : "Касса на связи"}</span>
+              <span>{cash === "idle" ? "Доступ ещё не открыт" : cash === "access" ? "Доступ открыт для вашего номера" : cash === "linking" ? "Ждём установку на кассу…" : "Касса на связи"}</span>
             </div>
-            {cash !== "ok" ? (
-              <button className="mk-onb-btn" onClick={linkCash} disabled={cash === "linking"}>Подключить через Эвотор.Маркет</button>
-            ) : (
-              <button className="mk-onb-btn" onClick={() => { move("cash", tone); finish(); }}>Начать бесплатный период</button>
+            {cash === "idle" && <button className="mk-onb-btn" onClick={openAccess}>Открыть доступ к приложению</button>}
+            {cash === "access" && (
+              <>
+                <a className="mk-onb-btn" href="https://market.evotor.ru" target="_blank" rel="noreferrer" onClick={waitInstall}>Войти в кабинет Эвотора →</a>
+                <p className="mk-onb-muted text-xs">Не помните пароль? Нажмите «Забыли пароль» на странице входа Эвотора: новый пароль придёт по SMS на номер владельца.</p>
+              </>
             )}
+            {cash === "linking" && <button className="mk-onb-btn" onClick={() => setCash("ok")}>Я установил — проверить подключение</button>}
+            {cash === "ok" && <button className="mk-onb-btn" onClick={() => { move("cash", tone); finish(); }}>Начать бесплатный период</button>}
             <button className="mk-onb-link" onClick={() => setManual(!manual)}>У меня другой ОФД или API-токен</button>
             {manual && (
               <div className="mt-3 space-y-3">
