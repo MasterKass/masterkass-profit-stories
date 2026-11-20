@@ -78,12 +78,16 @@ function Onboarding() {
     setErrors({}); setFailed(false); setSending(true);
     try {
       const res = await submit({ data: { phone, email, tariff: tone ? findTariff(tone).name : undefined, source: tone ? "Карточка тарифа" : "Подключение с сайта", ref: ref ?? undefined } });
-      if (!res.ok) return setFailed(true);
-      const t = { dealId: res.dealId, email: r.value.email };
+      // ВРЕМЕННО: пока Битрикс24 отклоняет запись, пропускаем клиента дальше без сделки.
+      const t = { dealId: res.ok ? res.dealId : 0, email: r.value.email };
       setTrial(t);
       sessionStorage.setItem(TRIAL_KEY, JSON.stringify(t));
       setStep(tone ? 2 : 1);
-    } catch { setFailed(true); } finally { setSending(false); }
+    } catch {
+      // ВРЕМЕННО: сбой связи тоже не блокирует просмотр следующих шагов.
+      setTrial({ dealId: 0, email: r.value.email });
+      setStep(tone ? 2 : 1);
+    } finally { setSending(false); }
   };
 
   const pickTariff = (t: string) => { setTone(t); move("tariff", t); setStep(2); };
