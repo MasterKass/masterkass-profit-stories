@@ -1,0 +1,2 @@
+ALTER TABLE public.mk_evotor_accounts ADD COLUMN IF NOT EXISTS phone text, ADD COLUMN IF NOT EXISTS deal_id bigint, ADD COLUMN IF NOT EXISTS linked_at timestamptz;
+CREATE INDEX IF NOT EXISTS mk_evotor_accounts_phone_idx ON public.mk_evotor_accounts(phone);

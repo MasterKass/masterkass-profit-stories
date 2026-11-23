@@ -47,3 +47,17 @@ export function isValidCard(number: string, exp: string, cvc: string) {
 export function isValidPhone(v: string) {
   return /^[78]\d{10}$/.test(v.replace(/\D/g, ""));
 }
+
+/** Окно, в котором свежая установка приложения Эвотора привязывается к заявке (вариант А) */
+export const LINK_WINDOW_MIN = 15;
+export type InstallRow = { evotor_user_id: string; installed: boolean; installed_at: string | null; phone: string | null };
+/** Своя касса (уже привязана к этому телефону) или самая свежая непривязанная установка в окне */
+export function pickInstall(rows: InstallRow[], phone: string, now: Date): InstallRow | null {
+  const own = rows.find((r) => r.installed && r.phone === phone);
+  if (own) return own;
+  const from = now.getTime() - LINK_WINDOW_MIN * 60000;
+  return rows
+    .filter((r) => r.installed && !r.phone && r.installed_at && Date.parse(r.installed_at) >= from)
+    .sort((a, b) => Date.parse(b.installed_at!) - Date.parse(a.installed_at!))[0] ?? null;
+}
+export const normPhone = (v: string) => { const d = v.replace(/\D/g, ""); return d.length === 11 ? "7" + d.slice(1) : d; };

@@ -9,6 +9,7 @@ import { ONBOARDING_STEPS, REFERRAL_BONUS_UNITS, TRIAL_KEY, findTariff, firstCha
 import { SERVICE_TARIFFS } from "@/lib/tariffs";
 import { validateRequest, type RequestErrors } from "@/lib/request";
 import { submitServiceRequest, updateTrialDeal } from "@/lib/request.functions";
+import { linkEvotorInstall } from "@/lib/evotor-link.functions";
 
 type Search = { tariff?: string | undefined; ref?: string | undefined };
 
@@ -31,7 +32,7 @@ export const Route = createFileRoute("/onboarding")({
 });
 
 const fmt = (d: Date) => d.toLocaleDateString("ru-RU", { day: "numeric", month: "long", year: "numeric" }).replace(/ г\.$/, "");
-type Trial = { dealId: number; email: string };
+type Trial = { dealId: number; email: string; phone?: string };
 
 function Onboarding() {
   const search = Route.useSearch();
@@ -51,6 +52,16 @@ function Onboarding() {
   const [endDate, setEndDate] = useState("");
   const submit = useServerFn(submitServiceRequest);
   const update = useServerFn(updateTrialDeal);
+  const link = useServerFn(linkEvotorInstall);
+  const [checking, setChecking] = useState(false);
+  const [linkErr, setLinkErr] = useState("");
+  const checkLink = async () => {
+    setChecking(true); setLinkErr("");
+    try {
+      const r = await link({ data: { phone, dealId: trial?.dealId ?? 0 } });
+      if (r.ok) { setCash("ok"); move("cash", tone); } else setLinkErr(r.error);
+    } catch { setLinkErr("Не удалось проверить, попробуйте ещё раз"); } finally { setChecking(false); }
+  };
 
   useEffect(() => {
     if (search.ref) localStorage.setItem("mk-ref", search.ref);
@@ -62,6 +73,7 @@ function Onboarding() {
       try {
         const t = JSON.parse(saved) as Trial;
         setTrial(t);
+        if (t.phone) setPhone(t.phone);
         setStep(search.tariff ? 2 : 1);
       } catch { /* пусто */ }
     }
@@ -79,7 +91,7 @@ function Onboarding() {
     try {
       const res = await submit({ data: { phone, email, tariff: tone ? findTariff(tone).name : undefined, source: tone ? "Карточка тарифа" : "Подключение с сайта", ref: ref ?? undefined } });
       // ВРЕМЕННО: пока Битрикс24 отклоняет запись, пропускаем клиента дальше без сделки.
-      const t = { dealId: res.ok ? res.dealId : 0, email: r.value.email };
+      const t = { dealId: res.ok ? res.dealId : 0, email: r.value.email, phone };
       setTrial(t);
       sessionStorage.setItem(TRIAL_KEY, JSON.stringify(t));
       setStep(tone ? 2 : 1);
@@ -176,15 +188,15 @@ function Onboarding() {
                 <p className="mk-onb-muted text-xs">Не помните пароль? Нажмите «Забыли пароль» на странице входа Эвотора: новый пароль придёт по SMS на номер владельца.</p>
               </>
             )}
-            {cash === "linking" && <button className="mk-onb-btn" onClick={() => setCash("ok")}>Я установил — проверить подключение</button>}
-            {cash === "ok" && <button className="mk-onb-btn" onClick={() => { move("cash", tone); finish(); }}>Начать бесплатный период</button>}
+            {cash === "linking" && (<><button className="mk-onb-btn" disabled={checking} onClick={checkLink}>{checking ? "Проверяем сигнал от кассы…" : "Я установил — проверить подключение"}</button>{linkErr && <p className="mk-onb-err">{linkErr}</p>}</>)}
+            {cash === "ok" && <button className="mk-onb-btn" onClick={finish}>Начать бесплатный период</button>}
             <button className="mk-onb-link" onClick={() => setManual(!manual)}>У меня другой ОФД или API-токен</button>
             {manual && (
               <div className="mt-3 space-y-3">
                 <label>API-токен
                   <input value={token} onChange={(e) => setToken(e.target.value)} placeholder="Вставьте ключ из кабинета ОФД" />
                 </label>
-                <button className="mk-onb-btn" disabled={token.trim().length < 8} onClick={() => { move("cash", tone); finish(); }}>Сохранить токен</button>
+                <button className="mk-onb-btn" disabled={token.trim().length < 8} onClick={finish}>Сохранить токен</button>
               </div>
             )}
             <button className="mk-onb-link" onClick={finish}>Подключу кассу позже</button>

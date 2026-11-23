@@ -86,27 +86,36 @@ export type Database = {
       mk_evotor_accounts: {
         Row: {
           api_token: string | null
+          deal_id: number | null
           evotor_user_id: string
           installed: boolean
           installed_at: string | null
+          linked_at: string | null
+          phone: string | null
           redeem_percent: number
           removed_at: string | null
           updated_at: string
         }
         Insert: {
           api_token?: string | null
+          deal_id?: number | null
           evotor_user_id: string
           installed?: boolean
           installed_at?: string | null
+          linked_at?: string | null
+          phone?: string | null
           redeem_percent?: number
           removed_at?: string | null
           updated_at?: string
         }
         Update: {
           api_token?: string | null
+          deal_id?: number | null
           evotor_user_id?: string
           installed?: boolean
           installed_at?: string | null
+          linked_at?: string | null
+          phone?: string | null
           redeem_percent?: number
           removed_at?: string | null
           updated_at?: string
