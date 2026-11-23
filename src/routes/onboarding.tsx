@@ -172,7 +172,7 @@ function Onboarding() {
             {cash === "idle" && <button className="mk-onb-btn" onClick={openAccess}>Открыть доступ к приложению</button>}
             {cash === "access" && (
               <>
-                <a className="mk-onb-btn" href="https://market.evotor.ru" target="_blank" rel="noreferrer" onClick={waitInstall}>Войти в кабинет Эвотора →</a>
+                <a className="mk-onb-btn" href="https://market.evotor.ru/store/apps/cc0b7b4e-6365-4eb0-b03b-d29ed50ccb2d" target="_blank" rel="noreferrer" onClick={waitInstall}>Войти в кабинет Эвотора →</a>
                 <p className="mk-onb-muted text-xs">Не помните пароль? Нажмите «Забыли пароль» на странице входа Эвотора: новый пароль придёт по SMS на номер владельца.</p>
               </>
             )}
