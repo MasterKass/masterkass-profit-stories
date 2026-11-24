@@ -5,7 +5,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { BackHome } from "@/components/back-home";
 import { BrandMark } from "@/components/brand-mark";
 import { PrivacyLink } from "@/components/privacy-dialog";
-import { ONBOARDING_STEPS, REFERRAL_BONUS_UNITS, TRIAL_KEY, findTariff, firstChargeDate, startingUnits } from "@/lib/onboarding";
+import { ONBOARDING_STEPS, REFERRAL_BONUS_UNITS, TRIAL_KEY, findTariff, firstChargeDate, startingUnits, resumeTrialStep } from "@/lib/onboarding";
 import { SERVICE_TARIFFS } from "@/lib/tariffs";
 import { validateRequest, type RequestErrors } from "@/lib/request";
 import { submitServiceRequest, updateTrialDeal } from "@/lib/request.functions";
@@ -73,8 +73,9 @@ function Onboarding() {
       try {
         const t = JSON.parse(saved) as Trial;
         setTrial(t);
-        if (t.phone) setPhone(t.phone);
-        setStep(search.tariff ? 2 : 1);
+        if (typeof t.phone === "string") setPhone(t.phone);
+        if (typeof t.email === "string") setEmail(t.email);
+        setStep(resumeTrialStep(t, search.tariff));
       } catch { /* пусто */ }
     }
   }, [search.ref, search.tariff]);
@@ -91,13 +92,17 @@ function Onboarding() {
     try {
       const res = await submit({ data: { phone, email, tariff: tone ? findTariff(tone).name : undefined, source: tone ? "Карточка тарифа" : "Подключение с сайта", ref: ref ?? undefined } });
       // ВРЕМЕННО: пока Битрикс24 отклоняет запись, пропускаем клиента дальше без сделки.
-      const t = { dealId: res.ok ? res.dealId : 0, email: r.value.email, phone };
+      const t = { dealId: res.ok ? res.dealId : 0, ...r.value };
+      setPhone(t.phone);
       setTrial(t);
       sessionStorage.setItem(TRIAL_KEY, JSON.stringify(t));
       setStep(tone ? 2 : 1);
     } catch {
       // ВРЕМЕННО: сбой связи тоже не блокирует просмотр следующих шагов.
-      setTrial({ dealId: 0, email: r.value.email });
+      const t = { dealId: 0, ...r.value };
+      setTrial(t);
+      setPhone(t.phone);
+      sessionStorage.setItem(TRIAL_KEY, JSON.stringify(t));
       setStep(tone ? 2 : 1);
     } finally { setSending(false); }
   };

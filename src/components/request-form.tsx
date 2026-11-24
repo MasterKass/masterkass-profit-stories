@@ -57,7 +57,7 @@ export function RequestForm() {
     try {
       const res = await submit({ data: { phone, email, company: honeypot, source: "Присоединиться к сервису" } });
       if (res.ok) {
-        sessionStorage.setItem(TRIAL_KEY, JSON.stringify({ dealId: res.dealId, email: result.value.email }));
+        sessionStorage.setItem(TRIAL_KEY, JSON.stringify({ dealId: res.dealId, ...result.value }));
         setSent(true);
         navigate({ to: "/onboarding", search: { tariff: undefined, ref: undefined } });
       }

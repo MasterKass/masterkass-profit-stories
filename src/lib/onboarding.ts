@@ -48,6 +48,12 @@ export function isValidPhone(v: string) {
   return /^[78]\d{10}$/.test(v.replace(/\D/g, ""));
 }
 
+/** Старые заявки без телефона возвращаем к контактам, а не к проверке кассы. */
+export function resumeTrialStep(trial: { phone?: string }, tariff?: string) {
+  if (typeof trial.phone !== "string" || !isValidPhone(trial.phone)) return 0;
+  return tariff ? 2 : 1;
+}
+
 /** Окно, в котором свежая установка приложения Эвотора привязывается к заявке (вариант А) */
 export const LINK_WINDOW_MIN = 15;
 export type InstallRow = { evotor_user_id: string; installed: boolean; installed_at: string | null; phone: string | null };
