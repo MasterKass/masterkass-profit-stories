@@ -35,6 +35,8 @@ const SECTIONS: Record<string, Doc[]> = {
     { name: "План рилсов на ноябрь.docx", date: "30 окт", note: "Зоопарк программ, будни кассира" },
   ],
   Финансы: [
+    { name: "Финмодель: затраты на сервер.pdf", date: "25 ноя", note: "Сервер Selectel 3 253,51 ₽/мес, маржа тарифов, точка безубыточности", href: "/downloads/finmodel-masterkass.pdf" },
+    { name: "Финмодель: затраты на сервер.docx", date: "25 ноя", note: "Редактируемая версия для Анастасии", href: "/downloads/finmodel-masterkass.docx" },
     { name: "Тарифы и юниты.xlsx", date: "25 окт", note: "1 950 / 3 850 / 5 650 ₽, себестоимость AI" },
     { name: "Фонд «Новая касса».pdf", date: "20 окт", note: "Модель накопления 750 ₽ в месяц" },
   ],
