@@ -1,2 +1,11 @@
 User-agent: *
-Disallow: /
+Allow: /
+Disallow: /owner
+Disallow: /cabinet
+Disallow: /cashier
+Disallow: /engineer
+Disallow: /partner
+Disallow: /administrator
+Disallow: /accountant
+Disallow: /digest
+Disallow: /api/
