@@ -72,7 +72,7 @@ function ServicePage() {
 
         <section className="mt-20 grid gap-4 md:grid-cols-2">
           {pillars.map((p) => (
-            <div key={p.n} className={`mk-card${p.wide ? " mk-pillar-wide" : ""}${p.wide ? " md:col-span-2" : ""}`}>
+            <div key={p.n} id={p.n === "01" ? "ai" : p.n === "05" ? "fund" : undefined} className={`mk-card${p.wide ? " mk-pillar-wide" : ""}${p.wide ? " md:col-span-2" : ""}`}>
               <div>
                 <span className="text-xs font-medium tracking-widest" style={{ color: "var(--mk-muted)" }}>{p.n}</span>
                 <h2 className="mt-6 text-2xl font-semibold tracking-[-0.03em]">{p.t}</h2>

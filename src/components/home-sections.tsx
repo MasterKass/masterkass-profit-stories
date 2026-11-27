@@ -454,7 +454,13 @@ export function AskAi({ title = "Задайте вопрос нашему ИИ �
 /* 12. Подвал — карточка с разделами (часть слов ведёт на готовые страницы) */
 /** Слова подвала, у которых уже есть адрес: «Тарифы» открывают блок тарифов на странице сервиса.
  *  Темы госрегулирования берутся из PULSE_FOOTER_LINKS в src/lib/pulse.ts. */
-const FOOTER_ROUTES: Record<string, { to: "/service" | "/partners" | "/loyalty" | "/stories" | "/pulse" | "/catalog"; hash?: string }> = {
+const FOOTER_ROUTES: Record<string, { to: "/" | "/service" | "/support" | "/partners" | "/loyalty" | "/stories" | "/pulse" | "/catalog"; hash?: string }> = {
+  "Как устроен сервис": { to: "/service" },
+  "AI-сотрудник 24/7": { to: "/service", hash: "ai" },
+  "Фонд амортизации": { to: "/service", hash: "fund" },
+  "Вопросы о сервисе": { to: "/", hash: "faq" },
+  "Поддержка": { to: "/support" },
+  "Наши клиенты": { to: "/", hash: "clients" },
   "Программа лояльности": { to: "/loyalty" },
   "Тарифы": { to: "/service", hash: "tariffs" },
   "Партнёрам": { to: "/partners" },

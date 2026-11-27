@@ -21,11 +21,10 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
-  // Главная всегда открывается с первого экрана: браузер не возвращает прошлую позицию скролла.
+  // Без ссылки на раздел главная открывается с первого экрана.
   useEffect(() => {
     if ("scrollRestoration" in history) history.scrollRestoration = "manual";
-    if (location.hash) history.replaceState(history.state, "", location.pathname + location.search);
-    window.scrollTo(0, 0);
+    if (!location.hash) window.scrollTo(0, 0);
   }, []);
   return (
     <div className="mk-page min-h-screen">
