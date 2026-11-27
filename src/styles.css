@@ -1026,3 +1026,13 @@ a.mk-tariff-cta { text-decoration: none; }
 .mk-cab-light { display: inline-flex; align-items: center; gap: 6px; padding: .35rem .7rem; border-radius: 999px; border: 1px solid var(--mk-line, currentColor); background: var(--mk-surface); color: var(--mk-fg); font-size: 13px; font-weight: 600; cursor: pointer; }
 .mk-cab-num { white-space: nowrap; font-size: clamp(19px, 5.5vw, 26px) !important; font-weight: 700; letter-spacing: -.02em; line-height: 1.1; }
 #attn { scroll-margin-top: 90px; }
+
+/* Логотип в верхней плашке крупнее на ноутбуках и больших экранах */
+@media (min-width: 1024px) {
+  .welcome-brand { font-size: 26px; gap: 6px; }
+  .welcome-brand .welcome-logo { width: 48px; height: 48px; }
+}
+@media (min-width: 1536px) {
+  .welcome-brand { font-size: 30px; }
+  .welcome-brand .welcome-logo { width: 56px; height: 56px; }
+}
