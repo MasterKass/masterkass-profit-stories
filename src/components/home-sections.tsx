@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { ArrowUpRight, ChevronDown, Plus, ShieldCheck, MessageCircleMore, Keyboard, Mic } from "lucide-react";
+import { ArrowUpRight, ChevronDown, Plus, ShieldCheck, MessageCircleMore, Keyboard, Mic, ArrowUp, X, Paperclip } from "lucide-react";
 import cafe from "@/assets/team-cafe.jpg";
 import florist from "@/assets/team-florist.jpg";
 import bakery from "@/assets/team-bakery.jpg";
@@ -409,6 +409,9 @@ export function AskAi({ title = "Задайте вопрос нашему ИИ �
   const [q, setQ] = useState<string | null>(null);
   const [text, setText] = useState("");
   const [voice, setVoice] = useState(false);
+  const [files, setFiles] = useState<File[]>([]);
+  const [sentFiles, setSentFiles] = useState<string[]>([]);
+  const fileRef = useRef<HTMLInputElement>(null);
   const promptLines = useMemo(() => (prompt ? [prompt] : PROMPTS), [prompt]);
   const typed = useTypewriter(promptLines, !text && !voice);
   return (
@@ -416,13 +419,13 @@ export function AskAi({ title = "Задайте вопрос нашему ИИ �
       <h2 className="mk-h2 mx-auto max-w-4xl">{title.split("\n").map((t, i) => <span key={i} className="block">{t}</span>)}</h2>
       {q && (
         <div className="mx-auto mt-10 max-w-2xl space-y-3 text-left text-sm">
-          <div className="ml-auto w-fit max-w-[85%] whitespace-pre-line rounded-2xl bg-[var(--mk-fg)] p-3 text-[var(--mk-bg)]">{q}</div>
+          <div className="ml-auto w-fit max-w-[85%] whitespace-pre-line rounded-2xl bg-[var(--mk-fg)] p-3 text-[var(--mk-bg)]">{q}{sentFiles.length > 0 && <span className="mt-2 block text-xs opacity-80">📎 {sentFiles.join(", ")}</span>}</div>
           <div className="w-fit max-w-[85%] rounded-2xl bg-[var(--mk-bubble)] p-3">{DEMO[q] ?? "Спасибо за вопрос! Скоро здесь будет отвечать настоящий AI-помощник."}</div>
         </div>
       )}
       <form
         className="mx-auto mt-8 max-w-2xl rounded-2xl border border-[var(--mk-border)] bg-[var(--mk-surface)] px-5 pb-3 pt-4 text-left shadow-lg"
-        onSubmit={(e) => { e.preventDefault(); const v = text.trim() || typed; if (v) { setQ(PROMPTS.find((p) => p.startsWith(v)) ?? v); setText(""); } }}
+        onSubmit={(e) => { e.preventDefault(); const v = text.trim() || (files.length ? "Посмотрите, пожалуйста, мои файлы" : typed); if (v) { setQ(PROMPTS.find((p) => p.startsWith(v)) ?? v); setSentFiles(files.map((f) => f.name)); setFiles([]); setText(""); } }}
       >
         <div className="relative min-h-12">
           {voice ? (
@@ -439,11 +442,24 @@ export function AskAi({ title = "Задайте вопрос нашему ИИ �
             </>
           )}
         </div>
+        {files.length > 0 && (
+          <ul className="mt-2 flex flex-wrap gap-2" aria-label="Прикреплённые файлы">
+            {files.map((f, i) => (
+              <li key={`${f.name}-${i}`} className="flex min-w-0 max-w-full items-center gap-1 rounded-full bg-[var(--mk-bubble)] py-1 pl-3 pr-1 text-xs">
+                <Paperclip className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+                <span className="min-w-0 truncate">{f.name}</span>
+                <button type="button" aria-label={`Убрать файл ${f.name}`} onClick={() => setFiles((cur) => cur.filter((_, j) => j !== i))} className="shrink-0 rounded-full p-1 hover:bg-black/10"><X className="h-3.5 w-3.5" /></button>
+              </li>
+            ))}
+          </ul>
+        )}
+        <input ref={fileRef} type="file" multiple hidden accept="image/*,.pdf,.doc,.docx,.xls,.xlsx,.txt,.csv" onChange={(e) => { const list = Array.from(e.target.files ?? []); if (list.length) setFiles((cur) => [...cur, ...list].slice(0, 5)); e.target.value = ""; }} />
         <div className="mt-3 flex items-center justify-between">
-          <button type="button" aria-label="Добавить" className="mk-icon-btn mk-icon-plain"><Plus className="h-5 w-5" /></button>
+          <button type="button" onClick={() => fileRef.current?.click()} aria-label="Прикрепить файл" className="mk-icon-btn mk-icon-plain"><Plus className="h-5 w-5" /></button>
           <div className="flex items-center gap-1">
             <button type="button" onClick={() => setVoice(false)} aria-label="Ввести текстом" className={`mk-icon-btn mk-icon-plain ${voice ? "opacity-50" : ""}`}><Keyboard className="h-5 w-5" /></button>
             <button type="button" onClick={() => setVoice(true)} aria-label="Задать вопрос голосом" className={`mk-icon-btn mk-icon-plain ${voice ? "" : "opacity-60"}`}><Mic className="h-5 w-5" /></button>
+            <button type="submit" aria-label="Отправить вопрос" className="ml-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--mk-fg)] text-[var(--mk-bg)] transition hover:opacity-85"><ArrowUp className="h-5 w-5" /></button>
           </div>
         </div>
       </form>
