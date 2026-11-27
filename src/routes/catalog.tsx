@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowUpRight, Clock, MessageCircle, Package, QrCode, ScanLine, Smartphone } from "lucide-react";
 import { BackHome } from "@/components/back-home";
 import { SiteFooter } from "@/components/home-sections";
+import { InstallRequestForm } from "@/components/install-request-form";
 
 export const Route = createFileRoute("/catalog")({
   head: () => ({
@@ -96,9 +97,11 @@ function CatalogPage() {
         </section>
 
         <section className="mt-16 flex flex-wrap items-center gap-3">
-          <Link to="/support" className="mk-outline"><MessageCircle />Спросить инженера<ArrowUpRight className="h-4 w-4" aria-hidden="true" /></Link>
+          <a href="#install-request" className="mk-outline"><MessageCircle />Оставить заявку на установку<ArrowUpRight className="h-4 w-4" aria-hidden="true" /></a>
           <Link to="/onboarding" search={{ tariff: undefined, ref: undefined }} className="mk-outline">Начать бесплатный период</Link>
         </section>
+
+        <InstallRequestForm />
       </main>
       <div className="px-4 pb-6"><SiteFooter /></div>
     </div>
