@@ -60,7 +60,7 @@ function CatalogPage() {
         <section className="mt-12 max-w-3xl">
           <span className="mk-soon"><Clock size={13} aria-hidden="true" />Страница оформляется</span>
           <h1 className="mt-6 text-[2.5rem] font-semibold leading-[1.05] tracking-[-0.035em] md:text-6xl">
-            <span className="mk-bonus-title">Кассы и оборудование</span>
+            Кассы и оборудование
           </h1>
           <p className="mt-6 text-lg leading-relaxed" style={{ color: "var(--mk-muted)" }}>
             Собираем в этом разделе кассы и всё, что нужно для их работы. Пока страница наполняется, инженер
