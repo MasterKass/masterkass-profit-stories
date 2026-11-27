@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { Check, Keyboard, Mic, Paperclip, Plus, Send, X } from "lucide-react";
+import { Check, Keyboard, Mic, Paperclip, Plus, ArrowUp, X } from "lucide-react";
 import { BackHome } from "@/components/back-home";
 
 export const Route = createFileRoute("/support")({
@@ -38,7 +38,8 @@ function Support() {
   useEffect(() => { end.current?.scrollIntoView({ block: "nearest" }); }, [msgs]);
 
   const send = () => {
-    const text = q.trim() || (files[0] ? `Фото: ${files[0].name}` : "");
+    const names = files.map((f) => f.name).join(", ");
+    const text = [q.trim(), names && `📎 ${names}`].filter(Boolean).join("\n");
     if (!text) return;
     const reply = authed
       ? "Вижу вашу кассу и её состояние. В демо-режиме живые ответы пока не подключены, после запуска помощник разберёт ситуацию по вашему оборудованию."
@@ -87,14 +88,12 @@ function Support() {
             <div className="mk-csh-bar">
               <label className="mk-csh-ibtn" aria-label="Прикрепить фото или файл">
                 <Plus size={22} aria-hidden="true" />
-                <input type="file" multiple accept="image/*,.pdf,.txt" className="sr-only" onChange={(e) => { setFiles([...files, ...Array.from(e.target.files ?? [])]); e.target.value = ""; }} />
+                <input type="file" multiple accept="image/*,.pdf,.doc,.docx,.xls,.xlsx,.txt,.csv" className="sr-only" onChange={(e) => { setFiles([...files, ...Array.from(e.target.files ?? [])]); e.target.value = ""; }} />
               </label>
               <span className="flex-1" />
               <button type="button" onClick={() => { wantFocus.current = true; setVoice(false); }} aria-label="Ввести текстом" className={`mk-csh-ibtn ${voice ? "opacity-50" : ""}`}><Keyboard size={20} aria-hidden="true" /></button>
               <button type="button" onClick={() => setVoice(true)} aria-label="Спросить голосом" className={`mk-csh-ibtn ${voice ? "" : "opacity-60"}`}><Mic size={22} aria-hidden="true" /></button>
-              {(q.trim().length > 0 || files.length > 0) && (
-                <button type="submit" className="mk-csh-ibtn mk-csh-send" aria-label="Отправить"><Send size={18} aria-hidden="true" /></button>
-              )}
+              <button type="submit" aria-label="Отправить" className="ml-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--mk-fg)] text-[var(--mk-bg)] transition hover:opacity-85"><ArrowUp size={20} aria-hidden="true" /></button>
             </div>
           </form>
         </section>
