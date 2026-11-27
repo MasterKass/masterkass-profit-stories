@@ -1,5 +1,5 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowUpRight, Clock, MessageCircle, Package, QrCode, ScanLine, Smartphone } from "lucide-react";
+import { createFileRoute } from "@tanstack/react-router";
+import { Clock, Package, QrCode, ScanLine, Smartphone } from "lucide-react";
 import { BackHome } from "@/components/back-home";
 import { SiteFooter } from "@/components/home-sections";
 import { InstallRequestForm } from "@/components/install-request-form";
@@ -94,11 +94,6 @@ function CatalogPage() {
               </li>
             ))}
           </ul>
-        </section>
-
-        <section className="mt-16 flex flex-wrap items-center gap-3">
-          <a href="#install-request" className="mk-outline"><MessageCircle />Оставить заявку на установку<ArrowUpRight className="h-4 w-4" aria-hidden="true" /></a>
-          <Link to="/onboarding" search={{ tariff: undefined, ref: undefined }} className="mk-outline">Начать бесплатный период</Link>
         </section>
 
         <InstallRequestForm />
