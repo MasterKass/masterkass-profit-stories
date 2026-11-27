@@ -105,7 +105,7 @@ export function QuickActions() {
   const items = [
     { t: "Пульс Гос.регулирования", b: "Следить за изменениями", to: "/pulse" },
     { t: "Как устроен сервис", b: "Исследовать", to: "/service" },
-    { t: "Кассы и оборудование", b: "Посмотреть каталог", to: "" },
+    { t: "Кассы и оборудование", b: "Посмотреть каталог", to: "/catalog" },
   ];
   return (
     <section id="services" className="mk-section pt-0">
@@ -454,11 +454,12 @@ export function AskAi({ title = "Задайте вопрос нашему ИИ �
 /* 12. Подвал — карточка с разделами (часть слов ведёт на готовые страницы) */
 /** Слова подвала, у которых уже есть адрес: «Тарифы» открывают блок тарифов на странице сервиса.
  *  Темы госрегулирования берутся из PULSE_FOOTER_LINKS в src/lib/pulse.ts. */
-const FOOTER_ROUTES: Record<string, { to: "/service" | "/partners" | "/loyalty" | "/stories" | "/pulse"; hash?: string }> = {
+const FOOTER_ROUTES: Record<string, { to: "/service" | "/partners" | "/loyalty" | "/stories" | "/pulse" | "/catalog"; hash?: string }> = {
   "Программа лояльности": { to: "/loyalty" },
   "Тарифы": { to: "/service", hash: "tariffs" },
   "Партнёрам": { to: "/partners" },
   "Истории клиентов": { to: "/stories" },
+  "Кассы и оборудование": { to: "/catalog" },
 };
 
 const FOOTER_COLUMNS: { title: string; links: string[] }[] = [

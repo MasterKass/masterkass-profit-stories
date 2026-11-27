@@ -338,6 +338,9 @@ body { font-family: var(--font-sans); }
 .mk-tile-btn:active { transform: scale(0.96); box-shadow: none; transition-duration: 90ms; }
 .mk-tile-btn:focus-visible { outline: 2px solid var(--mk-fg); outline-offset: 3px; }
 @media (max-width: 767px) { .mk-tile { min-height: 230px; padding: 2rem; gap: 2rem; } }
+/* Страница в оформлении: спокойная плашка-статус над заголовком */
+.mk-soon { display: inline-flex; align-items: center; gap: .45rem; padding: .4rem .8rem; border-radius: 999px; border: 1px solid var(--mk-border); background: var(--mk-bubble); color: var(--mk-muted); font-size: 13px; font-weight: 600; letter-spacing: -.01em; }
+.mk-soon::before { content: ""; width: 6px; height: 6px; border-radius: 999px; background: var(--mk-fg); opacity: .45; }
 /* Возврат на главную: стеклянный кружок в углу, прилипает к экрану и всегда под рукой */
 .mk-top-veil { position: fixed; top: -2px; left: 0; right: 0; z-index: 40; height: calc(3.75rem + 2px + env(safe-area-inset-top)); padding: calc(2px + env(safe-area-inset-top)) 0 1.5rem calc(0.75rem + env(safe-area-inset-left)); display: flex; align-items: center; pointer-events: none; }
 .mk-top-veil::before { content: ""; position: absolute; inset: 0; z-index: -1; background: color-mix(in oklch, var(--welcome-background) 62%, transparent); backdrop-filter: blur(20px) saturate(160%); mask-image: linear-gradient(to bottom, #000 0%, #000 60%, transparent 100%); }
