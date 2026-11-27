@@ -10,6 +10,7 @@
 <!-- LOVABLE:END -->
 
 - Keep the welcome photo scene in a browser-safe standalone React component with CSS perspective and scroll effects; it remains replaceable without changing the lower page sections.
+- Bundle the three real welcome-scene photographs as local JPEG imports; self-hosted deployments cannot serve Lovable's relative asset endpoints.
 - Scope welcome-screen colors to semantic CSS tokens so its light palette does not recolor the existing service and pricing sections.
 - Home page sections below the welcome scene live in src/components/home-sections.tsx, styled via scoped --mk-* tokens; the bottom wrapper .mk-tail carries the spectrum gradient so blocks can be reordered without touching the hero.
 - The day-in-the-life comic renders inline as a full magazine spread at the end of the service page (src/components/day-comic.tsx), never behind a preview button or in a dialog, and panels are laid out in justified rows that keep each artwork's own aspect ratio (.mk-comic-row), because cropping cuts the speech bubbles baked into the artwork.
